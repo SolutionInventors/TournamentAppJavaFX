@@ -7,9 +7,7 @@
  */
 package com.solutioninventors.tournament.group;
 
-import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +16,7 @@ public class StandingTable
 {
 	
 	/***
-	 * This class encapsulates the operation of a standingTable in a group Tournamet
+	 * This class encapsulates the operation of a standingTable in a group Tournament
 	 * The input of the class is a competitor array while the output is a String[][] table
 	 * This class also uses the SportType enum in order to know when to add GF , GA and GD
 	 * However the info W , D , L , Pts are not sportType dependent
@@ -37,7 +35,7 @@ public class StandingTable
 			String[ competitors.length ]
 				  [ sportType == SportType.GOALS_ARE_SCORED ? 8 : 5 ];
 		
-		updateTables(); //updates the String[][] table and Competiors[] array
+		updateTables(); //updates the String[][] table and Competitors[] array
 		
 	}
 
@@ -104,7 +102,7 @@ public class StandingTable
 			
 		}
 		
-		if (sportType == sportType.GOALS_ARE_SCORED )
+		if (sportType == SportType.GOALS_ARE_SCORED )
 		{
 			String[] goalsScoredColumn = new String[ numOfCompetitors ]  ;
 			String[] goalsConcededColumn =  new String[ numOfCompetitors ] ; 
