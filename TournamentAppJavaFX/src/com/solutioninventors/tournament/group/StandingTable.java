@@ -14,6 +14,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.solutioninventors.tournament.utils.Competitor;
+import com.solutioninventors.tournament.utils.SportType;
+
 public class StandingTable
 {
 	
