@@ -15,7 +15,6 @@ import com.solutioninventors.tournament.utils.SportType;
 
 public class SwissTournament extends GroupTournament
 {
-	private int currentRoundNum; 
 	private final Round[] rounds ;
 	
 	
@@ -29,31 +28,23 @@ public class SwissTournament extends GroupTournament
 	
 	}
 
-	
-	
-	
 	public int getTotalNumberOfRounds()
 	{
 		return rounds.length ;
 	}
 
-	public int getCurrentRoundNum()
-	{
-		return currentRoundNum ;
-	}
-	
-	
-	
+	@Override
 	public void moveToNextRound()
 	{
 		getTable().updateTables(); 
 		
-		currentRoundNum ++ ;
+		setCurrentRoundNum( getCurrentRoundNum() + 1 );
+		
 		if ( getCurrentRoundNum() <=  getTotalNumberOfRounds() )
 		{
 			Competitor[] temp = getTable().getCompetitors() ;
 			Fixture[] fixtures = new 
-					Fixture[ temp.length %2 == 0 ? getCompetitor().length : temp.length -1 ];
+					Fixture[ temp.length %2 == 0 ? getCompetitors().length : temp.length -1 ];
 			
 			
 			for ( int i = 0 ; i < fixtures.length ; i +=2 )

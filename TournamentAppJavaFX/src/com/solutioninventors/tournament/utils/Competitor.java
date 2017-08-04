@@ -41,6 +41,7 @@ public class Competitor
 	private boolean eliminated;
 	private double point;
 	
+	
 	public Competitor( String name , File imageFile )
 	{
 		this( name , null , imageFile );

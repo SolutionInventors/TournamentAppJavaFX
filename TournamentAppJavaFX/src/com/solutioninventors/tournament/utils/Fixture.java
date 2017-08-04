@@ -3,13 +3,14 @@ package com.solutioninventors.tournament.utils;
 public class Fixture
 {
 	
-	private Competitor competitorOne;
-	private Competitor competitorTwo;
+	private final Competitor COMPETITOR_ONE;
+	private final Competitor COMPETITOR_TWO;
 	
 	
-	public Fixture(Competitor competitorTwo2, Competitor competitorOne2)
+	public Fixture(Competitor competitorOne, Competitor competitorTwo)
 	{
-		
+		COMPETITOR_ONE = competitorOne ;
+		COMPETITOR_TWO = competitorTwo ;
 	}
 
 	
@@ -20,11 +21,11 @@ public class Fixture
 
 	public Competitor getCompetitorOne()
 	{
-		return competitorOne ;
+		return COMPETITOR_ONE ;
 	}
 	
 	public Competitor getCompetitorTwo()
 	{
-		return competitorTwo ;
+		return COMPETITOR_TWO ;
 	}
 }

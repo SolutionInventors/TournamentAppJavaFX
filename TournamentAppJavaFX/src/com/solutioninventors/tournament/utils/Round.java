@@ -63,7 +63,7 @@ public class Round
 	}
 	
 
-	private boolean isComplete()
+	public  boolean isComplete()
 	{
 		return complete;
 	}
