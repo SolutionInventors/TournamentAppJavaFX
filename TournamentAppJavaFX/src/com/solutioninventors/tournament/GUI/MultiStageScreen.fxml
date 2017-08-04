@@ -46,11 +46,11 @@
       </GridPane>
    
    
-      <Label layoutX="180.0" layoutY="14.0" text="GROUP STAGE SPECS">
+      <Label layoutX="180.0" layoutY="14.0" text="MULTI STAGE SPECS">
          <font>
             <Font name="Times New Roman Bold" size="18.0" />
          </font></Label>
-      <GridPane layoutX="37.0" layoutY="157.0" prefHeight="179.0" prefWidth="544.0">
+      <GridPane layoutX="37.0" layoutY="119.0" prefHeight="265.0" prefWidth="544.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="170.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="98.0" />
@@ -61,42 +61,46 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Tournament Style:">
+            <Label text="Group Stage Style:" GridPane.rowIndex="1">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label text="Pointing System" GridPane.rowIndex="1">
+            <Label text="Pointing System" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label text="Extra point for Away Game" GridPane.rowIndex="2">
+            <Label text="Extra point for Away Game" GridPane.rowIndex="3">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label text="(or playing as Black in chess)" GridPane.rowIndex="3">
+            <Label text="(or playing as Black in chess)" GridPane.rowIndex="4">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label text="Number of Competitors:" GridPane.rowIndex="4">
+            <Label text="Number of Competitors:" GridPane.rowIndex="5">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label text="Number of Rounds:" GridPane.rowIndex="5">
+            <Label text="Number of Rounds:" GridPane.rowIndex="6">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <RadioButton mnemonicParsing="false" text="Swiss Style" GridPane.columnIndex="1">
+            <RadioButton mnemonicParsing="false" text="Swiss Style" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <toggleGroup>
                   <ToggleGroup fx:id="type" />
                </toggleGroup>
@@ -104,47 +108,84 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Round Robin" toggleGroup="$type" GridPane.columnIndex="2">
+            <RadioButton mnemonicParsing="false" text="Round Robin" toggleGroup="$type" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Double Round Robin" toggleGroup="$type" GridPane.columnIndex="3">
+            <RadioButton mnemonicParsing="false" text="Double Round Robin" toggleGroup="$type" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="L" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <CheckBox mnemonicParsing="false" text="L" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </CheckBox>
-            <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
             <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <Label prefHeight="16.0" prefWidth="185.0" text="KNOCKOUT SPECS" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label prefHeight="16.0" prefWidth="174.0" text="GROUP STAGE SPECS" GridPane.columnIndex="1" GridPane.columnSpan="2">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Elimination Style" GridPane.rowIndex="8">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Home and Away" GridPane.rowIndex="9">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <RadioButton mnemonicParsing="false" text="Single" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <toggleGroup>
+                  <ToggleGroup fx:id="type1" />
+               </toggleGroup>
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Double" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <toggleGroup>
+                  <ToggleGroup fx:id="type1" />
+               </toggleGroup>
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </RadioButton>
+            <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
-      <Text fontSmoothingType="LCD" layoutX="37.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a Swiss style group tournament, the number of results is attempted to be shortened or reduced. The fixtures are determined from the current standing. This is achieved by pairing the top and bottom competitors" wrappingWidth="500.0">
+      <Text fontSmoothingType="LCD" layoutX="37.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a multistage tournament, there are two stages with the top competitors(or winners) of the first stage(thes group stage) advancing to the next stage (Knockout Stage)" wrappingWidth="500.0">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
