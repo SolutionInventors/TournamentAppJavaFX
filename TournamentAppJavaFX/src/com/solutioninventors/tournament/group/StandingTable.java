@@ -49,12 +49,10 @@ public class StandingTable
 									.thenComparing(Competitor:: getGoalDifference )
 									.thenComparing( Competitor :: getName ).reversed();
 		
-		List<Competitor > temp;
-		temp =  Arrays.stream( competitors )
-						.sorted( tableComparator )
-						.collect( Collectors.toList()  );
-		
-		 temp.toArray( competitors );
+		Arrays.stream( competitors )
+				.sorted( tableComparator )
+				.collect( Collectors.toList()  )
+				.toArray( competitors );
 		
 		updateStringTable(); // updates StringTable
 		

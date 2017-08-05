@@ -229,5 +229,9 @@ public class Competitor
 		return getGoalsScored() - getGoalsConceded();
 	}
 
-	
+	@Override
+	public String toString()
+	{
+		return getName();
+	}
 }

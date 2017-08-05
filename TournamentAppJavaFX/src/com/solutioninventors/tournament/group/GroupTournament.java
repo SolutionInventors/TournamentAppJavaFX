@@ -6,6 +6,11 @@
  */
 package com.solutioninventors.tournament.group;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
+import javax.swing.JOptionPane;
+
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
@@ -67,6 +72,21 @@ public abstract class GroupTournament
 		return getRoundsArray()[ getCurrentRoundNum() ];
 	}
 
+	public void setRoundResult( Competitor com1 , int score1 , int score2 , Competitor com2 )
+	{
+		try 
+		{
+			Arrays.stream( getCurrentRound().getFixtures() )
+				.filter( f -> f.hasFixture( com1 , com2  ))
+				.findFirst()
+				.get().setResult(score1, score2);
+			
+		}
+		catch ( NoSuchElementException e 	)
+		{
+			JOptionPane.showMessageDialog( null , "Fixture not found"); 
+		}
+	}
 	public abstract void moveToNextRound();
 	
 }
