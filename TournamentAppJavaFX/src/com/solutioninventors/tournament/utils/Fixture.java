@@ -10,6 +10,7 @@ public class Fixture
 	private  int competitorOneScore;
 	private  int competitorTwoScore ;
 	private boolean complete ;
+	
 	public Fixture(Competitor competitorOne, Competitor competitorTwo)
 	{
 		COMPETITOR_ONE = competitorOne ;
