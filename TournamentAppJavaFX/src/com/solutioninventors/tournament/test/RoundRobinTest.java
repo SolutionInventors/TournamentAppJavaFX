@@ -68,51 +68,55 @@ public class RoundRobinTest
 		JOptionPane.showMessageDialog( null , m );
 		m.delete( 0 , m.length() -1 );
 		
-		for ( int i = 0 ; i < rounds.length ; i++ )
+		while( !tournament.hasEnded() )
 		{
-			m.append( "Round " + ( i + 1) +"\n");
-			System.out.print( "Round " + ( i + 1) +"\n");
-			temp = rounds[ i ].getFixtures() ;
-			
-			for ( Fixture f : temp )
+			for ( int i = 0 ; i < rounds.length ; i++ )
 			{
-				m.append(String.format( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
-						f.getCompetitorTwo().getName()) );
-				System.out.print( String.format( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
-						f.getCompetitorTwo().getName()) );
+				m.append( "Round " + ( i + 1) +"\n");
+				System.out.print( "Round " + ( i + 1) +"\n");
+				temp = rounds[ i ].getFixtures() ;
+				
+				for ( Fixture f : temp )
+				{
+					m.append(String.format( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
+							f.getCompetitorTwo().getName()) );
+					System.out.print( String.format( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
+							f.getCompetitorTwo().getName()) );
+				}
+				System.out.println();
+				m.append( "\n" );
 			}
-			System.out.println();
-			m.append( "\n" );
-		}
-		JOptionPane.showMessageDialog( null , m );
-		Fixture[] fixtures = tournament.getCurrentRound().getFixtures() ;
-		
-		JOptionPane.showMessageDialog( null  , "Welcome to Round " + tournament.getCurrentRoundNum() );
-		StringBuilder resultsMessage = new StringBuilder( 200 );
-		resultsMessage.append( "Results: \n" );
-		for ( int i = 0  ; i < fixtures.length ; i ++ )
-		{
-			String message = String.format( "%s\n%s  VS %s", "Input Score for fixture:" ,
-					fixtures[ i ].getCompetitorOne() ,  fixtures[ i ].getCompetitorTwo() );
+			JOptionPane.showMessageDialog( null , m );
+			Fixture[] fixtures = tournament.getCurrentRound().getFixtures() ;
 			
-			JOptionPane.showMessageDialog( null , message );
-			double score1 = Double.parseDouble( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorOne() ) );
-			double score2 = Double.parseDouble( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorTwo() ) );
+			JOptionPane.showMessageDialog( null  , "Welcome to Round " + tournament.getCurrentRoundNum() );
+			StringBuilder resultsMessage = new StringBuilder( 200 );
+			resultsMessage.append( "Results: \n" );
+			for ( int i = 0  ; i < fixtures.length -1 ; i ++ )
+			{
+				String message = String.format( "%s\n%s  VS %s", "Input Score for fixture:" ,
+						fixtures[ i ].getCompetitorOne() ,  fixtures[ i ].getCompetitorTwo() );
+				
+				JOptionPane.showMessageDialog( null , message );
+				double score1 = Double.parseDouble( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorOne() ) );
+				double score2 = Double.parseDouble( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorTwo() ) );
+				
+				fixtures[ i ].setResult(score1, score2);
+				fixtures = tournament.getCurrentRound().getFixtures() ;
+				resultsMessage.append( 
+										String.format( "%s %.0f VS %.0f %s\n",
+										fixtures[ i ].getCompetitorOne() , fixtures[ i ]. getCompetitorOneScore() , 
+										fixtures[ i ].getCompetitorTwoScore() , fixtures[ i ].getCompetitorTwo()) 
+									);
+			}
 			
-			fixtures[ i ].setResult(score1, score2);
-			fixtures = tournament.getCurrentRound().getFixtures() ;
-			resultsMessage.append( 
-									String.format( "%s %.0f VS %.0f %s\n",
-									fixtures[ i ].getCompetitorOne() , fixtures[ i ]. getCompetitorOneScore() , 
-									fixtures[ i ].getCompetitorTwoScore() , fixtures[ i ].getCompetitorTwo()) 
-								);
+			
+			JOptionPane.showMessageDialog( null , resultsMessage );
+			
+			tournament.moveToNextRound();
+			JOptionPane.showMessageDialog(null , "Welcome to  Round: " + tournament.getCurrentRoundNum());
+			
 		}
-		
-		
-		JOptionPane.showMessageDialog( null , resultsMessage );
-		
-		tournament.moveToNextRound();
-		System.out.println("Welcome to  Round: " + tournament.getCurrentRoundNum());
 		
 //		System.out.println("Current Round Number " + tournament.getCurrentRoundNum());
 //		

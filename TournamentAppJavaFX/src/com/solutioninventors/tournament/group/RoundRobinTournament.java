@@ -6,14 +6,16 @@
  */
 package com.solutioninventors.tournament.group;
 
-import java.io.File;
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
-import com.solutioninventors.tournament.exceptions.TournamentException;
+import javax.swing.JOptionPane;
+
+import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
@@ -25,6 +27,8 @@ public class RoundRobinTournament extends GroupTournament
 	private final boolean HOME_AND_AWAY_FIXTURES;
 	private final boolean BYE; 
 	
+	private List<Fixture> outstandingMatches ;
+	private boolean ended;
 	public RoundRobinTournament(Competitor[] comps, SportType type , double winPoint ,
 								double drawPoint, double lossPoint , boolean away )
 	{
@@ -32,7 +36,7 @@ public class RoundRobinTournament extends GroupTournament
 		HOME_AND_AWAY_FIXTURES =  away ;
 		BYE =  getCompetitors().length % 2 == 0 ? false : true ;
 		setRoundsArray( createRounds( getCompetitors() ) ) ;
-		
+		outstandingMatches =  new ArrayList<>();
 	}
 	
 	private Round[] createRounds(Competitor[] competitor )
@@ -185,24 +189,95 @@ public class RoundRobinTournament extends GroupTournament
 	{
 		Round[] rnds = getRoundsArray();
 		
-		for ( int i = 0 ; i < rnds.length ; i ++  )
+		if ( !hasEnded() )
 		{
-			if ( rnds[ i ].isComplete() )
+			if ( !getCurrentRound().isComplete() ) //contains outstanding
 			{
-				System.out.println("Round is incomplete\nDo you want to continue?");
-				System.out.print("Y or N? "); // replace with JOptionPane version of JavaFx
-				String ans = new Scanner( System.in ).nextLine();
-				if ( ans.toLowerCase().equals( "y" ) )
+				int ans = JOptionPane.showConfirmDialog( null , "Has pending fixtures.\nContinue?" );
+				
+				if ( ans == JOptionPane.YES_OPTION )
 				{
-					System.out.println("continue" );
+					Arrays.stream( getCurrentRound().getPendingFixtures())
+						  .forEach( f -> outstandingMatches.add( f ) );
+					JOptionPane.showMessageDialog( null , "Incomplete fixtures added to outstanding" );
 					setCurrentRoundNum( getCurrentRoundNum() + 1 );
 				}
-				else
-					System.out.println( "did not change round" );
-				break;
+			}
+			else
+			{
+				setCurrentRoundNum( getCurrentRoundNum() + 1 );
+				if ( getCurrentRoundNum() < getRoundsArray().length && 
+						outstandingMatches.size() > 0 )
+				{
+					String message = "Only outsanding matches are left";
+					JOptionPane.showMessageDialog( null , message ) ;
+				}
+			}
+		}
+		else if ( getCurrentRoundNum() < getRoundsArray().length && 
+				outstandingMatches.size() == 0 )
+			setEnded( getCurrentRoundNum() < getRoundsArray().length ? false : true );
+		else if ( outstandingMatches.size() > 0 )
+		{
+			String message = "Only outsanding matches are left";
+			JOptionPane.showMessageDialog( null , message ) ;
+		}
+		
+		
+	}
+
+	public boolean hasEnded()
+	{
+		return ended;
+	}
+	
+	public void setEnded( boolean b )
+	{
+		ended = b ;
+	}
+	
+	@Override
+	public void setRoundResult( Competitor com1 , int score1 , int score2 , Competitor com2 )
+	{		
+		if ( Arrays.stream( getCurrentRound().getFixtures() )
+				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
+		{
+			Arrays.stream( getCurrentRound().getFixtures() )
+			.filter( f -> f.hasFixture( com1 , com2  ) )
+			.forEach( f -> f.setResult(score1, score2) );
+			
+		}
+	}
+	
+	
+	public void setOutstandingResult( Competitor com1 , int score1 , int score2 , Competitor com2 )
+	{		
+		if ( outstandingMatches.stream()
+				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
+		{
+			
+			for( int i = 0 ; i < outstandingMatches.size() ; i ++ )
+			{
+				if ( outstandingMatches.get( i ).hasFixture( com1, com2) )
+				{
+					outstandingMatches.get( i ).setResult( score1, score2);
+					outstandingMatches.remove( i );
+					break ;
+				}
 			}
 		}
 	}
 	
+	public Fixture[] getOutstanding() throws NoOutstandingException
+	{
+		if ( outstandingMatches.size() > 0 )
+		{
+			Fixture[] fixes = new Fixture [ outstandingMatches.size() ];
+			outstandingMatches.toArray( fixes ) ;
+			return fixes ;
+		}
+		throw new NoOutstandingException( ) ; 
+		
+	}
 	
 }

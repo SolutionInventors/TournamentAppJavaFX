@@ -9,6 +9,7 @@ package com.solutioninventors.tournament.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Round
@@ -69,7 +70,22 @@ public class Round
 		
 	}
 	
-
+	public Fixture[] getPendingFixtures()
+	{
+		if ( isComplete() )
+			return null ;
+		List< Fixture > fixtures =  new ArrayList<> ();
+		
+		Arrays.stream( getFixtures() )
+			.filter( f -> !f.isComplete() )
+			.forEach( f -> fixtures.add( f ) );
+		
+		Fixture[] fix = new Fixture[ fixtures.size() ];
+		
+		return  fixtures.toArray( fix ) ;
+	}
+	
+	
 	public  boolean isComplete()
 	{
 		if (Arrays.stream( getFixtures() )
