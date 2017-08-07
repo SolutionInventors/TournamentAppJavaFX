@@ -42,28 +42,41 @@ public class RoundRobinTest
 		Competitor c14 = new Competitor( "Atletico", file );
 		Competitor c15 = new Competitor( "Lagos" , file );
 		Competitor c16 = new Competitor( "NIgeria" ,  file ) ;
-		Competitor[] comps = { c1 , c2  , c3 , c4 ,c5 , c6  , c7  , c8, 
-				c9 , c10  , c11 , c12 ,c13 , c14  , c15  , c16} ;
+		Competitor[] comps = { c1 , c2  , c3 , c4 ,c5 , c6  , c7  , c8} ;
 		
-		System.out.println("Robin begins");
+		JOptionPane.showMessageDialog(null ,"Robin begins");
 		RoundRobinTournament tournament = 
-				new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , false  );
+				new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0  , false );
 		
 		Round[] rounds = tournament.getRoundsArray() ;
 		Fixture[] temp = null ;
-		System.out.println("The competitors in the tournament are"); 
+		StringBuilder m = new StringBuilder( 200 );
+		JOptionPane.showMessageDialog(null, "The competitors in the tournament are"); 
 		for ( int i  = 0  ; i < comps.length ; i ++ )
-			System.out.println( ( i+1 ) + ". " + comps[ i ].getName() );
+		{
+			m.append( ( i+1 ) + ". " + comps[ i ].getName() + "\n");
+			System.out.print( ( i+1 ) + ". " + comps[ i ].getName() + "\n" );
+		}
+		JOptionPane.showMessageDialog( null , m );
+		m.delete( 0 , m.length() -1 );
+		
 		for ( int i = 0 ; i < rounds.length ; i++ )
 		{
-			System.out.println("Round " + ( i + 1) );
+			m.append( "Round " + ( i + 1) +"\n");
+			System.out.print( "Round " + ( i + 1) +"\n");
 			temp = rounds[ i ].getFixtures() ;
+			
 			for ( Fixture f : temp )
-				System.out.printf( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
-						f.getCompetitorTwo().getName());
-			System.out.println( "\n");
+			{
+				m.append(String.format( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
+						f.getCompetitorTwo().getName()) );
+				System.out.print( String.format( "%30s VS %s\n" , f.getCompetitorOne().getName() , 
+						f.getCompetitorTwo().getName()) );
+			}
+			System.out.println();
+			m.append( "\n" );
 		}
-		
+		JOptionPane.showMessageDialog( null , m );
 		Fixture[] fixtures = tournament.getCurrentRound().getFixtures() ;
 		
 		JOptionPane.showMessageDialog( null  , "Welcome to Round " + tournament.getCurrentRoundNum() );
@@ -75,12 +88,13 @@ public class RoundRobinTest
 					fixtures[ i ].getCompetitorOne() ,  fixtures[ i ].getCompetitorTwo() );
 			
 			JOptionPane.showMessageDialog( null , message );
-			int score1 = Integer.parseInt( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorOne() ) );
-			int score2 = Integer.parseInt( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorTwo() ) );
+			double score1 = Double.parseDouble( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorOne() ) );
+			double score2 = Double.parseDouble( JOptionPane.showInputDialog( fixtures[ i ].getCompetitorTwo() ) );
 			
 			fixtures[ i ].setResult(score1, score2);
+			fixtures = tournament.getCurrentRound().getFixtures() ;
 			resultsMessage.append( 
-									String.format( "%s %d VS %d %s\n",
+									String.format( "%s %.0f VS %.0f %s\n",
 									fixtures[ i ].getCompetitorOne() , fixtures[ i ]. getCompetitorOneScore() , 
 									fixtures[ i ].getCompetitorTwoScore() , fixtures[ i ].getCompetitorTwo()) 
 								);

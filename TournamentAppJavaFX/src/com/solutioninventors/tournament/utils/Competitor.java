@@ -39,8 +39,6 @@ public class Competitor
 	
 	private File image;
 	private boolean eliminated;
-	private double point;
-	
 	
 	public Competitor( String name , File imageFile )
 	{
@@ -135,20 +133,12 @@ public class Competitor
 	}
 
 
-	public double getPoint()
+	public double getPoint( double pWin , double pDraw , double pLoss)
 	{
-		return point;
-	}
-
-
-	public void setPoint( int pWin , int pDraw , int pLoss)
-	{
-		point =  ( getNumberOfWin() * pWin )  + 
+		return ( getNumberOfWin() * pWin )  + 
 				 ( getNumberOfDraw() * pDraw ) + 
 				 ( getNumberOfLoss() *  pLoss );
 	}
-
-	
 
 	private void setImage(File imageFile)
 	{

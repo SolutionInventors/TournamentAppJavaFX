@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
@@ -23,11 +24,11 @@ public abstract class GroupTournament
 	private int currentRoundNum;
 	private Round[] rounds ;
 	
-	public GroupTournament( Competitor[] comps  , SportType type )
+	public GroupTournament( Competitor[] comps  , SportType type , double pWin , double pDraw , double pLoss  )
 	{
 		SPORT_TYPE = type ;
 		COMPETITORS = comps ; 
-		table = new StandingTable( SPORT_TYPE, COMPETITORS );
+		table = new StandingTable( SPORT_TYPE, COMPETITORS , pWin , pDraw , pLoss );
 	}
 	
 	public Competitor[] getCompetitors()
@@ -87,6 +88,6 @@ public abstract class GroupTournament
 			JOptionPane.showMessageDialog( null , "Fixture not found"); 
 		}
 	}
-	public abstract void moveToNextRound();
+	public abstract void moveToNextRound() throws TournamentException;
 	
 }

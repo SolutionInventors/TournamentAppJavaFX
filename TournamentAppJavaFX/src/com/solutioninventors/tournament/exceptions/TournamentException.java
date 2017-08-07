@@ -6,10 +6,11 @@
  */
 package com.solutioninventors.tournament.exceptions;
 
-public class TournamentException extends RuntimeException
+public class TournamentException extends Exception
 {
 	/**
 	 * This exception should be thrown  only by subclasses of Tournament 
+	 * Thrown when an error occurs when creating  tournament
 	 */
 	
 	public TournamentException( String message )
