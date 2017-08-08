@@ -9,7 +9,7 @@ package com.solutioninventors.tournament.group;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.utils.Competitor;
@@ -29,8 +29,12 @@ public class StandingTable
 	private String[][] table;
 	
 	private final SportType sportType;
+	private final double POINT_FOR_WIN;
+	private final double POINT_FOR_DRAW;
+	private final double POINT_FOR_LOSS;
 	
-	public StandingTable( SportType type, Competitor[] comptitors )
+	public StandingTable( SportType type, Competitor[] comptitors , 
+			double win , double draw , double loss )
 	{
 		sportType = type ;
 		setCompetitors(comptitors);
@@ -38,14 +42,35 @@ public class StandingTable
 			String[ competitors.length ]
 				  [ sportType == SportType.GOALS_ARE_SCORED ? 8 : 5 ];
 		
+		POINT_FOR_WIN = win ;
+		POINT_FOR_DRAW = draw ;
+		POINT_FOR_LOSS = loss ;
 		updateTables(); //updates the String[][] table and Competitors[] array
 		
 	}
 
-	public void updateTables()
+	private double getPointForWin()
+	{
+		return POINT_FOR_WIN ;
+	}
+	private double getPointForDraw()
+	{
+		return POINT_FOR_DRAW ;
+	}
+	private double getPointForLoss()
+	{
+		return POINT_FOR_LOSS ;
+	}
+	
+	public void updateTables( )
 	{
 //		The tableComparator should be improved with more tieBreakers
-		Comparator<Competitor> tableComparator = Comparator.comparing( Competitor :: getPoint )
+		
+		Function< Competitor, Double >  pointFunction = c->
+				c.getPoint( getPointForWin() , getPointForDraw() , getPointForLoss() );
+		
+		Comparator<Competitor> tableComparator = 
+				Comparator.comparing( pointFunction )
 									.thenComparing(Competitor:: getGoalDifference )
 									.thenComparing( Competitor :: getName ).reversed();
 		
@@ -89,7 +114,8 @@ public class StandingTable
 		
 		
 		Arrays.stream( competitors )
-		   .map( com -> String.valueOf( com.getPoint() ) )
+		   .map( com -> String.valueOf( 
+				   			com.getPoint( getPointForWin() , getPointForDraw() ,getPointForLoss()) ) )
 		   .collect( Collectors.toList() )
 		   .toArray ( pointColumn ) ;
 		

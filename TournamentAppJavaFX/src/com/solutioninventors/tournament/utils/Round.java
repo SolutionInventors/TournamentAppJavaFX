@@ -7,6 +7,7 @@
  */
 package com.solutioninventors.tournament.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -18,11 +19,17 @@ public class Round
 	 */
 	private Fixture[] fixtures;
 	
-	private boolean complete;
 	
 	public Round( Fixture[]  fixes )
 	{
 		fixtures = fixes ;
+	
+	}
+	
+	public Round( Fixture f )
+	{
+		Fixture[] temp = {f};
+		fixtures = temp; ;
 	
 	}
 	
@@ -65,7 +72,62 @@ public class Round
 
 	public  boolean isComplete()
 	{
-		return complete;
+		if (Arrays.stream( getFixtures() )
+				.anyMatch( f -> !f.isComplete() ) )
+			return false ;
+		else
+			return true ;
+	}
+	
+	
+	public boolean hasFixture( Competitor com1 , Competitor com2 )
+	{
+		return Arrays.stream( getFixtures() )
+				.anyMatch( f -> f.hasFixture(com1, com2 ) );
+
+	}
+
+
+	public Competitor[] getWinners()
+	{
+		ArrayList< Competitor > winners = new ArrayList<>() ;
+		Fixture[] temp = getFixtures() ;
+		
+		for (Fixture fixture : temp)
+		{
+			if ( fixture.hasWinner() )
+				winners.add( fixture.getWinner() );
+				
+		}
+		if ( winners.size() == 0  ) 
+			return null ;
+		return winners.toArray( new Competitor[ winners.size() ]) ;
+			
+	}
+	
+	public Competitor[] getLosers()
+	{
+		ArrayList< Competitor > losers = new ArrayList<>() ;
+		Fixture[] temp = getFixtures() ;
+		
+		for (Fixture fixture : temp)
+		{
+			if ( fixture.hasLoser() )
+				losers.add( fixture.getLoser() );
+				
+		}
+		if ( losers.size() == 0  ) 
+			return null ;
+		return losers.toArray( new Competitor[ losers.size() ]) ;
+			
+	}
+	
+	public boolean hasDraw()
+	{
+		
+			return Arrays.stream( getFixtures() )
+					.anyMatch(Fixture :: isDraw);
+			
 	}
 	
 }	

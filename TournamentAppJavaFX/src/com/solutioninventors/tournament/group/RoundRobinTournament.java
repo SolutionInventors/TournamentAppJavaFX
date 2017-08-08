@@ -25,9 +25,10 @@ public class RoundRobinTournament extends GroupTournament
 	private final boolean HOME_AND_AWAY_FIXTURES;
 	private final boolean BYE; 
 	
-	public RoundRobinTournament(Competitor[] comps, SportType type , boolean away )
+	public RoundRobinTournament(Competitor[] comps, SportType type , double winPoint ,
+								double drawPoint, double lossPoint , boolean away )
 	{
-		super(comps, type);
+		super(comps, type, winPoint , drawPoint, lossPoint );
 		HOME_AND_AWAY_FIXTURES =  away ;
 		BYE =  getCompetitors().length % 2 == 0 ? false : true ;
 		setRoundsArray( createRounds( getCompetitors() ) ) ;
@@ -186,7 +187,7 @@ public class RoundRobinTournament extends GroupTournament
 		
 		for ( int i = 0 ; i < rnds.length ; i ++  )
 		{
-			if ( !rnds[ i ].isComplete() )
+			if ( rnds[ i ].isComplete() )
 			{
 				System.out.println("Round is incomplete\nDo you want to continue?");
 				System.out.print("Y or N? "); // replace with JOptionPane version of JavaFx

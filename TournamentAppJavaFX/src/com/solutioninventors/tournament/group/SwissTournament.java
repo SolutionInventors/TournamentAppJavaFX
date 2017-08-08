@@ -18,9 +18,11 @@ public class SwissTournament extends GroupTournament
 	private final Round[] rounds ;
 	
 	
-	public SwissTournament( Competitor[] comps, SportType type, int totalRounds  ) throws Exception
+	public SwissTournament( Competitor[] comps, SportType type,
+							double winPoint , double drawPoint , double lossPoint,
+							int totalRounds  ) throws Exception
 	{
-		super( comps , type );
+		super( comps , type , winPoint , drawPoint , lossPoint );
 		if ( comps.length % 2 != 0 )
 			throw new Exception() ;
 	
@@ -34,7 +36,7 @@ public class SwissTournament extends GroupTournament
 	}
 
 	@Override
-	public void moveToNextRound()
+	public void moveToNextRound() throws TournamentException
 	{
 		getTable().updateTables(); 
 		
