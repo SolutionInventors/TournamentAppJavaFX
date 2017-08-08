@@ -21,8 +21,8 @@ public class RoundRobinTest
 
 	public static void main( String[]  args )
 	{
-		File file = new File ( "golf.jpg");
-		
+		//File file = new File("/test/golf.jpg");
+		File file = new File("C:\\Users\\Chinedu\\git\\TournamentAppJavaFX\\TournamentAppJavaFX\\bin\\com\\solutioninventors\\tournament\\test\\golf.jpg");
 		Competitor c1 = new Competitor( "Chidiebere" , file );
 		Competitor c2 = new Competitor( "Fred", file );
 		Competitor c3 = new Competitor( "Joshua" , file );
@@ -42,9 +42,10 @@ public class RoundRobinTest
 		Competitor c14 = new Competitor( "Atletico", file );
 		Competitor c15 = new Competitor( "Lagos" , file );
 		Competitor c16 = new Competitor( "NIgeria" ,  file ) ;
-		Competitor[] comps = { c1 , c2  , c3 , c4 ,c5 , c6  , c7  , c8, 
-				c9 , c10  , c11 , c12 ,c13 , c14  , c15  , c16} ;
-		
+		//Competitor[] comps = { c1 , c2  , c3 , c4 ,c5 , c6  , c7  , c8, 
+		//		c9 , c10  , c11 , c12 ,c13 , c14  , c15  , c16} ;
+		Competitor[] comps = { c1 , c2  , c3 , c4 }; 
+				//		c9 , c10  , c11 , c12 ,c13 , c14  , c15  , c16} ;
 		System.out.println("Robin begins");
 		RoundRobinTournament tournament = 
 				new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , false  );
