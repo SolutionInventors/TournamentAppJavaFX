@@ -1,22 +1,23 @@
 /**
  *@Author: Oguejiofor Chidiebere
- *SingleEliminationTest.java
+ *DoubleEliminationTest.java
  *Aug 9, 2017
- *3:30:11 PM
+ *7:30:18 PM
  */
 package com.solutioninventors.tournament.test;
 
-import java.awt.HeadlessException;
 import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.knockout.DoubleElimination;
 import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
-public class SingleEliminationTest
+public class DoubleEliminationTest
 {
 
 	public static void main(String[] args)
@@ -31,10 +32,10 @@ public class SingleEliminationTest
 
 		Competitor[] comps = { c1 , c2  , c3 , c4 }; 
 
-		SingleEliminationTournament tournament = null ;
+		DoubleElimination tournament = null ;
 		try
 		{
-			tournament = new SingleEliminationTournament(comps);
+			tournament = new DoubleElimination(comps);
 		}
 		catch (TournamentException e)
 		{
@@ -42,7 +43,7 @@ public class SingleEliminationTest
 			System.exit( 1 );
 			
 		}
-		Test.displayMessage("Single Elimination begins");
+		Test.displayMessage("Double Elimination begins");
 		
 		
 		while( ! tournament.hasEnded() 	)
@@ -51,17 +52,22 @@ public class SingleEliminationTest
 			
 			inputRoundResults(tournament);
 			
-			while( tournament.hasTie() )
-				breakTies( tournament );
-			
 			Test.displayRoundResults( tournament.getCurrentRound() );
-			tournament.moveToNextRound();
+			try
+			{
+				tournament.moveToNextRound();
+			}
+			catch (MoveToNextRoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner() );
-		
 	}
 
+	
 	private static void breakTies( SingleEliminationTournament tournament )
 	{
 		StringBuilder builder = new StringBuilder( 400 );
@@ -92,7 +98,7 @@ public class SingleEliminationTest
 		
 	}
 
-	public static void inputRoundResults(SingleEliminationTournament tournament)
+	public static void inputRoundResults(DoubleElimination tournament)
 	{
 		StringBuilder builder = new StringBuilder( 400 );
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
@@ -119,5 +125,6 @@ public class SingleEliminationTest
 		}
 		
 	}
-
+	
+	
 }

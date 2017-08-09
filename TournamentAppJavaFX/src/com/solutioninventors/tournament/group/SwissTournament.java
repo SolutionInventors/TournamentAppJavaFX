@@ -8,7 +8,7 @@
 package com.solutioninventors.tournament.group;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 import javax.swing.JOptionPane;
 
@@ -20,73 +20,100 @@ import com.solutioninventors.tournament.utils.SportType;
 
 public class SwissTournament extends GroupTournament
 {
-	private final Round[] rounds ;
-	
-	
+	/**
+	 * This class is used to simulate a swiss tournament. 
+	 * Its constructor takes a competitor array , SportType , pointing system and totalROunds
+	 * Utility method createTournament creates the tournament rounds
+	 * 
+	 * Then it takes results via calls to setResult
+	 * Method moveToNextRound moves to the next round 
+	 * 
+	 * The class also contains some utility methods that aid its use
+	 
+	 */
 	public SwissTournament( Competitor[] comps, SportType type,
 							double winPoint , double drawPoint , double lossPoint,
-							int totalRounds  ) throws Exception
+							int totalRounds  ) throws TournamentException
 	{
 		super( comps , type , winPoint , drawPoint , lossPoint );
 		if ( comps.length % 2 != 0 )
-			throw new Exception() ;
+			throw new TournamentException("Total competitors must be a multiple of 2" ) ;
 	
-		rounds = new Round[ totalRounds ];
-	
+		setRoundsArray( new Round[ totalRounds ] );
+		createTournament();
 	}
 
-	public int getTotalNumberOfRounds()
+	private void createTournament()
 	{
-		return rounds.length ;
+		createCurrentRound();
 	}
+	
 
 	@Override
-	public void moveToNextRound() throws TournamentException
+	public void moveToNextRound() 
 	{
 		getTable().updateTables(); 
 		
 		setCurrentRoundNum( getCurrentRoundNum() + 1 );
 		
-		if ( getCurrentRoundNum() <=  getTotalNumberOfRounds() )
+		if ( getCurrentRoundNum() <  getTotalNumberOfRounds() )
 		{
-			Competitor[] temp = getTable().getCompetitors() ;
-			Fixture[] fixtures = new 
-					Fixture[ temp.length %2 == 0 ? getCompetitors().length : temp.length -1 ];
-			
-			
-			for ( int i = 0 ; i < fixtures.length ; i +=2 )
-			{
-				fixtures[ i ] = new Fixture( temp[i], temp[ i + 1] );
-				
-			}
-			
-			rounds[ getCurrentRoundNum() - 1 ] = new Round( fixtures );
-		
+			createCurrentRound();
 		}
 		else
-			throw new TournamentException( "Tournament has ended" );
+			JOptionPane.showMessageDialog( null , "Tournament has ended" );
+		
 	}
+
+	private void createCurrentRound()
+	{
+		Competitor[] temp = getTable().getCompetitors() ;
+		Fixture[] fixtures = new 
+				Fixture[ temp.length / 2 ];
+		
+		
+		for ( int i = 0 ; i < temp.length ; i +=2 )
+		{
+			fixtures[ i/2 ] = new Fixture( temp[i], temp[ i + 1] );
+			
+		}
+		
+		 setCurrentRound( fixtures );
+	}
+	
+	
 	
 	@Override
 	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 )
 	{
-		try 
-		{
+		Predicate<Fixture> tester = f-> f.getCompetitorOne().getName().equals(com1.getName() )
+										&& f.getCompetitorTwo().getName().equals(com2.getName() );
+		
+		if ( Arrays.stream( getCurrentRound().getFixtures() )
+				.anyMatch( tester ) )
 			Arrays.stream( getCurrentRound().getFixtures() )
-				.filter( f -> f.hasFixture( com1 , com2  ))
-				.forEach( f-> f.setResult(score1, score2) );
-			
-		}
-		catch ( NoSuchElementException e 	)
-		{
-			JOptionPane.showMessageDialog( null , "Fixture not found"); 
-		}
+			.filter( f -> f.hasFixture( com1 , com2  ))
+			.forEach( f-> f.setResult(score1, score2) );
+		
 	}
 
 	@Override
 	public boolean hasEnded()
 	{
-		return getCurrentRoundNum() < getRoundsArray().length ? true : false ;
+		return getCurrentRoundNum() < getRoundsArray().length ? false : true ;
+		
+	}
+
+	@Override
+	public Competitor getWinner()
+	{
+		if ( hasEnded() )
+		{
+			getTable().updateTables();
+			return getTable().getCompetitors()[0 ];
+		}
+			
+		return null ;
 		
 	}
 	

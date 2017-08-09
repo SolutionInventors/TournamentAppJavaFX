@@ -197,9 +197,9 @@ public class Competitor
 	}
 
 
-	public void incrementGoalsScoredBy(int goals)
+	public void incrementGoalsScoredBy(double score1)
 	{
-		goalsScored += goals ;
+		goalsScored += score1 ;
 	}
 
 
@@ -209,7 +209,7 @@ public class Competitor
 	}
 
 
-	public void incrementGoalsConcededBy(int goals)
+	public void incrementGoalsConcededBy(double goals)
 	{
 		goalsConceded+= goals ;
 	}

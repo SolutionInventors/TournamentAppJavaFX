@@ -147,7 +147,7 @@ public class RoundRobinTournament extends GroupTournament
 		}
 		
 		
-		int numOfRounds = hasHomeaAndAwayFixtures() ? rounds.length * 2 : rounds.length  ; 
+		int numOfRounds = hasHomeAndAwayFixtures() ? rounds.length * 2 : rounds.length  ; 
 		Round[] finalRounds =  new Round[ numOfRounds  ];
 		
 		
@@ -160,7 +160,7 @@ public class RoundRobinTournament extends GroupTournament
 			
 		}
 		
-		if ( hasHomeaAndAwayFixtures() )
+		if ( hasHomeAndAwayFixtures() )
 		{
 			
 			for( int i = 0 ; i < rounds.length ; i++ )
@@ -193,7 +193,7 @@ public class RoundRobinTournament extends GroupTournament
 		return finalRounds ;
 	}
 
-	public boolean hasHomeaAndAwayFixtures()
+	public boolean hasHomeAndAwayFixtures()
 	{
 		return HOME_AND_AWAY_FIXTURES;
 	}
@@ -307,6 +307,8 @@ public class RoundRobinTournament extends GroupTournament
 			return getTable().getCompetitors()[ 0 ];
 		return null;
 	}
+
+	
 	
 	
 	

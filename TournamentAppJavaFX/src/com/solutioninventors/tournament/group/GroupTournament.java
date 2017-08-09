@@ -6,13 +6,9 @@
  */
 package com.solutioninventors.tournament.group;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
-import javax.swing.JOptionPane;
-
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
+import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 
@@ -68,6 +64,12 @@ public abstract class GroupTournament
 		return rounds ; 
 	}
 	
+	
+	public void setCurrentRound( Fixture[] fixes )
+	{
+		rounds[ getCurrentRoundNum() ] = new Round( fixes );
+	}
+	
 	public Round getCurrentRound()
 	{
 		if ( getCurrentRoundNum() < getRoundsArray().length )
@@ -79,4 +81,13 @@ public abstract class GroupTournament
 	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 );
 	public abstract void moveToNextRound() throws TournamentException;
 	public abstract boolean hasEnded();
+
+	public abstract Competitor getWinner();
+
+	public  int getTotalNumberOfRounds()
+	{
+		return getRoundsArray().length ;
+	}
+	
+	
 }

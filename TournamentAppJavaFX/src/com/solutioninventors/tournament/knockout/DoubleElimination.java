@@ -6,6 +6,13 @@
  */
 package com.solutioninventors.tournament.knockout;
 
+import java.awt.Container;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+
+import javax.print.attribute.HashDocAttributeSet;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -24,6 +31,8 @@ public class DoubleElimination extends EliminationTournament
 	
 	private Competitor tournamentWinner ; 
 	private boolean tournamentOver;
+	private List<Fixture> activeTies;
+	private List<Fixture> tieList;
 	
 	public DoubleElimination( Competitor[] comps ) throws TournamentException
 	{
@@ -35,6 +44,9 @@ public class DoubleElimination extends EliminationTournament
 					+ "competor equal to a power of 2 (i.e competitors = 2^x" );
 			
 		}
+		
+		activeTies = new ArrayList<Fixture>() ;
+		tieList = new ArrayList<Fixture>() ;
 		
 		createTournament();
 		
@@ -50,7 +62,7 @@ public class DoubleElimination extends EliminationTournament
 		tournamentFinals = new Round[ 2 ];
 
 		Fixture[] fixtures = new Fixture[ tempComps.length / 2 ];
-		for( int i = 0 ; i < fixtures.length ; i += 2 )
+		for( int i = 0 ; i < tempComps.length ; i += 2 )
 		{
 			fixtures[ i/2 ] = new Fixture( tempComps[ i ] ,tempComps[ i + 1 ] );
 		}
@@ -60,20 +72,50 @@ public class DoubleElimination extends EliminationTournament
 	
 	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 )
 	{
-		if ( tournamentFinals[ 1 ] != null )
-			tournamentFinals[ 0 ].setScores( com1, score1, score2, com2);
-		else if ( getCurrentRoundNum() ==  0 )
-			winnerBracketRounds[ 0 ].setScores(com1, score1, score2, com2);
-		else if ( ! isMajorBracket() )
+		Fixture[] fixes = getCurrentRound().getFixtures() ;
+		
+		Predicate<Fixture> tester = f -> f.getCompetitorOne().getName().equals( com1.getName() ) &&
+				f.getCompetitorTwo().getName().equals( com2.getName() ) ;
+		
+		if ( Arrays.stream( fixes)
+				.anyMatch( tester) ) //fixture is present
 		{
-			if ( getCurrentMinorBracketRound().hasFixture( com1 , com2  ))
-				getCurrentMinorBracketRound().setScores( com1 , score1, score2, com2);
-			else if ( getCurrentWinnersBracketRound().hasFixture(com1, com2))
-				getCurrentWinnersBracketRound().hasFixture( com1 , com2);
-			
+			Fixture theFixture = Arrays.stream( fixes )
+								  .filter( tester ).findFirst().get();
+			if ( score1 == score2)
+			{
+				Fixture temp = new Fixture( theFixture.getCompetitorOne() , 
+						theFixture.getCompetitorTwo());
+				temp.setResult(score1, score2, false );
+				
+				if( !activeTies.stream().anyMatch(tester ))
+				{
+					activeTies.add( temp );
+				}
+				
+				
+				tieList.add(temp);
+			}
+			else
+			{
+				Arrays.stream( fixes )
+				.filter( tester )
+				.forEach( f ->  f.setResult(score1, score2));
+				if ( hasTie() && activeTies.stream().anyMatch( tester) )
+					for ( int i = 0 ; i < activeTies.size() ; i ++ )
+					{
+						if ( activeTies.get( i ).getCompetitorOne().getName().equals( com1.getName()) &&
+							 activeTies.get( i ).getCompetitorTwo().getName().equals(com2.getName() ) )
+						{
+							activeTies.remove( i );
+							break;
+						}
+					}
+			}
 		}
-		else if ( isMajorBracket() && getCurrentMajorBracketRound().hasFixture( com1, com2))
-			getCurrentMajorBracketRound().setScores( com1, score1, score2, com2);
+		else
+			JOptionPane.showMessageDialog(null , "(Replace with Javafx modal dialog)\nFixture doesn't exist" );
+		
 		
 	}
 
@@ -97,14 +139,19 @@ public class DoubleElimination extends EliminationTournament
 		this.tournamentWinner = tournamentWinner;
 	}
 
+	
+	public boolean hasTie()
+	{
+		return activeTies.size() <= 0 ? false : true ;
+	}
 	public void moveToNextRound() throws MoveToNextRoundException 
 	{
 		if ( tournamentFinals[ 0 ] == null )
 		{
 			if ( getCurrentWinnersBracketRound().isComplete() && 
-					!getCurrentMinorBracketRound().isComplete() &&
-					!getCurrentWinnersBracketRound().hasDraw() && 
-					!getCurrentMinorBracketRound().hasDraw() )
+					!( getCurrentMinorBracketRound() != null && 
+					!getCurrentMinorBracketRound().isComplete() ) &&
+					!hasTie())
 			{
 				coalateRoundResults();
 				
@@ -222,8 +269,8 @@ public class DoubleElimination extends EliminationTournament
 	public Round getCurrentWinnersBracketRound()
 	{
 		if ( getCurrentRoundNum() < winnerBracketRounds.length  && 
-				 getCurrentRoundNum() > 0 )
-				return getCurrentWinnersBracketRound() ;
+				 getCurrentRoundNum() >= 0 )
+				return winnerBracketRounds[getCurrentRoundNum() ] ;
 		return null ;
 	}
 
@@ -232,10 +279,15 @@ public class DoubleElimination extends EliminationTournament
 	{
 		Fixture[] allRoundFixtures = null ;
 		
-		if ( getCurrentRoundNum() < winnerBracketRounds.length )
+		if ( getCurrentRoundNum() == 0 )
+		{
+			return getCurrentWinnersBracketRound();
+		}
+			
+		else if ( getCurrentRoundNum() < winnerBracketRounds.length )
 		{
 			Fixture[] wFixtures = getCurrentWinnersBracketRound().getFixtures();
-			Fixture[] minorFixtures = getCurrentMinorBracketRound().getFixtures();
+			Fixture[] minorFixtures = getCurrentMinorBracketRound().getFixtures() ;
 			
 			int factor = isMajorBracket() ? getCurrentMajorBracketRound().getFixtures().length * 3  :
 				getCurrentRoundNum() > 0 ? getCurrentMajorBracketRound().getFixtures().length * 2 : 
@@ -285,7 +337,36 @@ public class DoubleElimination extends EliminationTournament
 		return null;
 	}
 
-	
+	@Override
+	public String toString()
+	{
+		String message ;
+		switch( getActiveCompetitors().length  )
+		{
+		case 1 :
+			message = "Tournament Ended" ;
+			break;
+		case 2 :
+			message = "Final" ;
+			break;
+		case 4 :
+			message = "Semi- Final" ;
+			break;
+		case 8 :
+			message = "Quarter Final" ;
+			break;
+		case 16:
+			message = "Round of 16" ;
+			break;
+			
+		default :
+			message = "Round " + ( getCurrentRoundNum() + 1 ) ;
+			break;
+			
+		}
+		
+		return message;
+	}
 
 	
 }

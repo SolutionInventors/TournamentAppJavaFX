@@ -41,19 +41,19 @@ public class Round
 		return fixtures;
 	}
 
-	public void setScores( Competitor comp1 , double compOneScore ,
-								double comTwoScore , Competitor com2 ) throws NoSuchElementException
-	{
-//		throws NoSubchElementException if the fixture is not found in the round
-		Fixture temp = null ;
-		
-		
-		temp = Arrays.stream(  getFixtures() )
-				.filter( f -> f.getCompetitorOne().getName().equals( f.getCompetitorTwo().getName() ) )
-				.findFirst().get();
-		temp.setResult( compOneScore, comTwoScore );
-		
-	}
+//	public void setScores( Competitor comp1 , double compOneScore ,
+//								double comTwoScore , Competitor com2 ) throws NoSuchElementException
+//	{
+////		throws NoSubchElementException if the fixture is not found in the round
+//		Fixture temp = null ;
+//		
+//		
+//		temp = Arrays.stream(  getFixtures() )
+//				.filter( f -> f.getCompetitorOne().getName().equals( f.getCompetitorTwo().getName() ) )
+//				.findFirst().get();
+//		temp.setResult( compOneScore, comTwoScore );
+//		
+//	}
 
 	public Round invertHomeAndAway()
 	{

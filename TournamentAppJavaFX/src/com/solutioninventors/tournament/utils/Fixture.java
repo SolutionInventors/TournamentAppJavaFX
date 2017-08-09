@@ -38,6 +38,12 @@ public class Fixture
 				getCompetitorOne().incrementLoss();
 				getCompetitorTwo(). incrementWins();
 			}
+			
+			COMPETITOR_ONE.incrementGoalsScoredBy( score1 );
+			COMPETITOR_ONE.incrementGoalsConcededBy( score2 );
+			COMPETITOR_TWO.incrementGoalsScoredBy( score2 );
+			COMPETITOR_TWO.incrementGoalsConcededBy( score1 );
+			
 			competitorOneScore = score1 ;
 			competitorTwoScore = score2 ;
 			
