@@ -243,8 +243,6 @@ public class RoundRobinTournament extends GroupTournament
 			String message = "Tournament has ended";
 			JOptionPane.showMessageDialog( null , message ) ;
 		}
-			
-		
 		
 	}
 
@@ -299,5 +297,7 @@ public class RoundRobinTournament extends GroupTournament
 		throw new NoOutstandingException( ) ; 
 		
 	}
+	
+	
 	
 }
