@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -24,11 +22,32 @@ import com.solutioninventors.tournament.utils.SportType;
 public class RoundRobinTournament extends GroupTournament
 {
 
+	/**
+	 * This class is used to create a ROund Robin tournament and it extends GroupTournament
+	 * When created the constructor stores competitors, Sporttype and other info
+	 * It then calls utility method createRounds() which uses the Carousel-Berger system
+	 * to create the rounds in the tournament and enters the first round.
+	 * 
+	 * Note: The first roundNumber = 0. Also this class can have byes
+	 * 
+	 * After the object is created the program stores the first round results via calls to
+	 * method setResult
+	 * 
+	 * After the results are inputed, class increments rounds via a call to moveToRound() from
+	 * its object. 
+	 * When moveToROund() is called it checks that the results were inputed and if there are
+	 * pending fixtures it prompts the user to choose if he wants these fixtures to be outstnading
+	 * if so it adds those fixtures to List outstandingMatches
+	 * 
+	 * if all current round fixtures are inputed moveToNextRound() increments roundNuber
+	 * 
+	 */
+	
 	private final boolean HOME_AND_AWAY_FIXTURES;
 	private final boolean BYE; 
 	
 	private List<Fixture> outstandingMatches ;
-	private boolean ended;
+	
 	public RoundRobinTournament(Competitor[] comps, SportType type , double winPoint ,
 								double drawPoint, double lossPoint , boolean away )
 	{
@@ -189,7 +208,7 @@ public class RoundRobinTournament extends GroupTournament
 	{
 		Round[] rnds = getRoundsArray();
 		
-		if ( !hasEnded() )
+		if ( getCurrentRoundNum() < rnds.length  )
 		{
 			if ( !getCurrentRound().isComplete() ) //contains outstanding
 			{
@@ -214,27 +233,28 @@ public class RoundRobinTournament extends GroupTournament
 				}
 			}
 		}
-		else if ( getCurrentRoundNum() < getRoundsArray().length && 
-				outstandingMatches.size() == 0 )
-			setEnded( getCurrentRoundNum() < getRoundsArray().length ? false : true );
 		else if ( outstandingMatches.size() > 0 )
 		{
 			String message = "Only outsanding matches are left";
 			JOptionPane.showMessageDialog( null , message ) ;
 		}
+		else
+		{
+			String message = "Tournament has ended";
+			JOptionPane.showMessageDialog( null , message ) ;
+		}
+			
 		
 		
 	}
 
 	public boolean hasEnded()
 	{
-		return ended;
+		return getCurrentRoundNum() < getRoundsArray().length &&
+			outstandingMatches.size() <= 0 ? true : false ;	
 	}
 	
-	public void setEnded( boolean b )
-	{
-		ended = b ;
-	}
+	
 	
 	@Override
 	public void setRoundResult( Competitor com1 , int score1 , int score2 , Competitor com2 )

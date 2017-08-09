@@ -75,5 +75,5 @@ public abstract class GroupTournament
 
 	public abstract void setRoundResult( Competitor com1 , int score1 , int score2 , Competitor com2 );
 	public abstract void moveToNextRound() throws TournamentException;
-	
+	public abstract boolean hasEnded();
 }
