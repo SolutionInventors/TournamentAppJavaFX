@@ -36,7 +36,7 @@ public class SingleEliminationTournament extends EliminationTournament
 	 * The method contains other services required in an elimination tournament
 	 * 
 	 *  
-	 * Note: that the first round's number = 0 
+	 * Note: that the first round's number = 0 .
 	 */
 	private final Round[] ROUNDS;
 	
