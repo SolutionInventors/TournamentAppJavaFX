@@ -46,7 +46,7 @@ public class RoundRobinTest
 
 		Competitor[] comps = { c1 , c2  , c3 , c4 }; 
 				
-		displayMessage("Robin begins");
+		Test.displayMessage("Robin begins");
 
 		
 		RoundRobinTournament tournament = 
@@ -63,13 +63,13 @@ public class RoundRobinTest
 		}
 		
 		
-		displayMessage( builder.toString() );
-		displayStandingTable(   tournament.getTable().getStringTable() );
+		Test.displayMessage( builder.toString() );
+		Test.displayStandingTable(   tournament.getTable().getStringTable() );
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
 			
 			Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
-			displayFixtures( currentFixtures );
+			Test.displayFixtures( currentFixtures );
 			
 			builder.delete(0 , builder.length() );
 			builder.append("Roound results are: \n" );
@@ -92,46 +92,12 @@ public class RoundRobinTest
 			}
 			tournament.moveToNextRound(); 
 			
-			displayMessage( builder.toString()  );
-			displayStandingTable(   tournament.getTable().getStringTable() );
+			Test.displayMessage( builder.toString()  );
+			Test.displayStandingTable(   tournament.getTable().getStringTable() );
 		}
 		
-		displayMessage( "The winner is " + tournament.getWinner()) ;
+		Test.displayMessage( "The winner is " + tournament.getWinner()) ;
 	}
 
-	private static void displayStandingTable(String[][] stringTable)
-	{
-		StringBuilder builder = new StringBuilder( 1000 );
-		
-		for( int row = 0 ; row < stringTable.length ; row++ )
-		{
-			for( int col = 0 ; col < stringTable[row].length ; col ++)
-				builder.append( String.format("%s ", stringTable[row][ col ] ));
-			
-			builder.append( "\n");
-				
-		}
-		displayMessage("The table is \n" +  builder.toString() );;
-			
-	}
-
-	private static void displayFixtures(Fixture[] currentFixtures)
-	{
-		StringBuilder builder = new StringBuilder(500 );
-		
-		for ( int i = 0 ; i < currentFixtures.length ; i++ )
-			builder.append(String.format( "%s VS %s\n" ,
-					currentFixtures[ i ].getCompetitorOne() , currentFixtures[ i ].getCompetitorTwo() ));
-		
-		displayMessage( builder.toString() );
-		
-		
-	}
-
-	public static void displayMessage(String message) 
-	{
-		System.out.println( message );
-		JOptionPane.showMessageDialog(null ,message );
-	}
-
+	
 }

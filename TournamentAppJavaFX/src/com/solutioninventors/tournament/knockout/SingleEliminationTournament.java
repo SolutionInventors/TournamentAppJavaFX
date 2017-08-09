@@ -171,7 +171,7 @@ public class SingleEliminationTournament extends EliminationTournament
 				
 				if( !activeTies.stream().anyMatch(tester ))
 				{
-					activeTies.add( theFixture );
+					activeTies.add( temp );
 				}
 				
 				
@@ -225,6 +225,32 @@ public class SingleEliminationTournament extends EliminationTournament
 	}
 	
 
-	
+	public String toString()
+	{
+		String message = null ;
+		
+		switch( getActiveCompetitors().length )
+		{
+		
+		case 1: 
+			message = "Tournament Ended: \nWinner is " + getWinner() ;
+			break ;
+		case 2 :
+			message = "Final" ;
+			break ;
+		case  4:
+			message = "Semifinal";
+			break;
+		case 8:
+			message = "Quarter-Final";
+			break;
+		case 16 :
+			message = "Round of 16";
+			break;
+		default:
+			message = "Round " + ( getCurrentRoundNum() +  1) ;
+		}
+		return message ;
+	}
 
 }
