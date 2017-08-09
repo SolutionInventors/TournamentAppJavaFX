@@ -79,6 +79,7 @@ public class StandingTable
 				.collect( Collectors.toList()  )
 				.toArray( competitors );
 		
+
 		updateStringTable(); // updates StringTable
 		
 	}

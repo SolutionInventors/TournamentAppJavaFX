@@ -210,6 +210,7 @@ public class RoundRobinTournament extends GroupTournament
 		
 		if ( getCurrentRoundNum() < rnds.length  )
 		{
+			getTable().updateTables();
 			if ( !getCurrentRound().isComplete() ) //contains outstanding
 			{
 				int ans = JOptionPane.showConfirmDialog( null , "Has pending fixtures.\nContinue?" );
@@ -220,6 +221,7 @@ public class RoundRobinTournament extends GroupTournament
 						  .forEach( f -> outstandingMatches.add( f ) );
 					JOptionPane.showMessageDialog( null , "Incomplete fixtures added to outstanding" );
 					setCurrentRoundNum( getCurrentRoundNum() + 1 );
+					
 				}
 			}
 			else
@@ -248,14 +250,14 @@ public class RoundRobinTournament extends GroupTournament
 
 	public boolean hasEnded()
 	{
-		return getCurrentRoundNum() < getRoundsArray().length &&
+		return getCurrentRoundNum() >= getRoundsArray().length &&
 			outstandingMatches.size() <= 0 ? true : false ;	
 	}
 	
 	
 	
 	@Override
-	public void setResult( Competitor com1 , int score1 , int score2 , Competitor com2 )
+	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 )
 	{		
 		if ( Arrays.stream( getCurrentRound().getFixtures() )
 				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
@@ -296,6 +298,14 @@ public class RoundRobinTournament extends GroupTournament
 		}
 		throw new NoOutstandingException( ) ; 
 		
+	}
+
+	public Competitor getWinner()
+	{
+		getTable().updateTables(); 
+		if ( hasEnded())
+			return getTable().getCompetitors()[ 0 ];
+		return null;
 	}
 	
 	

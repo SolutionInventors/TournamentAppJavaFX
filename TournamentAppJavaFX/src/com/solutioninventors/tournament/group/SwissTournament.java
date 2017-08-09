@@ -68,7 +68,7 @@ public class SwissTournament extends GroupTournament
 	}
 	
 	@Override
-	public void setResult( Competitor com1 , int score1 , int score2 , Competitor com2 )
+	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 )
 	{
 		try 
 		{

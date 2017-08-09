@@ -52,6 +52,79 @@ public class RoundRobinTest
 		RoundRobinTournament tournament = 
 				new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0  , false );
 		
+		StringBuilder builder = new StringBuilder( 300 );
+		
+		builder.append( "The competitors are: \n" );
+		Competitor[] tournamentComps = tournament.getCompetitors() ;
+		
+		for ( int i =  0 ; i < tournamentComps.length ; i ++ )
+		{
+			builder.append( (i+1) + ". " + tournamentComps[ i ] + " \n" ); 
+		}
+		
+		
+		displayMessage( builder.toString() );
+		displayStandingTable(   tournament.getTable().getStringTable() );
+		while( !tournament.hasEnded() )//tournament is ongoing
+		{
+			
+			Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
+			displayFixtures( currentFixtures );
+			
+			builder.delete(0 , builder.length() );
+			builder.append("Roound results are: \n" );
+			for( int i = 0 ; i< currentFixtures.length ;i++ )
+			{
+				Competitor com1 = currentFixtures[i].getCompetitorOne() ;
+				Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
+
+				double score1 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
+									com1 ));
+				double score2 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
+						 com2 ));
+				
+				tournament.setResult( com1, score1, score2, com2);
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
+				
+				
+			}
+			tournament.moveToNextRound(); 
+			
+			displayMessage( builder.toString()  );
+			displayStandingTable(   tournament.getTable().getStringTable() );
+		}
+		
+		displayMessage( "The winner is " + tournament.getWinner()) ;
+	}
+
+	private static void displayStandingTable(String[][] stringTable)
+	{
+		StringBuilder builder = new StringBuilder( 1000 );
+		
+		for( int row = 0 ; row < stringTable.length ; row++ )
+		{
+			for( int col = 0 ; col < stringTable[row].length ; col ++)
+				builder.append( String.format("%s ", stringTable[row][ col ] ));
+			
+			builder.append( "\n");
+				
+		}
+		displayMessage("The table is \n" +  builder.toString() );;
+			
+	}
+
+	private static void displayFixtures(Fixture[] currentFixtures)
+	{
+		StringBuilder builder = new StringBuilder(500 );
+		
+		for ( int i = 0 ; i < currentFixtures.length ; i++ )
+			builder.append(String.format( "%s VS %s\n" ,
+					currentFixtures[ i ].getCompetitorOne() , currentFixtures[ i ].getCompetitorTwo() ));
+		
+		displayMessage( builder.toString() );
+		
 		
 	}
 
