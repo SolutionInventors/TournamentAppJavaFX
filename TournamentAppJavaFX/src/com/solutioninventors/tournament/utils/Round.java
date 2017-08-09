@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class Round
 {
@@ -19,12 +20,12 @@ public class Round
 	 * Variable complete becomes true when the round has no pending fixtures
 	 */
 	private Fixture[] fixtures;
-	
+	private List<Fixture> drawList;
 	
 	public Round( Fixture[]  fixes )
 	{
 		fixtures = fixes ;
-	
+		
 	}
 	
 	public Round( Fixture f )
@@ -40,8 +41,8 @@ public class Round
 		return fixtures;
 	}
 
-	public void setScores( Competitor comp1 , int compOneScore ,
-								int comTwoScore , Competitor com2 ) throws NoSuchElementException
+	public void setScores( Competitor comp1 , double compOneScore ,
+								double comTwoScore , Competitor com2 ) throws NoSuchElementException
 	{
 //		throws NoSubchElementException if the fixture is not found in the round
 		Fixture temp = null ;
@@ -145,5 +146,7 @@ public class Round
 					.anyMatch(Fixture :: isDraw);
 			
 	}
+
+	
 	
 }	

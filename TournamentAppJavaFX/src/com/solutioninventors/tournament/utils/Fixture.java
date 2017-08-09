@@ -133,6 +133,19 @@ public class Fixture
 	}
 
 
+	public void setResult(double score1, double score2, boolean b)
+	{
+		if ( b )
+			setResult(score1, score2);
+		else
+		{
+			competitorOneScore = score1;
+			competitorTwoScore = score2;
+		}
+		
+	}
+
+
 	
 	
 }
