@@ -48,13 +48,13 @@ public abstract class GroupTournament
 		return currentRoundNum;
 	}
 
-	public void setCurrentRoundNum(int rnd)
+	protected void setCurrentRoundNum(int rnd)
 	{
 		this.currentRoundNum = rnd;
 	}
 	
 
-	public void setRoundsArray( Round[] rnds )
+	protected void setRoundsArray( Round[] rnds )
 	{
 		rounds = rnds;
 	}
@@ -65,7 +65,7 @@ public abstract class GroupTournament
 	}
 	
 	
-	public void setCurrentRound( Fixture[] fixes )
+	protected void setCurrentRound( Fixture[] fixes )
 	{
 		rounds[ getCurrentRoundNum() ] = new Round( fixes );
 	}

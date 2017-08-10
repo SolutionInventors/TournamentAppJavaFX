@@ -108,9 +108,7 @@ public class SingleEliminationTournament extends EliminationTournament
 					eliminateLosers();
 					setCurrentRoundNum( getCurrentRoundNum() + 1 );
 					Competitor[] comps = getActiveCompetitors();
-					if ( comps.length == 1 )
-						setEnded(  true );
-					else
+					if( !hasEnded() )
 					{
 						Fixture[] fixtures = new Fixture[ comps.length / 2];
 						
@@ -251,6 +249,12 @@ public class SingleEliminationTournament extends EliminationTournament
 			message = "Round " + ( getCurrentRoundNum() +  1) ;
 		}
 		return message ;
+	}
+
+	@Override
+	public boolean hasEnded()
+	{
+		return getCompetitors().length == 1 ? true : false ;
 	}
 
 }

@@ -108,8 +108,8 @@ public class Competitor {
 	}
 
 	private void setImage(File imageFile) {
-		// This method copies the image file and stores it in the class dir
-		// It first validates the file and its format
+//		 This method copies the image file and stores it in the class dir
+//		 It first validates the file and its format
 		String imageName = imageFile.getName();
 
 		if (imageFile.exists() || imageName.indexOf(".") < 0) {
@@ -118,9 +118,9 @@ public class Competitor {
 //			System.out.println(format);
 			
 //			System.out.println(format);
-			//NOTE: after abt an hour of troubleshooting my code
-			//I realized that the problem was from here
-			//so I had to set this to lowercase to match all checks
+//			NOTE: after abt an hour of troubleshooting my code
+//			I realized that the problem was from here
+//			so I had to set this to lowercase to match all checks
 			format = format.toLowerCase();
 			if (format.matches(".png|.jpg|.jpeg")) {
 				image = new File(getName() + format);
