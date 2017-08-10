@@ -19,209 +19,158 @@ import javax.swing.JFileChooser;
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 
-public class Competitor
-{
-	
+public class Competitor {
+
 	/**
-	 * This class encapsulates all the information about a competitor
-	 * The class stores the name, numberOFWins, numberOfDraws, numberOfLosses
-	 * points , image file , and a boolean which is true when the Competitor is eliminated
+	 * This class encapsulates all the information about a competitor The class
+	 * stores the name, numberOFWins, numberOfDraws, numberOfLosses points , image
+	 * file , and a boolean which is true when the Competitor is eliminated
 	 */
 	private final String FIRST_NAME;
 	private final String LAST_NAME;
-	
+
 	private int numberOfWin;
 	private int numberOfDraw;
 	private int numberOfLoss;
-	
+
 	private int goalsScored;
 	private int goalsConceded;
-	
+
 	private File image;
 	private boolean eliminated;
-	
-	public Competitor( String name , File imageFile )
-	{
-		this( name , null , imageFile );
-	}
-	
-	
-	public Competitor( String first, String last , File imageFile ) 
-	{
-		
-		
-		if ( first  != null  )
-		{
-			FIRST_NAME = first ;
-			LAST_NAME = last ;
-		}
-		else
-			throw new 
-				NoCompetitorNameException( "You tried to input null as a name" );
-		setImage( imageFile );
-		setEliminated( false );
-		
+
+	public Competitor(String name, File imageFile) {
+		this(name, null, imageFile);
 	}
 
+	public Competitor(String first, String last, File imageFile) {
 
-	public String getFirstName()
-	{
-		return FIRST_NAME ;
+		if (first != null) {
+			FIRST_NAME = first;
+			LAST_NAME = last;
+		} else
+			throw new NoCompetitorNameException("You tried to input null as a name");
+		setImage(imageFile);
+		setEliminated(false);
+
 	}
 
-	public String getLastName()
-	{
-		return LAST_NAME != null ? LAST_NAME : "" ;
+	public String getFirstName() {
+		return FIRST_NAME;
 	}
-	
-	public String getName()
-	{
-		return getFirstName() + " " + getLastName(); 
+
+	public String getLastName() {
+		return LAST_NAME != null ? LAST_NAME : "";
 	}
-	
-	public int getNumberOfWin()
-	{
+
+	public String getName() {
+		return getFirstName() + " " + getLastName();
+	}
+
+	public int getNumberOfWin() {
 		return numberOfWin;
 	}
 
-
-	public void incrementWins()
-	{
+	public void incrementWins() {
 		numberOfWin++;
 	}
 
-
-	public int getNumberOfDraw()
-	{
+	public int getNumberOfDraw() {
 		return numberOfDraw;
 	}
 
-
-	public void incrementDraw()
-	{
-		numberOfDraw++ ;
+	public void incrementDraw() {
+		numberOfDraw++;
 	}
 
-
-	public int getNumberOfLoss()
-	{
+	public int getNumberOfLoss() {
 		return numberOfLoss;
 	}
 
-
-	public void incrementLoss()
-	{
-		numberOfLoss++ ;
+	public void incrementLoss() {
+		numberOfLoss++;
 	}
 
-
-	public File getImage()
-	{
+	public File getImage() {
 		return image;
 	}
 
-
-	public boolean isEliminated()
-	{
+	public boolean isEliminated() {
 		return eliminated;
 	}
 
-
-	public void setEliminated(boolean eliminated)
-	{
+	public void setEliminated(boolean eliminated) {
 		this.eliminated = eliminated;
 	}
 
-
-	public double getPoint( double pWin , double pDraw , double pLoss)
-	{
-		return ( getNumberOfWin() * pWin )  + 
-				 ( getNumberOfDraw() * pDraw ) + 
-				 ( getNumberOfLoss() *  pLoss );
+	public double getPoint(double pWin, double pDraw, double pLoss) {
+		return (getNumberOfWin() * pWin) + (getNumberOfDraw() * pDraw) + (getNumberOfLoss() * pLoss);
 	}
 
-	private void setImage(File imageFile)
-	{
-//		This method copies the image file and stores it in the class dir
-//		It first validates the file and its format
+	private void setImage(File imageFile) {
+		// This method copies the image file and stores it in the class dir
+		// It first validates the file and its format
 		String imageName = imageFile.getName();
-		
 
-		if ( imageFile.exists()  || imageName.indexOf( "." ) < 0 ) 
-		{
-			String format = imageName.substring( 
-					imageName.indexOf( "." ) , imageName.length() ) ; //get the format
+		if (imageFile.exists() || imageName.indexOf(".") < 0) {
+			String format = imageName.substring(imageName.indexOf("."), imageName.length()); // get the format
+//			System.out.println("still comp");
+//			System.out.println(format);
 			
-			if ( format.matches( ".png|.jpg|.jpeg") )
-			{
-				image = new File( getName()  + format );
-				copyFile(imageFile, image ); //copies the file
-				
-			}
-			else
-				throw new ImageFormatException( "The file is not a valid image file" );
-				
-		}
-		else
-			throw new ImageFormatException( "The URL is not a file" );
+//			System.out.println(format);
+			//NOTE: after abt an hour of troubleshooting my code
+			//I realized that the problem was from here
+			//so I had to set this to lowercase to match all checks
+			format = format.toLowerCase();
+			if (format.matches(".png|.jpg|.jpeg")) {
+				image = new File(getName() + format);
+				copyFile(imageFile, image); // copies the file
+
+			} else
+				throw new ImageFormatException("The file is not a valid image file");
+
+		} else
+			throw new ImageFormatException("The URL is not a file");
 	}
 
+	private void copyFile(File fileToCopy, File fileToPaste) {
+		try {
+			FileChannel input = new FileInputStream(fileToCopy).getChannel();
+			FileChannel output = new FileOutputStream(fileToPaste).getChannel();
+			output.transferFrom(input, 0, input.size());
 
-	private void copyFile(File fileToCopy , File fileToPaste)
-	{
-		try
-		{
-			FileChannel input = new FileInputStream( fileToCopy ).getChannel();
-			FileChannel output = new FileOutputStream( fileToPaste ).getChannel() ;
-			output.transferFrom( input ,  0 , input.size() );
-			
-		}
-		catch (FileNotFoundException e)
-		{
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 	}
 
-
-	
-	public int getGoalsScored()
-	{
+	public int getGoalsScored() {
 		return goalsScored;
 	}
 
-
-	public void incrementGoalsScoredBy(double score1)
-	{
-		goalsScored += score1 ;
+	public void incrementGoalsScoredBy(double score1) {
+		goalsScored += score1;
 	}
 
-
-	public int getGoalsConceded()
-	{
+	public int getGoalsConceded() {
 		return goalsConceded;
 	}
 
-
-	public void incrementGoalsConcededBy(double goals)
-	{
-		goalsConceded+= goals ;
+	public void incrementGoalsConcededBy(double goals) {
+		goalsConceded += goals;
 	}
 
-	public int getGoalDifference()
-	{
+	public int getGoalDifference() {
 		return getGoalsScored() - getGoalsConceded();
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return getName();
 	}
 }
