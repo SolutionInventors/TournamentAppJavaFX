@@ -11,11 +11,14 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.group.InvalidBreakerException;
 import com.solutioninventors.tournament.group.RoundRobinTournament;
+import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class RoundRobinTest
 {
@@ -48,9 +51,22 @@ public class RoundRobinTest
 				
 		Test.displayMessage("Robin begins");
 
+		Breaker[] breakers = {
+				Breaker.GOALS_DIFFERENCE , Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD
+		};
 		
-		RoundRobinTournament tournament = 
-				new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0  , false );
+		
+		RoundRobinTournament tournament = null ;
+		try
+		{
+			TieBreaker tieBreakers = new TieBreaker( breakers );
+			tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , tieBreakers  , false );
+		}
+		catch (InvalidBreakerException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		StringBuilder builder = new StringBuilder( 300 );
 		

@@ -6,11 +6,15 @@
  */
 package com.solutioninventors.tournament.group;
 
+import java.util.Arrays;
+
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public abstract class GroupTournament
 {
@@ -20,11 +24,15 @@ public abstract class GroupTournament
 	private int currentRoundNum;
 	private Round[] rounds ;
 	
-	public GroupTournament( Competitor[] comps  , SportType type , double pWin , double pDraw , double pLoss  )
+	public GroupTournament( Competitor[] comps  , SportType type , 
+			double pWin , double pDraw , double pLoss , TieBreaker breaker ) throws InvalidBreakerException
 	{
 		SPORT_TYPE = type ;
 		COMPETITORS = comps ; 
-		table = new StandingTable( SPORT_TYPE, COMPETITORS , pWin , pDraw , pLoss );
+		if ( breaker == null || Arrays.stream( breaker.getBreakers() )
+				.anyMatch( b -> b.getType() != Breaker.GROUUP_BREAKER ))
+			throw new InvalidBreakerException("The breaker is invalid");
+		table = new StandingTable( SPORT_TYPE, COMPETITORS , pWin , pDraw , pLoss, breaker );
 	}
 	
 	public Competitor[] getCompetitors()

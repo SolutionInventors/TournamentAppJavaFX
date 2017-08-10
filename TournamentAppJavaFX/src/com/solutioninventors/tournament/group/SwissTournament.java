@@ -17,6 +17,7 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class SwissTournament extends GroupTournament
 {
@@ -29,13 +30,17 @@ public class SwissTournament extends GroupTournament
 	 * Method moveToNextRound moves to the next round 
 	 * 
 	 * The class also contains some utility methods that aid its use
+	 * 
+	 * @throws InvalidBreakerException 
 	 
 	 */
 	public SwissTournament( Competitor[] comps, SportType type,
 							double winPoint , double drawPoint , double lossPoint,
-							int totalRounds  ) throws TournamentException
+							 TieBreaker breaker , int totalRounds  
+						  ) 
+							throws TournamentException, InvalidBreakerException
 	{
-		super( comps , type , winPoint , drawPoint , lossPoint );
+		super( comps , type , winPoint , drawPoint , lossPoint, breaker );
 		if ( comps.length % 2 != 0 )
 			throw new TournamentException("Total competitors must be a multiple of 2" ) ;
 	

@@ -12,7 +12,12 @@ import java.util.function.Function;
 
 public enum Breaker
 {
-
+	/**
+	 * This golden enum encapsulates all the types of breakers
+	 * Each type contains a Comparator object which is used to break ties
+	 * Private classes HeadToHead and CoinToss are used to create the headTOhead and
+	 * CoinToss types
+	 */
 	GROUUP_BREAKER ,
 	KNOCKOUT_BREAKER , 
 	
@@ -53,7 +58,7 @@ public enum Breaker
 
 	
 
-	public Breaker getName()
+	public Breaker getType()
 	{
 		return type;
 	}
