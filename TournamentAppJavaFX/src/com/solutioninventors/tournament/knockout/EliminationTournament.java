@@ -6,6 +6,7 @@
  */
 package com.solutioninventors.tournament.knockout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +17,11 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 
-public abstract class EliminationTournament
+public abstract class EliminationTournament implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int roundNum; 
 	private final Competitor[] competitors;
 	

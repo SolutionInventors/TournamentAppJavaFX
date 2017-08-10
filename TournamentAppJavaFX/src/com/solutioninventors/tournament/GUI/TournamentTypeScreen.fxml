@@ -48,7 +48,7 @@
             <RadioButton fx:id="rbGroup" mnemonicParsing="false" onAction="#radioSelected" text="Group tournament" toggleGroup="$TorType" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="246.0" text="Please input the name of the Tournament" GridPane.rowIndex="6" />
             <Label text="Tournament Name e.g EPL 2016/17" GridPane.rowIndex="7" />
-            <TextField GridPane.rowIndex="8" />
+            <TextField fx:id="tournamentName" GridPane.rowIndex="8" />
             <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="122.0" text="Goal Game Only" GridPane.rowIndex="9" />
          </children>
       </GridPane>

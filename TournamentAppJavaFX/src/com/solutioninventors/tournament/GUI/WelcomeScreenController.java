@@ -37,5 +37,11 @@ public class WelcomeScreenController {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setTitle("Tournament App");
+		
+		
+		/*
+		LayoutSizingAligning li = new LayoutSizingAligning();
+		li.start(primaryStage);*/
+		
 	}
 }

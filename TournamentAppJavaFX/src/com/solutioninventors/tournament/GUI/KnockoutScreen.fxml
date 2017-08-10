@@ -27,7 +27,7 @@
         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#previous" text="&lt;&lt; Previous" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Next &gt;&gt;" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="73.0" text="Next &gt;&gt;" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Finish" GridPane.columnIndex="2" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Cancel" GridPane.columnIndex="3" />
          </children>
@@ -58,7 +58,7 @@
             <Label text="Number of Competitors" GridPane.rowIndex="1" />
             <Label text="Home and Away" GridPane.rowIndex="2" />
             <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Spinner accessibleRole="INCREMENT_BUTTON" editable="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <Spinner accessibleRole="INCREMENT_BUTTON" editable="true" min="2" max="1024" initialValue="2" amountToStepBy="2" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Text layoutX="61.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a single elimination knockout tournament, a competitor is eliminated when he loses one game. In this application the total number of competitors must be in the form 2^x and x&gt;1(i.e. 4,8,16…)" wrappingWidth="500.0">

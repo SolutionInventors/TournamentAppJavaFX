@@ -28,4 +28,14 @@ public class ButtonsController {
 		scene.getStylesheets().add(getClass().getResource(Cssfile).toExternalForm());
 		primaryStage.show();
 		primaryStage.setTitle(title);}
+	
+	public void next(ActionEvent event, String fxml, String Cssfile, String title) throws IOException {
+		((Node)event.getSource()).getScene().getWindow().hide();
+		Stage primaryStage = new Stage();
+		Parent root = FXMLLoader.load(getClass().getResource(fxml));
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		//scene.getStylesheets().add(getClass().getResource(Cssfile).toExternalForm());
+		primaryStage.show();
+		primaryStage.setTitle(title);}
 }
