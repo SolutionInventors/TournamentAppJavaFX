@@ -14,6 +14,9 @@ import javafx.stage.Stage;
  *
  */
 public class GUITest extends Application{
+	
+
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -21,6 +24,7 @@ public class GUITest extends Application{
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 			scene.getStylesheets().add(getClass().getResource("lookfeel.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
 		} catch(Exception e) {
