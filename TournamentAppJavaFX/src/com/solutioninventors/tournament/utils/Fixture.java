@@ -39,10 +39,14 @@ public class Fixture
 				getCompetitorTwo(). incrementWins();
 			}
 			
-			COMPETITOR_ONE.incrementGoalsScoredBy( score1 );
-			COMPETITOR_ONE.incrementGoalsConcededBy( score2 );
-			COMPETITOR_TWO.incrementGoalsScoredBy( score2 );
-			COMPETITOR_TWO.incrementGoalsConcededBy( score1 );
+			getCompetitorOne().incrementGoalsScoredBy( score1 );
+			getCompetitorOne().incrementGoalsConcededBy( score2 );
+			getCompetitorTwo().incrementGoalsScoredBy( score2 );
+			getCompetitorTwo().incrementGoalsConcededBy( score1 );
+			
+			getCompetitorOne().addToHeadToHead( getCompetitorTwo() , score1); 
+			getCompetitorTwo().addToHeadToHead(getCompetitorOne(), score2 );
+			
 			
 			competitorOneScore = score1 ;
 			competitorTwoScore = score2 ;

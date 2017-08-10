@@ -13,8 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-
-import javax.swing.JFileChooser;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
@@ -33,17 +33,20 @@ public class Competitor {
 	private int numberOfDraw;
 	private int numberOfLoss;
 
-	private int goalsScored;
-	private int goalsConceded;
+	private double goalsScored;
+	private double goalsConceded;
 
+	private Map< Competitor , Double > headToHead ; 
 	private File image;
 	private boolean eliminated;
 
-	public Competitor(String name, File imageFile) {
+	public Competitor(String name, File imageFile)
+	{
 		this(name, null, imageFile);
 	}
 
-	public Competitor(String first, String last, File imageFile) {
+	public Competitor(String first, String last, File imageFile)
+	{
 
 		if (first != null) {
 			FIRST_NAME = first;
@@ -53,61 +56,77 @@ public class Competitor {
 		setImage(imageFile);
 		setEliminated(false);
 
+		headToHead = new HashMap<Competitor , Double >();
+		
 	}
 
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return FIRST_NAME;
 	}
 
-	public String getLastName() {
+	public String getLastName() 
+	{
 		return LAST_NAME != null ? LAST_NAME : "";
 	}
 
-	public String getName() {
+	public String getName() 
+	{
 		return getFirstName() + " " + getLastName();
 	}
 
-	public int getNumberOfWin() {
+	public int getNumberOfWin() 
+	{
 		return numberOfWin;
 	}
 
-	public void incrementWins() {
+	public void incrementWins() 
+	{
 		numberOfWin++;
 	}
 
-	public int getNumberOfDraw() {
+	public int getNumberOfDraw() 
+	{
 		return numberOfDraw;
 	}
 
-	public void incrementDraw() {
+	public void incrementDraw() 
+	{
 		numberOfDraw++;
 	}
 
-	public int getNumberOfLoss() {
+	public int getNumberOfLoss() 
+	{
 		return numberOfLoss;
 	}
 
-	public void incrementLoss() {
+	public void incrementLoss() 
+	{
 		numberOfLoss++;
 	}
 
-	public File getImage() {
+	public File getImage() 
+	{
 		return image;
 	}
 
-	public boolean isEliminated() {
+	public boolean isEliminated() 
+	{
 		return eliminated;
 	}
 
-	public void setEliminated(boolean eliminated) {
+	public void setEliminated(boolean eliminated)
+	{
 		this.eliminated = eliminated;
 	}
 
-	public double getPoint(double pWin, double pDraw, double pLoss) {
+	public double getPoint(double pWin, double pDraw, double pLoss) 
+	{
 		return (getNumberOfWin() * pWin) + (getNumberOfDraw() * pDraw) + (getNumberOfLoss() * pLoss);
 	}
 
-	private void setImage(File imageFile) {
+	private void setImage(File imageFile) 
+	{
 //		 This method copies the image file and stores it in the class dir
 //		 It first validates the file and its format
 		String imageName = imageFile.getName();
@@ -133,44 +152,77 @@ public class Competitor {
 			throw new ImageFormatException("The URL is not a file");
 	}
 
-	private void copyFile(File fileToCopy, File fileToPaste) {
-		try {
+	private void copyFile(File fileToCopy, File fileToPaste)
+	{
+		try 
+		{
 			FileChannel input = new FileInputStream(fileToCopy).getChannel();
 			FileChannel output = new FileOutputStream(fileToPaste).getChannel();
 			output.transferFrom(input, 0, input.size());
 
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (FileNotFoundException e) 
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (IOException e)
+		{
+			
 			e.printStackTrace();
 		}
 
 	}
 
-	public int getGoalsScored() {
+	public double getGoalsScored() 
+	{
 		return goalsScored;
 	}
 
-	public void incrementGoalsScoredBy(double score1) {
+	public void incrementGoalsScoredBy(double score1) 
+	{
 		goalsScored += score1;
 	}
 
-	public int getGoalsConceded() {
+	public double getGoalsConceded() 
+	{
 		return goalsConceded;
 	}
 
-	public void incrementGoalsConcededBy(double goals) {
+	public void incrementGoalsConcededBy(double goals)
+	{
 		goalsConceded += goals;
 	}
 
-	public int getGoalDifference() {
+	public double getGoalDifference() 
+	{
 		return getGoalsScored() - getGoalsConceded();
 	}
 
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return getName();
+	}
+	
+	public int getPlayedFixtures()
+	{
+		return getNumberOfDraw() + 
+				getNumberOfWin() + 
+				getNumberOfLoss() ;
+	}
+	
+	public void addToHeadToHead( Competitor com , double score )
+	{
+		if ( headToHead.containsKey( com ) )
+			score += headToHead.get( com );
+		
+		headToHead.put( com , score );
+	}
+	
+	public double getHeadToHeadScore( Competitor com  )
+	{
+		if( headToHead.containsKey( com ) )
+			return headToHead.get( com ) ;
+		return 0 ;
 	}
 }
