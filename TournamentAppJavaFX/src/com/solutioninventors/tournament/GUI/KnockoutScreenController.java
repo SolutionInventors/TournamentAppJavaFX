@@ -33,6 +33,7 @@ public class KnockoutScreenController {
 	// spinner.setValueFactory(valueFactory);}
 	public void setTournamentName(String tournamentName) {
 		TournamentName = tournamentName;
+		System.out.println("name received");
 
 		
 		
@@ -59,7 +60,7 @@ public class KnockoutScreenController {
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource("InputCompetitorScreen.fxml").openStream());
-		InputCompetitorScreenController ic = (InputCompetitorScreenController) loader.getController();
+		TestClass ic = (TestClass) loader.getController();
 		//ic.setKOtournament(TournamentName, spinner.getValue());
 		ic.setKOtournament(TournamentName,4);
 		//System.out.println(spinner.getValue());

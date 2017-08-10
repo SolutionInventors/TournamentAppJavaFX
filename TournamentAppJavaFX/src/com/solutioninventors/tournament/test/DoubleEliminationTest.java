@@ -59,7 +59,6 @@ public class DoubleEliminationTest
 			}
 			catch (MoveToNextRoundException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
