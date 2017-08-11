@@ -44,4 +44,12 @@ public class WelcomeScreenController {
 		li.start(primaryStage);*/
 		
 	}
+	
+	//called when the class is created
+//	  public void initialize() {
+//	        int count = 1 ;
+//	        for (int i = 0; i <3; i++) {
+//				System.out.println("I am here "+ i);
+//			}
+//	    }
 }
