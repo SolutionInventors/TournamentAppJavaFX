@@ -7,8 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -18,7 +17,7 @@ public class KnockoutScreenController {
 	@FXML
 	private ToggleGroup ElimType;
 	@FXML
-	Spinner<Integer> spinner;
+	private TextField txtNoofcompetitors;
 	//Spinner(int min, int max, int initialValue, int amountToStepBy)
 	// Value factory.
 	
@@ -54,16 +53,16 @@ public class KnockoutScreenController {
 		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}
 
+	
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		((Node) event.getSource()).getScene().getWindow().hide();
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource("InputCompetitorScreen.fxml").openStream());
+		Pane root = loader.load(getClass().getResource("TestTxtfield.fxml").openStream());
 		TestClass ic = (TestClass) loader.getController();
 		//ic.setKOtournament(TournamentName, spinner.getValue());
-		ic.setKOtournament(TournamentName,4);
-		//System.out.println(spinner.getValue());
+		ic.setKOtournament(TournamentName,Integer.valueOf(txtNoofcompetitors.getText()));
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
