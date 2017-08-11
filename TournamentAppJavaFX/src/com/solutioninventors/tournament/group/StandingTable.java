@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class StandingTable
 {
@@ -33,8 +34,11 @@ public class StandingTable
 	private final double POINT_FOR_DRAW;
 	private final double POINT_FOR_LOSS;
 	
+	
+	private final TieBreaker TIE_BREAKER; 
+	
 	public StandingTable( SportType type, Competitor[] comptitors , 
-			double win , double draw , double loss )
+			double win , double draw , double loss , TieBreaker breakers )
 	{
 		sportType = type ;
 		setCompetitors(comptitors);
@@ -45,8 +49,10 @@ public class StandingTable
 		POINT_FOR_WIN = win ;
 		POINT_FOR_DRAW = draw ;
 		POINT_FOR_LOSS = loss ;
+		TIE_BREAKER = breakers ;
 		updateTables(); //updates the String[][] table and Competitors[] array
 		
+	
 	}
 
 	private double getPointForWin()
@@ -64,22 +70,11 @@ public class StandingTable
 	
 	public void updateTables( )
 	{
-//		The tableComparator should be improved with more tieBreakers
-		
-		Function< Competitor, Double >  pointFunction = c->
-				c.getPoint( getPointForWin() , getPointForDraw() , getPointForLoss() );
-		
-		Comparator<Competitor> tableComparator = 
-				Comparator.comparing( pointFunction )
-									.thenComparing(Competitor:: getGoalDifference )
-									.thenComparing( Competitor :: getName ).reversed();
-		
-		Arrays.stream( competitors )
-				.sorted( tableComparator )
-				.collect( Collectors.toList()  )
-				.toArray( competitors );
-		
-
+//		
+		competitors = getTieBreaker().breakTies(competitors, 
+						getPointForWin(),
+						getPointForDraw(), 
+						getPointForLoss() );	
 		updateStringTable(); // updates StringTable
 		
 	}
@@ -183,7 +178,10 @@ public class StandingTable
 		return table;
 	}
 	
-	
+	public TieBreaker getTieBreaker()
+	{
+		return TIE_BREAKER ;
+	}
 }
 
 

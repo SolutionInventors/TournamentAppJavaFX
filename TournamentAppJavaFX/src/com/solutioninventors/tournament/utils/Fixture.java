@@ -30,6 +30,30 @@ public class Fixture {
 				getCompetitorTwo().incrementWins();
 			}
 
+			
+			getCompetitorOne().incrementGoalsScoredBy( score1 );
+			getCompetitorOne().incrementGoalsConcededBy( score2 );
+			getCompetitorTwo().incrementGoalsScoredBy( score2 );
+			getCompetitorTwo().incrementGoalsConcededBy( score1 );
+			
+			getCompetitorOne().addToHeadToHead( getCompetitorTwo() , score1); 
+			getCompetitorTwo().addToHeadToHead(getCompetitorOne(), score2 );
+			
+			
+			competitorOneScore = score1 ;
+			competitorTwoScore = score2 ;
+			
+			complete = true ;
+		}
+		else
+		{
+			String message = String.format( "%s\n%s %.1f VS %.1f %s", "This fixture has a result" ,
+										getCompetitorOne().getName() , getCompetitorOneScore() , 
+										getCompetitorTwoScore() , getCompetitorTwo().getName() );
+			JOptionPane.showMessageDialog( null , message );
+			
+
+
 			COMPETITOR_ONE.incrementGoalsScoredBy(score1);
 			COMPETITOR_ONE.incrementGoalsConcededBy(score2);
 			COMPETITOR_TWO.incrementGoalsScoredBy(score2);
@@ -39,13 +63,7 @@ public class Fixture {
 			competitorTwoScore = score2;
 
 			complete = true;
-		} else {
-			String message = String.format("%s\n%s %.1f VS %.1f %s", "This fixture has a result",
-					getCompetitorOne().getName(), getCompetitorOneScore(), getCompetitorTwoScore(),
-					getCompetitorTwo().getName());
-			JOptionPane.showMessageDialog(null, message);
-
-		}
+		} 
 	}
 
 	public boolean isComplete() {
@@ -78,7 +96,8 @@ public class Fixture {
 
 	}
 
-	public Competitor getLoser() {
+	public Competitor getLoser() 
+	{
 		if (hasLoser())
 			return getCompetitorOneScore() < getCompetitorTwoScore() ? getCompetitorOne() : getCompetitorTwo();
 

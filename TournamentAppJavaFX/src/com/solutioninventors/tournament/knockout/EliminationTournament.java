@@ -24,7 +24,6 @@ public abstract class EliminationTournament implements Serializable
 	
 	private int roundNum; 
 	private final Competitor[] competitors;
-	private boolean ended;
 	
 	public EliminationTournament ( Competitor[] comps )
 	{
@@ -42,7 +41,7 @@ public abstract class EliminationTournament implements Serializable
 		return roundNum;
 	}
 
-	public void setCurrentRoundNum(int roundNumber)
+	protected void setCurrentRoundNum(int roundNumber)
 	{
 		this.roundNum = roundNumber;
 	}
@@ -78,16 +77,8 @@ public abstract class EliminationTournament implements Serializable
 	
 	}
 
-	public boolean hasEnded()
-	{
-		return ended;
-	}
-
-	public void setEnded(boolean ended)
-	{
-		this.ended = ended;
-	}
-
+	public abstract boolean hasEnded();
+	
 	public abstract Competitor getWinner();
 	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 );
 	public abstract Round getCurrentRound();

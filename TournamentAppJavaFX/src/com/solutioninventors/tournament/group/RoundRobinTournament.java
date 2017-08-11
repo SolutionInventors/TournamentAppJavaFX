@@ -18,6 +18,7 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class RoundRobinTournament extends GroupTournament
 {
@@ -49,9 +50,9 @@ public class RoundRobinTournament extends GroupTournament
 	private List<Fixture> outstandingMatches ;
 	
 	public RoundRobinTournament(Competitor[] comps, SportType type , double winPoint ,
-								double drawPoint, double lossPoint , boolean away )
+								double drawPoint, double lossPoint , TieBreaker breaker , boolean away ) throws InvalidBreakerException
 	{
-		super(comps, type, winPoint , drawPoint, lossPoint );
+		super(comps, type, winPoint , drawPoint, lossPoint , breaker  );
 		HOME_AND_AWAY_FIXTURES =  away ;
 		BYE =  getCompetitors().length % 2 == 0 ? false : true ;
 		setRoundsArray( createRounds( getCompetitors() ) ) ;

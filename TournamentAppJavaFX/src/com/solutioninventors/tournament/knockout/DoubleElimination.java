@@ -368,5 +368,11 @@ public class DoubleElimination extends EliminationTournament
 		return message;
 	}
 
+	@Override
+	public boolean hasEnded()
+	{
+		return false ;
+	}
+
 	
 }

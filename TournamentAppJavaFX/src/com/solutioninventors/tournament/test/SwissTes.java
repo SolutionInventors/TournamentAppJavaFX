@@ -11,11 +11,13 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.group.RoundRobinTournament;
+import com.solutioninventors.tournament.group.InvalidBreakerException;
 import com.solutioninventors.tournament.group.SwissTournament;
+import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class SwissTes
 {
@@ -46,11 +48,16 @@ public class SwissTes
 
 				Competitor[] comps = { c1 , c2  , c3 , c4  }; 
 						
+				Breaker[] breakers = {
+						Breaker.GOALS_DIFFERENCE , Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD
+				};
+				
 				
 				SwissTournament tournament = null ;
 				try
 				{
-					tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , 5  );
+					TieBreaker tieBreakers = new TieBreaker( breakers );
+					tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , tieBreakers , 5 );
 				}
 				catch (TournamentException e )
 				{
@@ -58,6 +65,14 @@ public class SwissTes
 					e.printStackTrace();
 					System.exit( 0 );
 				}
+				catch (InvalidBreakerException e)
+				{
+					JOptionPane.showMessageDialog(null,  e.getMessage() );
+					e.printStackTrace();
+					System.exit( 0 );
+				}
+				
+				
 				
 				Test.displayMessage("Swiss begins");
 				StringBuilder builder = new StringBuilder( 300 );
