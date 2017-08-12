@@ -27,7 +27,7 @@ public class KnockoutScreenController {
 	public String getTournamentName() {
 		return TournamentName;
 	}
-
+	int abc;
 	// public KnockoutScreenController() {
 	// spinner.setValueFactory(valueFactory);}
 	public void setTournamentName(String tournamentName) {
