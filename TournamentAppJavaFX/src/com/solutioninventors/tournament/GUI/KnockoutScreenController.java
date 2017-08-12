@@ -32,7 +32,6 @@ public class KnockoutScreenController {
 	// spinner.setValueFactory(valueFactory);}
 	public void setTournamentName(String tournamentName) {
 		TournamentName = tournamentName;
-		System.out.println("name received");
 
 		
 		
@@ -48,7 +47,6 @@ public class KnockoutScreenController {
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
-		System.out.println(TournamentName);
 		ButtonsController btn = new ButtonsController();
 		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}
@@ -59,8 +57,8 @@ public class KnockoutScreenController {
 		((Node) event.getSource()).getScene().getWindow().hide();
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource("TestTxtfield.fxml").openStream());
-		TestClass ic = (TestClass) loader.getController();
+		Pane root = loader.load(getClass().getResource("InputCompetitorScreen.fxml").openStream());
+		InputCompetitorController ic = (InputCompetitorController) loader.getController();
 		//ic.setKOtournament(TournamentName, spinner.getValue());
 		ic.setKOtournament(TournamentName,Integer.valueOf(txtNoofcompetitors.getText()));
 		Scene scene = new Scene(root);
