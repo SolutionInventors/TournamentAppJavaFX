@@ -7,6 +7,11 @@
 
 package com.solutioninventors.tournament;
 
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.group.NoFixtureException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 
@@ -22,6 +27,7 @@ public abstract class Tournament
 	public Tournament ( Competitor[] coms )
 	{
 		competitors = coms ;
+		currentRoundNum = 0 ; 
 	}
 
 
@@ -41,16 +47,16 @@ public abstract class Tournament
 	{
 		currentRoundNum++ ;
 	}
-
-
-	public abstract Round[] getRoundsArray();
-
-
-	public abstract void moveToNextRound();
-	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 );
+	
+	public abstract void moveToNextRound()
+			throws TournamentEndedException, MoveToNextRoundException ;
+	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 ) throws NoFixtureException;
 	public abstract boolean hasEnded() ;
-	public abstract Round getCurrentRound();
+	public abstract Round getCurrentRound() throws TournamentEndedException;
 	public abstract Competitor getWinner();
+
+	public abstract Round[] getRoundArray();
+	
 	
 
 	

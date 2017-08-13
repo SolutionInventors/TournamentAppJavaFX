@@ -18,6 +18,8 @@ public enum Breaker
 	 * Private classes HeadToHead and CoinToss are used to create the headTOhead and
 	 * CoinToss types
 	 */
+	
+	
 	GROUUP_BREAKER ,
 	KNOCKOUT_BREAKER , 
 	
@@ -123,7 +125,7 @@ public enum Breaker
 			double score1 = com1.getHeadToHeadScore( com2 );
 			double score2 = com2.getHeadToHeadScore( com1 ); ;
 			
-			if ( score1 > score2 )
+			if ( score1 < score2 )
 				return 1;
 			else if ( score1 == score2 )
 				return 0 ;

@@ -27,7 +27,7 @@ public class TieBreaker
 		comparator = comparator.reversed();
 		for ( int i = 0 ; i < getBreakers().length ;i ++ )
 		{
-			comparator.thenComparing( getBreakers()[i].getBreaker() );
+			comparator = comparator.thenComparing( getBreakers()[i].getBreaker() );
 		}
 		
 		return Arrays.stream( comps )

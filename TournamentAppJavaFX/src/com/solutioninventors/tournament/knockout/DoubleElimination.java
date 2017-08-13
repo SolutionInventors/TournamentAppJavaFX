@@ -374,5 +374,12 @@ public class DoubleElimination extends EliminationTournament
 		return false ;
 	}
 
+	@Override
+	public Round[] getRoundArray()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

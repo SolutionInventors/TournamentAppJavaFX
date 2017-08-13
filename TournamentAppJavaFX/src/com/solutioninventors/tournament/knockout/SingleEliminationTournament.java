@@ -70,8 +70,8 @@ public class SingleEliminationTournament extends EliminationTournament
 	}
 	
 	
-	
-	public Round[] getRounds()
+	@Override
+	public Round[] getRoundArray()
 	{
 		return ROUNDS;
 	}
@@ -254,7 +254,7 @@ public class SingleEliminationTournament extends EliminationTournament
 	@Override
 	public boolean hasEnded()
 	{
-		return getCompetitors().length == 1 ? true : false ;
+		return getActiveCompetitors().length == 1 ? true : false ;
 	}
 
 }

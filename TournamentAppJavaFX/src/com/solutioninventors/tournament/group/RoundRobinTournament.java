@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -204,10 +205,18 @@ public class RoundRobinTournament extends GroupTournament
 		return BYE;
 	}
 
-	@Override
-	public void moveToNextRound()
+	
+	
+	public boolean isCurrentRoundComplete()
 	{
-		Round[] rnds = getRoundsArray();
+		if ( !hasEnded() && getCurrentRound().isComplete() )
+			return true;
+		return false;
+	}
+	@Override
+	public void moveToNextRound() throws MoveToNextRoundException
+	{
+		Round[] rnds = getRoundArray();
 		
 		if ( getCurrentRoundNum() < rnds.length  )
 		{
@@ -228,7 +237,7 @@ public class RoundRobinTournament extends GroupTournament
 			else
 			{
 				setCurrentRoundNum( getCurrentRoundNum() + 1 );
-				if ( getCurrentRoundNum() < getRoundsArray().length && 
+				if ( getCurrentRoundNum() < getRoundArray().length && 
 						outstandingMatches.size() > 0 )
 				{
 					String message = "Only outsanding matches are left";
@@ -243,22 +252,22 @@ public class RoundRobinTournament extends GroupTournament
 		}
 		else
 		{
-			String message = "Tournament has ended";
-			JOptionPane.showMessageDialog( null , message ) ;
+			throw new MoveToNextRoundException("Tournament is over thus cannot move to next round" );
 		}
 		
 	}
 
 	public boolean hasEnded()
 	{
-		return getCurrentRoundNum() >= getRoundsArray().length &&
+		return getCurrentRoundNum() >= getRoundArray().length &&
 			outstandingMatches.size() <= 0 ? true : false ;	
 	}
 	
 	
 	
 	@Override
-	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 )
+	public void setResult( Competitor com1 , double score1 , 
+			double score2 , Competitor com2 ) throws NoFixtureException
 	{		
 		if ( Arrays.stream( getCurrentRound().getFixtures() )
 				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
@@ -268,6 +277,8 @@ public class RoundRobinTournament extends GroupTournament
 			.forEach( f -> f.setResult(score1, score2) );
 			
 		}
+		else
+			throw new NoFixtureException("The fixture does not exist") ;
 	}
 	
 	

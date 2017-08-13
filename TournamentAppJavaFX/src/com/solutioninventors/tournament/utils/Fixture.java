@@ -21,11 +21,14 @@ public class Fixture {
 			if (score1 > score2) {
 				getCompetitorOne().incrementWins();
 				getCompetitorTwo().incrementLoss();
-			} else if (score1 == score2) // match is a draw
+			} 
+			else if (score1 == score2) // match is a draw
 			{
 				getCompetitorOne().incrementDraw();
 				getCompetitorTwo().incrementDraw();
-			} else {
+			}
+			else 
+			{
 				getCompetitorOne().incrementLoss();
 				getCompetitorTwo().incrementWins();
 			}

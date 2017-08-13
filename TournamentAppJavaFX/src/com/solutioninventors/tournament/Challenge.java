@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
@@ -39,12 +40,12 @@ public class Challenge extends Tournament
 		{
 			fixture = new Fixture(getCompetitors()[ i % 2 == 0 ? 0 : 1], 
 					getCompetitors()[ i % 2 == 0 ? 1 : 0 ] );
-			getRoundsArray()[ i ] = new Round( fixture );
+			getRoundArray()[ i ] = new Round( fixture );
 		}
 	}
 
 	@Override
-	public Round[] getRoundsArray()
+	public Round[] getRoundArray()
 	{
 		return ROUNDS ;
 	}
@@ -77,7 +78,9 @@ public class Challenge extends Tournament
 	@Override
 	public Round getCurrentRound()
 	{
-		return getRoundsArray()[ getCurrentRoundNum() ];
+		if ( getCurrentRoundNum() < getRoundArray().length )
+			return getRoundArray()[ getCurrentRoundNum() ];
+		throw new TournamentEndedException();
 	}
 
 	@Override
@@ -115,4 +118,6 @@ public class Challenge extends Tournament
 	{
 		return "Round " + ( getCurrentRoundNum() + 1 ); 
 	}
+
+	
 }

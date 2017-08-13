@@ -79,6 +79,18 @@ public class StandingTable
 		
 	}
 
+	
+	public Competitor getCompetitor( int position )
+	{
+		updateTables();
+		
+		if ( position < getCompetitors().length )
+			return getCompetitors()[ position ];
+		
+		return null ;
+	}
+	
+	
 	private void updateStringTable()
 	{
 		int numOfCompetitors = competitors.length ;

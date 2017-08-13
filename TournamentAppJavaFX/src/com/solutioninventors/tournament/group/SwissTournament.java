@@ -105,7 +105,7 @@ public class SwissTournament extends GroupTournament
 	@Override
 	public boolean hasEnded()
 	{
-		return getCurrentRoundNum() < getRoundsArray().length ? false : true ;
+		return getCurrentRoundNum() < getRoundArray().length ? false : true ;
 		
 	}
 
