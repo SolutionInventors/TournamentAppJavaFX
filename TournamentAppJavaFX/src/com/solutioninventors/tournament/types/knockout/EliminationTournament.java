@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -28,22 +29,10 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	public EliminationTournament ( Competitor[] comps )
 	{
 		super( comps );
-		setCurrentRoundNum(0) ;
 	}
 
 	
 
-	public int getCurrentRoundNum()
-	{
-		return roundNum;
-	}
-
-	protected void setCurrentRoundNum(int roundNumber)
-	{
-		this.roundNum = roundNumber;
-	}
-	
-	
 	public Competitor[] getActiveCompetitors()
 	{
 		List< Competitor > list = new ArrayList<>();
@@ -75,10 +64,6 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	}
 
 	
-	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 );
-	public abstract Round getCurrentRound();
-
-
 
 	public Round getRound(int i)
 	{

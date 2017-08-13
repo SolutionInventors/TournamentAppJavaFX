@@ -42,7 +42,7 @@ public class Fixture {
 			getCompetitorOne().addToHeadToHead( getCompetitorTwo() , score1); 
 			getCompetitorTwo().addToHeadToHead(getCompetitorOne(), score2 );
 			
-			
+			getCompetitorTwo().addAwayGoal( getCompetitorOne(), score2);//adds away goal
 			competitorOneScore = score1 ;
 			competitorTwoScore = score2 ;
 			

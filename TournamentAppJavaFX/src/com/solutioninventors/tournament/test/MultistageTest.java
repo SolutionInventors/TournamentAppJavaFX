@@ -8,10 +8,12 @@ package com.solutioninventors.tournament.test;
 
 import java.io.File;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.group.GroupTournament;
@@ -26,9 +28,10 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public class MultistageTest
 {
 
-	public static void main(String[] args)
-	{
-		File file = new File("golf.jpg");
+	public static void main(String[] args) 
+	{	
+		File file = new File( 
+				"C:\\Users\\USER\\Pictures\\Family and Self\\Inspiration.JPG") ;
 		Competitor c1 = new Competitor( "Chidiebere" , file );
 		Competitor c2 = new Competitor( "Fred", file );
 		Competitor c3 = new Competitor( "Joshua" , file );
@@ -65,7 +68,8 @@ public class MultistageTest
 		try
 		{
 			tieBreakers = new TieBreaker( breakers );
-			tournament = new Multistage( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , tieBreakers  , false, false );
+			tournament = new Multistage( comps, SportType.GOALS_ARE_SCORED , 
+					3 , 1 , 0 , tieBreakers  , false, false );
 			
 		}
 		catch (InvalidBreakerException | TournamentException e)
@@ -91,8 +95,8 @@ public class MultistageTest
 //		
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
-			
-			Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
+			Fixture[] currentFixtures = 
+					tournament.getCurrentRound().getPendingFixtures() ;
 			Test.displayFixtures( currentFixtures );
 			
 			builder.delete(0 , builder.length() );
@@ -103,12 +107,19 @@ public class MultistageTest
 				Competitor com1 = currentFixtures[i].getCompetitorOne() ;
 				Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
 
-				double score1 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
-									com1 ));
-				double score2 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
-						 com2 ));
+				double score1 = Double.parseDouble(
+						JOptionPane.showInputDialog( "Input score for " + com1 ));
+				double score2 = Double.parseDouble(
+						JOptionPane.showInputDialog( "Input score for " + com2 ));
 				
-				tournament.setResult( com1, score1, score2, com2);
+				try
+				{
+					tournament.setResult( com1, score1, score2, com2);
+				}
+				catch (NoFixtureException e)
+				{
+					Test.displayMessage(e.getMessage() );
+				}
 				builder.append(String.format("%s %.0f VS %.0f %s\n",
 						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
 						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));

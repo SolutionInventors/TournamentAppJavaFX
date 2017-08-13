@@ -37,6 +37,7 @@ public class Competitor {
 	private double goalsConceded;
 
 	private Map< Competitor , Double > headToHead ; 
+	private Map< Competitor , Double > awayGoals; 
 	private File image;
 	private boolean eliminated;
 
@@ -57,6 +58,7 @@ public class Competitor {
 		setEliminated(false);
 
 		headToHead = new HashMap<Competitor , Double >();
+		awayGoals = new HashMap<Competitor , Double >();
 		
 	}
 
@@ -224,5 +226,27 @@ public class Competitor {
 		if( headToHead.containsKey( com ) )
 			return headToHead.get( com ) ;
 		return 0 ;
+	}
+	
+	
+	public void addAwayGoal( Competitor com , double score )
+	{
+		if ( awayGoals.containsKey( com ) )
+			score += awayGoals.get( com );
+		
+		awayGoals.put( com , score );
+	}
+	
+	public double getAwayGoal( Competitor com  )
+	{
+		if( awayGoals.containsKey( com ) )
+			return awayGoals.get( com ) ;
+		return 0 ;
+	}
+	public static boolean isEqual( Competitor com1 , Competitor com2 )
+	{
+		if ( com1.getName().equals( com2.getName() ) )
+			return true;
+		return false;
 	}
 }

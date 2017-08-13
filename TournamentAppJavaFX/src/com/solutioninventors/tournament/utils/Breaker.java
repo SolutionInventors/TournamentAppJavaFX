@@ -22,16 +22,19 @@ public enum Breaker
 	
 	GROUUP_BREAKER ,
 	KNOCKOUT_BREAKER , 
+	BOTH , 
 	
+	AWAY_GOAL( KNOCKOUT_BREAKER , getAwayGoalBreaker() ),
+	SHOOT_OUT( KNOCKOUT_BREAKER , null  ),
+	
+	COIN_TOSS( BOTH  , getCoinToss() )  ,
 	GOALS_SCORED( GROUUP_BREAKER , getGoalsScored() ) ,
 	GOALS_CONCEDED( GROUUP_BREAKER , getGoalsConceded() ) ,
 	GOALS_DIFFERENCE( GROUUP_BREAKER , getGoalsDifference() ) ,
-	NUMBER_OF_WINS( GROUUP_BREAKER , getGoalsScored() ) ,
-	NUMBER_OF_DRAWS( GROUUP_BREAKER, getGoalsScored() ) ,
-	NUMBER_OF_LOSS( GROUUP_BREAKER , getGoalsScored() ) ,
-	COIN_TOSS( GROUUP_BREAKER , getCoinToss() )  ,
+	NUMBER_OF_WINS( GROUUP_BREAKER , getNumberOfWins() ) ,
+	NUMBER_OF_DRAWS( GROUUP_BREAKER, getNumberOfDraw() ) ,
+	NUMBER_OF_LOSS( GROUUP_BREAKER , getNumberOfLoss() ) ,
 	HEAD_TO_HEAD( GROUUP_BREAKER , getHeadToHead() )  ;
-	
 	
 	private final  Comparator< Competitor> breaker;
 	private final Breaker type ;
@@ -41,6 +44,11 @@ public enum Breaker
 		this( null , null );
 	}
 	
+	private static Comparator< Competitor>  getAwayGoalBreaker()
+	{
+		return null;
+	}
+
 	private Breaker( Breaker typeName, Comparator<Competitor> comparator )
 	{
 		type = typeName;
@@ -133,6 +141,25 @@ public enum Breaker
 				return -1 ;
 			
 			
+		}
+	}
+	
+	
+	private static class AwayGoal implements Comparator< Competitor >
+	{
+		@Override
+		public int compare(Competitor com1, Competitor com2)
+		{
+			
+			double score1 = com1.getAwayGoal( com2 );
+			double score2 = com2.getAwayGoal( com1 ); ;
+			
+			if ( score1 < score2 )
+				return 1;
+			else if ( score1 == score2 )
+				return 0 ;
+			else
+				return -1 ;
 		}
 	}
 	

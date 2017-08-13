@@ -192,7 +192,7 @@ public class Multistage extends Tournament
 				for( int i = 0 ; i < groupWinners.size() /2 ; i++ )
 				{
 					finalOutput.add( groupWinners.get( i ) ) ;
-					finalOutput.add( groupWinners.get( groupWinners.size() - i ) );
+					finalOutput.add( groupWinners.get( groupWinners.size() -1 - i ) );
 				}
 			
 				allQualifiers.addAll( finalOutput );
@@ -212,8 +212,12 @@ public class Multistage extends Tournament
 		else
 		{
 			
-			knockoutStage.moveToNextRound(); 
-			incrementRoundNum();
+			if ( knockoutStage.getCurrentRound().isComplete() )
+			{
+				knockoutStage.moveToNextRound(); 
+				incrementRoundNum();
+			}
+			
 		}
 			
 		
@@ -279,7 +283,8 @@ public class Multistage extends Tournament
 	
 	
 	@Override
-	public void setResult(Competitor com1, double score1, double score2, Competitor com2)
+	public void setResult(Competitor com1, double score1, 
+			double score2, Competitor com2) throws NoFixtureException
 	{
 		boolean found = false ; 
 		

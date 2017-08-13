@@ -50,7 +50,8 @@ public abstract class Tournament
 	
 	public abstract void moveToNextRound()
 			throws TournamentEndedException, MoveToNextRoundException ;
-	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 ) throws NoFixtureException;
+	public abstract void setResult( Competitor com1 , 
+			double score1 , double score2 , Competitor com2 ) throws NoFixtureException;
 	public abstract boolean hasEnded() ;
 	public abstract Round getCurrentRound() throws TournamentEndedException;
 	public abstract Competitor getWinner();
