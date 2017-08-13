@@ -4,7 +4,7 @@
  *Aug 3, 2017
  *9:53:16 PM
  */
-package com.solutioninventors.tournament.group;
+package com.solutioninventors.tournament.types.group;
 
 import java.util.Arrays;
 

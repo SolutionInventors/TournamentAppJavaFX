@@ -4,7 +4,7 @@
  *Aug 7, 2017
  *2:38:15 PM
  */
-package com.solutioninventors.tournament.knockout;
+package com.solutioninventors.tournament.types.knockout;
 
 import java.util.ArrayList;
 import java.util.Arrays;

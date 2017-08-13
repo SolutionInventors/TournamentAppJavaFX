@@ -4,7 +4,7 @@
  *Aug 6, 2017
   s10:46:29 PM
  */
-package com.solutioninventors.tournament.knockout;
+package com.solutioninventors.tournament.types.knockout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.solutioninventors.tournament.Tournament;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 

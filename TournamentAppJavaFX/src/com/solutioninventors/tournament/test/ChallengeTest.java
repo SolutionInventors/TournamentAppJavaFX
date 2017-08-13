@@ -11,11 +11,11 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import com.solutioninventors.tournament.Challenge;
-import com.solutioninventors.tournament.Tournament;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
-import com.solutioninventors.tournament.group.NoFixtureException;
+import com.solutioninventors.tournament.types.Challenge;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 

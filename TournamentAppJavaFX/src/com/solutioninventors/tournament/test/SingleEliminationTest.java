@@ -6,14 +6,12 @@
  */
 package com.solutioninventors.tournament.test;
 
-import java.awt.HeadlessException;
 import java.io.File;
-import java.io.InputStream;
 
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 

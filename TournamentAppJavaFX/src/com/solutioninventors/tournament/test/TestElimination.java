@@ -8,7 +8,7 @@ package com.solutioninventors.tournament.test;
 import java.io.File;
 
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 
 public class TestElimination {

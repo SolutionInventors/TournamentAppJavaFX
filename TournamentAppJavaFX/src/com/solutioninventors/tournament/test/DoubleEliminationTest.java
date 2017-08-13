@@ -12,8 +12,8 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.knockout.DoubleElimination;
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 

@@ -4,7 +4,7 @@
  *Aug 9, 2017
  *11:42:42 PM
  */
-package com.solutioninventors.tournament;
+package com.solutioninventors.tournament.types;
 
 import java.util.Arrays;
 import java.util.Comparator;

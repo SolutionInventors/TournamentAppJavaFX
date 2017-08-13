@@ -5,13 +5,13 @@
  * 8:07:23 AM
  */
 
-package com.solutioninventors.tournament;
+package com.solutioninventors.tournament.types;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.group.NoFixtureException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 

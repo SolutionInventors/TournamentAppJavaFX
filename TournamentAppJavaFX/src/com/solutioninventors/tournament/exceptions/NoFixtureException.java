@@ -4,7 +4,7 @@
  *Aug 11, 2017
  *9:20:40 PM
  */
-package com.solutioninventors.tournament.group;
+package com.solutioninventors.tournament.exceptions;
 
 public class NoFixtureException extends Exception
 {

@@ -11,9 +11,9 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.group.InvalidBreakerException;
-import com.solutioninventors.tournament.group.NoFixtureException;
 import com.solutioninventors.tournament.group.RoundRobinTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
