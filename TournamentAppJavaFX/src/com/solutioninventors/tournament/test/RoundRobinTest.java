@@ -25,8 +25,8 @@ public class RoundRobinTest
 
 	public static void main( String[]  args )
 	{
-		//File file = new File("/test/golf.jpg");
-		File file = new File("golf.jpg");
+		File file = new File("C:\\Users\\Chinedu\\git\\TournamentAppJavaFX\\TournamentAppJavaFX\\src\\com\\solutioninventors\\tournament\\GUI\\golf.jpg");
+		//File file = new File("golf.jpg");
 		Competitor c1 = new Competitor( "Chidiebere" , file );
 		Competitor c2 = new Competitor( "Fred", file );
 		Competitor c3 = new Competitor( "Joshua" , file );

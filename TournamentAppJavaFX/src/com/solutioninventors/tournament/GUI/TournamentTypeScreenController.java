@@ -43,13 +43,13 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML
 	public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
-			message = "In a Challenge tournament";
+			message = "In this format, champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
 			nextFxml = "ChallengeScreen.fxml";
 		} else if (rbMultiStage.isSelected()) {
-			message = "In a Challenge tournament";
+			message = "Many tournaments are held in multiple stages, with the top teams in one stage progressing to the next.  A group stage (also known as pool play or the pool stage) is a round-robin stage in a multi-stage tournament. The competitors are divided into multiple groups, which play separate round-robins in parallel.";
 			nextFxml = "MultiStageScreen.fxml";
 		} else if (rbGroup.isSelected()) {
-			message = "In a Group tournament";
+			message = "A group tournament, league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture. Usually each competitor plays an equal number of fixtures, in which case rankings by total points and by average points are equivalent.";
 			nextFxml = "GroupStageScreen.fxml";
 		} else {
 			message = "A knockout tournament is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
