@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.CompetitorTable.CompetitorStatusController">
+   <children>
+      <TableView fx:id="table" layoutX="34.0" layoutY="100.0" prefHeight="500.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="sn" prefWidth="45.0" text="S/N" />
+          <TableColumn fx:id="competitorName" prefWidth="188.0" text="Competitor Name" />
+            <TableColumn fx:id="eliminated" prefWidth="85.0" text="Eliminated" />
+           
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

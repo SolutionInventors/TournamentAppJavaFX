@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Fixtures">
+      <content>
+         <fx:include source="Fixtures.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Results">
+      <content>
+        <fx:include source="ViewResults.fxml" />
+      </content>
+    </Tab>
+      <Tab text="Input Scores">
+      <content>
+        <fx:include source="InputResults.fxml" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

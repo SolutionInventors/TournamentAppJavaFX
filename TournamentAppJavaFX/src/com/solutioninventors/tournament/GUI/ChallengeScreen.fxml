@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.ChallengeScreenController">
+   <children>
+      <GridPane alignment="CENTER" layoutX="82.0" layoutY="409.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Next &gt;&gt;" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Finish" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Cancel" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#previous" text="&lt;&lt; Previous">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Button>
+         </children>
+      </GridPane>
+   
+   
+      <Label layoutX="233.0" layoutY="14.0" prefHeight="20.0" prefWidth="134.0" text="CHALLENGE" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font></Label>
+      <GridPane layoutX="37.0" layoutY="157.0" prefHeight="179.0" prefWidth="400.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="178.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="72.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="64.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="88.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Pointing System">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Extra point for Challenger" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label text="(or playing as Black in chess)" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Number of Rounds:" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox mnemonicParsing="false" text="L" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </CheckBox>
+            <Spinner prefHeight="25.0" prefWidth="169.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <Text fontSmoothingType="LCD" layoutX="37.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a challenge, two competitors, chanpion and challenger (or number one contender) battle for a titile. This is used in boxing, world class championshop etc. A challenge is an alternative to tournament" wrappingWidth="500.0">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
