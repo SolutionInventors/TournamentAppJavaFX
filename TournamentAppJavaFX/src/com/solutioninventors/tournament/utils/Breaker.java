@@ -24,7 +24,7 @@ public enum Breaker
 	KNOCKOUT_BREAKER , 
 	BOTH , 
 	
-	AWAY_GOAL( KNOCKOUT_BREAKER , getAwayGoalBreaker() ),
+	AWAY_GOAL( BOTH , getAwayGoalBreaker() ),
 	SHOOT_OUT( KNOCKOUT_BREAKER , null  ),
 	
 	COIN_TOSS( BOTH  , getCoinToss() )  ,
@@ -46,7 +46,7 @@ public enum Breaker
 	
 	private static Comparator< Competitor>  getAwayGoalBreaker()
 	{
-		return null;
+		return new AwayGoal();
 	}
 
 	private Breaker( Breaker typeName, Comparator<Competitor> comparator )

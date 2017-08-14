@@ -10,9 +10,10 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.group.InvalidBreakerException;
-import com.solutioninventors.tournament.group.SwissTournament;
+import com.solutioninventors.tournament.types.group.InvalidBreakerException;
+import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -106,7 +107,15 @@ public class SwissTes
 						double score2 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
 								 com2 ));
 						
-						tournament.setResult( com1, score1, score2, com2);
+						try
+						{
+							tournament.setResult( com1, score1, score2, com2);
+						}
+						catch (NoFixtureException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						builder.append(String.format("%s %.0f VS %.0f %s\n",
 								com1 , currentFixtures[ i ].getCompetitorOneScore() ,
 								currentFixtures[  i ].getCompetitorTwoScore() , com2 ));

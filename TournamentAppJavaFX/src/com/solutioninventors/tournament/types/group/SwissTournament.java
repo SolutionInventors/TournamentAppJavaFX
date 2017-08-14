@@ -10,8 +10,9 @@ package com.solutioninventors.tournament.types.group;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -55,7 +56,7 @@ public class SwissTournament extends GroupTournament
 	
 
 	@Override
-	public void moveToNextRound() 
+	public void moveToNextRound() throws MoveToNextRoundException 
 	{
 		getTable().updateTables(); 
 		
@@ -66,7 +67,8 @@ public class SwissTournament extends GroupTournament
 			createCurrentRound();
 		}
 		else
-			JOptionPane.showMessageDialog( null , "Tournament has ended" );
+			throw new
+			MoveToNextRoundException("Tournament is over thus cannot move to next round" );
 		
 	}
 
@@ -89,16 +91,20 @@ public class SwissTournament extends GroupTournament
 	
 	
 	@Override
-	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 )
+	public void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 ) throws NoFixtureException
 	{
 		Predicate<Fixture> tester = f-> f.getCompetitorOne().getName().equals(com1.getName() )
 										&& f.getCompetitorTwo().getName().equals(com2.getName() );
 		
 		if ( Arrays.stream( getCurrentRound().getFixtures() )
 				.anyMatch( tester ) )
+		{
 			Arrays.stream( getCurrentRound().getFixtures() )
 			.filter( f -> f.hasFixture( com1 , com2  ))
 			.forEach( f-> f.setResult(score1, score2) );
+		}
+		else
+			throw new NoFixtureException("The fixture is not in the current round");
 		
 	}
 

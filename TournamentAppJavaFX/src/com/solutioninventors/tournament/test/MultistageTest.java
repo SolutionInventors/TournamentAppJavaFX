@@ -8,17 +8,14 @@ package com.solutioninventors.tournament.test;
 
 import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
-import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.group.GroupTournament;
-import com.solutioninventors.tournament.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.Multistage;
+import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -53,13 +50,18 @@ public class MultistageTest
 //		Competitor c16 = new Competitor( "NIgeria" ,  file ) ;
 
 		Competitor[] comps = { c1 , c2  , c3 , c4 , 
-							   c5 , c6  , c7 , c8 } ;//,
-//							   c9 , c10  , c11 , c12 }; 
+							   c5 , c6  , c7 , c8 ,
+							   c9 , c10  , c11 , c12 }; 
 				
-		Test.displayMessage("MultiStage begins");
-
-		Breaker[] breakers = {
-				 Breaker.HEAD_TO_HEAD			 
+		
+		Breaker[] breakers = 
+			{
+				 Breaker.GOALS_DIFFERENCE ,
+				 Breaker.GOALS_SCORED ,
+				 Breaker.GOALS_CONCEDED,
+				 Breaker.NUMBER_OF_WINS, 
+				 Breaker.AWAY_GOAL ,
+				 
 		};
 		
 		Multistage tournament = null ;
@@ -68,16 +70,37 @@ public class MultistageTest
 		try
 		{
 			tieBreakers = new TieBreaker( breakers );
-			tournament = new Multistage( comps, SportType.GOALS_ARE_SCORED , 
-					3 , 1 , 0 , tieBreakers  , false, false );
+			int type = Integer.parseInt(JOptionPane.showInputDialog( "Type 1 for swiss group stage or \n"
+					+ "Type 2 for a double round robin( home and away group stage\n" 
+					+"Type any other number for round robin group stage")) ;
+			if ( type == 1 )
+			{
+				int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog( "Input number of rounds: " ) );
+				tournament = new Multistage( comps, SportType.GOALS_ARE_SCORED , 
+						3 , 1 , 0 , tieBreakers  , numOfRounds, false );
+			}
+			else if ( type == 2 )
+			{
+				tournament = new Multistage( comps, SportType.GOALS_ARE_SCORED , 
+						3 , 1 , 0 , tieBreakers  , true , false );
+			}		
+			else
+			{
+				
+				tournament = new Multistage( comps, SportType.GOALS_ARE_SCORED , 
+						3 , 1 , 0 , tieBreakers  , false , false ) ;
+			}
 			
 		}
 		catch (InvalidBreakerException | TournamentException e)
 		{
-			System.exit( 0 );
 			e.printStackTrace();
+			System.exit( 0 );
 		}
 		
+		
+		Test.displayMessage("MultiStage begins");
+
 		StringBuilder builder = new StringBuilder( 300 );
 		
 		builder.append( "The competitors are: \n" );
@@ -95,12 +118,13 @@ public class MultistageTest
 //		
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
+			Test.displayMessage( "Welcome to " + tournament );
 			Fixture[] currentFixtures = 
 					tournament.getCurrentRound().getPendingFixtures() ;
 			Test.displayFixtures( currentFixtures );
 			
 			builder.delete(0 , builder.length() );
-			builder.append("Roound results are: \n" );
+			builder.append("Round results are: \n" );
 			
 			for( int i = 0 ; i< currentFixtures.length ;i++ )
 			{
@@ -122,40 +146,46 @@ public class MultistageTest
 				}
 				builder.append(String.format("%s %.0f VS %.0f %s\n",
 						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
-				
-				
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
 			}
+			
+			Test.displayMessage( builder.toString()  );
 			try
 			{
 				tournament.moveToNextRound();
+				
+				
 			}
 			catch (MoveToNextRoundException e)
 			{
 				e.printStackTrace();
 			} 
 			
-			Test.displayMessage( builder.toString()  );
-			if ( !tournament.isGroupStageOver() )
-				displayGroupStanding( tournament );
-		}
-		
-		Test.displayMessage( "The winner is " + tournament.getWinner()) ;
-		Test.displayMessage("The Round results are : " );
-		try
-		{
-			for ( int i = 0 ; i < tournament.getRoundArray().length ; i ++ )
+			
+				
+			if (  tournament.getCurrentRoundNum() <=
+					tournament.getNumberOfGroupRounds()) 
 			{
-				Test.displayMessage("Round " + i +":\n");
-				Test.displayRoundResults( tournament.getRound(i));
+				displayGroupStanding( tournament );
+				if (tournament.getNumberOfExtraQualifiers() != 0) 
+				{
+				String position = 
+						tournament.getNumberOfGroups() == 3 ? "3rd" : "4th";
+			
+				Test.displayMessage(
+						String.format("The %s place ranking able is shown ", position) );
+				Test.displayStandingTable(tournament.getPossibleQualifierTable()
+											.getStringTable());
+				}
 			}
+				
+			
 			
 		}
-		catch (RoundIndexOutOfBoundsException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		Test.displayMessage( "The winner is " + tournament.getWinner() +
+				" and his total goals scored is " + tournament.getWinner().getGoalsScored()) ;
+		
 	}
 
 	public static void displayGroupStanding(Multistage tournament)
@@ -165,7 +195,8 @@ public class MultistageTest
 		{
 			try
 			{
-				Test.displayStandingTable( tournament.getGroup( i ).getTable().getStringTable() ) ;
+				Test.displayStandingTable( 
+						tournament.getGroup( i ).getTable().getStringTable() ) ;
 			}
 			catch (GroupIndexOutOfBoundsException e)
 			{

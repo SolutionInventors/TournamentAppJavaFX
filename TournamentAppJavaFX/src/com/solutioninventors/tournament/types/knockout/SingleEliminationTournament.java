@@ -133,38 +133,6 @@ public class SingleEliminationTournament extends EliminationTournament
 					incrementRoundNum();
 				else //second leg fixture
 				{
-					List<Fixture > firstLeg = new ArrayList<>();
-					List<Fixture > secondLeg = new ArrayList<>();
-					
-					
-					firstLeg.addAll( Arrays.asList(getRound( 
-							getCurrentRoundNum()).getFixtures() ) );
-					secondLeg.addAll( Arrays.asList(getCurrentRound().getFixtures() ) );
-					
-					for (int i = 0 ; i <  firstLeg.size() ; i++ )
-					{
-						Competitor com1 = firstLeg.get(i).getCompetitorOne();
-						Competitor com2 = firstLeg.get(i).getCompetitorTwo();
-						
-						double totalComOneScore = firstLeg.get(i).getCompetitorOneScore() +
-								secondLeg.get(i).getCompetitorTwoScore();
-						
-						double totalComTwoScore = firstLeg.get(i).getCompetitorTwoScore() +
-								secondLeg.get(i).getCompetitorOneScore();
-						
-						if ( totalComOneScore > totalComTwoScore )
-							eliminateLoser( com1 );
-						else if ( totalComOneScore <totalComTwoScore )
-							eliminateLoser( com2 );
-						else
-						{
-							if ( com1.getAwayGoal(com2 ) >com2.getAwayGoal(com1 ) )
-								eliminateLoser(com2);
-							else
-								eliminateLoser(com1);
-						}
-						
-					}
 					createNextRound();
 				}
 			}
@@ -185,6 +153,7 @@ public class SingleEliminationTournament extends EliminationTournament
 
 	public void createNextRound()
 	{
+		
 		eliminateLosers();
 		incrementRoundNum();
 		Competitor[] comps = getActiveCompetitors();
@@ -210,13 +179,55 @@ public class SingleEliminationTournament extends EliminationTournament
 		
 		if ( !hasAway() )
 		{
-			Arrays.stream( getCompetitors() )
-			.filter( c -> c.getNumberOfLoss() >= 1 && !c.isEliminated() )
-			.forEach( c -> c.setEliminated( true ) );
+			Arrays.stream(getCurrentRound().getFixtures() )
+				.forEach(f-> 
+				{
+					if ( f.getCompetitorOneScore() > f.getCompetitorTwoScore() )
+					{
+						f.getCompetitorTwo().setEliminated( true );
+					}
+					else
+					{
+						f.getCompetitorOne().setEliminated( true );
+					}
+					
+				});
 		}
-		
-		
-		
+		else
+		{
+			List<Fixture > firstLeg = new ArrayList<>();
+			List<Fixture > secondLeg = new ArrayList<>();
+			
+			
+			firstLeg.addAll( Arrays.asList(getRound( 
+					getCurrentRoundNum()).getFixtures() ) );
+			secondLeg.addAll( Arrays.asList(getCurrentRound().getFixtures() ) );
+			
+			for (int i = 0 ; i <  firstLeg.size() ; i++ )
+			{
+				Competitor com1 = firstLeg.get(i).getCompetitorOne();
+				Competitor com2 = firstLeg.get(i).getCompetitorTwo();
+				
+				double totalComOneScore = firstLeg.get(i).getCompetitorOneScore() +
+						secondLeg.get(i).getCompetitorTwoScore();
+				
+				double totalComTwoScore = firstLeg.get(i).getCompetitorTwoScore() +
+						secondLeg.get(i).getCompetitorOneScore();
+				
+				if ( totalComOneScore > totalComTwoScore )
+					eliminateLoser( com1 );
+				else if ( totalComOneScore <totalComTwoScore )
+					eliminateLoser( com2 );
+				else
+				{
+					if ( com1.getAwayGoal(com2 ) >com2.getAwayGoal(com1 ) )
+						eliminateLoser(com2);
+					else
+						eliminateLoser(com1);
+				}
+				
+			}
+		}
 	}
 
 	

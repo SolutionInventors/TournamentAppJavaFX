@@ -15,10 +15,11 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.group.GroupTournament;
-import com.solutioninventors.tournament.group.InvalidBreakerException;
-import com.solutioninventors.tournament.group.RoundRobinTournament;
-import com.solutioninventors.tournament.group.StandingTable;
+import com.solutioninventors.tournament.types.group.GroupTournament;
+import com.solutioninventors.tournament.types.group.InvalidBreakerException;
+import com.solutioninventors.tournament.types.group.RoundRobinTournament;
+import com.solutioninventors.tournament.types.group.StandingTable;
+import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -44,42 +45,70 @@ public class Multistage extends Tournament
 	private final int NUMBER_OF_EXTRA_QUALIFIERS ;
 	
 	private final GroupWinners numberOfGroupWinners;
+	private final GroupStageType groupType;
+	
+	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
+			double pLoss , TieBreaker breaker , int numOfGroupRound,  boolean knockoutHomeAndAway) 
+					throws TournamentException, InvalidBreakerException
+	{
+		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , knockoutHomeAndAway,
+				GroupStageType.SWISS );
+		
+	}
 	
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , boolean groupHomeAndAway , boolean knockoutHomeAndAway) 
 					throws TournamentException, InvalidBreakerException
 	{
-		super(coms);
+		this( coms , type , pWin , pDraw ,pLoss, breaker , 
+				0 , groupHomeAndAway ,knockoutHomeAndAway , GroupStageType.ROUND_ROBIN 	 );
 		
-		groupAwayMatches = groupHomeAndAway;
-		knockoutAwayMatches = knockoutHomeAndAway ;
-		WIN_POINT = pWin ;
-		DRAW_POINT = pDraw;
-		LOSS_POINT = pLoss ;
-		int totalCompetitors = coms.length ;
-		if( totalCompetitors % 4 != 0 )
-			throw new TournamentException("The total competitors must be a multiple of 4 " );
-		
+	}
+
+	public int calculateExtraQualifiers(int totalCompetitors)
+	{
 		int totalQualifiers = 1 ;
 		int totalFirstTwo = totalCompetitors/2 ;
 		while( totalQualifiers <  totalFirstTwo)
 			totalQualifiers *= 2 ;
 		
 		int factor = totalQualifiers - totalFirstTwo;
-		NUMBER_OF_EXTRA_QUALIFIERS = factor;
+		return factor;
+	}
+
+	private Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
+			double pLoss , TieBreaker breaker , int numOfGroupRound, boolean groupHomeAndAway,
+			boolean knockoutHomeAndAway , GroupStageType groupStageType ) 
+					throws TournamentException, InvalidBreakerException
+	{
+		super(coms);
+		groupAwayMatches = groupHomeAndAway;
+		knockoutAwayMatches = knockoutHomeAndAway ;
+		WIN_POINT = pWin ;
+		DRAW_POINT = pDraw;
+		LOSS_POINT = pLoss ;
 		
-		if ( factor > totalFirstTwo )
+		if( coms.length % 4 != 0 )
+			throw new TournamentException("The total competitors must be a multiple of 4 " );
+		
+		NUMBER_OF_EXTRA_QUALIFIERS = calculateExtraQualifiers(coms.length);;
+		
+		if ( NUMBER_OF_EXTRA_QUALIFIERS > coms.length / 2 )
 			numberOfGroupWinners = GroupWinners.FIRST_THREE;
 		else
 			numberOfGroupWinners = GroupWinners.FIRST_TWO;
+		groupType = groupStageType ;
 		
-		createTournament( type , breaker , totalCompetitors/4 );
+		createTournament( type , breaker , numOfGroupRound );
 	}
-
-	private void createTournament( SportType type , TieBreaker breaker , int groupNum) throws InvalidBreakerException
+	
+	private void createTournament( SportType type , TieBreaker breaker , int numOfGroupRound ) 
+			throws InvalidBreakerException, TournamentException
 	{
-		groupStage = new RoundRobinTournament[ groupNum ] ;
-		
+		if ( groupType == GroupStageType.ROUND_ROBIN )
+			groupStage = new RoundRobinTournament[ getCompetitors().length / 4 ] ;
+		else
+			groupStage = new SwissTournament[getCompetitors().length / 4 ];
 		
 		Competitor[] theCompetitors = getCompetitors();
 		Competitor[] compPerGroup = new Competitor[ 4 ];
@@ -91,8 +120,12 @@ public class Multistage extends Tournament
 			compPerGroup [ 2 ] = theCompetitors[ i + 2 ];
 			compPerGroup [ 3 ] = theCompetitors[ i + 3 ];
 			
-			groupStage[ i/4 ] = new RoundRobinTournament(compPerGroup, type ,getWinPoint(), 
-					getDrawPoint(), getLossPoint(), breaker, hasGroupAwayMatches() );
+			if ( groupType == GroupStageType.ROUND_ROBIN)
+				groupStage[ i/4 ] = new RoundRobinTournament(compPerGroup, type ,getWinPoint(), 
+						getDrawPoint(), getLossPoint(), breaker, hasGroupAwayMatches() );
+			else
+				groupStage[ i/4 ] = new SwissTournament( compPerGroup, type ,getWinPoint(), 
+						getDrawPoint(), getLossPoint(), breaker, numOfGroupRound );
 		}
 	}
 
@@ -141,7 +174,8 @@ public class Multistage extends Tournament
 			
 			round = new Round( list.toArray( new Fixture[ list.size() ] ) );
 		}
-		else if ( roundNum >= 0 && roundNum - numberOfGroupStageRounds() < knockoutStage.getRoundArray().length )
+		else if ( roundNum >= 0 && roundNum - numberOfGroupStageRounds() < 
+				knockoutStage.getRoundArray().length )
 		{
 			round = knockoutStage.getRound( roundNum - numberOfGroupStageRounds() );
 		}
@@ -167,46 +201,7 @@ public class Multistage extends Tournament
 			incrementRoundNum();
 			if ( getCurrentRoundNum() == numberOfGroupStageRounds())
 			{
-				List<Competitor> allQualifiers = new ArrayList<Competitor> ();
-				
-				if ( extraQualifierTable != null )
-				{
-					Competitor[] extraQualifiers = new Competitor[ getNumberOfExtraQualifiers() ] ;
-					Competitor[] possibleQualifiers = extraQualifierTable.getCompetitors();
-					
-					
-					for ( int i = 0 ; i < extraQualifiers.length ; i++ )
-					{
-						extraQualifiers[ i ] = possibleQualifiers[ i ];
-					}
-					allQualifiers.addAll( Arrays.asList( extraQualifiers ) );
-					
-				}
-				
-				List<Competitor> groupWinners = Arrays.asList( getGroupWinners() );
-				
-				List< Competitor > finalOutput 
-					= new ArrayList<>( groupWinners.size() ); 
-				
-//				This loop ensures that two competitors from the same group don't meet in the knock-out stage
-				for( int i = 0 ; i < groupWinners.size() /2 ; i++ )
-				{
-					finalOutput.add( groupWinners.get( i ) ) ;
-					finalOutput.add( groupWinners.get( groupWinners.size() -1 - i ) );
-				}
-			
-				allQualifiers.addAll( finalOutput );
-				
-				try
-				{
-					knockoutStage = new SingleEliminationTournament(
-							allQualifiers.toArray( new Competitor[ allQualifiers.size() ]) );
-				}
-				catch (TournamentException e)
-				{
-					throw new 
-						MoveToNextRoundException("Error in entering knockout stage" );
-				}		
+				createKnockoutStage();		
 			}
 		}
 		else
@@ -221,6 +216,65 @@ public class Multistage extends Tournament
 		}
 			
 		
+	}
+
+	public int getNumberOfGroupRounds()
+	{
+		try
+		{
+			return getGroup( 0 ).getRoundArray().length ;
+		}
+		catch (GroupIndexOutOfBoundsException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0 ;
+	}
+	public void createKnockoutStage() throws MoveToNextRoundException
+	{
+		List<Competitor> allQualifiers = new ArrayList<Competitor> ();
+		
+		if ( extraQualifierTable != null )
+		{
+			Competitor[] extraQualifiers = new Competitor[ getNumberOfExtraQualifiers() ] ;
+			Competitor[] possibleQualifiers = extraQualifierTable.getCompetitors();
+			
+			
+			for ( int i = 0 ; i < extraQualifiers.length ; i++ )
+			{
+				extraQualifiers[ i ] = possibleQualifiers[ i ];
+			}
+			allQualifiers.addAll( Arrays.asList( extraQualifiers ) );
+			
+		}
+		
+		List<Competitor> groupWinners = Arrays.asList( getGroupWinners() );
+		
+		List< Competitor > finalOutput 
+			= new ArrayList<>( groupWinners.size() ); 
+		
+//				This loop ensures that two competitors from the same group don't meet in the knock-out stage
+		for( int i = 0 ; i < groupWinners.size() /2 ; i++ )
+		{
+			finalOutput.add( groupWinners.get( i ) ) ;
+			finalOutput.add( groupWinners.get( groupWinners.size() -1 - i ) );
+		}
+
+		allQualifiers.addAll( finalOutput );
+		
+		try
+		{
+			knockoutStage = new SingleEliminationTournament(
+					allQualifiers.toArray( 
+							new Competitor[ allQualifiers.size() ]) , 
+							hasKnockoutAwayMatches() );
+		}
+		catch (TournamentException e)
+		{
+			throw new 
+				MoveToNextRoundException("Error in entering knockout stage" );
+		}
 	}
 
 	public Competitor[] getGroupWinners()
@@ -357,7 +411,7 @@ public class Multistage extends Tournament
 		return groupAwayMatches;
 	}
 
-	public boolean haKnockoutAwayMatches()
+	public boolean hasKnockoutAwayMatches()
 	{
 		return knockoutAwayMatches;
 	}
@@ -403,6 +457,14 @@ public class Multistage extends Tournament
 		return extraQualifierTable;
 	}
 	
+	@Override
+	public String toString()
+	{
+		if ( isGroupStageOver() )
+			return knockoutStage.toString();
+		return groupStage[0 ].toString();
+		
+	}
 	private enum GroupWinners
 	{
 		/** 
@@ -426,5 +488,10 @@ public class Multistage extends Tournament
 			return numOfWinners;
 		}
 
+	}
+	
+	private enum GroupStageType
+	{
+		SWISS , ROUND_ROBIN;
 	}
 }

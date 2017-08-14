@@ -34,7 +34,7 @@ public class SingleEliminationTest {
 		SingleEliminationTournament tournament = null;
 		try 
 		{
-			tournament = new SingleEliminationTournament(comps , true );
+			tournament = new SingleEliminationTournament(comps , false );
 		} catch (TournamentException e) {
 			Test.displayMessage(e.getMessage());
 			System.exit(1);

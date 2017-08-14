@@ -35,8 +35,9 @@ public abstract class GroupTournament extends Tournament
 		super(comps);
 		SPORT_TYPE = type ;
 		COMPETITORS = comps ; 
-		if ( breaker == null || Arrays.stream( breaker.getBreakers() )
-				.anyMatch( b -> b.getType() != Breaker.GROUUP_BREAKER ))
+		if ( breaker == null || !Arrays.stream( breaker.getBreakers() )
+				.allMatch( b -> b.getType() == Breaker.GROUUP_BREAKER ||
+							b.getType() ==  Breaker.BOTH ))
 			throw new InvalidBreakerException("The breaker is invalid");
 		table = new StandingTable( SPORT_TYPE, COMPETITORS , pWin , pDraw , pLoss, breaker );
 		setName("" );
@@ -121,6 +122,10 @@ public abstract class GroupTournament extends Tournament
 				tournamentName.matches("[A-za-z]*" ) ? tournamentName : "" ;
 	}
 
+	public String toString()
+	{
+		return "Round " + getCurrentRoundNum();
+	}
 	
 	
 	

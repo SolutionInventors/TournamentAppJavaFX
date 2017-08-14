@@ -215,7 +215,7 @@ public class DoubleElimination extends EliminationTournament
 			}
 			else
 			{
-				setCurrentRoundNum( getCurrentRoundNum() + 1 );
+				incrementRoundNum();
 				Fixture[] losBracketFixtures = new Fixture[ losBracketWinners.length / 2];
 				Fixture[] wBracketFixtures = new Fixture[ losBracketFixtures.length 	];
 				
