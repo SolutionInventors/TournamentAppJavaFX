@@ -10,6 +10,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.group.InvalidBreakerException;
@@ -122,7 +123,15 @@ public class SwissTes
 						
 						
 					}
-					tournament.moveToNextRound(); 
+					try
+					{
+						tournament.moveToNextRound();
+					}
+					catch (MoveToNextRoundException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
 					
 					Test.displayMessage( builder.toString()  );
 					Test.displayStandingTable(   tournament.getTable().getStringTable() );
