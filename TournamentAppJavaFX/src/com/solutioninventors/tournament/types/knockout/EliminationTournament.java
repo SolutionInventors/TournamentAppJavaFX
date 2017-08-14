@@ -4,7 +4,7 @@
  *Aug 6, 2017
   s10:46:29 PM
  */
-package com.solutioninventors.tournament.knockout;
+package com.solutioninventors.tournament.types.knockout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,40 +13,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 
-public abstract class EliminationTournament implements Serializable
+public abstract class EliminationTournament extends Tournament implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 	
 	private int roundNum; 
-	private final Competitor[] competitors;
 	
 	public EliminationTournament ( Competitor[] comps )
 	{
-		competitors = comps ;
-		setCurrentRoundNum(0) ;
+		super( comps );
 	}
 
-	public Competitor[] getCompetitors()
-	{
-		return competitors;
-	}
-
-	public int getCurrentRoundNum()
-	{
-		return roundNum;
-	}
-
-	protected void setCurrentRoundNum(int roundNumber)
-	{
-		this.roundNum = roundNumber;
-	}
 	
-	
+
 	public Competitor[] getActiveCompetitors()
 	{
 		List< Competitor > list = new ArrayList<>();
@@ -77,11 +63,12 @@ public abstract class EliminationTournament implements Serializable
 	
 	}
 
-	public abstract boolean hasEnded();
 	
-	public abstract Competitor getWinner();
-	public abstract void setResult( Competitor com1 , double score1 , double score2 , Competitor com2 );
-	public abstract Round getCurrentRound();
-	public abstract void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException ;
+
+	public Round getRound(int i)
+	{
+		return getRoundArray()[ i ];
+	}
+	
 	
 }

@@ -16,13 +16,20 @@ public class Test {
 		StringBuilder builder = new StringBuilder(1000);
 
 		if (stringTable[0].length == 8)
-			builder.append("Name    W D L GF GA GD Pts\n");
+			builder.append(String.format( "%-20s %s", "Name" , 
+					"W D L  GF GA  GD  Pts\n"));
 		else
-			builder.append("Name     W D L Pts\n");
-
+			builder.append(String.format( "%-20s %s", "Name" , 
+					"W D L Pts\n"));
+			
 		for (int row = 0; row < stringTable.length; row++) {
 			for (int col = 0; col < stringTable[row].length; col++)
-				builder.append(String.format("%s ", stringTable[row][col]));
+			{
+				if ( col == 0 )
+					builder.append(String.format("%-20s ", stringTable[row][col]));
+				else
+					builder.append(String.format("%s ", stringTable[row][col]));
+			}
 
 			builder.append("\n");
 

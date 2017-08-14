@@ -21,11 +21,14 @@ public class Fixture {
 			if (score1 > score2) {
 				getCompetitorOne().incrementWins();
 				getCompetitorTwo().incrementLoss();
-			} else if (score1 == score2) // match is a draw
+			} 
+			else if (score1 == score2) // match is a draw
 			{
 				getCompetitorOne().incrementDraw();
 				getCompetitorTwo().incrementDraw();
-			} else {
+			}
+			else 
+			{
 				getCompetitorOne().incrementLoss();
 				getCompetitorTwo().incrementWins();
 			}
@@ -39,7 +42,7 @@ public class Fixture {
 			getCompetitorOne().addToHeadToHead( getCompetitorTwo() , score1); 
 			getCompetitorTwo().addToHeadToHead(getCompetitorOne(), score2 );
 			
-			
+			getCompetitorTwo().addAwayGoal( getCompetitorOne(), score2);//adds away goal
 			competitorOneScore = score1 ;
 			competitorTwoScore = score2 ;
 			

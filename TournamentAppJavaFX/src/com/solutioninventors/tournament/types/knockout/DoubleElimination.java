@@ -4,7 +4,7 @@
  *Aug 6, 2017
  *10:38:53 PM
  */
-package com.solutioninventors.tournament.knockout;
+package com.solutioninventors.tournament.types.knockout;
 
 import java.awt.Container;
 import java.util.ArrayList;
@@ -372,6 +372,13 @@ public class DoubleElimination extends EliminationTournament
 	public boolean hasEnded()
 	{
 		return false ;
+	}
+
+	@Override
+	public Round[] getRoundArray()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

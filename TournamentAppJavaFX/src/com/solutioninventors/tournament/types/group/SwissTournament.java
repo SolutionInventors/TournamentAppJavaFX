@@ -5,7 +5,7 @@
  * 9:15:00 PM
  *
  */
-package com.solutioninventors.tournament.group;
+package com.solutioninventors.tournament.types.group;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

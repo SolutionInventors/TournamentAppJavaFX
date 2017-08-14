@@ -11,8 +11,11 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import com.solutioninventors.tournament.Challenge;
-import com.solutioninventors.tournament.Tournament;
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.types.Challenge;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
@@ -40,7 +43,15 @@ public class ChallengeTest
 			inputRoundResults(tournament);
 			
 			Test.displayRoundResults( tournament.getCurrentRound() );
-			tournament.moveToNextRound();
+			try
+			{
+				tournament.moveToNextRound();
+			}
+			catch ( MoveToNextRoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		Test.displayMessage("The winner is " + tournament.getWinner() );
@@ -59,7 +70,15 @@ public class ChallengeTest
 		double score2 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
 				 com2 ));
 		
-		tournament.setResult( com1, score1, score2, com2);
+		try
+		{
+			tournament.setResult( com1, score1, score2, com2);
+		}
+		catch (NoFixtureException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Test.displayMessage("Round results:\n" + String.format("%s %.0f VS %.0f %s\n",
 				com1 , fixture.getCompetitorOneScore() ,

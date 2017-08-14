@@ -14,9 +14,7 @@ import javafx.stage.Stage;
  *
  */
 public class GUITest extends Application{
-	
 
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {

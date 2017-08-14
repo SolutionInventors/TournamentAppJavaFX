@@ -10,8 +10,9 @@ package com.solutioninventors.tournament.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
+
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 
 public class Round
 {
@@ -41,20 +42,25 @@ public class Round
 		return fixtures;
 	}
 
-//	public void setScores( Competitor comp1 , double compOneScore ,
-//								double comTwoScore , Competitor com2 ) throws NoSuchElementException
-//	{
-////		throws NoSubchElementException if the fixture is not found in the round
-//		Fixture temp = null ;
-//		
-//		
-//		temp = Arrays.stream(  getFixtures() )
-//				.filter( f -> f.getCompetitorOne().getName().equals( f.getCompetitorTwo().getName() ) )
-//				.findFirst().get();
-//		temp.setResult( compOneScore, comTwoScore );
-//		
-//	}
-
+	public void  setResult( Competitor com1 , double score1 , 
+					double score2 , Competitor com2 ) throws NoFixtureException
+	{
+		Predicate<Fixture> tester =
+				f -> f.getCompetitorOne().getName().equals( com1.getName() ) &&
+				f.getCompetitorTwo().getName().equals( com2.getName() ) ;
+		
+		if ( Arrays.stream( getFixtures() ).anyMatch( tester ) )
+		{
+			Arrays.stream( getFixtures() )
+			.filter( tester )
+			.findFirst()
+			.get().setResult( score1 , score2 );
+			
+		}
+		else
+			throw new NoFixtureException( "Fixture does not exist" );
+	}
+	
 	public Round invertHomeAndAway()
 	{
 		Fixture[] inverseFixtures = new Fixture[ getFixtures().length ];

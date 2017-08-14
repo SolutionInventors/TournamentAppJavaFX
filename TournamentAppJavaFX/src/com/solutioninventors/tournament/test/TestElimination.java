@@ -7,8 +7,11 @@ package com.solutioninventors.tournament.test;
 
 import java.io.File;
 
+import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 
 public class TestElimination {
@@ -24,14 +27,20 @@ public class TestElimination {
 		Competitor c4 = new Competitor( "Chinedu" ,  file ) ;
 		Competitor[] comps = { c1 , c2  , c3 , c4 }; 
 		
-		try {
+		try 
+		{
 			SingleEliminationTournament cp = new SingleEliminationTournament(comps);
 			cp.setResult(c1, 2, 5, c2);
 			cp.setResult(c3, 2, 5, c4);
 			cp.moveToNextRound();
-		} catch (TournamentException e) {
+		}
+		catch ( MoveToNextRoundException| NoFixtureException |
+				TournamentEndedException | TournamentException e)
+		{
 			e.printStackTrace();
 		}
+		
+		
 		
 	}
 
