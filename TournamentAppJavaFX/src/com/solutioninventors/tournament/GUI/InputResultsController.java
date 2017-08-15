@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
@@ -91,7 +92,7 @@ public class InputResultsController {
 	}// end set current
 	
 	@FXML
-	public void getResults(ActionEvent e) throws IOException {
+	public void getResults(ActionEvent e) throws IOException, NoFixtureException {
 		double scores[] = new double[competitors.length];
 		for (int i = 0; i < competitors.length; i++)
 			scores[i] = Double.valueOf(txtresults.get(i).getText());

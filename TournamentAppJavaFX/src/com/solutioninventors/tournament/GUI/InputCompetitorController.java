@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 
 import javafx.event.ActionEvent;

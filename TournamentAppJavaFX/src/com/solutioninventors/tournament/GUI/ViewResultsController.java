@@ -3,7 +3,7 @@ package com.solutioninventors.tournament.GUI;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import com.solutioninventors.tournament.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
