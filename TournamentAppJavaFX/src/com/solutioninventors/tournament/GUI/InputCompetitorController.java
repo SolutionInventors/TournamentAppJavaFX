@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.Challenge;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 
@@ -30,58 +32,102 @@ import javafx.stage.Stage;
 
 public class InputCompetitorController {
 	// shared variables
-		private String TournamentName;
-		private int noOfCompetitors;
-		
-		 @FXML
-		    private List<Label> SNArray ;
-		 @FXML
-		    private List<TextField> txtArray ;
-		 @FXML
-		    private List<ImageView> imgArray ;
-		
-		
-		
-		private File[] file;
-		private TextField[] txtfield;
-		
-		Competitor[] comps;
-		@FXML
-		public void chinedu() {
-			
-		}
-		
-		public void setTournamentName(String tournamentName) {
-			TournamentName = tournamentName;
-		}
-		public void setKOtournament(String tn, int noofcomp) {
-			TournamentName = tn;
-			noOfCompetitors=noofcomp;
-			file = new File[noofcomp];
-		}
+	private String TournamentName;
+	private int noOfCompetitors;
+	private int onOfRounds;
 
-		public void initialize() throws MalformedURLException {
-			File file = new File("C:\\Users\\Chinedu\\Pictures\\333.PNG");
-			String localUrl = file.toURI().toURL().toString();
-			Image localImage = new Image(localUrl, false);
-	        for (int i = 0; i <noOfCompetitors; i++) 
-	        	imgArray.get(i).setImage(localImage);
-			System.out.println("I ran adsf a dsf adsf ");
-			System.out.println(localUrl + " From athe init");
-	    }//end method initialize
-		
-	SingleEliminationTournament tournament = null;
+	private enum TournamentTypes {
+		KNOCKOUT, CHALLENGE,GROUP
+	};
+
+	private TournamentTypes TournamentType;
+	private Tournament tournament;
+	@FXML
+	private List<Label> SNArray;
+	@FXML
+	private List<TextField> txtArray;
+	@FXML
+	private List<ImageView> imgArray;
+
+	private File[] file;
+//	private TextField[] txtfield;
+
+	Competitor[] comps;
+
+	@FXML
+	public void chinedu() {
+
+	}
+
+	public void setTournamentName(String tournamentName) {
+		TournamentName = tournamentName;
+	}
+
+	public void setKOtournament(String tn, int noofcomp) {
+		TournamentName = tn;
+		noOfCompetitors = noofcomp;
+		//file = new File[noOfCompetitors];
+		TournamentType = TournamentTypes.KNOCKOUT;
+		initialize();
+	}
+
+	public void setChallengeTournament(String tn, int rud) {
+		TournamentName = tn;
+		onOfRounds = rud;
+		noOfCompetitors = 2;
+		TournamentType = TournamentTypes.CHALLENGE;
+		initialize();
+	}
 	
+	public void setGroupTournament(String tn, int rud, int noofcomp) {
+		TournamentName = tn;
+		onOfRounds = rud;
+		noOfCompetitors = noofcomp;
+		TournamentType = TournamentTypes.GROUP;
+		initialize();
+	}
+
+	public void initialize() {
+		file = new File[noOfCompetitors];
+		Image image = new Image("file:arsenal.jpg");
+		for (int i = 0; i < noOfCompetitors; i++) {
+			imgArray.get(i).setImage(image);
+			file[i] = new File("arsenal.jpg");
+		}
+		
+	}
+	
+	/*
+	 * public void initialize() throws MalformedURLException { File file = new
+	 * File("C:\\Users\\Chinedu\\Pictures\\333.PNG"); String localUrl =
+	 * file.toURI().toURL().toString(); Image localImage = new Image(localUrl,
+	 * false); for (int i = 0; i <noOfCompetitors; i++)
+	 * imgArray.get(i).setImage(localImage);
+	 * System.out.println("I ran adsf a dsf adsf "); System.out.println(localUrl +
+	 * " From athe init"); }//end method initialize
+	 */
+
 	@FXML
 	public void next(ActionEvent event) throws IOException {
-		
+
 		comps = new Competitor[noOfCompetitors];
 		for (int i = 0; i < comps.length; i++) {
 			comps[i] = new Competitor(txtArray.get(i).getText(), file[i]);
 			System.out.println(txtArray.get(i).getText());
 		}
 		try {
-			tournament = new SingleEliminationTournament(comps);
+			switch (TournamentType) {
+			case KNOCKOUT:
+				tournament = new SingleEliminationTournament(comps,false);
+				break;
+			case CHALLENGE:
+				tournament = new Challenge(comps, onOfRounds);
+				break;
+			case GROUP:
+				tournament = new Challenge(comps, onOfRounds);
+				break;
+			}
+			
 		} catch (TournamentException e) {
 			e.printStackTrace();
 		}
@@ -96,9 +142,10 @@ public class InputCompetitorController {
 		primaryStage.show();
 		primaryStage.setTitle(TournamentName);
 	}
+
 	public void changeImage1(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File ("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
 		File file1 = fc.showOpenDialog(null);
 		file[0] = new File(file1.toURI());
 		// for the image
@@ -107,10 +154,12 @@ public class InputCompetitorController {
 			Image localImage = new Image(localUrl, false);
 			System.out.println(localUrl);
 			imgArray.get(0).setImage(localImage);
-		}}// end change image
+		}
+	}// end change image
+
 	public void changeImage2(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File ("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
 		File file2 = fc.showOpenDialog(null);
 		file[1] = new File(file2.toURI());
 		System.out.println(file2);
@@ -119,10 +168,12 @@ public class InputCompetitorController {
 			String localUrl = file2.toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(1).setImage(localImage);
-		}}// end change image
+		}
+	}// end change image
+
 	public void changeImage3(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File ("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
 		File file3 = fc.showOpenDialog(null);
 		file[2] = new File(file3.toURI());
 		// for the image
@@ -130,18 +181,21 @@ public class InputCompetitorController {
 			String localUrl = file3.toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(2).setImage(localImage);
-		}}// end change image
+		}
+	}// end change image
+
 	public void changeImage4(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File ("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
 		File file4 = fc.showOpenDialog(null);
 		file[3] = new File(file4.toURI());
 		// for the image
 		if (file4 != null) {
 			String localUrl = file4.toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
-			
-			imgArray.get(3).setImage(localImage);
-		}}// end change image
 
-}//end class
+			imgArray.get(3).setImage(localImage);
+		}
+	}// end change image
+
+}// end class

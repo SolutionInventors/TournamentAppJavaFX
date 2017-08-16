@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -29,13 +30,14 @@ public class ButtonsController {
 		primaryStage.show();
 		primaryStage.setTitle(title);}
 	
-	public void next(ActionEvent event, String fxml, String Cssfile, String title) throws IOException {
-		((Node)event.getSource()).getScene().getWindow().hide();
+	public void next(Pane root, ActionEvent event, String title) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
 		Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(fxml));
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		//scene.getStylesheets().add(getClass().getResource(Cssfile).toExternalForm());
 		primaryStage.show();
-		primaryStage.setTitle(title);}
+		primaryStage.setTitle(title);
+		}
+	public void cancel(ActionEvent event) {
+	}
 }

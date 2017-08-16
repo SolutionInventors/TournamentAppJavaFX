@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
@@ -34,7 +34,7 @@ public class FixturesController {
 	@FXML
 	private Button btnpregroup;
 	private Competitor[] competitors;
-	private SingleEliminationTournament currentTour;
+	private Tournament tournament;
 	String[] abc = new String[4];
 
 	public void initialize() {
@@ -48,13 +48,13 @@ public class FixturesController {
 
 	}// end method initialize
 
-	public void setTournament(SingleEliminationTournament value) {
+	public void setTournament(Tournament value) {
 	
-		currentTour = value;
-		Fixture[] currentFixtures = currentTour.getCurrentRound().getFixtures();
-		competitors = currentTour.getCompetitors();
+		tournament = value;
+		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
+		competitors = tournament.getCompetitors();
 		int i = 0;
-		for (int j = 0; j < competitors.length/2; j++) {
+		for (int j = 0; j < currentFixtures.length; j++) {
 			
 			lblcompArray.get(i).setVisible(true);
 			lblcompArray.get(i).setText(currentFixtures[j].getCompetitorOne().toString());
@@ -90,7 +90,7 @@ public class FixturesController {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource("InputResults.fxml").openStream());
 		InputResultsController vr = (InputResultsController) loader.getController();
-		vr.setTournament(currentTour);
+		vr.setTournament(tournament);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();

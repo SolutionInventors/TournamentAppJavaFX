@@ -28,10 +28,10 @@
             <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="txtfield1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtfield2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtfield3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtfield4" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtfield1" text="First" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtfield2" text="Second" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtfield3" text="Third" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtfield4" text="Fourth" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
@@ -98,29 +98,29 @@
    </children>
    
    <fx:define>
-        <ArrayList fx:id="SNArray" >
-            <fx:reference source="sn1"/>
-            <fx:reference source="sn2"/>
-            <fx:reference source="sn3"/>
-            <fx:reference source="sn4"/>
+        <ArrayList fx:id="SNArray">
+            <fx:reference source="sn1" />
+            <fx:reference source="sn2" />
+            <fx:reference source="sn3" />
+            <fx:reference source="sn4" />
             
         </ArrayList>
     </fx:define>
     <fx:define>
-        <ArrayList fx:id="txtArray" >
-            <fx:reference source="txtfield1"/>
-            <fx:reference source="txtfield2"/>
-            <fx:reference source="txtfield3"/>
-            <fx:reference source="txtfield4"/>
+        <ArrayList fx:id="txtArray">
+            <fx:reference source="txtfield1" />
+            <fx:reference source="txtfield2" />
+            <fx:reference source="txtfield3" />
+            <fx:reference source="txtfield4" />
             
         </ArrayList>
     </fx:define>
     <fx:define>
-        <ArrayList fx:id="imgArray" >
-            <fx:reference source="img1"/>
-            <fx:reference source="img2"/>
-            <fx:reference source="img3"/>
-             <fx:reference source="img4"/>
+        <ArrayList fx:id="imgArray">
+            <fx:reference source="img1" />
+            <fx:reference source="img2" />
+            <fx:reference source="img3" />
+             <fx:reference source="img4" />
             
         </ArrayList>
     </fx:define>

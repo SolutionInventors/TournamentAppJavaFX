@@ -48,11 +48,11 @@
             <RadioButton fx:id="rbGroup" mnemonicParsing="false" onAction="#radioSelected" text="Group tournament" toggleGroup="$TorType" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="246.0" text="Please input the name of the Tournament" GridPane.rowIndex="6" />
             <Label text="Tournament Name e.g EPL 2016/17" GridPane.rowIndex="7" />
-            <TextField fx:id="tournamentName" GridPane.rowIndex="8" />
+            <TextField fx:id="tournamentName" text="Test tournament" GridPane.rowIndex="8" />
             <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="122.0" text="Goal Game Only" GridPane.rowIndex="9" />
          </children>
       </GridPane>
-      <TextArea fx:id="txtAdisplay" editable="false" layoutX="345.0" layoutY="64.0" prefHeight="262.0" prefWidth="245.0" text="A knockout tournament is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination" wrapText="true">
+      <TextArea fx:id="txtAdisplay" editable="false" layoutX="308.0" layoutY="64.0" prefHeight="262.0" prefWidth="282.0" text="A knockout tournament is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination" wrapText="true">
          <font>
             <Font name="Times New Roman" size="20.0" />
          </font></TextArea>
@@ -69,8 +69,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#previous" text="&lt;&lt;Previous" />
             <Button mnemonicParsing="false" onAction="#next" text="Next&gt;&gt;" GridPane.columnIndex="1" />
-            <Button fx:id="finish" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Finish" textAlignment="CENTER" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" text="Cancel" GridPane.columnIndex="3" />
+            <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.columnIndex="3" />
          </children>
       </GridPane>
    </children>

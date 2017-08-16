@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.solutioninventors.tournament.GUI;
 
 import javafx.application.Application;
@@ -9,21 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * @author ChineduKnight
- *
- */
-public class GUITest extends Application{
+public class AACustomtest extends Application{
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("FRSCIScreen.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
-			scene.getStylesheets().add(getClass().getResource("lookfeel.css").toExternalForm());
-			primaryStage.setTitle("Tournament APP");
+			primaryStage.setTitle("Media Test");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

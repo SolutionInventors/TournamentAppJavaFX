@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class TournamentTypeScreenController implements Initializable {
 	String message;
 	String nextFxml = "KnockoutScreen.fxml";
-
+	ButtonsController btn = new ButtonsController();
 	@FXML
 	private RadioButton rbKnockOut;
 	@FXML
@@ -103,7 +103,10 @@ public class TournamentTypeScreenController implements Initializable {
 	public void initialize() {
 		finish.disableProperty().set(true);
 	}
-
+	public void cancel(ActionEvent event) throws IOException {
+		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
