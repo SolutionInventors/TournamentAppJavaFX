@@ -33,16 +33,10 @@ public class SingleEliminationTest {
 
 		Competitor[] comps = { c1, c2, c3, c4 };
 
-<<<<<<< HEAD
 		Tournament tournament = null;
 		try 
 		{
 			tournament = new SingleEliminationTournament(comps , false );
-=======
-		SingleEliminationTournament tournament = null;
-		try {
-			tournament = new SingleEliminationTournament(comps, false);
->>>>>>> refs/remotes/origin/master
 		} catch (TournamentException e) {
 			Test.displayMessage(e.getMessage());
 			System.exit(1);
@@ -53,13 +47,9 @@ public class SingleEliminationTest {
 		while (!tournament.hasEnded()) {
 			Test.displayMessage("Welcome to the " + tournament.toString());
 			inputRoundResults(tournament);
-<<<<<<< HEAD
 
 			while ( ( 	(SingleEliminationTournament)tournament)
 						.hasTie())
-=======
-			while (tournament.hasTie())
->>>>>>> refs/remotes/origin/master
 				breakTies(tournament);
 			Test.displayRoundResults(tournament.getCurrentRound());
 			tournament.moveToNextRound();

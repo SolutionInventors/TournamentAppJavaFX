@@ -53,7 +53,6 @@ public class RoundRobinTest {
 
 		Test.displayMessage("Robin begins");
 
-<<<<<<< HEAD
 		Breaker[] breakers = {
 				 Breaker.HEAD_TO_HEAD			 
 		};
@@ -66,20 +65,10 @@ public class RoundRobinTest {
 		}
 		catch (InvalidBreakerException e)
 		{
-=======
-		Breaker[] breakers = { Breaker.HEAD_TO_HEAD };
-
-		RoundRobinTournament tournament = null;
-		try {
-			TieBreaker tieBreakers = new TieBreaker(breakers);
-			tournament = new RoundRobinTournament(comps, SportType.GOALS_ARE_SCORED, 3, 1, 0, tieBreakers, false);
-		} catch (InvalidBreakerException e) {
->>>>>>> refs/remotes/origin/master
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		
+
 		StringBuilder builder = new StringBuilder( 300 );
 		
 		builder.append( "The competitors are: \n" );
@@ -109,46 +98,7 @@ public class RoundRobinTest {
 			{
 				Competitor com1 = currentFixtures[i].getCompetitorOne() ;
 				Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
-=======
->>>>>>> refs/remotes/origin/master
 
-		StringBuilder builder = new StringBuilder(300);
-
-		builder.append("The competitors are: \n");
-		Competitor[] tournamentComps = tournament.getCompetitors();
-
-		for (int i = 0; i < tournamentComps.length; i++) {
-			builder.append((i + 1) + ". " + tournamentComps[i] + " \n");
-		}
-
-		Test.displayMessage(builder.toString());
-		Test.displayStandingTable(tournament.getTable().getStringTable());
-		while (!tournament.hasEnded())// tournament is ongoing
-		{
-
-			Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
-			Test.displayFixtures(currentFixtures);
-
-			builder.delete(0, builder.length());
-			builder.append("Roound results are: \n");
-			for (int i = 0; i < currentFixtures.length; i++) {
-				Competitor com1 = currentFixtures[i].getCompetitorOne();
-				Competitor com2 = currentFixtures[i].getCompetitorTwo();
-
-				double score1 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com1));
-				double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
-
-				tournament.setResult(com1, score1, score2, com2);
-				builder.append(String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
-						currentFixtures[i].getCompetitorTwoScore(), com2));
-
-			}
-			try {
-				tournament.moveToNextRound();
-			} catch (MoveToNextRoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-<<<<<<< HEAD
 			} 
 			
 			Test.displayMessage( builder.toString()  );
@@ -158,35 +108,7 @@ public class RoundRobinTest {
 		}
 		
 		Test.displayMessage( "The winner is " + tournament.getWinner()) ;
-		Test.displayMessage("The Round results are : " );
-		try
-		{
-			for ( int i = 0 ; i < tournament.getRoundArray().length ; i ++ )
-			{
-				Test.displayMessage("Round " + i +":\n");
-				Test.displayRoundResults( ( 
-						(GroupTournament ) tournament).getRound(0) //GroupTournament specific
-						);
-=======
->>>>>>> refs/remotes/origin/master
-			}
-
-			Test.displayMessage(builder.toString());
-			Test.displayStandingTable(tournament.getTable().getStringTable());
-		}
-
-		Test.displayMessage("The winner is " + tournament.getWinner());
-		Test.displayMessage("The Round results are : ");
-		try {
-			for (int i = 0; i < tournament.getRoundArray().length; i++) {
-				Test.displayMessage("Round " + i + ":\n");
-				Test.displayRoundResults(tournament.getRound(0));
-			}
-
-		} catch (RoundIndexOutOfBoundsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 }

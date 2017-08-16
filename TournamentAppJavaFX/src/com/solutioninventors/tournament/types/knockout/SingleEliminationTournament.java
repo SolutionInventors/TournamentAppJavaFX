@@ -45,36 +45,20 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	public SingleEliminationTournament(Competitor[] comps, boolean away) throws TournamentException {
 		super(comps);
-<<<<<<< HEAD
-		
-=======
-		double validator = (Math.log(getCompetitors().length)) / (Math.log(2));
-		if (!(validator % 1 == 0.0f)) // the number is valid
-			throw new TournamentException("The number of Competitors must be a power of 2 ");
 
->>>>>>> refs/remotes/origin/master
 		roundList = new ArrayList<>();
 		AWAY = away;
 		createTounament();
 		tieList = new ArrayList<>();
 		activeTies = new ArrayList<>();
-<<<<<<< HEAD
-		
+
 	}
 	
 	public SingleEliminationTournament(Competitor[] comps) throws TournamentException
 	{
 		this( comps , false );
 	}
-	
-=======
 
-	}
->>>>>>> refs/remotes/origin/master
-
-	public SingleEliminationTournament(Competitor[] comps) throws TournamentException {
-		this(comps, false);
-	}
 
 	private void createTounament() {
 		Competitor[] tempComps = getCompetitors();
