@@ -15,6 +15,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Multistage;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -64,7 +65,7 @@ public class MultistageTest
 				 
 		};
 		
-		Multistage tournament = null ;
+		Tournament tournament = null ;
 		
 		TieBreaker tieBreakers;
 		try
@@ -113,7 +114,7 @@ public class MultistageTest
 		
 		
 		Test.displayMessage( builder.toString() );
-		displayGroupStanding(tournament);
+		displayGroupStanding( ( Multistage ) tournament);
 		
 //		
 		while( !tournament.hasEnded() )//tournament is ongoing
@@ -162,19 +163,20 @@ public class MultistageTest
 			} 
 			
 			
-				
+			Multistage multiStageSpecific = ( Multistage )  tournament;
+					
 			if (  tournament.getCurrentRoundNum() <=
-					tournament.getNumberOfGroupRounds()) 
+					multiStageSpecific.getNumberOfGroupRounds()) 
 			{
-				displayGroupStanding( tournament );
-				if (tournament.getNumberOfExtraQualifiers() != 0) 
+				displayGroupStanding( multiStageSpecific );
+				if (multiStageSpecific.getNumberOfExtraQualifiers() != 0) 
 				{
 				String position = 
-						tournament.getNumberOfGroups() == 3 ? "3rd" : "4th";
+						multiStageSpecific.getNumberOfGroups() == 3 ? "3rd" : "4th";
 			
 				Test.displayMessage(
 						String.format("The %s place ranking able is shown ", position) );
-				Test.displayStandingTable(tournament.getPossibleQualifierTable()
+				Test.displayStandingTable( multiStageSpecific.getPossibleQualifierTable()
 											.getStringTable());
 				}
 			}

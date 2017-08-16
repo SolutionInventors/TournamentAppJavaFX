@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
+import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.group.GroupTournament;
 import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.utils.Breaker;
@@ -56,7 +58,7 @@ public class RoundRobinTest
 				 Breaker.HEAD_TO_HEAD			 
 		};
 		
-		RoundRobinTournament tournament = null ;
+		Tournament tournament = null ;
 		try
 		{
 			TieBreaker tieBreakers = new TieBreaker( breakers );
@@ -80,9 +82,13 @@ public class RoundRobinTest
 		
 		
 		Test.displayMessage( builder.toString() );
-		Test.displayStandingTable(   tournament.getTable().getStringTable() );
+		
+		Test.displayStandingTable(   
+				( (GroupTournament ) tournament)
+				.getTable().getStringTable() );// groupTournament specific
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
+			
 			
 			Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
 			Test.displayFixtures( currentFixtures );
@@ -117,7 +123,9 @@ public class RoundRobinTest
 			} 
 			
 			Test.displayMessage( builder.toString()  );
-			Test.displayStandingTable(   tournament.getTable().getStringTable() );
+			Test.displayStandingTable(   
+					( (GroupTournament ) tournament)
+					.getTable().getStringTable() );// groupTournament specific
 		}
 		
 		Test.displayMessage( "The winner is " + tournament.getWinner()) ;
@@ -127,7 +135,9 @@ public class RoundRobinTest
 			for ( int i = 0 ; i < tournament.getRoundArray().length ; i ++ )
 			{
 				Test.displayMessage("Round " + i +":\n");
-				Test.displayRoundResults( tournament.getRound(0));
+				Test.displayRoundResults( ( 
+						(GroupTournament ) tournament).getRound(0) //GroupTournament specific
+						);
 			}
 			
 		}

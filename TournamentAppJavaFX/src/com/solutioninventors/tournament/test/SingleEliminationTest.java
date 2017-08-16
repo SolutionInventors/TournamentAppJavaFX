@@ -14,6 +14,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -31,7 +32,7 @@ public class SingleEliminationTest {
 
 		Competitor[] comps = { c1, c2, c3, c4 };
 
-		SingleEliminationTournament tournament = null;
+		Tournament tournament = null;
 		try 
 		{
 			tournament = new SingleEliminationTournament(comps , false );
@@ -47,7 +48,8 @@ public class SingleEliminationTest {
 
 			inputRoundResults(tournament);
 
-			while (tournament.hasTie())
+			while ( ( 	(SingleEliminationTournament)tournament)
+						.hasTie())
 				breakTies(tournament);
 
 			Test.displayRoundResults(tournament.getCurrentRound());
@@ -58,9 +60,10 @@ public class SingleEliminationTest {
 
 	}
 
-	private static void breakTies(SingleEliminationTournament tournament) {
+	private static void breakTies(Tournament tournament) {
 		StringBuilder builder = new StringBuilder(400);
-		Fixture[] currentFixtures = tournament.getActiveTies();
+		Fixture[] currentFixtures = ( (SingleEliminationTournament)tournament)
+									.getActiveTies(); // singleElim specific
 		Test.displayMessage("Current Ties: \n");
 		Test.displayFixtures(currentFixtures);
 
@@ -85,12 +88,11 @@ public class SingleEliminationTest {
 			builder.append(String.format("%s %.0f VS %.0f %s\n", com1, score1, score2, com2));
 
 		}
-
 		Test.displayMessage(builder.toString());
 
 	}
 
-	public static void inputRoundResults(SingleEliminationTournament tournament) {
+	public static void inputRoundResults(Tournament tournament) {
 		StringBuilder builder = new StringBuilder(400);
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		Test.displayFixtures(currentFixtures);
@@ -113,7 +115,8 @@ public class SingleEliminationTest {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
+			builder.append(
+					String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
 					currentFixtures[i].getCompetitorTwoScore(), com2));
 
 		}

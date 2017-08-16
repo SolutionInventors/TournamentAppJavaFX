@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
@@ -24,11 +25,16 @@ public abstract class EliminationTournament extends Tournament implements Serial
 
 	private static final long serialVersionUID = 1L;
 	
-	private int roundNum; 
 	
-	public EliminationTournament ( Competitor[] comps )
+	public EliminationTournament ( Competitor[] comps ) throws TournamentException
 	{
 		super( comps );
+		double validator = ( Math.log( comps.length ) )/
+				( Math.log( 2 ) );
+		if ( ! ( validator % 1 == 0.0f)  ) //the number is invalid 
+			throw new TournamentException( "The number of Competitors must be a power of 2 " );
+
+
 	}
 
 	
@@ -41,11 +47,9 @@ public abstract class EliminationTournament extends Tournament implements Serial
 						.filter( c -> ! c.isEliminated() )
 						.collect( Collectors.toList() ) ;
 		
-		Competitor[] temp = new Competitor[ list.size() ];
-		list.toArray( temp );
 		
-		return temp ;
-	
+		return list.toArray( new Competitor[ list.size() ] ) ;
+		
 	}
 	
 	public Competitor[] getEliminatedCompetitors()

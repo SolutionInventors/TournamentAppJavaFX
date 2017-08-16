@@ -6,14 +6,9 @@
  */
 package com.solutioninventors.tournament.types.knockout;
 
-import java.rmi.activation.ActivateFailedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
-
-import javax.swing.JOptionPane;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -52,10 +47,6 @@ public class SingleEliminationTournament extends EliminationTournament
 			Competitor[] comps , boolean away) throws TournamentException
 	{
 		super(comps);
-		double validator = ( Math.log( getCompetitors().length ) )/
-							( Math.log( 2 ) );
-		if ( ! ( validator % 1 == 0.0f)  ) //the number is valid 
-			throw new TournamentException( "The number of Competitors must be a power of 2 " );
 		
 		roundList = new ArrayList<>();
 		AWAY = away;
@@ -69,10 +60,6 @@ public class SingleEliminationTournament extends EliminationTournament
 	{
 		this( comps , false );
 	}
-	
-	
-
-	
 	
 
 	private void createTounament()

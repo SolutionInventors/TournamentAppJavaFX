@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.group.GroupTournament;
 import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.utils.Breaker;
@@ -55,7 +57,7 @@ public class SwissTes
 				};
 				
 				
-				SwissTournament tournament = null ;
+				Tournament tournament = null ;
 				try
 				{
 					TieBreaker tieBreakers = new TieBreaker( breakers );
@@ -89,7 +91,9 @@ public class SwissTes
 				
 				
 				Test.displayMessage( builder.toString() );
-				Test.displayStandingTable(   tournament.getTable().getStringTable() );
+				Test.displayStandingTable(   ( (GroupTournament)tournament )
+											  .getTable() // groupTournament specific
+											  .getStringTable() );
 				while( !tournament.hasEnded() )//tournament is ongoing
 				{
 					
@@ -134,7 +138,9 @@ public class SwissTes
 					} 
 					
 					Test.displayMessage( builder.toString()  );
-					Test.displayStandingTable(   tournament.getTable().getStringTable() );
+					Test.displayStandingTable(  ((GroupTournament)tournament)
+												.getTable() //GroupTournament specific
+												.getStringTable() );
 				}
 				
 				Test.displayMessage( "The winner is " + tournament.getWinner()) ;
