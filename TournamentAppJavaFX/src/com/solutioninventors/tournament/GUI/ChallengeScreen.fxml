@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,7 +24,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Next &gt;&gt;" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" onAction="#next" text="Next &gt;&gt;" GridPane.columnIndex="1">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font></Button>
@@ -108,7 +108,11 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </CheckBox>
-            <Spinner prefHeight="25.0" prefWidth="169.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <TextField fx:id="txtnoOfrounds" promptText="e.g 1,2,3..." GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
          </children>
       </GridPane>
       <Text fontSmoothingType="LCD" layoutX="37.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a challenge, two competitors, chanpion and challenger (or number one contender) battle for a titile. This is used in boxing, world class championshop etc. A challenge is an alternative to tournament" wrappingWidth="500.0">

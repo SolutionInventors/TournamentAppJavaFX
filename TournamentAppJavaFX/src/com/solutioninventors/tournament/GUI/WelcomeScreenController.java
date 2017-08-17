@@ -2,6 +2,7 @@ package com.solutioninventors.tournament.GUI;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.text.Text;
@@ -26,7 +27,7 @@ public class WelcomeScreenController {
 	private Label Help;
 	@FXML
 	private Text mainmenu;
-
+	ButtonsController btn = new ButtonsController();
 	// Event Listener on Label[#NewT].onMouseClicked
 	@FXML
 	public void newTournament(MouseEvent event) throws IOException {
@@ -38,18 +39,7 @@ public class WelcomeScreenController {
 		primaryStage.show();
 		primaryStage.setTitle("Tournament App");
 		
-		
-		/*
-		LayoutSizingAligning li = new LayoutSizingAligning();
-		li.start(primaryStage);*/
-		
 	}
-	
-	//called when the class is created
-//	  public void initialize() {
-//	        int count = 1 ;
-//	        for (int i = 0; i <3; i++) {
-//				System.out.println("I am here "+ i);
-//			}
-//	    }
+
+
 }

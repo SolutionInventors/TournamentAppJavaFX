@@ -20,10 +20,11 @@ import com.solutioninventors.tournament.utils.Fixture;
 
 public class SingleEliminationTest {
 
-	public static void main(String[] args) throws  MoveToNextRoundException {
-		File file = new File("golf.jpg");
-		//File file = new File(InputStream = new InputStream(getClass().getResourceAsStream("/img/icon2.png")))
-	//	getClass().getResourceAsStream("/img/icon2.png");
+	public static void main(String[] args) throws MoveToNextRoundException {
+		File file = new File("C:\\Users\\Chinedu\\Pictures\\Arsenal logo.png");
+		// File file = new File(InputStream = new
+		// InputStream(getClass().getResourceAsStream("/img/icon2.png")))
+		// getClass().getResourceAsStream("/img/icon2.png");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
@@ -32,9 +33,8 @@ public class SingleEliminationTest {
 		Competitor[] comps = { c1, c2, c3, c4 };
 
 		SingleEliminationTournament tournament = null;
-		try 
-		{
-			tournament = new SingleEliminationTournament(comps , false );
+		try {
+			tournament = new SingleEliminationTournament(comps, false);
 		} catch (TournamentException e) {
 			Test.displayMessage(e.getMessage());
 			System.exit(1);
@@ -73,12 +73,9 @@ public class SingleEliminationTest {
 			double score1 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com1));
 			double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
 
-			try
-			{
+			try {
 				tournament.setResult(com1, score1, score2, com2);
-			}
-			catch (NoFixtureException e)
-			{
+			} catch (NoFixtureException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -104,13 +101,9 @@ public class SingleEliminationTest {
 			double score1 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com1));
 			double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
 
-			try
-			{
+			try {
 				tournament.setResult(com1, score1, score2, com2);
-			}
-			catch (NoFixtureException e)
-			{
-				// TODO Auto-generated catch block
+			} catch (NoFixtureException e) {
 				e.printStackTrace();
 			}
 			builder.append(String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),

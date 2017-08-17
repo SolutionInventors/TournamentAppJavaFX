@@ -29,7 +29,7 @@
             <Button mnemonicParsing="false" onAction="#previous" text="&lt;&lt; Previous" />
             <Button mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="73.0" text="Next &gt;&gt;" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Finish" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Cancel" GridPane.columnIndex="3" />
+            <Button mnemonicParsing="false"  onAction="#previous" prefHeight="25.0" prefWidth="73.0" text="Cancel" GridPane.columnIndex="3" />
          </children>
       </GridPane>
       <Label layoutX="168.0" layoutY="23.0" text="KNOCKOUT TOURNAMENT SPECS">
