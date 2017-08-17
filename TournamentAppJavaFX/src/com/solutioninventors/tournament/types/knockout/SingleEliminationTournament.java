@@ -6,14 +6,9 @@
  */
 package com.solutioninventors.tournament.types.knockout;
 
-import java.rmi.activation.ActivateFailedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
-
-import javax.swing.JOptionPane;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -24,6 +19,7 @@ import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 
 public class SingleEliminationTournament extends EliminationTournament {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * this class simulates a single elimination tournament The class constructor
 	 * throwa a TournamentException if the number of competitors inputs is not a

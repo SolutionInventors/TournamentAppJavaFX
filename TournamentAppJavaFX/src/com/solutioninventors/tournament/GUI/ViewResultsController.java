@@ -106,7 +106,6 @@ public class ViewResultsController {
 				//e.printStackTrace();
 				System.out.println("Error move to next round");
 			}
-			
 			((Node) event.getSource()).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("Fixtures.fxml").openStream());
@@ -117,6 +116,7 @@ public class ViewResultsController {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("Tournament name");
+
 		} else {
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
@@ -124,3 +124,5 @@ public class ViewResultsController {
 		
 	}// end nextRound
 }// end class
+
+
