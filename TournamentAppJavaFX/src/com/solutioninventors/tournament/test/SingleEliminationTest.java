@@ -44,16 +44,12 @@ public class SingleEliminationTest {
 
 		while (!tournament.hasEnded()) {
 			Test.displayMessage("Welcome to the " + tournament.toString());
-
 			inputRoundResults(tournament);
-
 			while (tournament.hasTie())
 				breakTies(tournament);
-
 			Test.displayRoundResults(tournament.getCurrentRound());
 			tournament.moveToNextRound();
 		}
-
 		Test.displayMessage("The winner is " + tournament.getWinner());
 
 	}

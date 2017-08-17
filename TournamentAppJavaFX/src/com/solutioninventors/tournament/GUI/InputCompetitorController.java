@@ -89,6 +89,12 @@ public class InputCompetitorController {
 
 	public void initialize() {
 		file = new File[noOfCompetitors];
+		Image image = new Image("file:arsenal.jpg");
+		for (int i = 0; i < noOfCompetitors; i++) {
+			imgArray.get(i).setImage(image);
+			file[i] = new File("arsenal.jpg");
+		}
+		
 	}
 	
 	/*
@@ -112,7 +118,7 @@ public class InputCompetitorController {
 		try {
 			switch (TournamentType) {
 			case KNOCKOUT:
-				tournament = new SingleEliminationTournament(comps);
+				tournament = new SingleEliminationTournament(comps,false);
 				break;
 			case CHALLENGE:
 				tournament = new Challenge(comps, onOfRounds);

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -40,6 +42,7 @@ public class InputResultsController {
 	private Competitor[] competitors;
 	private Tournament tournament;
 	ViewResultsController vr;
+	Fixture[] currentFixtures;
 	String[] abc = new String[4];
 
 	public void initialize() {
@@ -57,10 +60,10 @@ public class InputResultsController {
 	public void setTournament(Tournament value) {
 
 		tournament = value;
-		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
+		currentFixtures = tournament.getCurrentRound().getFixtures();
 		competitors = tournament.getCompetitors();
 		int i = 0;
-		for (int j = 0; j < currentFixtures.length ; j++) {
+		for (int j = 0; j < currentFixtures.length; j++) {
 
 			lblcompArray.get(i).setVisible(true);
 			lblcompArray.get(i).setText(currentFixtures[j].getCompetitorOne().toString());
@@ -83,29 +86,44 @@ public class InputResultsController {
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
-			
+
 			txtresults.get(i).setVisible(true);
-			txtresults.get(i+1).setVisible(true);
-			
+			txtresults.get(i + 1).setVisible(true);
+
 			i += 2;// increment i by 2
 		} // end for loop
 
 	}// end set current
-	
+
 	@FXML
 	public void getResults(ActionEvent e) throws IOException, NoFixtureException {
-		double scores[] = new double[competitors.length];
-		for (int i = 0; i < competitors.length; i++)
-			scores[i] = Double.valueOf(txtresults.get(i).getText());
-		// pass result to tournament
-		// tournament.setResult(com1, score1, score2, com2);
-		int i=0;
-		for (int j = 0; j < competitors.length / 2; j ++) {
-			tournament.setResult(competitors[i], scores[i], scores[i + 1], competitors[i + 1]);
-			i+=2;
-			System.out.println("I ran scores are "+ scores[0] + " " + scores[1]);
+		/*
+		 * double scores[] = new double[currentFixtures.length*2]; for (int i = 0; i <
+		 * currentFixtures.length*2; i++) scores[i] =
+		 * Double.valueOf(txtresults.get(i).getText()); // pass result to tournament int
+		 * i=0; for (int j = 0; j < currentFixtures.length; j ++) {
+		 * tournament.setResult(competitors[i], scores[i], scores[i + 1], competitors[i
+		 * + 1]); i+=2; System.out.println("I ran scores are "+ scores[0] + " " +
+		 * scores[1]); }
+		 */
+		int count = 0;
+		for (int i = 0; i < currentFixtures.length; i++) {
+			Competitor com1 = currentFixtures[i].getCompetitorOne();
+			Competitor com2 = currentFixtures[i].getCompetitorTwo();
+
+			double score1 = Double.valueOf(txtresults.get(count).getText());
+			double score2 = Double.valueOf(txtresults.get(count + 1).getText());
+
+			try {
+				tournament.setResult(com1, score1, score2, com2);
+			} catch (NoFixtureException ee) {
+				ee.printStackTrace();
+			}
+
+			count += 2;
 		}
-		//open results window
+
+		// open results window
 		((Node) e.getSource()).getScene().getWindow().hide();
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
