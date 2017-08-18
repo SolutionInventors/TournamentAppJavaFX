@@ -13,8 +13,13 @@ import java.util.List;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.group.InvalidBreakerException;
+import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
+import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,9 +40,13 @@ public class InputCompetitorController {
 	private String TournamentName;
 	private int noOfCompetitors;
 	private int onOfRounds;
+	// for group
+	double winpoint;
+	double drawpoint;
+	double losspoint;
 
 	private enum TournamentTypes {
-		KNOCKOUT, CHALLENGE,GROUP
+		KNOCKOUT, CHALLENGE, GROUP
 	};
 
 	private TournamentTypes TournamentType;
@@ -50,7 +59,7 @@ public class InputCompetitorController {
 	private List<ImageView> imgArray;
 
 	private File[] file;
-//	private TextField[] txtfield;
+	// private TextField[] txtfield;
 
 	Competitor[] comps;
 
@@ -66,7 +75,7 @@ public class InputCompetitorController {
 	public void setKOtournament(String tn, int noofcomp) {
 		TournamentName = tn;
 		noOfCompetitors = noofcomp;
-		//file = new File[noOfCompetitors];
+		// file = new File[noOfCompetitors];
 		TournamentType = TournamentTypes.KNOCKOUT;
 		initialize();
 	}
@@ -78,12 +87,15 @@ public class InputCompetitorController {
 		TournamentType = TournamentTypes.CHALLENGE;
 		initialize();
 	}
-	
-	public void setGroupTournament(String tn, int rud, int noofcomp) {
+
+	public void setGroupTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp) {
 		TournamentName = tn;
 		onOfRounds = rud;
 		noOfCompetitors = noofcomp;
 		TournamentType = TournamentTypes.GROUP;
+		winpoint = winp;
+		drawpoint = drawp;
+		losspoint = lossp;
 		initialize();
 	}
 
@@ -94,18 +106,8 @@ public class InputCompetitorController {
 			imgArray.get(i).setImage(image);
 			file[i] = new File("arsenal.jpg");
 		}
-		
+
 	}
-	
-	/*
-	 * public void initialize() throws MalformedURLException { File file = new
-	 * File("C:\\Users\\Chinedu\\Pictures\\333.PNG"); String localUrl =
-	 * file.toURI().toURL().toString(); Image localImage = new Image(localUrl,
-	 * false); for (int i = 0; i <noOfCompetitors; i++)
-	 * imgArray.get(i).setImage(localImage);
-	 * System.out.println("I ran adsf a dsf adsf "); System.out.println(localUrl +
-	 * " From athe init"); }//end method initialize
-	 */
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
@@ -118,17 +120,19 @@ public class InputCompetitorController {
 		try {
 			switch (TournamentType) {
 			case KNOCKOUT:
-				tournament = new SingleEliminationTournament(comps,false);
+				tournament = new SingleEliminationTournament(comps, false);
 				break;
 			case CHALLENGE:
 				tournament = new Challenge(comps, onOfRounds);
 				break;
 			case GROUP:
-				tournament = new Challenge(comps, onOfRounds);
+				Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };
+				TieBreaker tieBreakers = new TieBreaker(breakers);
+				tournament = new SwissTournament(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
+						tieBreakers, onOfRounds);
 				break;
 			}
-			
-		} catch (TournamentException e) {
+		} catch (TournamentException | InvalidBreakerException e) {
 			e.printStackTrace();
 		}
 		((Node) event.getSource()).getScene().getWindow().hide();

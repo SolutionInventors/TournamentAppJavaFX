@@ -107,17 +107,18 @@
             <Label fx:id="lblresult8" layoutX="172.0" layoutY="343.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Button fx:id="btnnextgroup" layoutX="231.0" layoutY="450.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" text="Next Group">
+      <Button fx:id="btnnextgroup" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" text="Next Group">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="btnpregroup" layoutX="109.0" layoutY="450.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" text="Pervious Group">
+      <Button fx:id="btnpregroup" layoutX="28.0" layoutY="450.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" text="Pervious Group">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
       <Button layoutX="405.0" layoutY="450.0" mnemonicParsing="false" onAction="#nextRound" prefHeight="37.0" prefWidth="139.0" text="Move to Next Round" />
+      <Button layoutX="283.0" layoutY="450.0" mnemonicParsing="false" onAction="#viewTable" prefHeight="37.0" prefWidth="139.0" text="View table" />
    </children>
    <fx:define>
         <ArrayList fx:id="imgArray">

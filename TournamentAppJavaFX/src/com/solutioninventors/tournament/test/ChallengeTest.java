@@ -20,8 +20,8 @@ import com.solutioninventors.tournament.utils.Fixture;
 public class ChallengeTest {
 
 	public static void main(String[] args) {
-		File file = new File(
-				"C:\\Users\\Chinedu\\git\\TournamentAppJavaFX\\TournamentAppJavaFX\\bin\\com\\solutioninventors\\tournament\\test\\golf.jpg");
+		File file = new File("arsenal.jpg"
+				);
 
 		Competitor[] coms = { new Competitor("Chinedu", file), new Competitor("Chidi", file) };
 

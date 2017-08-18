@@ -49,6 +49,9 @@ public class SingleEliminationTest {
 				breakTies(tournament);
 			Test.displayRoundResults(tournament.getCurrentRound());
 			tournament.moveToNextRound();
+			System.out.println(tournament.hasEnded());
+		
+		
 		}
 		Test.displayMessage("The winner is " + tournament.getWinner());
 

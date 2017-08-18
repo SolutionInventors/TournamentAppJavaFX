@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.solutioninventors.tournament.GUI.StandingTable.StandingTableController;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -14,9 +15,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -96,7 +99,7 @@ public class ViewResultsController {
 
 	@FXML
 	public void nextRound(ActionEvent event) throws IOException {
-		if (!tournament.hasEnded()) {
+		
 			try {
 				tournament.moveToNextRound();
 			} catch (TournamentEndedException e) {
@@ -106,6 +109,7 @@ public class ViewResultsController {
 				//e.printStackTrace();
 				System.out.println("Error move to next round");
 			}
+			if (!tournament.hasEnded()) {
 			((Node) event.getSource()).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("Fixtures.fxml").openStream());
@@ -123,6 +127,21 @@ public class ViewResultsController {
 
 		
 	}// end nextRound
+	
+	@FXML
+	public void viewTable(ActionEvent event) throws IOException {
+		//((Node) event.getSource()).getScene().getWindow().hide();
+		FXMLLoader loader = new FXMLLoader();
+		Parent root = loader.load(getClass().getResource("\\StandingTable/StandingTable22.fxml").openStream());
+		StandingTableController fc = (StandingTableController) loader.getController();
+		fc.setTournament(tournament);
+		Stage primaryStage = new Stage();
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		primaryStage.setTitle("Tournament name");
+	}
+	
 }// end class
 
 

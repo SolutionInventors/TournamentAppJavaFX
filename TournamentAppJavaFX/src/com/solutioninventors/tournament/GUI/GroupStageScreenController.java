@@ -12,8 +12,17 @@ import javafx.scene.layout.Pane;
 public class GroupStageScreenController {
 	@FXML
 	private ToggleGroup type;
-	@FXML private TextField txtnoOfrounds;
-	@FXML private TextField txtnoOfcomps;
+	@FXML
+	private TextField txtnoOfrounds;
+	@FXML
+	private TextField txtnoOfcomps;
+	@FXML
+	private TextField txtwinpoint;
+	@FXML
+	private TextField txtdrawpoint;
+	@FXML
+	private TextField txtlosspoint;
+
 	private String TournamentName;
 	private ButtonsController btn = new ButtonsController();
 
@@ -26,14 +35,16 @@ public class GroupStageScreenController {
 		ButtonsController btn = new ButtonsController();
 		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}
-	
+
 	@FXML
-	public void next(ActionEvent event) throws IOException  {
+	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource("InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setGroupTournament(TournamentName, Integer.valueOf(txtnoOfrounds.getText()), Integer.valueOf(txtnoOfcomps.getText()));
+		ic.setGroupTournament(TournamentName, Integer.valueOf(txtnoOfrounds.getText()),
+				Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
+				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()));
 		btn.next(root, event, TournamentName);
-		
+
 	}
 }
