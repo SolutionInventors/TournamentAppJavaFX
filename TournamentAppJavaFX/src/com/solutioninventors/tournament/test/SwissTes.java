@@ -26,6 +26,7 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public class SwissTes {
 
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
 	public static void main(String[] args) {
 		File file = new File("arsenal.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
@@ -57,6 +58,14 @@ public class SwissTes {
 //				Competitor c15 = new Competitor( "Lagos" , file );
 //				Competitor c16 = new Competitor( "NIgeria" ,  file ) ;
 >>>>>>> 788c7c1 You can now retrieve the Breakers via calls to getGroupBreakers and getKnockoutBreakers Note also thaat the toString of each breaker returns the name 
+=======
+	public static void main(String[] args) {
+		File file = new File("arsenal.jpg");
+		Competitor c1 = new Competitor("Chidiebere", file);
+		Competitor c2 = new Competitor("Fred", file);
+		Competitor c3 = new Competitor("Joshua", file);
+		Competitor c4 = new Competitor("Chinedu", file);
+>>>>>>> 3e9f70f Ignore
 
 <<<<<<< HEAD
 	//	Competitor c5 = new Competitor("Ada", file);
@@ -129,14 +138,12 @@ public class SwissTes {
 						Breaker.GOALS_DIFFERENCE , Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD
 				};
 				
-				int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("How many rounds do you want to simulate"));
+				
 				Tournament tournament = null ;
 				try
 				{
 					TieBreaker tieBreakers = new TieBreaker( breakers );
-					tournament =new SwissTournament( 
-							comps, SportType.GOALS_ARE_SCORED , 
-							3 , 1 , 0 , tieBreakers , numOfRounds );
+					tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , tieBreakers , 5 );
 				}
 				catch (TournamentException e )
 				{
