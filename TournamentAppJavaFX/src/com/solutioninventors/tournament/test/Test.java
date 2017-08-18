@@ -40,33 +40,45 @@ public class Test {
 	}
 
 	public static void displayFixtures(Fixture[] currentFixtures) {
+		
+		displayMessage(getFixutures(currentFixtures));
+
+	}
+
+	public static String getFixutures(Fixture[] currentFixtures)
+	{
 		StringBuilder builder = new StringBuilder(500);
 
 		for (int i = 0; i < currentFixtures.length; i++)
 			builder.append(String.format("%s VS %s\n", currentFixtures[i].getCompetitorOne(),
 					currentFixtures[i].getCompetitorTwo()));
-
-		displayMessage(builder.toString());
-
+		return builder.toString();
 	}
 
-	public static void displayMessage(String message) {
+	public static void displayMessage(String message) 
+	{
 		System.out.println(message);
 		JOptionPane.showMessageDialog(null, message);
 	}
 
-	public static void displayRoundResults(Round currentRound) {
+	public static void displayRoundResults(Round currentRound)
+	{
+		
+		displayMessage(getResultString(currentRound));
+
+	}
+
+	public static String getResultString(Round currentRound)
+	{
 		Fixture[] fixtures = currentRound.getFixtures();
 
 		StringBuilder builder = new StringBuilder(500);
-		builder.append("Round Results: ");
+		builder.append("Round Results: \n");
 		for (Fixture fixture : fixtures) {
 			builder.append(String.format("%s %.1f VS %.1f %s\n", fixture.getCompetitorOne(),
 					fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), fixture.getCompetitorTwo()));
 		}
-
-		displayMessage(builder.toString());
-
+		return builder.toString();
 	}
 
 }

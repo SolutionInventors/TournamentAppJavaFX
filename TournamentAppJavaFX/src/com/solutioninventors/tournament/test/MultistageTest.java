@@ -15,6 +15,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Multistage;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -53,7 +54,11 @@ public class MultistageTest {
 
 		};
 
-		Multistage tournament = null;
+		
+		Tournament tournament = null ;
+
+
+
 
 		TieBreaker tieBreakers;
 		try {
@@ -79,66 +84,93 @@ public class MultistageTest {
 
 		Test.displayMessage("MultiStage begins");
 
-		StringBuilder builder = new StringBuilder(300);
 
-		builder.append("The competitors are: \n");
-		Competitor[] tournamentComps = tournament.getCompetitors();
-
-		for (int i = 0; i < tournamentComps.length; i++) {
-			builder.append((i + 1) + ". " + tournamentComps[i] + " \n");
-		}
-
-		Test.displayMessage(builder.toString());
-		displayGroupStanding(tournament);
-
-		//
-		while (!tournament.hasEnded())// tournament is ongoing
+		StringBuilder builder = new StringBuilder( 300 );
+		
+		builder.append( "The competitors are: \n" );
+		Competitor[] tournamentComps = tournament.getCompetitors() ;
+		
+		for ( int i =  0 ; i < tournamentComps.length ; i ++ )
 		{
-			Test.displayMessage("Welcome to " + tournament);
-			Fixture[] currentFixtures = tournament.getCurrentRound().getPendingFixtures();
-			Test.displayFixtures(currentFixtures);
-
-			builder.delete(0, builder.length());
-			builder.append("Round results are: \n");
-
-			for (int i = 0; i < currentFixtures.length; i++) {
-				Competitor com1 = currentFixtures[i].getCompetitorOne();
-				Competitor com2 = currentFixtures[i].getCompetitorTwo();
-
-				double score1 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com1));
-				double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
-
-				try {
-					tournament.setResult(com1, score1, score2, com2);
-				} catch (NoFixtureException e) {
-					Test.displayMessage(e.getMessage());
-				}
-				builder.append(String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
-						currentFixtures[i].getCompetitorTwoScore(), com2));
-			}
-
-			Test.displayMessage(builder.toString());
-			try {
-				tournament.moveToNextRound();
-
-			} catch (MoveToNextRoundException e) {
-				e.printStackTrace();
-			}
-
-			if (tournament.getCurrentRoundNum() <= tournament.getNumberOfGroupRounds()) {
-				displayGroupStanding(tournament);
-				if (tournament.getNumberOfExtraQualifiers() != 0) {
-					String position = tournament.getNumberOfGroups() == 3 ? "3rd" : "4th";
-
-					Test.displayMessage(String.format("The %s place ranking able is shown ", position));
-					Test.displayStandingTable(tournament.getPossibleQualifierTable().getStringTable());
-				}
-			}
-
+			builder.append( (i+1) + ". " + tournamentComps[ i ] + " \n" ); 
 		}
+		
+		
+		Test.displayMessage( builder.toString() );
+		displayGroupStanding( ( Multistage ) tournament);
+		
+//		
+		while( !tournament.hasEnded() )//tournament is ongoing
+		{
+			Test.displayMessage( "Welcome to " + tournament );
+			Fixture[] currentFixtures = 
+					tournament.getCurrentRound().getPendingFixtures() ;
+			Test.displayFixtures( currentFixtures );
+			
+			builder.delete(0 , builder.length() );
+			builder.append("Round results are: \n" );
+			
+			for( int i = 0 ; i< currentFixtures.length ;i++ )
+			{
+				Competitor com1 = currentFixtures[i].getCompetitorOne() ;
+				Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
 
-		Test.displayMessage("The winner is " + tournament.getWinner() + " and his total goals scored is "
+				double score1 = Double.parseDouble(
+						JOptionPane.showInputDialog( "Input score for " + com1 ));
+				double score2 = Double.parseDouble(
+						JOptionPane.showInputDialog( "Input score for " + com2 ));
+				
+				try
+				{
+					tournament.setResult( com1, score1, score2, com2);
+				}
+				catch (NoFixtureException e)
+				{
+					Test.displayMessage(e.getMessage() );
+				}
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
+			}
+			
+			Test.displayMessage( builder.toString()  );
+			try
+			{
+				tournament.moveToNextRound();
+				
+				
+			}
+			catch (MoveToNextRoundException e)
+			{
+				e.printStackTrace();
+			} 
+			
+			
+			Multistage multiStageSpecific = ( Multistage )  tournament;
+					
+			if (  tournament.getCurrentRoundNum() <=
+					multiStageSpecific.getNumberOfGroupRounds()) 
+			{
+				displayGroupStanding( multiStageSpecific );
+				if (multiStageSpecific.getNumberOfExtraQualifiers() != 0) 
+				{
+				String position = 
+						multiStageSpecific.getNumberOfGroups() == 3 ? "3rd" : "4th";
+			
+				Test.displayMessage(
+						String.format("The %s place ranking able is shown ", position) );
+				Test.displayStandingTable( multiStageSpecific.getPossibleQualifierTable()
+											.getStringTable());
+				}
+			}
+				
+			
+			
+
+
+			Test.displayMessage("The winner is " + tournament.getWinner() + " and his total goals scored is "
 				+ tournament.getWinner().getGoalsScored());
+		}
 
 	}
 

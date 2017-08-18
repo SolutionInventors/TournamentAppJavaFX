@@ -57,7 +57,8 @@ public abstract class Tournament
 	public abstract Competitor getWinner();
 
 	public abstract Round[] getRoundArray();
-	
+	@Override
+	public abstract String toString();
 	
 
 	
