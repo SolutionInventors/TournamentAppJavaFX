@@ -70,13 +70,6 @@ public class StandingTable {
 
 	public Competitor getCompetitor(int position) {
 		updateTables();
-<<<<<<< Upstream, based on origin/master
-
-		if (position < getCompetitors().length)
-			return getCompetitors()[position];
-
-		return null;
-=======
 		
 		if ( position < getCompetitors().length )
 			return getCompetitors()[ position ];
@@ -162,68 +155,10 @@ public class StandingTable {
 				table[ row ][ 6 ] = goalDifferenceColumn[ row ];
 				table[ row ][ 7 ] = pointColumn[ row ];
 			}
+		}
 			
-		}
+	}
 		
->>>>>>> 788c7c1 You can now retrieve the Breakers via calls to getGroupBreakers and getKnockoutBreakers Note also thaat the toString of each breaker returns the name 
-	}
-
-	private void updateStringTable() {
-		int numOfCompetitors = competitors.length;
-		String[] nameColumn = new String[numOfCompetitors];
-		String[] winsColumn = new String[numOfCompetitors];
-		String[] drawColumn = new String[numOfCompetitors];
-		String[] lossColumn = new String[numOfCompetitors];
-		String[] pointColumn = new String[numOfCompetitors];
-
-		Arrays.stream(competitors).map(Competitor::getName).collect(Collectors.toList()).toArray(nameColumn);
-
-		Arrays.stream(competitors).map(com -> String.valueOf(com.getNumberOfWin())).collect(Collectors.toList())
-				.toArray(winsColumn);
-
-		Arrays.stream(competitors).map(com -> String.valueOf(com.getNumberOfDraw())).collect(Collectors.toList())
-				.toArray(drawColumn);
-
-		Arrays.stream(competitors).map(com -> String.valueOf(com.getNumberOfLoss())).collect(Collectors.toList())
-				.toArray(lossColumn);
-
-		Arrays.stream(competitors)
-				.map(com -> String.valueOf(com.getPoint(getPointForWin(), getPointForDraw(), getPointForLoss())))
-				.collect(Collectors.toList()).toArray(pointColumn);
-
-		for (int row = 0; row < competitors.length; row++) {
-			table[row][0] = nameColumn[row];
-			table[row][1] = winsColumn[row];
-			table[row][2] = drawColumn[row];
-			table[row][3] = lossColumn[row];
-			table[row][4] = pointColumn[row];
-
-		}
-
-		if (sportType == SportType.GOALS_ARE_SCORED) {
-			String[] goalsScoredColumn = new String[numOfCompetitors];
-			String[] goalsConcededColumn = new String[numOfCompetitors];
-			String[] goalDifferenceColumn = new String[numOfCompetitors];
-
-			Arrays.stream(competitors).map(com -> String.valueOf(com.getGoalsScored())).collect(Collectors.toList())
-					.toArray(goalsScoredColumn);
-
-			Arrays.stream(competitors).map(com -> String.valueOf(com.getGoalsConceded())).collect(Collectors.toList())
-					.toArray(goalsConcededColumn);
-
-			Arrays.stream(competitors).map(com -> String.valueOf(com.getGoalDifference())).collect(Collectors.toList())
-					.toArray(goalDifferenceColumn);
-
-			for (int row = 0; row < competitors.length; row++) {
-				table[row][4] = goalsScoredColumn[row];
-				table[row][5] = goalsConcededColumn[row];
-				table[row][6] = goalDifferenceColumn[row];
-				table[row][7] = pointColumn[row];
-			}
-
-		}
-
-	}
 
 	public Competitor[] getCompetitors() {
 		return competitors;

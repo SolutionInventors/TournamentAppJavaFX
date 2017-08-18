@@ -31,18 +31,12 @@ public abstract class GroupTournament extends Tournament {
 	public GroupTournament(Competitor[] comps, SportType type, double pWin, double pDraw, double pLoss,
 			TieBreaker breaker) throws InvalidBreakerException {
 		super(comps);
-<<<<<<< Upstream, based on origin/master
-		SPORT_TYPE = type;
-		COMPETITORS = comps;
-		if (breaker == null || !Arrays.stream(breaker.getBreakers())
-				.allMatch(b -> b.getType() == Breaker.GROUUP_BREAKER || b.getType() == Breaker.BOTH))
-=======
+
 		SPORT_TYPE = type ;
 		COMPETITORS = comps ; 
 		if ( breaker == null || !Arrays.stream( breaker.getBreakers() )
 				.allMatch( b -> b.getType() == Breaker.GROUP_BREAKER ||
 							b.getType() ==  Breaker.BOTH ))
->>>>>>> 788c7c1 You can now retrieve the Breakers via calls to getGroupBreakers and getKnockoutBreakers Note also thaat the toString of each breaker returns the name 
 			throw new InvalidBreakerException("The breaker is invalid");
 		table = new StandingTable(SPORT_TYPE, COMPETITORS, pWin, pDraw, pLoss, breaker);
 		setName("");

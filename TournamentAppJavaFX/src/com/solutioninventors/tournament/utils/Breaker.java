@@ -7,6 +7,7 @@
 package com.solutioninventors.tournament.utils;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -209,12 +210,16 @@ public enum Breaker
 	
 	public static Breaker[] getGroupBreakers()
 	{
-		List<Breaker> groupBreakers  = 
-				Arrays.stream( Breaker.values() )
-				  .filter(b -> b.getType() != Breaker.KNOCKOUT_BREAKER )
-				  .collect(Collectors.toList() );
+		Breaker[] vals = Breaker.values();
 		
-		return groupBreakers.toArray( new Breaker[ groupBreakers.size() ] );
+		List< Breaker > list = new ArrayList<>();
+		
+		for ( int i = 0 ;i < vals.length;i++ )
+			if ( vals[i].getType() != Breaker.KNOCKOUT_BREAKER && vals[i].getType() != null )
+				list.add(vals[ i ] );
+		
+		
+		return list.toArray( new Breaker[ list.size() ] );
 			  
 	}
 	
@@ -222,7 +227,8 @@ public enum Breaker
 	{
 		List<Breaker> knockoutBreakers  = 
 				Arrays.stream( Breaker.values() )
-				  .filter(b -> b.getType() != Breaker.GROUP_BREAKER )
+				  .filter(b -> b.getType() != Breaker.GROUP_BREAKER  &&
+						  	b.getType()!= null )
 				  .collect(Collectors.toList() );
 		
 		return knockoutBreakers.toArray( new Breaker[ knockoutBreakers.size() ] );
