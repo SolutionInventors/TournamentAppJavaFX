@@ -231,13 +231,13 @@ public class RoundRobinTournament extends GroupTournament
 					Arrays.stream( getCurrentRound().getPendingFixtures())
 						  .forEach( f -> outstandingMatches.add( f ) );
 					JOptionPane.showMessageDialog( null , "Incomplete fixtures added to outstanding" );
-					setCurrentRoundNum( getCurrentRoundNum() + 1 );
+					incrementRoundNum();
 					
 				}
 			}
 			else
 			{
-				setCurrentRoundNum( getCurrentRoundNum() + 1 );
+				incrementRoundNum();
 				if ( getCurrentRoundNum() < getRoundArray().length && 
 						outstandingMatches.size() > 0 )
 				{

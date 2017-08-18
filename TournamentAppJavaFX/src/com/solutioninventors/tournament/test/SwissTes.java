@@ -8,6 +8,7 @@ package com.solutioninventors.tournament.test;
 
 import java.io.File;
 
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -38,11 +39,13 @@ public class SwissTes {
 		Competitor[] comps = {c1, c2 ,c3,c4};	
 		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};
 		Tournament tournament = null ;
+		
+		int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("input the number of Round"));
 		try
 		{
 			TieBreaker tieBreakers = new TieBreaker( breakers );
 			tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 
-					3 , 1 , 0 , tieBreakers , 5 );
+					3 , 1 , 0 , tieBreakers , numOfRounds );
 		}
 		catch (TournamentException e )
 		{

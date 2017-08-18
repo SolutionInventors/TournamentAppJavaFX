@@ -48,16 +48,17 @@ public class SwissTournament extends GroupTournament {
 	}
 
 	@Override
-	public void moveToNextRound() throws MoveToNextRoundException {
+	public void moveToNextRound() throws MoveToNextRoundException 
+	{
 		getTable().updateTables();
-
-		setCurrentRoundNum(getCurrentRoundNum() + 1);
-
-		if (getCurrentRoundNum() < getTotalNumberOfRounds()) {
+		incrementRoundNum();
+		if (!hasEnded()) 
+		{
 			createCurrentRound();
-		} else
+		} 
+		else if ( getCurrentRoundNum() != getRoundArray().length)
 			throw new MoveToNextRoundException("Tournament is over thus cannot move to next round");
-
+		
 	}
 
 	private void createCurrentRound() {
@@ -86,7 +87,8 @@ public class SwissTournament extends GroupTournament {
 	}
 
 	@Override
-	public boolean hasEnded() {
+	public boolean hasEnded() 
+	{
 		return getCurrentRoundNum() < getRoundArray().length ? false : true;
 
 	}

@@ -15,6 +15,8 @@ public class Test {
 	public static void displayStandingTable(String[][] stringTable) {
 		StringBuilder builder = new StringBuilder(1000);
 
+		
+		
 		if (stringTable[0].length == 8)
 			builder.append(String.format( "%-20s %s", "Name" , 
 					"W D L  GF GA  GD  Pts\n"));

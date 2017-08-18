@@ -26,7 +26,7 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public class MultistageTest {
 
 	public static void main(String[] args) {
-		File file = new File("arsenal.jpg");
+		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
@@ -56,10 +56,6 @@ public class MultistageTest {
 
 		
 		Tournament tournament = null ;
-
-
-
-
 		TieBreaker tieBreakers;
 		try {
 			tieBreakers = new TieBreaker(breakers);
@@ -163,15 +159,9 @@ public class MultistageTest {
 											.getStringTable());
 				}
 			}
-				
-			
-			
-
-
-			Test.displayMessage("The winner is " + tournament.getWinner() + " and his total goals scored is "
-				+ tournament.getWinner().getGoalsScored());
 		}
-
+		Test.displayMessage("The winner is " + tournament.getWinner() + " and his total goals scored is "
+				+ (int) tournament.getWinner().getGoalsScored());
 	}
 
 	public static void displayGroupStanding(Multistage tournament) {

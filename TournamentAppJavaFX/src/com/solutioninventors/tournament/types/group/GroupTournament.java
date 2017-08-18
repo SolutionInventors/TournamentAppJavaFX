@@ -54,13 +54,8 @@ public abstract class GroupTournament extends Tournament {
 		return table;
 	}
 
-	public int getCurrentRoundNum() {
-		return currentRoundNum;
-	}
-
-	protected void setCurrentRoundNum(int rnd) {
-		this.currentRoundNum = rnd;
-	}
+	
+	
 
 	protected void setRoundsArray(Round[] rnds) {
 		rounds = rnds;
