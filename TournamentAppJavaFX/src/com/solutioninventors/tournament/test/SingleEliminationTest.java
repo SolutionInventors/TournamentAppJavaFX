@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
-import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
@@ -22,7 +21,7 @@ import com.solutioninventors.tournament.utils.Fixture;
 public class SingleEliminationTest {
 
 	public static void main(String[] args) throws MoveToNextRoundException {
-		File file = new File("C:\\Users\\Chinedu\\Pictures\\Arsenal logo.png");
+		File file = new File("Arsenal.jpg");
 		// File file = new File(InputStream = new
 		// InputStream(getClass().getResourceAsStream("/img/icon2.png")))
 		// getClass().getResourceAsStream("/img/icon2.png");
@@ -33,15 +32,21 @@ public class SingleEliminationTest {
 
 		Competitor[] comps = { c1, c2, c3, c4 };
 
+		int ans = Integer.parseInt( JOptionPane.showInputDialog(
+				"Type 1 for home and away else only home fixtures" ));
+		
+		boolean homeAndAway = ans == 1 ? true : false ;
 		Tournament tournament = null;
 		try 
 		{
-			tournament = new SingleEliminationTournament(comps , false );
+			tournament = new SingleEliminationTournament(comps , homeAndAway );
 		} catch (TournamentException e) {
 			Test.displayMessage(e.getMessage());
 			System.exit(1);
 
 		}
+		
+		
 		Test.displayMessage("Single Elimination begins");
 
 		while (!tournament.hasEnded()) {

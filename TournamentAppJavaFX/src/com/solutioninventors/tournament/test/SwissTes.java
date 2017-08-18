@@ -25,12 +25,38 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class SwissTes {
 
+<<<<<<< Upstream, based on origin/master
 	public static void main(String[] args) {
 		File file = new File("arsenal.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
+=======
+	public static void main(String[] args)
+	{
+		//File file = new File("/test/golf.jpg");
+				File file = new File("Arsenal.jpg");
+				Competitor c1 = new Competitor( "Chidiebere" , file );
+				Competitor c2 = new Competitor( "Fred", file );
+				Competitor c3 = new Competitor( "Joshua" , file );
+				Competitor c4 = new Competitor( "Chinedu" ,  file ) ;
+				
+				Competitor c5 = new Competitor( "Ada" , file );
+//				Competitor c6 = new Competitor( "Oguejiofor", file );
+//				Competitor c7 = new Competitor( "Pio" , file );
+//				Competitor c8 = new Competitor( "Oloche" ,  file ) ;
+//				
+//				Competitor c9 = new Competitor( "Manchester" , "United", file );
+//				Competitor c10 = new Competitor( "Chealsea", file );
+//				Competitor c11 = new Competitor( "Arsenal" , file );
+//				Competitor c12 = new Competitor( "Real" ,  file ) ;
+//				
+//				Competitor c13 = new Competitor( "Barca" , file );
+//				Competitor c14 = new Competitor( "Atletico", file );
+//				Competitor c15 = new Competitor( "Lagos" , file );
+//				Competitor c16 = new Competitor( "NIgeria" ,  file ) ;
+>>>>>>> 788c7c1 You can now retrieve the Breakers via calls to getGroupBreakers and getKnockoutBreakers Note also thaat the toString of each breaker returns the name 
 
 <<<<<<< HEAD
 	//	Competitor c5 = new Competitor("Ada", file);
@@ -103,12 +129,14 @@ public class SwissTes {
 						Breaker.GOALS_DIFFERENCE , Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD
 				};
 				
-				
+				int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("How many rounds do you want to simulate"));
 				Tournament tournament = null ;
 				try
 				{
 					TieBreaker tieBreakers = new TieBreaker( breakers );
-					tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , tieBreakers , 5 );
+					tournament =new SwissTournament( 
+							comps, SportType.GOALS_ARE_SCORED , 
+							3 , 1 , 0 , tieBreakers , numOfRounds );
 				}
 				catch (TournamentException e )
 				{

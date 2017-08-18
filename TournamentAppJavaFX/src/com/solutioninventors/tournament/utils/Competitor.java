@@ -33,6 +33,8 @@ public class Competitor {
 	private int numberOfDraw;
 	private int numberOfLoss;
 
+	private int numberOfAwayWin;
+	private int numberOfHomeWin;
 	private double goalsScored;
 	private double goalsConceded;
 
@@ -249,4 +251,25 @@ public class Competitor {
 			return true;
 		return false;
 	}
+
+	public int getNumberOfAwayWin()
+	{
+		return numberOfAwayWin;
+	}
+
+	public void incrementNumberOfAwayWin()
+	{
+		numberOfAwayWin++ ;
+	}
+	
+	public int getNumberOfHomeWin()
+	{
+		return numberOfHomeWin;
+	}
+
+	public void incrementNumberOfHomeWin()
+	{
+		numberOfHomeWin++ ;
+	}
+	
 }

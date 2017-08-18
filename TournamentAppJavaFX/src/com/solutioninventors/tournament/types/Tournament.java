@@ -21,13 +21,14 @@ public abstract class Tournament
 	private final Competitor[] competitors;
 	
 	private int currentRoundNum;
-	
-	
+	private String name;	
 	
 	public Tournament ( Competitor[] coms )
 	{
 		competitors = coms ;
 		currentRoundNum = 0 ; 
+		
+		setName( "Tournament App" );
 	}
 
 
@@ -59,6 +60,18 @@ public abstract class Tournament
 	public abstract Round[] getRoundArray();
 	@Override
 	public abstract String toString();
+
+
+	public String getName()
+	{
+		return name;
+	}
+
+
+	public void setName(String name)
+	{
+		this.name = name != null ? name : "Tournament App" 	;
+	}
 	
 
 	

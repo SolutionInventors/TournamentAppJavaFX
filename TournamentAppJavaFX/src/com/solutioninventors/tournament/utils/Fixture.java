@@ -19,6 +19,7 @@ public class Fixture {
 	public void setResult(final double score1, final double score2) {
 		if (!isComplete()) {
 			if (score1 > score2) {
+				getCompetitorOne().incrementNumberOfHomeWin();
 				getCompetitorOne().incrementWins();
 				getCompetitorTwo().incrementLoss();
 			} 
@@ -30,6 +31,7 @@ public class Fixture {
 			else 
 			{
 				getCompetitorOne().incrementLoss();
+				getCompetitorTwo().incrementNumberOfAwayWin();
 				getCompetitorTwo().incrementWins();
 			}
 

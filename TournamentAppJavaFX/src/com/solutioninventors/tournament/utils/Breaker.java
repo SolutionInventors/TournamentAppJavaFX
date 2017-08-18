@@ -7,8 +7,11 @@
 package com.solutioninventors.tournament.utils;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Breaker
 {
@@ -20,39 +23,61 @@ public enum Breaker
 	 */
 	
 	
-	GROUUP_BREAKER ,
-	KNOCKOUT_BREAKER , 
-	BOTH , 
+	GROUP_BREAKER("GROUP BREAKER") ,
+	KNOCKOUT_BREAKER( "KNOCKOUT BREAKER") , 
+	BOTH( null ) , 
 	
-	AWAY_GOAL( BOTH , getAwayGoalBreaker() ),
-	SHOOT_OUT( KNOCKOUT_BREAKER , null  ),
+	AWAY_GOAL( BOTH , getAwayGoalBreaker(), "AWAY GOAL" ),
+	SHOOT_OUT( KNOCKOUT_BREAKER , null , "SHOOT OUT" ),
 	
-	COIN_TOSS( BOTH  , getCoinToss() )  ,
-	GOALS_SCORED( GROUUP_BREAKER , getGoalsScored() ) ,
-	GOALS_CONCEDED( GROUUP_BREAKER , getGoalsConceded() ) ,
-	GOALS_DIFFERENCE( GROUUP_BREAKER , getGoalsDifference() ) ,
-	NUMBER_OF_WINS( GROUUP_BREAKER , getNumberOfWins() ) ,
-	NUMBER_OF_DRAWS( GROUUP_BREAKER, getNumberOfDraw() ) ,
-	NUMBER_OF_LOSS( GROUUP_BREAKER , getNumberOfLoss() ) ,
-	HEAD_TO_HEAD( GROUUP_BREAKER , getHeadToHead() )  ;
+	
+	COIN_TOSS( BOTH  , getCoinToss() , "COIN TOSS")  ,
+	
+	HOME_WIN( GROUP_BREAKER , getHomeWin() ,"HOME_WIN" ) ,
+	AWAY_WIN( GROUP_BREAKER , getAwayWin() ,"AWAY_WIN" ) ,
+	GOALS_SCORED( GROUP_BREAKER , getGoalsScored() , "GOALS SCORED") ,
+	GOALS_CONCEDED( GROUP_BREAKER , getGoalsConceded() , "GOALS CONCEDDED") ,
+	GOALS_DIFFERENCE( GROUP_BREAKER , getGoalsDifference(), "GOAL DIFFERENCE" ) ,
+	NUMBER_OF_WINS( GROUP_BREAKER , getNumberOfWins(), "NUMBER OF WINS" ) ,
+	NUMBER_OF_DRAWS( GROUP_BREAKER, getNumberOfDraw(), "NUMBER OF DRAWS" ) ,
+	NUMBER_OF_LOSS( GROUP_BREAKER , getNumberOfLoss(), "NUMBER OF LOSS" ) ,
+	HEAD_TO_HEAD( GROUP_BREAKER , getHeadToHead() , "HEAD TO HEAD")  ;
 	
 	private final  Comparator< Competitor> breaker;
 	private final Breaker type ;
+	private final String name ;
 	
-	private Breaker()
+	private Breaker(String name )
 	{
-		this( null , null );
+		this( null , null, name  );
 	}
 	
+	
+
 	private static Comparator< Competitor>  getAwayGoalBreaker()
 	{
 		return new AwayGoal();
 	}
 
-	private Breaker( Breaker typeName, Comparator<Competitor> comparator )
+	private Breaker( Breaker typeName, Comparator<Competitor> comparator, String theName )
 	{
 		type = typeName;
 		breaker = comparator;
+		name = theName;
+	}
+	
+	private static Comparator< Competitor> getAwayWin()
+	{
+		Function< Competitor, Integer >  function = Competitor:: getNumberOfAwayWin;
+
+		return Comparator.comparing( function ).reversed();
+	}
+	
+	private static Comparator<Competitor> getHomeWin()
+	{
+		Function< Competitor, Integer >  function = Competitor:: getNumberOfHomeWin;
+
+		return Comparator.comparing( function ).reversed();
 	}
 	
 	
@@ -182,4 +207,37 @@ public enum Breaker
 		}
 	}
 	
+	public static Breaker[] getGroupBreakers()
+	{
+		List<Breaker> groupBreakers  = 
+				Arrays.stream( Breaker.values() )
+				  .filter(b -> b.getType() != Breaker.KNOCKOUT_BREAKER )
+				  .collect(Collectors.toList() );
+		
+		return groupBreakers.toArray( new Breaker[ groupBreakers.size() ] );
+			  
+	}
+	
+	public static Breaker[] getKnockoutBreakers()
+	{
+		List<Breaker> knockoutBreakers  = 
+				Arrays.stream( Breaker.values() )
+				  .filter(b -> b.getType() != Breaker.GROUP_BREAKER )
+				  .collect(Collectors.toList() );
+		
+		return knockoutBreakers.toArray( new Breaker[ knockoutBreakers.size() ] );
+			  
+	}
+	
+	public String toString()
+	{
+		return getName();
+	}
+
+
+
+	public String getName()
+	{
+		return name;
+	}
 }
