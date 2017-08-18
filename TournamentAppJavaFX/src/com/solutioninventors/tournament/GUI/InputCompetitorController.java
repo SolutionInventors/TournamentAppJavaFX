@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
-import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Breaker;

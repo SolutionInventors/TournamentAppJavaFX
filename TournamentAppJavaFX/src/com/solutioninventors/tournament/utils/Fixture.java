@@ -1,8 +1,10 @@
 package com.solutioninventors.tournament.utils;
 
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 
-public class Fixture {
+public class Fixture implements Serializable{
 
 	private final Competitor COMPETITOR_ONE;
 	private final Competitor COMPETITOR_TWO;
@@ -16,7 +18,8 @@ public class Fixture {
 
 	}
 
-	public void setResult(final double score1, final double score2) {
+	public void setResult(final double score1, final double score2)
+	{
 		if (!isComplete()) {
 			if (score1 > score2) {
 				getCompetitorOne().incrementNumberOfHomeWin();
@@ -33,6 +36,7 @@ public class Fixture {
 				getCompetitorOne().incrementLoss();
 				getCompetitorTwo().incrementNumberOfAwayWin();
 				getCompetitorTwo().incrementWins();
+				
 			}
 
 			
@@ -40,7 +44,7 @@ public class Fixture {
 			getCompetitorOne().incrementGoalsConcededBy( score2 );
 			getCompetitorTwo().incrementGoalsScoredBy( score2 );
 			getCompetitorTwo().incrementGoalsConcededBy( score1 );
-			
+			getCompetitorTwo().incrementNumberOfAwayGoalsBy( score2); 
 			getCompetitorOne().addToHeadToHead( getCompetitorTwo() , score1); 
 			getCompetitorTwo().addToHeadToHead(getCompetitorOne(), score2 );
 			

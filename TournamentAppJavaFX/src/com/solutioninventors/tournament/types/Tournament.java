@@ -7,15 +7,23 @@
 
 package com.solutioninventors.tournament.types;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
-import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 
-public abstract class Tournament
+public abstract class Tournament implements Serializable
 {
 	
 	private final Competitor[] competitors;
@@ -73,7 +81,59 @@ public abstract class Tournament
 		this.name = name != null ? name : "Tournament App" 	;
 	}
 	
-
+	public static void saveTournament( Tournament tournament, File file ) 
+			throws FileNotFoundException , IOException, TournamentException
+			
+	{
+		
+		if ( tournament == null )
+			throw new TournamentException( "The tournament object is null" );
+		
+		ObjectOutputStream output  = null ;
+		try
+		{
+			output  = 
+					new ObjectOutputStream( new FileOutputStream(file ));
+		}
+		catch (IOException e)
+		{
+			throw new IOException( "Error in writing to file" );
+		}
+		
+		output.writeObject( tournament );
+		output.close();
+	
+		
+	}
+	
+	
+	public static Tournament loadTournament( File file  ) 
+			throws FileNotFoundException , IOException, TournamentException
+			
+	{
+		Tournament tournament ;
+		 if ( file.exists() )
+		{
+			ObjectInputStream input  = null ;
+			try
+			{
+				input  = 
+						new ObjectInputStream( new FileInputStream(file ));
+				tournament = (Tournament) input.readObject( );
+				input.close();
+				
+			}
+			catch (IOException | ClassNotFoundException e)
+			{
+				throw new IOException( "Error in reading the file" );
+			}
+			
+		}
+		else  
+			throw new FileNotFoundException("The file was not found" ) ;
+		 
+		 return tournament;
+	}
 	
 	
 }

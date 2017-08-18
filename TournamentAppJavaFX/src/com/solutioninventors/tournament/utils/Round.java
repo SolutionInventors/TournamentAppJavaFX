@@ -7,6 +7,7 @@
  */
 package com.solutioninventors.tournament.utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.function.Predicate;
 
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 
-public class Round
+public class Round implements Serializable
 {
 	/**
 	 * This class encapsulates all the action that occur in a Round

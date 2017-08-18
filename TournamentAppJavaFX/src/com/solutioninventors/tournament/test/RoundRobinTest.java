@@ -10,12 +10,12 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
-import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;

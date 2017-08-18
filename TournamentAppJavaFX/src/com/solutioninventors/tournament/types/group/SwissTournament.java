@@ -10,6 +10,7 @@ package com.solutioninventors.tournament.types.group;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentException;

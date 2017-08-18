@@ -7,6 +7,7 @@
  */
 package com.solutioninventors.tournament.types.group;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Function;
@@ -16,7 +17,7 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
-public class StandingTable {
+public class StandingTable implements Serializable {
 
 	/***
 	 * This class encapsulates the operation of a standingTable in a group

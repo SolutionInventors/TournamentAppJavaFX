@@ -8,6 +8,7 @@ package com.solutioninventors.tournament.types.group;
 
 import java.util.Arrays;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;

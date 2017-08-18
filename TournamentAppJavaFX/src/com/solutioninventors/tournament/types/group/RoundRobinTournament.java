@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;

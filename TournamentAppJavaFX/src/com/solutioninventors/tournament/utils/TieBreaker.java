@@ -1,12 +1,13 @@
 package com.solutioninventors.tournament.utils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-import com.solutioninventors.tournament.types.group.InvalidBreakerException;
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 
-public class TieBreaker
+public class TieBreaker implements Serializable
 {
 	private final Breaker[] BREAKERS;
 	

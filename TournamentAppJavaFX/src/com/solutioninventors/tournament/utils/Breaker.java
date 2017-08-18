@@ -6,6 +6,7 @@
  */
 package com.solutioninventors.tournament.utils;
 
+import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public enum Breaker
+public enum Breaker implements Serializable
 {
 	/**
 	 * This golden enum encapsulates all the types of breakers
@@ -33,12 +34,13 @@ public enum Breaker
 	
 	
 	COIN_TOSS( BOTH  , getCoinToss() , "COIN TOSS")  ,
-	
-	HOME_WIN( GROUP_BREAKER , getHomeWin() ,"HOME_WIN" ) ,
+
 	AWAY_WIN( GROUP_BREAKER , getAwayWin() ,"AWAY_WIN" ) ,
 	GOALS_SCORED( GROUP_BREAKER , getGoalsScored() , "GOALS SCORED") ,
 	GOALS_CONCEDED( GROUP_BREAKER , getGoalsConceded() , "GOALS CONCEDDED") ,
 	GOALS_DIFFERENCE( GROUP_BREAKER , getGoalsDifference(), "GOAL DIFFERENCE" ) ,
+	NUMBER_OF_HOME_WIN( GROUP_BREAKER , getNumberOfHomeWin() ,"NUMBER OF HOME WIN" ) ,
+	NUMBER_OF_AWAY_GOALS( GROUP_BREAKER , getNumberOfAwayGoals() , "NUMBER OF AWAY GOAL" ), 
 	NUMBER_OF_WINS( GROUP_BREAKER , getNumberOfWins(), "NUMBER OF WINS" ) ,
 	NUMBER_OF_DRAWS( GROUP_BREAKER, getNumberOfDraw(), "NUMBER OF DRAWS" ) ,
 	NUMBER_OF_LOSS( GROUP_BREAKER , getNumberOfLoss(), "NUMBER OF LOSS" ) ,
@@ -54,6 +56,15 @@ public enum Breaker
 	}
 	
 	
+
+	private static Comparator<Competitor> getNumberOfAwayGoals()
+	{
+		Function< Competitor, Double >  function = Competitor:: getNumberOfAwayGoals;
+
+		return Comparator.comparing( function ).reversed();
+	}
+
+
 
 	private static Comparator< Competitor>  getAwayGoalBreaker()
 	{
@@ -74,7 +85,7 @@ public enum Breaker
 		return Comparator.comparing( function ).reversed();
 	}
 	
-	private static Comparator<Competitor> getHomeWin()
+	private static Comparator<Competitor> getNumberOfHomeWin()
 	{
 		Function< Competitor, Integer >  function = Competitor:: getNumberOfHomeWin;
 
@@ -173,6 +184,9 @@ public enum Breaker
 	
 	private static class AwayGoal implements Comparator< Competitor >
 	{
+		/**
+		 * This breaks the tie based on the head to head away goal
+		 */
 		@Override
 		public int compare(Competitor com1, Competitor com2)
 		{

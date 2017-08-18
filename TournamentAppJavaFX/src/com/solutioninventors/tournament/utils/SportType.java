@@ -7,7 +7,9 @@
  */
 package com.solutioninventors.tournament.utils;
 
-public enum SportType
+import java.io.Serializable;
+
+public enum SportType implements Serializable
 {
 	GOALS_ARE_SCORED , 
 	GOALS_ARE_NOT_SCORED ;

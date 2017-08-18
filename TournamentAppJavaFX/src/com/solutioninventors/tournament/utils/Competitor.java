@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 
-public class Competitor {
+public class Competitor implements Serializable{
 
 	/**
 	 * This class encapsulates all the information about a competitor The class
@@ -35,6 +36,9 @@ public class Competitor {
 
 	private int numberOfAwayWin;
 	private int numberOfHomeWin;
+	
+	private double numberOfAwayGoals;
+	
 	private double goalsScored;
 	private double goalsConceded;
 
@@ -94,7 +98,7 @@ public class Competitor {
 		return numberOfDraw;
 	}
 
-	public void incrementDraw() 
+	protected void incrementDraw() 
 	{
 		numberOfDraw++;
 	}
@@ -182,7 +186,7 @@ public class Competitor {
 		return goalsScored;
 	}
 
-	public void incrementGoalsScoredBy(double score1) 
+	protected void incrementGoalsScoredBy(double score1) 
 	{
 		goalsScored += score1;
 	}
@@ -257,7 +261,7 @@ public class Competitor {
 		return numberOfAwayWin;
 	}
 
-	public void incrementNumberOfAwayWin()
+	protected void incrementNumberOfAwayWin()
 	{
 		numberOfAwayWin++ ;
 	}
@@ -267,9 +271,20 @@ public class Competitor {
 		return numberOfHomeWin;
 	}
 
-	public void incrementNumberOfHomeWin()
+	protected void incrementNumberOfHomeWin()
 	{
 		numberOfHomeWin++ ;
+	}
+
+	public double getNumberOfAwayGoals()
+	{
+		return numberOfAwayGoals;
+	}
+
+	
+	protected void incrementNumberOfAwayGoalsBy(double goals)
+	{
+		numberOfAwayGoals+= goals ;
 	}
 	
 }

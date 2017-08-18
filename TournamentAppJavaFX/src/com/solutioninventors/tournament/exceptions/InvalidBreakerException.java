@@ -4,7 +4,7 @@
  *Aug 10, 2017
  *9:44:01 PM
  */
-package com.solutioninventors.tournament.types.group;
+package com.solutioninventors.tournament.exceptions;
 
 public class InvalidBreakerException extends Exception
 {

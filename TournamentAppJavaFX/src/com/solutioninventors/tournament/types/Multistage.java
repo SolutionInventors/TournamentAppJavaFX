@@ -11,12 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.group.GroupTournament;
-import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.types.group.StandingTable;
 import com.solutioninventors.tournament.types.group.SwissTournament;
