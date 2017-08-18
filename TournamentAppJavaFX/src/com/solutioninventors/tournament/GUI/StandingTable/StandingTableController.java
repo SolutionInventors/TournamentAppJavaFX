@@ -9,10 +9,10 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.test.Test;
 import com.solutioninventors.tournament.types.Tournament;
-import com.solutioninventors.tournament.types.group.InvalidBreakerException;
 import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
