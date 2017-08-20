@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import java.util.ArrayList?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputCompetitorController">
+   <children>
+      <GridPane layoutX="38.0" layoutY="78.0" prefHeight="274.0" prefWidth="532.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="110.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="222.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="0.0" prefWidth="12.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="188.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="46.0" minHeight="1.0" prefHeight="13.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="114.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtfield1" text="First" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtfield2" text="Second" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtfield3" text="Third" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtfield4" text="Fourth" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" onMouseClicked="#changeImage4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="S/N">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Competitor Name" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Competitor Logo" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="sn1" text="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="sn2" text="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="sn3" text="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="sn4" text="4" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutX="69.0" layoutY="395.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#next" text="Next&gt;&gt;" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" text="Finish" GridPane.columnIndex="2" />
+            <Button mnemonicParsing="false" text="&lt;&lt;Pervious" />
+            <Button mnemonicParsing="false" text="Cancel" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+      <Label layoutX="201.0" layoutY="20.0" text="INPUT COMPETITOR">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+   
+   <fx:define>
+        <ArrayList fx:id="SNArray">
+            <fx:reference source="sn1" />
+            <fx:reference source="sn2" />
+            <fx:reference source="sn3" />
+            <fx:reference source="sn4" />
+            
+        </ArrayList>
+    </fx:define>
+    <fx:define>
+        <ArrayList fx:id="txtArray">
+            <fx:reference source="txtfield1" />
+            <fx:reference source="txtfield2" />
+            <fx:reference source="txtfield3" />
+            <fx:reference source="txtfield4" />
+            
+        </ArrayList>
+    </fx:define>
+    <fx:define>
+        <ArrayList fx:id="imgArray">
+            <fx:reference source="img1" />
+            <fx:reference source="img2" />
+            <fx:reference source="img3" />
+             <fx:reference source="img4" />
+            
+        </ArrayList>
+    </fx:define>
+</AnchorPane>

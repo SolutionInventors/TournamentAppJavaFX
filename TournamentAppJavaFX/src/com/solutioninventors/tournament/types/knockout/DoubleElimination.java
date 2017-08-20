@@ -16,7 +16,6 @@ import java.util.Map;
 
 import javax.print.attribute.HashAttributeSet;
 
-import com.solutioninventors.tournament.GUI.FixturesController;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;

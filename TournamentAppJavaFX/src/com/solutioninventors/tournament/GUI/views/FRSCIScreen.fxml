@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+
+<TabPane  fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.FRSCIScreenController">
+<tabs>
+   <Tab fx:id="tab1_fixtures" text="Fixtures">
+        <fx:include fx:id="tabfix" source="/com/solutioninventors/tournament/GUI/views/Fixtures.fxml" />
+    </Tab>
+     <Tab fx:id="tab2_results" text="Results">
+        <fx:include fx:id="tabresult" source="/com/solutioninventors/tournament/GUI/views/ViewResults.fxml" />
+    </Tab>
+     <Tab fx:id="tab3_standingtable" text="Standing">
+        <fx:include fx:id="tabstand" source="/com/solutioninventors/tournament/GUI/views/Standing.fxml" />
+    </Tab>
+     <Tab fx:id="tab4_Competitors" text="Competitors">
+        <fx:include fx:id="tabcomp" source="/com/solutioninventors/tournament/GUI/views/CompetitorStatus.fxml" />
+    </Tab>
+     <Tab fx:id="tab5_inputScores" text="Input Scores">
+        <fx:include fx:id="tabinputscore" source="/com/solutioninventors/tournament/GUI/views/InputResults.fxml" />
+    </Tab>
+</tabs>
+</TabPane>

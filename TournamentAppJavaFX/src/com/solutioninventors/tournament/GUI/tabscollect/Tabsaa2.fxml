@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane fx:id="tabPane"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+  <tabs>
+    <Tab fx:id="tab1_foo" text="View Results">
+      <content>
+        <fx:include fx:id="xxx_tab1foo_xxx" source="/com/solutioninventors/tournament/GUI/ViewResults.fxml"/>
+      </content>
+    </Tab>
+  </tabs>
+  <tabs>
+    <Tab text="Competitor Status">
+      <content>
+        <fx:include  source="/com/solutioninventors/tournament/GUI/CompetitorTable/CompetitorStatus.fxml"/>
+      </content>
+    </Tab>
+  </tabs>
+   <tabs>
+    <Tab fx:id="tabPaneStanding" text="Standing Table">
+      <content>
+        <fx:include fx:id="Standing" source="/com/solutioninventors/tournament/GUI/Standing.fxml"/>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>
