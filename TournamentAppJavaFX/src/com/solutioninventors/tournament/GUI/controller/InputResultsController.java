@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -59,6 +61,7 @@ public class InputResultsController {
 	public void setTournament(Tournament value) {
 
 		tournament = value;
+		if(!tournament.hasEnded()) {
 		currentFixtures = tournament.getCurrentRound().getFixtures();
 		competitors = tournament.getCompetitors();
 		int i = 0;
@@ -91,20 +94,13 @@ public class InputResultsController {
 
 			i += 2;// increment i by 2
 		} // end for loop
-
+	} else {
+		AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+	}
 	}// end set current
 
 	@FXML
 	public void getResults(ActionEvent e) throws IOException, NoFixtureException {
-		/*
-		 * double scores[] = new double[currentFixtures.length*2]; for (int i = 0; i <
-		 * currentFixtures.length*2; i++) scores[i] =
-		 * Double.valueOf(txtresults.get(i).getText()); // pass result to tournament int
-		 * i=0; for (int j = 0; j < currentFixtures.length; j ++) {
-		 * tournament.setResult(competitors[i], scores[i], scores[i + 1], competitors[i
-		 * + 1]); i+=2; System.out.println("I ran scores are "+ scores[0] + " " +
-		 * scores[1]); }
-		 */
 		int count = 0;
 		for (int i = 0; i < currentFixtures.length; i++) {
 			Competitor com1 = currentFixtures[i].getCompetitorOne();
@@ -121,17 +117,18 @@ public class InputResultsController {
 
 			count += 2;
 		}
-
-		// open results window
-		((Node) e.getSource()).getScene().getWindow().hide();
+		System.out.println("Done");
+		
+		/*// open results window
+		///((Node) e.getSource()).getScene().getWindow().hide();
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"ViewResults.fxml").openStream());
-		vr = (ViewResultsController) loader.getController();
-		vr.setTournament(tournament);
+		//vr = (ViewResultsController) loader.getController();
+	//	vr.setTournament(tournament);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		primaryStage.setTitle("Tournament Name");
+		primaryStage.setTitle("Tournament Name");*/
 	}// end getResults
 }// end class

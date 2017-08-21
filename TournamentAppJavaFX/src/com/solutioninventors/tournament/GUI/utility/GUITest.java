@@ -23,7 +23,6 @@ public class GUITest extends Application{
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
 			scene.getStylesheets().add(getClass().getResource(Paths.viewpath+"lookfeel.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
 		} catch(Exception e) {

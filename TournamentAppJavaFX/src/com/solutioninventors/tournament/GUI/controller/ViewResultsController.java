@@ -60,6 +60,7 @@ public class ViewResultsController {
 	public void setTournament(Tournament value) {
 
 		tournament = value;
+		if (!tournament.hasEnded()) {
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		competitors = tournament.getCompetitors();
 		int i = 0;
@@ -94,7 +95,9 @@ public class ViewResultsController {
 			lblresults.get(i + 1).setText(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
 			i += 2;// increment i by 2
 		} // end for loop
-
+		} else {
+			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+		}
 	}// end set current
 
 	@FXML
@@ -110,7 +113,7 @@ public class ViewResultsController {
 				//System.out.println("Error move to next round");
 			}
 			if (!tournament.hasEnded()) {
-			((Node) event.getSource()).getScene().getWindow().hide();
+		/*	((Node) event.getSource()).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"Fixtures.fxml").openStream());
 			FixturesController fc = (FixturesController) loader.getController();
@@ -121,7 +124,7 @@ public class ViewResultsController {
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			primaryStage.setTitle("Tournament name");
+			primaryStage.setTitle("Tournament name");*/
 
 		} else {
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());

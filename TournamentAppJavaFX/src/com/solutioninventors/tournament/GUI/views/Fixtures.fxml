@@ -107,7 +107,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="451.0" layoutY="454.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Input Results" onAction="#inputresults"/>
+<!--       <Button layoutX="451.0" layoutY="454.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Input Results" onAction="#inputresults"/> -->
    </children>
    <fx:define>
         <ArrayList fx:id="imgArray">

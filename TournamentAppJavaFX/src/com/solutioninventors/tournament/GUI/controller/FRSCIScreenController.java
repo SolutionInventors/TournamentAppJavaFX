@@ -31,7 +31,7 @@ public class FRSCIScreenController {
 	@FXML private ViewResultsController tabresultController;// TabPaneRootView.fxml_include_fx:id="xxx_tab2bar_xxx" +
 	@FXML private StandingTable22Controller tabstandController;
 	@FXML private CompetitorStatusController tabcompController;
-	//@FXML private InputResultsController tabinputscore;
+	@FXML private InputResultsController tabinputscoreController;
 
 	// ###########################################################################################
 
@@ -50,7 +50,7 @@ public class FRSCIScreenController {
 					}else if(newValue == tab4_Competitors) {
 						tabcompController.setTournament(tournament);
 					}else if(newValue == tab5_inputScores) {
-					//	tabinputscore.setTournament(tournament);
+						tabinputscoreController.setTournament(tournament);
 					}
 				});
 	}

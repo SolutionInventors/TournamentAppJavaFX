@@ -36,8 +36,11 @@ public class StandingTable22Controller {
 
 		public void setTournament(Tournament tour) {
 			tournament = tour;
+			if (tournament instanceof GroupTournament) {
+				tableswiss =((GroupTournament) tournament).getTable().getStringTable();
 			
-			tableswiss =((GroupTournament) tournament).getTable().getStringTable();
+			
+			
 			setupTable();// call utility method
 			Label lbl[] = new Label[noOfRounds];
 			for (int i = 0; i < lbl.length; i++) {
@@ -47,11 +50,13 @@ public class StandingTable22Controller {
 			vBox.setPadding(new Insets(10, 10, 10, 10));
 			for (int i = 0; i < noOfRounds; i++) {
 				vBox.getChildren().add(lbl[i]);
-				vBox.getChildren().add(table[i]);
-			}
+				vBox.getChildren().add(table[i]);}
+			
 
 			sp.setContent(vBox);
-		}
+			}//end if tournament is instance of
+			
+		}//end setTournament
 		
 		
 		@SuppressWarnings("unchecked")
@@ -72,8 +77,6 @@ public class StandingTable22Controller {
 				}
 			}
 			List<ObservableList<StandingTable>> abc = setuptablevariable();
-			//abc 
-
 			table = new TableView[noOfRounds];
 
 			// how to pass in multiple list

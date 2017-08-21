@@ -26,8 +26,8 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public class RoundRobinTest {
 
 	public static void main(String[] args) throws NoFixtureException {
-		File file = new File(
-				"C:\\Users\\Chinedu\\git\\TournamentAppJavaFX\\TournamentAppJavaFX\\src\\com\\solutioninventors\\tournament\\GUI\\golf.jpg");
+		File file = new File("arsenal.jpg");
+				
 		// File file = new File("golf.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);

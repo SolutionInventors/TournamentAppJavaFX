@@ -1,22 +1,18 @@
 package com.solutioninventors.tournament.GUI.controller;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import com.solutioninventors.tournament.GUI.utility.Paths;
+import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 public class FixturesController {
 	@FXML
@@ -49,6 +45,7 @@ public class FixturesController {
 	public void setTournament(Tournament value) {
 	
 		tournament = value;
+		if(!tournament.hasEnded()) {
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		competitors = tournament.getCompetitors();
 		int i = 0;
@@ -78,10 +75,13 @@ public class FixturesController {
 			
 			i+=2;//increment i by 2
 		}//end for loop
-		
+	   }//end if tournament has not ended
+	 else {
+		AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+	}
 	}// end set current
 	
-	@FXML
+	/*@FXML
 	public void inputresults(ActionEvent event) throws IOException {
 		//((Node) event.getSource()).getScene().getWindow().hide();
 	//	Stage primaryStage = new Stage();
@@ -89,11 +89,11 @@ public class FixturesController {
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputResults.fxml").openStream());
 		InputResultsController vr = (InputResultsController) loader.getController();
 		vr.setTournament(tournament);
-		/*Scene scene = new Scene(root);
+		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		primaryStage.setTitle("Tournament Name");*/
+		primaryStage.setTitle("Tournament Name");
 		Btn.next(root, event, tournament.getName());
-	}
+	}*/
 
 }// end class

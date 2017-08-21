@@ -85,11 +85,6 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label text="(or playing as Black in chess)" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font>
-            </Label>
             <Label text="Number of Competitors:" GridPane.rowIndex="5">
                <font>
                   <Font name="Times New Roman" size="14.0" />
@@ -118,34 +113,8 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="L" GridPane.columnIndex="3" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <CheckBox mnemonicParsing="false" text="W" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="D" GridPane.columnIndex="3" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font>
-            </CheckBox>
-            <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <TextField text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <TextField text="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
             <Label prefHeight="16.0" prefWidth="185.0" text="KNOCKOUT SPECS" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <font>
                   <Font name="Times New Roman Bold" size="14.0" />
@@ -166,23 +135,50 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <RadioButton mnemonicParsing="false" text="Single" GridPane.columnIndex="1" GridPane.rowIndex="8">
-               <toggleGroup>
-                  <ToggleGroup fx:id="type1" />
-               </toggleGroup>
+            <RadioButton mnemonicParsing="false" selected="true" text="Single" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
-            </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Double" GridPane.columnIndex="2" GridPane.rowIndex="8">
                <toggleGroup>
-                  <ToggleGroup fx:id="type1" />
+                  <ToggleGroup fx:id="type3" />
                </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Double" toggleGroup="$type3" GridPane.columnIndex="2" GridPane.rowIndex="8">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
             <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label text="W" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" prefHeight="29.0" prefWidth="29.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Times New Roman Bold" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="180.0" layoutY="64.0" text="D" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField layoutX="180.0" layoutY="89.0" maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" prefHeight="29.0" prefWidth="29.0" text="1" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Times New Roman Bold" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="278.0" layoutY="89.0" text="L" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField layoutX="278.0" layoutY="89.0" maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" prefHeight="29.0" prefWidth="29.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Times New Roman Bold" size="17.0" />
+               </font>
+            </TextField>
          </children>
       </GridPane>
       <Text fontSmoothingType="LCD" layoutX="37.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a multistage tournament, there are two stages with the top competitors(or winners) of the first stage(thes group stage) advancing to the next stage (Knockout Stage)" wrappingWidth="500.0">
