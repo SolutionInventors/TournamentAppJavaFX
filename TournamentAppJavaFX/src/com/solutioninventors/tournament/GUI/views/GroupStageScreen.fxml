@@ -29,10 +29,6 @@
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font></Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Finish" GridPane.columnIndex="2">
-               <font>
-                  <Font name="Times New Roman" size="14.0" />
-               </font></Button>
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Cancel" GridPane.columnIndex="3">
                <font>
                   <Font name="Times New Roman" size="14.0" />
@@ -85,7 +81,7 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <RadioButton fx:id="swiss" mnemonicParsing="false" selected="true" text="Swiss Style" GridPane.columnIndex="1">
+            <RadioButton fx:id="swiss" mnemonicParsing="false" onAction="#radioSelected" selected="true" text="Swiss Style" GridPane.columnIndex="1">
                <toggleGroup>
                   <ToggleGroup fx:id="type" />
                </toggleGroup>
@@ -93,12 +89,12 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="round" mnemonicParsing="false" text="Round Robin" toggleGroup="$type" GridPane.columnIndex="2">
+            <RadioButton fx:id="round" mnemonicParsing="false" onAction="#radioSelected" text="Round Robin" toggleGroup="$type" GridPane.columnIndex="2">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="doubleround" mnemonicParsing="false" text="Double Round Robin" toggleGroup="$type" GridPane.columnIndex="3">
+            <RadioButton fx:id="doubleround" mnemonicParsing="false" onAction="#radioSelected" text="Double Round Robin" toggleGroup="$type" GridPane.columnIndex="3">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
@@ -137,7 +133,7 @@
             </TextField>
          </children>
       </GridPane>
-      <Text fontSmoothingType="LCD" layoutX="37.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a Swiss style group tournament, the number of results is attempted to be shortened or reduced. The fixtures are determined from the current standing. This is achieved by pairing the top and bottom competitors" wrappingWidth="500.0">
+      <Text fx:id="THeader" fontSmoothingType="LCD" layoutX="37.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a Swiss style group tournament, the number of results is attempted to be shortened or reduced. The fixtures are determined from the current standing. This is achieved by pairing the top and bottom competitors" wrappingWidth="500.0">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>

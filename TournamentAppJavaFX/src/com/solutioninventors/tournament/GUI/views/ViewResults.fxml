@@ -17,7 +17,7 @@
       <AnchorPane prefHeight="500.0" prefWidth="600.0">
       <!--    <?import java.util.ArrayList?> -->
          <children>
-            <GridPane layoutX="19.0" layoutY="17.0" prefHeight="383.0" prefWidth="566.0">
+            <GridPane layoutX="17.0" layoutY="52.0" prefHeight="383.0" prefWidth="566.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="90.0" minWidth="74.0" prefWidth="74.0" />
@@ -29,99 +29,100 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints />
-                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="45.0" minHeight="32.0" prefHeight="45.0" />
+                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="111.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="img8" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                  <ImageView fx:id="img7" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
-                  <ImageView fx:id="img5" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-                  <ImageView fx:id="img3" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-                  <Label fx:id="lblgroup1" text="GROUP 1" GridPane.columnIndex="3">
+                  <ImageView fx:id="img8" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                  <ImageView fx:id="img7" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" />
+                  <ImageView fx:id="img5" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
+                  <ImageView fx:id="img3" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
+                  <Label fx:id="lblgroup1" text="GROUP 1" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblgroup2" text="GROUP 2" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Label fx:id="lblgroup2" text="GROUP 2" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer1" contentDisplay="CENTER" text="ervbcn" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1">
+                  <Label fx:id="lblplayer1" contentDisplay="CENTER" text="ervbcn" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer7" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <Label fx:id="lblplayer7" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer5" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="lblplayer5" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer3" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="lblplayer3" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="vs1" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Label fx:id="vs1" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="vs2" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Label fx:id="vs2" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="vs3" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label fx:id="vs3" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="vs4" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                  <Label fx:id="vs4" alignment="CENTER" prefHeight="36.0" prefWidth="98.0" text="VS/GAME" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer2" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                  <Label fx:id="lblplayer2" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer4" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                  <Label fx:id="lblplayer4" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer6" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                  <Label fx:id="lblplayer6" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="5">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblplayer8" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                  <Label fx:id="lblplayer8" prefHeight="64.0" prefWidth="110.0" text="WRETWERTERTWRETWERTTWER" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="img2" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                  <ImageView fx:id="img4" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                  <ImageView fx:id="img6" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                  <ImageView fx:id="img1" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                  <Label fx:id="lblresult1" prefHeight="28.0" prefWidth="41.0" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
-                  <Label fx:id="lblresult3" layoutX="171.0" layoutY="49.0" prefHeight="27.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label fx:id="lblresult2" layoutX="171.0" layoutY="49.0" prefHeight="24.0" prefWidth="88.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Label fx:id="lblresult4" layoutX="171.0" layoutY="121.0" prefHeight="32.0" prefWidth="88.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <Label fx:id="lblresult5" layoutX="171.0" layoutY="121.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Label fx:id="lblresult6" layoutX="171.0" layoutY="121.0" prefHeight="28.0" prefWidth="88.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                  <Label fx:id="lblresult7" layoutX="171.0" layoutY="121.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <Label fx:id="lblresult8" layoutX="172.0" layoutY="343.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <ImageView fx:id="img2" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                  <ImageView fx:id="img4" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                  <ImageView fx:id="img6" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                  <ImageView fx:id="img1" fitHeight="74.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+                  <Label fx:id="lblresult1" prefHeight="28.0" prefWidth="41.0" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="2" />
+                  <Label fx:id="lblresult3" layoutX="171.0" layoutY="49.0" prefHeight="27.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label fx:id="lblresult2" layoutX="171.0" layoutY="49.0" prefHeight="24.0" prefWidth="88.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Label fx:id="lblresult4" layoutX="171.0" layoutY="121.0" prefHeight="32.0" prefWidth="88.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Label fx:id="lblresult5" layoutX="171.0" layoutY="121.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Label fx:id="lblresult6" layoutX="171.0" layoutY="121.0" prefHeight="28.0" prefWidth="88.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <Label fx:id="lblresult7" layoutX="171.0" layoutY="121.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Label fx:id="lblresult8" layoutX="172.0" layoutY="343.0" prefHeight="23.0" prefWidth="62.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                </children>
             </GridPane>
             <Button fx:id="btnnextgroup" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" text="Next Group">
@@ -135,6 +136,11 @@
                </font>
             </Button>
             <Button layoutX="405.0" layoutY="450.0" mnemonicParsing="false" onAction="#nextRound" prefHeight="37.0" prefWidth="139.0" text="Move to Next Round" />
+            <Label fx:id="stage" layoutX="255.0" layoutY="14.0" text="Label">
+               <font>
+                  <Font name="Trebuchet MS Bold Italic" size="27.0" />
+               </font>
+            </Label>
          </children>
          <fx:define>
               <ArrayList fx:id="imgArray">

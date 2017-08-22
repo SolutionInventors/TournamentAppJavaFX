@@ -7,6 +7,7 @@ import java.util.List;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
@@ -28,8 +29,8 @@ import javafx.stage.Stage;
 public class ViewResultsController {
 	@FXML
 	private List<Label> lblcompArray;
-	@FXML
-	private List<ImageView> imgArray;
+	@FXML private Label stage;
+	@FXML private List<ImageView> imgArray;
 	@FXML
 	private List<Label> lblVsArray;
 	@FXML
@@ -61,7 +62,14 @@ public class ViewResultsController {
 
 		tournament = value;
 		if (!tournament.hasEnded()) {
+			stage.setText(tournament.toString());
+		
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
+		if (tournament instanceof EliminationTournament) {
+			competitors = ((EliminationTournament)tournament).getActiveCompetitors();
+		} else {
+			competitors = tournament.getCompetitors();
+		}
 		competitors = tournament.getCompetitors();
 		
 		int i = 0;

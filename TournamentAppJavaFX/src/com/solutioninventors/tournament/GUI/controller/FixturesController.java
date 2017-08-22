@@ -19,8 +19,8 @@ public class FixturesController {
 	private List<Label> lblcompArray;
 	@FXML
 	private List<ImageView> imgArray;
-	@FXML
-	private List<Label> lblVsArray;
+	@FXML private Label stage;
+	@FXML private List<Label> lblVsArray;
 	@FXML
 	private List<Label> lblGroupArray;
 	@FXML
@@ -46,6 +46,7 @@ public class FixturesController {
 	
 		tournament = value;
 		if(!tournament.hasEnded()) {
+			stage.setText(tournament.toString());
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		competitors = tournament.getCompetitors();
 		int i = 0;

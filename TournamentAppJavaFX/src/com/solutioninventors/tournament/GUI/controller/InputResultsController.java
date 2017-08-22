@@ -7,6 +7,7 @@ import java.util.List;
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
@@ -19,14 +20,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class InputResultsController {
-	@FXML
-	private List<Label> lblcompArray;
+	@FXML private List<Label> lblcompArray;
 	@FXML
 	private List<ImageView> imgArray;
 	@FXML
 	private List<Label> lblVsArray;
 	@FXML
 	private List<Label> lblGroupArray;
+	@FXML private Label stage;
 	@FXML
 	private List<TextField> txtresults;
 	@FXML
@@ -55,8 +56,14 @@ public class InputResultsController {
 
 		tournament = value;
 		if(!tournament.hasEnded()) {
+			stage.setText(tournament.toString());
 		currentFixtures = tournament.getCurrentRound().getFixtures();
-		competitors = tournament.getCompetitors();
+		if (tournament instanceof EliminationTournament) {
+			competitors = ((EliminationTournament)tournament).getActiveCompetitors();
+		} else {
+			competitors = tournament.getCompetitors();
+		}
+		
 		int i = 0;
 		for (int j = 0; j < currentFixtures.length; j++) {
 
@@ -110,7 +117,6 @@ public class InputResultsController {
 
 			count += 2;
 		}
-		System.out.println("Done");
 		
 		/*// open results window
 		///((Node) e.getSource()).getScene().getWindow().hide();

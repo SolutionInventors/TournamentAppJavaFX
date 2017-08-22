@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.solutioninventors.tournament.GUI.utility.StandingTable;
+import com.solutioninventors.tournament.test.Test;
+import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
 
@@ -36,25 +38,21 @@ public class StandingTable22Controller {
 
 		public void setTournament(Tournament tour) {
 			tournament = tour;
-			if (tournament instanceof GroupTournament) {
+			if (tournament instanceof GroupTournament){
 				tableswiss =((GroupTournament) tournament).getTable().getStringTable();
 			
-			
-			
 			setupTable();// call utility method
-			Label lbl[] = new Label[noOfRounds];
-			for (int i = 0; i < lbl.length; i++) {
-				lbl[i] = new Label("Group " + (i + 1));
-			}
-			vBox = new VBox(10);
-			vBox.setPadding(new Insets(10, 10, 10, 10));
-			for (int i = 0; i < noOfRounds; i++) {
-				vBox.getChildren().add(lbl[i]);
-				vBox.getChildren().add(table[i]);}
 			
-
-			sp.setContent(vBox);
 			}//end if tournament is instance of
+			else if (tournament instanceof Multistage) {
+				try {
+					tableswiss = ( ( ( Multistage ) tournament) .getGroup(0).getTable().getStringTable());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				setupTable();// call utility method
+			}
 			
 		}//end setTournament
 		
@@ -88,6 +86,21 @@ public class StandingTable22Controller {
 					table[i].getColumns().add(WDLFADP[i][col]);
 				}
 			}
+			
+			
+			//setup display
+			Label lbl[] = new Label[noOfRounds];
+			for (int i = 0; i < lbl.length; i++) {
+				lbl[i] = new Label("Group " + (i + 1));
+			}
+			vBox = new VBox(10);
+			vBox.setPadding(new Insets(10, 10, 10, 10));
+			for (int i = 0; i < noOfRounds; i++) {
+				vBox.getChildren().add(lbl[i]);
+				vBox.getChildren().add(table[i]);}
+			
+
+			sp.setContent(vBox);
 		}// end table setup
 
 		public List<ObservableList<StandingTable>> setuptablevariable() {

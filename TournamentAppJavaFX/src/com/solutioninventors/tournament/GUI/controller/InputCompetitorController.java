@@ -14,7 +14,9 @@ import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Challenge;
+import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.types.group.SwissTournament;
 import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
@@ -34,7 +36,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -52,7 +53,7 @@ public class InputCompetitorController {
 	private boolean homeandAway;
 
 	private enum TournamentTypes {
-		KNOCKOUT, CHALLENGE, GROUP
+		KNOCKOUT, CHALLENGE, GROUP, MULTISTAGE
 	};
 
 	private TournamentTypes TournamentType;
@@ -68,6 +69,7 @@ public class InputCompetitorController {
 	// private TextField[] txtfield;
 
 	Competitor[] comps;
+	private int tournamenttype;
 
 	@FXML
 	public void chinedu() {
@@ -95,7 +97,7 @@ public class InputCompetitorController {
 		initialize();
 	}
 
-	public void setGroupTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp) {
+	public void setGroupTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp, int tourType) {
 		TournamentName = tn;
 		onOfRounds = rud;
 		noOfCompetitors = noofcomp;
@@ -103,9 +105,25 @@ public class InputCompetitorController {
 		winpoint = winp;
 		drawpoint = drawp;
 		losspoint = lossp;
+		tournamenttype = tourType;
 		initialize();
 	}
 
+	public void setMultiStageTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp, int tourType, boolean KOSinDob) {
+		TournamentName = tn;
+		onOfRounds = rud;
+		noOfCompetitors = noofcomp;
+		TournamentType = TournamentTypes.MULTISTAGE;
+		winpoint = winp;
+		drawpoint = drawp;
+		losspoint = lossp;
+		tournamenttype = tourType;
+		sigleOrDouble = KOSinDob;
+		initialize();
+	}
+			
+		
+	
 	public void initialize() {
 		file = new File[noOfCompetitors];
 		Image image = new Image("file:arsenal.jpg");
@@ -117,8 +135,9 @@ public class InputCompetitorController {
 	}
 
 	@FXML
-	public void next(ActionEvent event) throws IOException {
-
+	public void next(ActionEvent event) throws IOException, InvalidBreakerException {
+		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };
+		TieBreaker tieBreakers = new TieBreaker(breakers);
 		comps = new Competitor[noOfCompetitors];
 		for (int i = 0; i < comps.length; i++) {
 			comps[i] = new Competitor(txtArray.get(i).getText(), file[i]);
@@ -138,10 +157,40 @@ public class InputCompetitorController {
 				tournament = new Challenge(comps, onOfRounds);
 				break;
 			case GROUP:
-				Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };
-				TieBreaker tieBreakers = new TieBreaker(breakers);
-				tournament = new SwissTournament(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
-						tieBreakers, onOfRounds);
+				
+				
+					switch (tournamenttype) {
+						case 1:
+							tournament = new SwissTournament(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
+									tieBreakers, onOfRounds);
+						break;
+						case 2:
+							tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 
+									winpoint, drawpoint, losspoint, tieBreakers  ,  false  );
+						break;
+						case 3:
+							tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 
+									winpoint, drawpoint, losspoint, tieBreakers  ,  true  );
+						break;
+					}//end inner switch
+					
+				break;
+			case MULTISTAGE:
+				switch (tournamenttype) {
+				case 1:
+					tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint, tieBreakers, onOfRounds,
+							sigleOrDouble);
+				break;
+				case 2:
+					tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint, tieBreakers, false, sigleOrDouble);
+				break;
+				case 3:
+					tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint, tieBreakers, true, sigleOrDouble);
+				break;
+			}//end inner switch
+				
+				break;
+			default:
 				break;
 			}
 		} catch (TournamentException | InvalidBreakerException e) {
@@ -151,7 +200,6 @@ public class InputCompetitorController {
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = loader.load(getClass().getResource(Paths.viewpath+"FRSCIScreen.fxml").openStream());
-		//FixturesController ic = (FixturesController) loader.getController();
 		FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 		ic.setTournament(tournament);
 		ic.init();
