@@ -77,7 +77,6 @@ public class InputCompetitorController {
 	public void setKOtournament(String tn, int noofcomp) {
 		TournamentName = tn;
 		noOfCompetitors = noofcomp;
-		// file = new File[noOfCompetitors];
 		TournamentType = TournamentTypes.KNOCKOUT;
 		initialize();
 	}

@@ -10,9 +10,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import java.util.ArrayList?> 
+<?import java.util.ArrayList?>
 <!--    <?import java.util.ArrayList?> -->
-
 
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputResultsController">
    <content>
@@ -136,7 +135,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="459.0" layoutY="454.0" mnemonicParsing="false" onAction="#getResults" prefHeight="37.0" prefWidth="95.0" text="View Results" />
+            <Button layoutX="459.0" layoutY="454.0" mnemonicParsing="false" onAction="#getResults" prefHeight="37.0" prefWidth="95.0" text="Submit" />
          </children>
          <fx:define>
               <ArrayList fx:id="imgArray">

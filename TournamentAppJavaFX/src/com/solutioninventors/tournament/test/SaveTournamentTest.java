@@ -145,6 +145,7 @@ public class SaveTournamentTest
 		{
 			Test.displayMessage("Swiss Tournament is saving...");
 			Tournament.saveTournament(tournament, tournamentFile);
+			
 		}
 		catch (FileNotFoundException e)
 		{

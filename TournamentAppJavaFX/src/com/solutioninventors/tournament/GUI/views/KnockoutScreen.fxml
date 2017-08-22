@@ -57,7 +57,7 @@
             <RadioButton mnemonicParsing="false" selected="true" text="Single Elimination" toggleGroup="$ElimType" GridPane.columnIndex="1" />
             <Label text="Number of Competitors" GridPane.rowIndex="1" />
             <Label text="Home and Away" GridPane.rowIndex="2" />
-            <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <CheckBox fx:id="homeandAway" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtNoofcompetitors" text="4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>

@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
-import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -13,17 +12,11 @@ import com.solutioninventors.tournament.utils.Fixture;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class InputResultsController {
 	@FXML

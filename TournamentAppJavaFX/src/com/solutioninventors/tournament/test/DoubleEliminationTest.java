@@ -24,7 +24,7 @@ public class DoubleEliminationTest
 
 	public static void main(String[] args)
 	{
-		File file = new File("C:\\Users\\USER\\Pictures\\Family and Self\\Inspiration.JPG");
+		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor( "Chidiebere" , file );
 		Competitor c2 = new Competitor( "Fred", file );
 		Competitor c3 = new Competitor( "Joshua" , file );

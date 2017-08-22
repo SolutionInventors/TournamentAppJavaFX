@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,8 @@ public class KnockoutScreenController {
 	@FXML
 	private TextField txtNoofcompetitors;
 	Btn btn = new Btn();
+	@FXML private CheckBox homeandAway;
+	
 	//Spinner(int min, int max, int initialValue, int amountToStepBy)
 	// Value factory.
 	
@@ -27,6 +30,7 @@ public class KnockoutScreenController {
 
 	public String getTournamentName() {
 		return TournamentName;
+		
 	}
 	int abc;
 	// public KnockoutScreenController() {
