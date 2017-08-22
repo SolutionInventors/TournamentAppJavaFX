@@ -22,7 +22,7 @@ public class ChallengeTest {
 	public static void main(String[] args) {
 		File file = new File("Arsenal.jpg"
 				);
-
+		
 		Competitor[] coms = { new Competitor("Chinedu", file), new Competitor("Chidi", file) };
 
 		Tournament tournament = new Challenge(coms, 2);

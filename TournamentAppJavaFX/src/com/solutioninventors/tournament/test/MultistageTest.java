@@ -146,7 +146,8 @@ public class MultistageTest {
 			Multistage multiStageSpecific = ( Multistage )  tournament;
 					
 			if (  tournament.getCurrentRoundNum() <=
-					multiStageSpecific.getNumberOfGroupRounds()) 
+					multiStageSpecific.getNumberOfGroupRounds()
+					) 
 			{
 				displayGroupStanding( multiStageSpecific );
 				if (multiStageSpecific.getNumberOfExtraQualifiers() != 0) 

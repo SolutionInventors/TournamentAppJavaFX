@@ -20,13 +20,14 @@ import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class RoundRobinTest {
 
 	public static void main(String[] args) throws NoFixtureException {
-		File file = new File("arsenal.jpg");
+		File file = new File("Arsenal.jpg");
 				
 		// File file = new File("golf.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
@@ -50,18 +51,22 @@ public class RoundRobinTest {
 		// Competitor c16 = new Competitor( "NIgeria" , file ) ;
 
 		Competitor[] comps = { c1, c2, c3, c4 };
-
+		
 		Test.displayMessage("Robin begins");
-
+		
+		
 		Breaker[] breakers = {
 				 Breaker.HEAD_TO_HEAD			 
 		};
 		
+		
+		String ans = JOptionPane.showInputDialog( "Input 1 for double-robin\nElse Single robin" );
 		Tournament tournament = null ;
 		try
 		{
 			TieBreaker tieBreakers = new TieBreaker( breakers );
-			tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 3 , 1 , 0 , tieBreakers  , false );
+			tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 
+					3 , 1 , 0 , tieBreakers  , ans.equals("1" ) ? true : false  );
 		}
 		catch (InvalidBreakerException e)
 		{
@@ -82,6 +87,7 @@ public class RoundRobinTest {
 		
 		Test.displayMessage( builder.toString() );
 		
+		printRounds( tournament.getRoundArray() );
 		Test.displayStandingTable(   
 				( (GroupTournament ) tournament)
 				.getTable().getStringTable() );// groupTournament specific
@@ -98,16 +104,63 @@ public class RoundRobinTest {
 			{
 				Competitor com1 = currentFixtures[i].getCompetitorOne() ;
 				Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
-
-			} 
+				
+				double score1 = Double.parseDouble(
+						JOptionPane.showInputDialog( "Input score for " + com1 ));
+				double score2 = Double.parseDouble(
+						JOptionPane.showInputDialog( "Input score for " + com2 ));
+				
+				try
+				{
+					tournament.setResult( com1, score1, score2, com2);
+				}
+				catch (NoFixtureException e)
+				{
+					Test.displayMessage(e.getMessage() );
+				}
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
+			}
 			
 			Test.displayMessage( builder.toString()  );
+			try
+			{
+				tournament.moveToNextRound();
+				
+				
+			}
+			catch (MoveToNextRoundException e)
+			{
+				e.printStackTrace();
+			} 
+			
 			Test.displayStandingTable(   
 					( (GroupTournament ) tournament)
 					.getTable().getStringTable() );// groupTournament specific
+			
+
+		} 
+			
+			
+	
+		Test.displayMessage( "The winner is " + tournament.getWinner() ) ;
+		
+	}
+
+	private static void printRounds(Round[] rounds)
+	{
+		StringBuilder builder =  new StringBuilder( 200 );
+		
+		for ( int i = 0 ; i < rounds.length ; i ++ 	)
+		{
+			builder.append( ("Round " + i + ":\n" ) );
+			builder.append(  ( Test.getFixutures( rounds[ i ].getFixtures() ) 	) + "\n") ;
+			
 		}
 		
-		Test.displayMessage( "The winner is " + tournament.getWinner()) ;
+		Test.displayMessage( builder.toString() );
+		
 		
 	}
 
