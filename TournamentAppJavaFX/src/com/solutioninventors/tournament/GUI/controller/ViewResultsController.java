@@ -63,6 +63,7 @@ public class ViewResultsController {
 		if (!tournament.hasEnded()) {
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		competitors = tournament.getCompetitors();
+		
 		int i = 0;
 		for (int j = 0; j < currentFixtures.length; j++) {
 
@@ -125,7 +126,7 @@ public class ViewResultsController {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("Tournament name");*/
-
+				System.out.println(tournament.toString());
 		} else {
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}

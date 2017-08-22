@@ -85,7 +85,7 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <RadioButton mnemonicParsing="false" selected="true" text="Swiss Style" GridPane.columnIndex="1">
+            <RadioButton fx:id="swiss" mnemonicParsing="false" selected="true" text="Swiss Style" GridPane.columnIndex="1">
                <toggleGroup>
                   <ToggleGroup fx:id="type" />
                </toggleGroup>
@@ -93,12 +93,12 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Round Robin" toggleGroup="$type" GridPane.columnIndex="2">
+            <RadioButton fx:id="round" mnemonicParsing="false" text="Round Robin" toggleGroup="$type" GridPane.columnIndex="2">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Double Round Robin" toggleGroup="$type" GridPane.columnIndex="3">
+            <RadioButton fx:id="doubleround" mnemonicParsing="false" text="Double Round Robin" toggleGroup="$type" GridPane.columnIndex="3">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>

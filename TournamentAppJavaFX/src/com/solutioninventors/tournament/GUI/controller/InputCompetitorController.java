@@ -16,6 +16,7 @@ import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.SwissTournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -46,6 +47,9 @@ public class InputCompetitorController {
 	double winpoint;
 	double drawpoint;
 	double losspoint;
+	//for Knock out
+	private boolean sigleOrDouble;
+	private boolean homeandAway;
 
 	private enum TournamentTypes {
 		KNOCKOUT, CHALLENGE, GROUP
@@ -74,10 +78,12 @@ public class InputCompetitorController {
 		TournamentName = tournamentName;
 	}
 
-	public void setKOtournament(String tn, int noofcomp) {
+	public void setKOtournament(String tn, int noofcomp, boolean sigleTour, boolean homeAndAway) {
 		TournamentName = tn;
 		noOfCompetitors = noofcomp;
 		TournamentType = TournamentTypes.KNOCKOUT;
+		homeandAway = homeAndAway;
+		sigleOrDouble = sigleTour;
 		initialize();
 	}
 
@@ -121,7 +127,12 @@ public class InputCompetitorController {
 		try {
 			switch (TournamentType) {
 			case KNOCKOUT:
-				tournament = new SingleEliminationTournament(comps, false);
+				if (sigleOrDouble) {
+					tournament = new SingleEliminationTournament(comps, homeandAway);
+				} else {
+					tournament = new DoubleElimination(comps);
+				}
+				
 				break;
 			case CHALLENGE:
 				tournament = new Challenge(comps, onOfRounds);

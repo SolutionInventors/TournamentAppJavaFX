@@ -42,8 +42,7 @@ public class TournamentTypeScreenController implements Initializable {
 	private Button finish;
 
 	// Event Listener on RadioButton[#rbKnockOut].onAction
-	@FXML
-	public void radioSelected(ActionEvent event) {
+	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
 			message = "In this format, champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
 			nextFxml = "ChallengeScreen.fxml";

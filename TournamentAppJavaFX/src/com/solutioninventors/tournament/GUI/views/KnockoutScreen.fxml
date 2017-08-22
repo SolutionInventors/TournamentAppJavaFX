@@ -50,14 +50,14 @@
         </rowConstraints>
          <children>
             <Label text="Tournament Style" />
-            <RadioButton mnemonicParsing="false" text="Double Elimination" GridPane.columnIndex="2">
+            <RadioButton fx:id="doubleelim" onAction="#tourselected" mnemonicParsing="false" text="Double Elimination" GridPane.columnIndex="2">
                <toggleGroup>
                   <ToggleGroup fx:id="ElimType" />
                </toggleGroup></RadioButton>
-            <RadioButton mnemonicParsing="false" selected="true" text="Single Elimination" toggleGroup="$ElimType" GridPane.columnIndex="1" />
+            <RadioButton fx:id="singleelim" onAction="#tourselected"  mnemonicParsing="false" selected="true" text="Single Elimination" toggleGroup="$ElimType" GridPane.columnIndex="1" />
             <Label text="Number of Competitors" GridPane.rowIndex="1" />
             <Label text="Home and Away" GridPane.rowIndex="2" />
-            <CheckBox fx:id="homeandAway" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <CheckBox fx:id="homeandAway" mnemonicParsing="false"  onAction="#homeAway" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtNoofcompetitors" text="4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
