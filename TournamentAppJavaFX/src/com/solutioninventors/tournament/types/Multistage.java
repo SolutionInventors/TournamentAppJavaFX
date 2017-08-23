@@ -15,6 +15,7 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.group.GroupTournament;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
@@ -188,7 +189,7 @@ public class Multistage extends Tournament
 		
 	}
 	@Override
-	public void moveToNextRound() throws MoveToNextRoundException
+	public void moveToNextRound() throws MoveToNextRoundException, TournamentEndedException
 	{
 		if ( hasEnded() )
 			throw new MoveToNextRoundException("The tournament has ended" );
@@ -338,7 +339,7 @@ public class Multistage extends Tournament
 	
 	@Override
 	public void setResult(Competitor com1, double score1, 
-			double score2, Competitor com2) throws NoFixtureException
+			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException
 	{
 		boolean found = false ; 
 		

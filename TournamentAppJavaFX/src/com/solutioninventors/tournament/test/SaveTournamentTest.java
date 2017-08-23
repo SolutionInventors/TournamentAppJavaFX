@@ -6,167 +6,113 @@
  */
 package com.solutioninventors.tournament.test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
-import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
-import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
+import com.solutioninventors.tournament.types.Challenge;
+import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
-import com.solutioninventors.tournament.types.group.GroupTournament;
+import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.types.group.SwissTournament;
-import com.solutioninventors.tournament.utils.Breaker;
-import com.solutioninventors.tournament.utils.Competitor;
-import com.solutioninventors.tournament.utils.Fixture;
-import com.solutioninventors.tournament.utils.SportType;
-import com.solutioninventors.tournament.utils.TieBreaker;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 
 public class SaveTournamentTest
 {
 
-	public static void main( String[] args 	)
+	public static void main( String[] args 	) throws FileNotFoundException, IOException 
+			
 	{
-		File file = new File("Arsenal.jpg");
-		File golfFile =  new File("golf.jpg" );
-		JFileChooser ch =  new JFileChooser();
-		ch.showOpenDialog(null);
-		File pio = ch.getSelectedFile() ;
-		Competitor c1 = new Competitor("Chidiebere", golfFile);
-		Competitor c2 = new Competitor("Fred", file);
-		Competitor c3 = new Competitor("Joshua", file);
-		Competitor c4 = new Competitor("Chinedu", golfFile);
-		Competitor c5 = new Competitor("Ada", file);
-		Competitor c6 = new Competitor("Oguejiofor", file);
-		Competitor c7 = new Competitor("Pio", pio );
-		Competitor c8 = new Competitor("Oloche", file);
+		JFileChooser fileChooser =  new JFileChooser();
+		fileChooser.setDialogTitle( "Open previously saved tournament file" );
+		fileChooser.showOpenDialog( null );
 		
-	
-		Competitor[] comps = {c1, c2 ,c3,c4, c5 , c6 , c7,  c8 };	
-		
-		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};
 		Tournament tournament = null ;
-		
-		int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("input the number of Round"));
 		try
 		{
-			TieBreaker tieBreakers = new TieBreaker( breakers );
-			tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 
-					3 , 1 , 0 , tieBreakers , numOfRounds );
+			tournament = Tournament.loadTournament( fileChooser.getSelectedFile() );
 		}
-		catch (TournamentException | InvalidBreakerException e )
+		catch (IOException | TournamentException e1)
 		{
-			JOptionPane.showMessageDialog(null,  e.getMessage() );
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		try
+		{
+			if ( tournament instanceof SingleEliminationTournament )
+				SingleEliminationTest.simulateRound( tournament );
+			else if ( tournament instanceof SwissTournament )
+				SwissTes.simulateRound( tournament );
+			else if ( tournament instanceof RoundRobinTournament )
+				RoundRobinTest.simulateRound( tournament );
+			else if ( tournament instanceof Multistage )
+				MultistageTest.simulateRound( tournament );
+			else if ( tournament instanceof Challenge )
+				ChallengeTest.simulateRound( tournament );	
+				
+		}
+		catch( MoveToNextRoundException e 	)
+		{
+			Test.displayMessage(e.getMessage());
+			e.printStackTrace(); 
+			System.exit( 0 );
+			
+		}
+		catch (TournamentEndedException e)
+		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		JFileChooser fileChooser = new JFileChooser();
 		
+		if ( tournament.hasEnded() )
+			Test.displayMessage("The winner is " + tournament.getWinner() );
 		
+		Test.displayMessage("Saving File....");
 		
-		
-//		Tournament begins
-		Test.displayMessage("Swiss begins");
-		StringBuilder builder = new StringBuilder( 300 );
-		
-		builder.append( "The competitors are: \n" );
-		Competitor[] tournamentComps = tournament.getCompetitors() ;
-		
-		for ( int i =  0 ; i < tournamentComps.length ; i ++ )
+		try
 		{
-			builder.append( (i+1) + ". " + tournamentComps[ i ] + " \n" ); 
+			tournament.save();
 		}
-		
-		
-		Test.displayMessage( builder.toString() );
-		Test.displayStandingTable(   ( (GroupTournament)tournament )
-									  .getTable() // groupTournament specific
-									  .getStringTable() );
-		
-		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
-		Test.displayFixtures( currentFixtures );
-		
-		builder.delete(0 , builder.length() );
-		builder.append("Round results are: \n" );
-		for( int i = 0 ; i< currentFixtures.length ;i++ )
+		catch (TournamentException | TournamentHasNotBeenSavedException e)
 		{
-			Competitor com1 = currentFixtures[i].getCompetitorOne() ;
-			Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
-
-			double score1 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
-								com1 ));
-			double score2 = Double.parseDouble(JOptionPane.showInputDialog( "Input score for " + 
-					 com2 ));
+			Test.displayMessage("Save unsuccessful\nError Message: " + e.getMessage() );
+			Test.displayMessage( "Save As...." );
+			fileChooser.setDialogTitle("Save As Dialog is opening..." );
+			fileChooser.showSaveDialog(null );
 			
 			try
 			{
-				tournament.setResult( com1, score1, score2, com2);
+				Tournament.saveAs( tournament,  fileChooser.getSelectedFile() );
 			}
-			catch (NoFixtureException e)
+			catch (TournamentException e2)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e2.printStackTrace();
+				System.exit( 0 );
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-					currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
 			
 			
 		}
-			
-			
+		Test.displayMessage("Save Successful");
 		
-		Test.displayMessage( builder.toString()  );
+		viewPreviouslySaveFileNames();
 		
-		try
-		{
-			tournament.moveToNextRound();
-		}
-		catch (TournamentEndedException | MoveToNextRoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		Test.displayStandingTable(  ((GroupTournament)tournament)
-				.getTable() //GroupTournament specific
-				.getStringTable() );
-		fileChooser.showSaveDialog( null );
-		File tournamentFile = fileChooser.getSelectedFile();
-		
-		saveTournament( tournament , tournamentFile );
 	}
 
-	
-	public static void saveTournament(Tournament tournament, File tournamentFile)
+	private static void viewPreviouslySaveFileNames()
 	{
-		try
-		{
-			Test.displayMessage("Swiss Tournament is saving...");
-			Tournament.saveTournament(tournament, tournamentFile);
-			
-		}
-		catch (FileNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		catch (TournamentException e)
-		{
-			e.printStackTrace();
-		}
+		System.out.println("Previously Saved files are..." );
+		String[] names = Tournament.savedFilePaths();
 		
-		
-		
+		for( int i = 0 ; i < names.length ; i++ )
+			System.out.println( names[ i ] );
+				
 	}
 
 }

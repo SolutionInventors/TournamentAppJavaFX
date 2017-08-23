@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
@@ -49,24 +50,35 @@ public class SingleEliminationTest {
 		
 		Test.displayMessage("Single Elimination begins");
 
-		while (!tournament.hasEnded()) {
-			Test.displayMessage("Welcome to the " + tournament.toString());
-			inputRoundResults(tournament);
-
-			while ( ( 	(SingleEliminationTournament)tournament)
-						.hasTie())
-				breakTies(tournament);
-			Test.displayRoundResults(tournament.getCurrentRound());
-			tournament.moveToNextRound();
-			System.out.println(tournament.hasEnded());
-		
-		
+		while (!tournament.hasEnded()) 
+		{
+			try
+			{
+				simulateRound(tournament);
+			}
+			catch (TournamentEndedException e)
+			{
+				break;
+			}
 		}
 		Test.displayMessage("The winner is " + tournament.getWinner());
 
 	}
 
-	private static void breakTies(Tournament tournament) {
+	public static void simulateRound(Tournament tournament) throws MoveToNextRoundException, TournamentEndedException
+	{
+		Test.displayMessage("Welcome to the " + tournament.toString());
+		inputRoundResults(tournament);
+
+		while ( ( 	(SingleEliminationTournament)tournament)
+					.hasTie())
+			breakTies(tournament);
+		Test.displayRoundResults(tournament.getCurrentRound());
+		tournament.moveToNextRound();
+		System.out.println(tournament.hasEnded());
+	}
+
+	private static void breakTies(Tournament tournament) throws TournamentEndedException {
 		StringBuilder builder = new StringBuilder(400);
 		Fixture[] currentFixtures = ( (SingleEliminationTournament)tournament)
 									.getActiveTies(); // singleElim specific
@@ -95,7 +107,7 @@ public class SingleEliminationTest {
 
 	}
 
-	public static void inputRoundResults(Tournament tournament) {
+	public static void inputRoundResults(Tournament tournament) throws TournamentEndedException {
 		StringBuilder builder = new StringBuilder(400);
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		Test.displayFixtures(currentFixtures);

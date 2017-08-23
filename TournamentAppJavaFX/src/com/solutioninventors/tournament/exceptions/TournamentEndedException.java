@@ -6,7 +6,7 @@
  */
 package com.solutioninventors.tournament.exceptions;
 
-public class TournamentEndedException extends RuntimeException
+public class TournamentEndedException extends Exception
 {
 
 	/** 

@@ -191,7 +191,9 @@ public class SingleEliminationTournament extends EliminationTournament {
 	}
 
 	@Override
-	public void setResult(Competitor com1, double score1, double score2, Competitor com2) throws NoFixtureException {
+	public void setResult(Competitor com1, double score1, double score2, Competitor com2)
+			throws NoFixtureException, TournamentEndedException 
+	{
 		if (!hasEnded()) {
 			if (activeTies.stream().anyMatch(f -> f.hasFixture(com1, com2))) {
 				for (int i = 0; i < activeTies.size(); i++)

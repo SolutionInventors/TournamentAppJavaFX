@@ -6,6 +6,7 @@
  */
 package com.solutioninventors.tournament.types;
 
+import java.awt.HeadlessException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Function;
@@ -50,7 +51,7 @@ public class Challenge extends Tournament
 		return ROUNDS ;
 	}
 	@Override
-	public void moveToNextRound()
+	public void moveToNextRound() throws  TournamentEndedException
 	{
 		if ( !hasEnded() && getCurrentRound().isComplete() 	)
 			incrementRoundNum();
@@ -61,7 +62,8 @@ public class Challenge extends Tournament
 		
 	}
 	
-	public void setResult(Competitor com1 , double score1 , double score2 , Competitor com2)
+	public void setResult(Competitor com1 , double score1 , double score2 , Competitor com2) 
+			throws TournamentEndedException
 	{
 		if ( !hasEnded() )
 		{
@@ -76,7 +78,7 @@ public class Challenge extends Tournament
 	}
 	
 	@Override
-	public Round getCurrentRound()
+	public Round getCurrentRound() throws TournamentEndedException
 	{
 		if ( getCurrentRoundNum() < getRoundArray().length )
 			return getRoundArray()[ getCurrentRoundNum() ];

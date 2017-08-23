@@ -12,6 +12,7 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Breaker;
@@ -76,15 +77,15 @@ public abstract class GroupTournament extends Tournament {
 		rounds[getCurrentRoundNum()] = new Round(fixes);
 	}
 
-	public Round getCurrentRound() {
+	public Round getCurrentRound() throws TournamentEndedException {
 		if (getCurrentRoundNum() < getRoundArray().length)
 			return getRoundArray()[getCurrentRoundNum()];
 		else
-			return null;
+			throw new TournamentEndedException( "This tournament is over");
 	}
 
 	public abstract void setResult(Competitor com1, double score1, double score2, Competitor com2)
-			throws NoFixtureException;
+			throws NoFixtureException, TournamentEndedException ;
 
 	public abstract void moveToNextRound() throws MoveToNextRoundException;
 

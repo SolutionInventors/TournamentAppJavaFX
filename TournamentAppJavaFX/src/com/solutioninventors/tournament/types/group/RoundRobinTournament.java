@@ -17,6 +17,7 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
@@ -209,7 +210,7 @@ public class RoundRobinTournament extends GroupTournament
 
 	
 	
-	public boolean isCurrentRoundComplete()
+	public boolean isCurrentRoundComplete() throws TournamentEndedException
 	{
 		if ( !hasEnded() && getCurrentRound().isComplete() )
 			return true;
@@ -222,29 +223,37 @@ public class RoundRobinTournament extends GroupTournament
 		
 		if ( getCurrentRoundNum() < rnds.length  )
 		{
-			getTable().updateTables();
-			if ( !getCurrentRound().isComplete() ) //contains outstanding
+			try
 			{
-				int ans = JOptionPane.showConfirmDialog( null , "Has pending fixtures.\nContinue?" );
+				getTable().updateTables();
 				
-				if ( ans == JOptionPane.YES_OPTION )
+				if ( !getCurrentRound().isComplete() ) //contains outstanding
 				{
-					Arrays.stream( getCurrentRound().getPendingFixtures())
-						  .forEach( f -> outstandingMatches.add( f ) );
-					JOptionPane.showMessageDialog( null , "Incomplete fixtures added to outstanding" );
-					incrementRoundNum();
+					int ans = JOptionPane.showConfirmDialog( null , "Has pending fixtures.\nContinue?" );
 					
+					if ( ans == JOptionPane.YES_OPTION )
+					{
+						Arrays.stream( getCurrentRound().getPendingFixtures())
+							  .forEach( f -> outstandingMatches.add( f ) );
+						JOptionPane.showMessageDialog( null , "Incomplete fixtures added to outstanding" );
+						incrementRoundNum();
+						
+					}
+				}
+				else
+				{
+					incrementRoundNum();
+					if ( getCurrentRoundNum() < getRoundArray().length && 
+							outstandingMatches.size() > 0 )
+					{
+						String message = "Only outsanding matches are left";
+						JOptionPane.showMessageDialog( null , message ) ;
+					}
 				}
 			}
-			else
+			catch (TournamentEndedException e)
 			{
-				incrementRoundNum();
-				if ( getCurrentRoundNum() < getRoundArray().length && 
-						outstandingMatches.size() > 0 )
-				{
-					String message = "Only outsanding matches are left";
-					JOptionPane.showMessageDialog( null , message ) ;
-				}
+				throw new MoveToNextRoundException( e.getMessage() );
 			}
 		}
 		else if ( outstandingMatches.size() > 0 )
@@ -270,17 +279,26 @@ public class RoundRobinTournament extends GroupTournament
 	@Override
 	public void setResult( Competitor com1 , double score1 , 
 			double score2 , Competitor com2 ) throws NoFixtureException
-	{		
-		if ( Arrays.stream( getCurrentRound().getFixtures() )
-				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
+	{	
+		try 
 		{
-			Arrays.stream( getCurrentRound().getFixtures() )
-			.filter( f -> f.hasFixture( com1 , com2  ) )
-			.forEach( f -> f.setResult(score1, score2) );
+			if ( Arrays.stream( getCurrentRound().getFixtures() )
+					.anyMatch( f -> f.hasFixture( com1 , com2  )) )
+			{
+				Arrays.stream( getCurrentRound().getFixtures() )
+				.filter( f -> f.hasFixture( com1 , com2  ) )
+				.forEach( f -> f.setResult(score1, score2) );
+				
+			}
+			else
+				throw new NoFixtureException("The fixture does not exist") ;
+		}
+		catch(  TournamentEndedException e )
+		{
+			throw new NoFixtureException( e.getMessage() );
 			
 		}
-		else
-			throw new NoFixtureException("The fixture does not exist") ;
+		
 	}
 	
 	

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  */
 
 
-public class GUITest extends Application{
+public class GUITest  extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -29,6 +29,7 @@ public class GUITest extends Application{
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public static void main(String[] args) {
 		launch(args);

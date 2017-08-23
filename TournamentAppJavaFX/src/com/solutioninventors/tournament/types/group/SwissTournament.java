@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -53,8 +54,15 @@ public class SwissTournament extends GroupTournament {
 	{
 		getTable().updateTables();
 		
-		if( !getCurrentRound().isComplete() )
-			throw new MoveToNextRoundException("The current round is not yet complete");
+		try
+		{
+			if( !getCurrentRound().isComplete() )
+				throw new MoveToNextRoundException("The current round is not yet complete");
+		}
+		catch (TournamentEndedException e)
+		{
+			throw new MoveToNextRoundException(e.getMessage() );
+		}
 		
 		incrementRoundNum();
 		if (!hasEnded()) 
@@ -80,15 +88,24 @@ public class SwissTournament extends GroupTournament {
 	}
 
 	@Override
-	public void setResult(Competitor com1, double score1, double score2, Competitor com2) throws NoFixtureException {
+	public void setResult(Competitor com1,
+			double score1, double score2, Competitor com2) throws NoFixtureException 
+	{
 		Predicate<Fixture> tester = f -> f.getCompetitorOne().getName().equals(com1.getName())
 				&& f.getCompetitorTwo().getName().equals(com2.getName());
 
-		if (Arrays.stream(getCurrentRound().getFixtures()).anyMatch(tester)) {
-			Arrays.stream(getCurrentRound().getFixtures()).filter(f -> f.hasFixture(com1, com2))
-					.forEach(f -> f.setResult(score1, score2));
-		} else
-			throw new NoFixtureException("The fixture is not in the current round");
+		try
+		{
+			if (Arrays.stream(getCurrentRound().getFixtures()).anyMatch(tester)) {
+				Arrays.stream(getCurrentRound().getFixtures()).filter(f -> f.hasFixture(com1, com2))
+						.forEach(f -> f.setResult(score1, score2));
+			} else
+				throw new NoFixtureException("The fixture is not in the current round");
+		}
+		catch (TournamentEndedException e)
+		{
+			throw new NoFixtureException( e.getMessage() );
+		}
 
 	}
 

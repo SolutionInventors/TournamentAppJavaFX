@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
@@ -22,7 +23,7 @@ import com.solutioninventors.tournament.utils.Fixture;
 public class DoubleEliminationTest
 {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws TournamentEndedException
 	{
 		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor( "Chidiebere" , file );
@@ -101,7 +102,7 @@ public class DoubleEliminationTest
 
 	
 	
-	public static void inputRoundResults(DoubleElimination tournament)
+	public static void inputRoundResults(DoubleElimination tournament) throws TournamentEndedException
 	{
 		StringBuilder builder = new StringBuilder( 400 );
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;

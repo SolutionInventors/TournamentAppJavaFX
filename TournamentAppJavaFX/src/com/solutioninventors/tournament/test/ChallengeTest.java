@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -28,16 +29,15 @@ public class ChallengeTest {
 
 		Test.displayMessage("Challenge between \n" + coms[0] + " and " + coms[1] + "begins");
 
-		while (!tournament.hasEnded()) {
-			Test.displayMessage("Welcome to the " + tournament.toString());
-
-			inputRoundResults(tournament);
-
-			Test.displayRoundResults(tournament.getCurrentRound());
-			try {
-				tournament.moveToNextRound();
-			} catch (MoveToNextRoundException e) {
-				e.printStackTrace();
+		while (!tournament.hasEnded()) 
+		{
+			try
+			{
+				simulateRound(tournament);
+			}
+			catch (TournamentEndedException e)
+			{
+				break;
 			}
 		}
 
@@ -45,7 +45,21 @@ public class ChallengeTest {
 
 	}
 
-	private static void inputRoundResults(Tournament tournament) {
+	public static void simulateRound(Tournament tournament) throws TournamentEndedException
+	{
+		Test.displayMessage("Welcome to the " + tournament.toString());
+
+		inputRoundResults(tournament);
+
+		Test.displayRoundResults(tournament.getCurrentRound());
+		try {
+			tournament.moveToNextRound();
+		} catch (MoveToNextRoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void inputRoundResults(Tournament tournament) throws TournamentEndedException {
 		Test.displayFixtures(tournament.getCurrentRound().getFixtures());
 		Fixture fixture = tournament.getCurrentRound().getFixtures()[0];
 		Competitor com1 = fixture.getCompetitorOne();

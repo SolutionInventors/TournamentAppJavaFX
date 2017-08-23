@@ -96,7 +96,7 @@ public class DoubleElimination extends EliminationTournament
 	
 	@Override
 	public void setResult(Competitor com1, double score1, 
-			double score2, Competitor com2) throws NoFixtureException
+			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException
 	{
 		if ( score1 != score2 )
 			getCurrentRound().setResult(com1, score1, score2, com2);
