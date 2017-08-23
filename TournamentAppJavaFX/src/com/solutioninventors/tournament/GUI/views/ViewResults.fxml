@@ -135,12 +135,13 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="405.0" layoutY="450.0" mnemonicParsing="false" onAction="#nextRound" prefHeight="37.0" prefWidth="139.0" text="Move to Next Round" />
+            <Button layoutX="464.0" layoutY="444.0" mnemonicParsing="false" onAction="#nextRound" prefHeight="43.0" prefWidth="80.0" text="Move to Next Round" wrapText="true" />
             <Label fx:id="stage" layoutX="255.0" layoutY="14.0" text="Label">
                <font>
                   <Font name="Trebuchet MS Bold Italic" size="27.0" />
                </font>
             </Label>
+            <Button layoutX="366.0" layoutY="453.0" mnemonicParsing="false" onAction="#savetour" prefHeight="32.0" prefWidth="63.0" text="Save" />
          </children>
          <fx:define>
               <ArrayList fx:id="imgArray">

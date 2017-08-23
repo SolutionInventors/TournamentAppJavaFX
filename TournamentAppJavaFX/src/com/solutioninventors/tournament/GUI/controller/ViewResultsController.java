@@ -1,11 +1,13 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -24,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewResultsController {
@@ -141,6 +144,18 @@ public class ViewResultsController {
 
 		
 	}// end nextRound
+	
+	
+	public void savetour(ActionEvent event)  {
+		FileChooser fileChooser = new FileChooser();
+		Stage primaryStage = new Stage();
+		File tournamentFile = fileChooser.showSaveDialog(primaryStage);
+		try {
+			Tournament.saveTournament(tournament, tournamentFile);
+		} catch (IOException | TournamentException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@FXML
 	public void viewTable(ActionEvent event) throws IOException {

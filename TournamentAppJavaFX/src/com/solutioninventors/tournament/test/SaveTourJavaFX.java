@@ -1,8 +1,7 @@
 /**
- *@Author: Oguejiofor Chidiebere
- *SaveTournamentTest.java
- *Aug 18, 2017
- *2:13:52 PM
+ * @author Chinedu Oguejiofor
+ *23 Aug. 2017
+ * 10:35:33 am
  */
 package com.solutioninventors.tournament.test;
 
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
@@ -26,11 +24,32 @@ import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
-public class SaveTournamentTest
-{
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-	public static void main( String[] args 	)
-	{
+public class SaveTourJavaFX extends Application{
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("FileChooser.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			primaryStage.setTitle("FileChooser");
+			
+			
+			
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+
 		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
@@ -55,13 +74,15 @@ public class SaveTournamentTest
 			e.printStackTrace();
 		}
 
-		JFileChooser fileChooser = new JFileChooser();
-		
-		fileChooser.showSaveDialog( null );
-		File tournamentFile = fileChooser.getSelectedFile();
+	//	JFileChooser fileChoos = new JFileChooser();
+		FileChooser fileChooser = new FileChooser();
+		//Stage primaryStage = new Stage();
+	//	fileChoos.showSaveDialog( null );
+		File tournamentFile = fileChooser.showSaveDialog(primaryStage);
+		//File tournamentFile = fileChooser.getSelectedFile();
+		//	File tournamentFile = fileChooser.getSelectedExtensionFilter();
 		
 		tournament = saveAndRetrieveToournament(tournament, tournamentFile);
-		
 		
 		
 //		Tournament begins
@@ -176,5 +197,9 @@ public class SaveTournamentTest
 		}
 		return tournament;
 	}
-
+	
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
