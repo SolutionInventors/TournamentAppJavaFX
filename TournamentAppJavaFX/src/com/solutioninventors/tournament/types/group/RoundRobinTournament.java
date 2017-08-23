@@ -27,7 +27,7 @@ public class RoundRobinTournament extends GroupTournament
 {
 
 	/**
-	 * This class is used to create a ROund Robin tournament and it extends GroupTournament
+	 * This class is used to create a Round Robin tournament and it extends GroupTournament
 	 * When created the constructor stores competitors, Sporttype and other info
 	 * It then calls utility method createRounds() which uses the Carousel-Berger system
 	 * to create the rounds in the tournament and enters the first round.

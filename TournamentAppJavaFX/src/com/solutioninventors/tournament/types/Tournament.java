@@ -90,7 +90,8 @@ public abstract class Tournament implements Serializable
 			throw new TournamentException( "The tournament object is null" );
 		
 		ObjectOutputStream output  = null ;
-		file = new File( file.getName() + ".sit" );
+		
+		file = new File( file.getAbsolutePath() + ".sit" );
 		try
 		{
 			output  = 

@@ -52,10 +52,15 @@ public class SwissTournament extends GroupTournament {
 	public void moveToNextRound() throws MoveToNextRoundException 
 	{
 		getTable().updateTables();
+		
+		if( !getCurrentRound().isComplete() )
+			throw new MoveToNextRoundException("The current round is not yet complete");
+		
 		incrementRoundNum();
 		if (!hasEnded()) 
 		{
 			createCurrentRound();
+			
 		} 
 		else if ( getCurrentRoundNum() != getRoundArray().length)
 			throw new MoveToNextRoundException("Tournament is over thus cannot move to next round");
