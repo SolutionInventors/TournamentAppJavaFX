@@ -34,7 +34,7 @@ public class SwissTes {
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
-
+		
 	
 		Competitor[] comps = {c1, c2 ,c3,c4};	
 		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};

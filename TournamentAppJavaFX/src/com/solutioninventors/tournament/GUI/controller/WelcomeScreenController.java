@@ -52,10 +52,10 @@ public class WelcomeScreenController {
 	public void continuetour(MouseEvent event) throws IOException {
 		FileChooser fc = new FileChooser();
 		File seletedfile = fc.showOpenDialog(null);
-		File tourFile = new File(seletedfile.getName() + ".sit");
+//		File tourFile = new File(seletedfile.getName() + ".sit");
 		
 		try {
-			tournament = Tournament.loadTournament(tourFile);
+			tournament = Tournament.loadTournament(seletedfile);
 		} catch (IOException | TournamentException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();

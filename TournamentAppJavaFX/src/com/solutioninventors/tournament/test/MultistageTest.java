@@ -27,13 +27,14 @@ public class MultistageTest {
 
 	public static void main(String[] args) {
 		File file = new File("Arsenal.jpg");
-		Competitor c1 = new Competitor("Chidiebere", file);
+		File golfFile =  new File("golf.jpg" );
+		Competitor c1 = new Competitor("Chidiebere", golfFile);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
-		Competitor c4 = new Competitor("Chinedu", file);
+		Competitor c4 = new Competitor("Chinedu", golfFile);
 
 		Competitor c5 = new Competitor("Ada", file);
-		Competitor c6 = new Competitor("Oguejiofor", file);
+		Competitor c6 = new Competitor("Oguejiofor", golfFile);
 		Competitor c7 = new Competitor("Pio", file);
 		Competitor c8 = new Competitor("Oloche", file);
 		//
@@ -81,7 +82,7 @@ public class MultistageTest {
 
 		Test.displayMessage("MultiStage begins");
 
-
+		
 		StringBuilder builder = new StringBuilder( 300 );
 		
 		builder.append( "The competitors are: \n" );
