@@ -22,20 +22,14 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 public class WelcomeScreenController {
-	@FXML
-	private Label NewT;
-	@FXML
-	private Label ContinueT;
-	@FXML
-	private Label Settings;
-	@FXML
-	private Label About;
-	@FXML
-	private Label Help;
-	@FXML
-	private Text mainmenu;
-	private Btn btn = new Btn();
-	private Tournament tournament;
+	@FXML private Label NewT;
+	@FXML private Label ContinueT;
+	@FXML private Label Settings;
+	@FXML private Label About;
+	@FXML private Label Help;
+	@FXML private Text 	mainmenu;
+		  private Btn 	btn = new Btn();
+		  private Tournament tournament;
 	// Event Listener on Label[#NewT].onMouseClicked
 	@FXML
 	public void newTournament(MouseEvent event) throws IOException {
@@ -52,10 +46,10 @@ public class WelcomeScreenController {
 	public void continuetour(MouseEvent event) throws IOException {
 		FileChooser fc = new FileChooser();
 		File seletedfile = fc.showOpenDialog(null);
-		File tourFile = new File(seletedfile.getName() + ".sit");
+		//File tourFile = new File(seletedfile.getName() + ".sit");
 		
 		try {
-			tournament = Tournament.loadTournament(tourFile);
+			tournament = Tournament.loadTournament(seletedfile);
 		} catch (IOException | TournamentException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
