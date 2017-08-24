@@ -61,7 +61,7 @@ public class ViewResultsController {
 
 	}// end method initialize
 
-	public void setTournament(Tournament value) {
+	public void setTournament(Tournament value) throws TournamentEndedException {
 
 		tournament = value;
 		if (!tournament.hasEnded()) {
@@ -151,7 +151,7 @@ public class ViewResultsController {
 		Stage primaryStage = new Stage();
 		File tournamentFile = fileChooser.showSaveDialog(primaryStage);
 		try {
-			Tournament.saveTournament(tournament, tournamentFile);
+			Tournament.saveAs(tournament, tournamentFile);
 		} catch (IOException | TournamentException e) {
 			e.printStackTrace();
 		}
@@ -185,7 +185,7 @@ public class ViewResultsController {
 		primaryStage.setTitle("Tournament name");
 	}
 	@FXML
-	public void viewTab(ActionEvent event) throws IOException {
+	public void viewTab(ActionEvent event) throws IOException, TournamentEndedException {
 		//((Node) event.getSource()).getScene().getWindow().hide();
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = loader.load(getClass().getResource(Paths.viewpath+"FRSCIScreen.fxml").openStream());

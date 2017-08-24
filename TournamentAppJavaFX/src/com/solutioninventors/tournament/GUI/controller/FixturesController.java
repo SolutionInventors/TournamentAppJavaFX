@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -42,7 +43,7 @@ public class FixturesController {
 
 	}// end method initialize
 
-	public void setTournament(Tournament value) {
+	public void setTournament(Tournament value) throws TournamentEndedException {
 	
 		tournament = value;
 		if(!tournament.hasEnded()) {

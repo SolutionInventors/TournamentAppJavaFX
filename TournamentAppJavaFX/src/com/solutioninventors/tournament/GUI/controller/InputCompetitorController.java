@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Multistage;
@@ -135,7 +136,7 @@ public class InputCompetitorController {
 	}
 
 	@FXML
-	public void next(ActionEvent event) throws IOException, InvalidBreakerException {
+	public void next(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException {
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };
 		TieBreaker tieBreakers = new TieBreaker(breakers);
 		comps = new Competitor[noOfCompetitors];

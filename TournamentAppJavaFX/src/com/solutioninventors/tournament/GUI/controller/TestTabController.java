@@ -1,5 +1,6 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 
 import javafx.beans.value.ObservableValue;
@@ -37,7 +38,12 @@ public class TestTabController {
 					if (newValue == tab1_fixtures) {
 						System.out.println("- 2.Tab bar -");
 						System.out.println("xxx_tab2bar_xxxController=" + tabfixController); // if =null => inject problem
-						tabfixController.setTournament(tournament);
+						try {
+							tabfixController.setTournament(tournament);
+						} catch (TournamentEndedException e) {
+							// FIXME Auto-generated catch block
+							e.printStackTrace();
+						}
 					} else if (newValue == tab2_standingtable) {
 						System.out.println("- 1.Tab foo -");
 						System.out.println("xxx_tab1foo_xxxController=" + tabstandController); // if =null => inject problem

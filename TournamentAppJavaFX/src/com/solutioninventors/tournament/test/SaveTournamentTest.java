@@ -80,7 +80,7 @@ public class SaveTournamentTest
 		{
 			tournament.save();
 		}
-		catch (TournamentException | TournamentHasNotBeenSavedException e)
+		catch (  Exception e)
 		{
 			Test.displayMessage("Save unsuccessful\nError Message: " + e.getMessage() );
 			Test.displayMessage( "Save As...." );

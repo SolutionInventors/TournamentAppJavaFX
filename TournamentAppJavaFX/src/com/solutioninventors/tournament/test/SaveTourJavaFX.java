@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
@@ -33,7 +34,7 @@ import javafx.stage.Stage;
 
 public class SaveTourJavaFX extends Application{
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws TournamentEndedException {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("FileChooser.fxml"));
 			Scene scene = new Scene(root);
@@ -165,7 +166,7 @@ public class SaveTourJavaFX extends Application{
 		try
 		{
 			Test.displayMessage("Swiss Tournament is saving...");
-			Tournament.saveTournament(tournament, tournamentFile);
+			Tournament.saveAs(tournament, tournamentFile);
 			
 		}
 		catch (FileNotFoundException e)

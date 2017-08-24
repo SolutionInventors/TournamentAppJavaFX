@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -52,7 +53,7 @@ public class InputResultsController {
 
 	}// end method initialize
 
-	public void setTournament(Tournament value) {
+	public void setTournament(Tournament value) throws TournamentEndedException {
 
 		tournament = value;
 		if(!tournament.hasEnded()) {
@@ -100,7 +101,7 @@ public class InputResultsController {
 	}// end set current
 
 	@FXML
-	public void getResults(ActionEvent e) throws IOException, NoFixtureException {
+	public void getResults(ActionEvent e) throws IOException, NoFixtureException, TournamentEndedException {
 		int count = 0;
 		for (int i = 0; i < currentFixtures.length; i++) {
 			Competitor com1 = currentFixtures[i].getCompetitorOne();

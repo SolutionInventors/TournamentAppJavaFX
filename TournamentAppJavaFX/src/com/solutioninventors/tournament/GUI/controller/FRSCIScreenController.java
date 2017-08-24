@@ -1,5 +1,6 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 
 import javafx.beans.value.ObservableValue;
@@ -39,10 +40,13 @@ public class FRSCIScreenController {
 		tabPane.getSelectionModel().selectedItemProperty()
 				.addListener((ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) -> {
 
-					
+					try {
 
 					if (newValue == tab1_fixtures) {
-						tabfixController.setTournament(tournament);
+						
+							tabfixController.setTournament(tournament);
+						
+						
 					} else if(newValue == tab2_results) {
 						tabresultController.setTournament(tournament);
 					}else if(newValue == tab3_standingtable) {
@@ -52,10 +56,14 @@ public class FRSCIScreenController {
 					}else if(newValue == tab5_inputScores) {
 						tabinputscoreController.setTournament(tournament);
 					}
+					
+				} catch (TournamentEndedException e) {
+					// FIXME Auto-generated catch block
+					e.printStackTrace();}
 				});
 	}
 
-	public void setTournament(Tournament tour) {
+	public void setTournament(Tournament tour) throws TournamentEndedException {
 		tournament = tour;
 		tabfixController.setTournament(tournament);
 	}
