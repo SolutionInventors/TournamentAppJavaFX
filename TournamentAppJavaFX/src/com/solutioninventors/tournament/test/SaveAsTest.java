@@ -44,7 +44,7 @@ public class SaveAsTest
 		Competitor c7 = new Competitor("Pio", file );
 		Competitor c8 = new Competitor("Oloche", file);
 		
-	
+		
 		Competitor[] comps = {c1, c2 ,c3,c4, c5 , c6 , c7,  c8 };	
 		
 		Breaker[] breakers ={Breaker.GOALS_DIFFERENCE ,Breaker.NUMBER_OF_WINS };
