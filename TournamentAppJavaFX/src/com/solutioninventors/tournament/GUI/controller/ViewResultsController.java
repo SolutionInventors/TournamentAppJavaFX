@@ -8,6 +8,7 @@ import java.util.List;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -147,6 +148,19 @@ public class ViewResultsController {
 	
 	
 	public void savetour(ActionEvent event)  {
+		//FileChooser fileChooser = new FileChooser();
+		//Stage primaryStage = new Stage();
+		//File tournamentFile = fileChooser.showSaveDialog(primaryStage);
+		try {
+			tournament.save();
+		} catch (IOException | TournamentException | TournamentHasNotBeenSavedException e) {
+			// FIXME Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void saveastour(ActionEvent event)  {
 		FileChooser fileChooser = new FileChooser();
 		Stage primaryStage = new Stage();
 		File tournamentFile = fileChooser.showSaveDialog(primaryStage);
@@ -156,7 +170,6 @@ public class ViewResultsController {
 			e.printStackTrace();
 		}
 	}
-	
 	@FXML
 	public void viewTable(ActionEvent event) throws IOException {
 		//((Node) event.getSource()).getScene().getWindow().hide();

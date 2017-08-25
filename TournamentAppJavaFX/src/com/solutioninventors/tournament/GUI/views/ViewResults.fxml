@@ -141,7 +141,8 @@
                   <Font name="Trebuchet MS Bold Italic" size="27.0" />
                </font>
             </Label>
-            <Button layoutX="366.0" layoutY="453.0" mnemonicParsing="false" onAction="#savetour" prefHeight="32.0" prefWidth="63.0" text="Save" />
+            <Button layoutX="366.0" layoutY="453.0" mnemonicParsing="false" onAction="#saveastour" prefHeight="32.0" prefWidth="63.0" text="Saveas" />
+            <Button layoutX="300.0" layoutY="453.0" mnemonicParsing="false" onAction="#savetour" prefHeight="32.0" prefWidth="63.0" text="Save" />
          </children>
          <fx:define>
               <ArrayList fx:id="imgArray">
