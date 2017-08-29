@@ -2,6 +2,7 @@
 #lblmainmenu{
 	-fx-background-color: rgba(0,0,0,0) ;
 	-fx-text-fill: red;
+	 -fx-font-family: url(com/solutioninventors/tournament/GUI/resource/font/Pristina.ttf);
 }
 
 .label{
