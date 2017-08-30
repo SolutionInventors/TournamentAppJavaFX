@@ -6,15 +6,13 @@
  */
 package com.solutioninventors.tournament.types.knockout;
 
-import java.io.IOError;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.print.attribute.HashAttributeSet;
+import java.util.Set;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -28,8 +26,10 @@ import com.solutioninventors.tournament.utils.Round;
 public class DoubleElimination extends EliminationTournament
 {
 
-	private boolean winnerRoundComplete;
+	private boolean minorComplete;
+	private boolean initialComplete; 
 	
+	private String roundName ;
 	private Map< BracketType , List<Round> > rounds;
 	
 	public DoubleElimination(Competitor[] comps) throws TournamentException
@@ -39,12 +39,11 @@ public class DoubleElimination extends EliminationTournament
 		List<Round> minor = new ArrayList<>(); //used to increase index to 1
 		List<Round> major = new ArrayList<>(); //used to increase index to 1
 		
-		minor.add(null);
-		major.add(null);
 		rounds.put( BracketType.WINNERS_BRACKET , new ArrayList<Round>() );
 		rounds.put( BracketType.MAJOR_BRACKET ,major );
 		rounds.put( BracketType.MINOR_BRACKET ,   minor);
-		
+		rounds.put( BracketType.INITIAL_BRACKET , new ArrayList<>() );
+		rounds.put( BracketType.TOURNAMENT_FINAL, new ArrayList<>() );
 //		setLoserMajorRund( true );
 		createTournament();
 	}
@@ -59,300 +58,359 @@ public class DoubleElimination extends EliminationTournament
 		{
 			roundFixtures.add( new Fixture( competitors[ i ] , competitors[ i+ 1] ) );
 		}
-		Round winnerRound = new Round(  
+		
+		
+		Round initialRound = new Round(  
 				roundFixtures.toArray(new Fixture[ roundFixtures.size() ] ));
-		addRound( BracketType.WINNERS_BRACKET , winnerRound );
+		addRound( BracketType.INITIAL_BRACKET , initialRound );
 		
 	}
 
+	private void addRound(BracketType bracketType, Round round )
+	{
+		if ( bracketType != BracketType.INITIAL_BRACKET )
+		{
+			List<Round> bracketRounds  = rounds.get( bracketType );
+			bracketRounds.add( round );//appends the round
+			rounds.put( bracketType	, bracketRounds ); 
+		}
+		else
+		{
+			List<Round> bracketRounds = new ArrayList<>() ;
+			bracketRounds.add( round );
+			rounds.put( bracketType	, bracketRounds ); //overwrites the INITIAL_BRACKET
+		}
+		
+	}
+	
+	
 	public Round getCurrentRound( BracketType type ) 
 			throws RoundIndexOutOfBoundsException
 	{
-		return getBracketRound(getCurrentRoundNum(), type );
+		if( type == BracketType.INITIAL_BRACKET && getCurrentRoundNum() > 0 )
+			throw new RoundIndexOutOfBoundsException( "The round index is out of bound . " + getCurrentRoundNum());
+		return getBracketRound( getCurrentRoundNum() , type );
 	}
 	
 	public Round getBracketRound(int roundNum ,  BracketType type)
 			throws RoundIndexOutOfBoundsException
 	{
+		List<Round> typeRounds = rounds.get( type );
 		
-		List<Round> list = rounds.get( type );
-		
-		if ( list.size() <= 0 	|| roundNum >= list.size())
-			throw new RoundIndexOutOfBoundsException();
-		
-		Round round = list.get(roundNum);
-		if ( round == null )
-			throw new RoundIndexOutOfBoundsException();
-		return round ; 
+		if( type == BracketType.TOURNAMENT_FINAL )
+		{
+			return typeRounds.get( typeRounds.size() - 1  );
+		}
+		else if ( roundNum <  typeRounds.size()  && typeRounds.size() >= 0 )
+		{
+			return typeRounds.get( roundNum );
+		}
+		else
+			throw new RoundIndexOutOfBoundsException("The Round index is higher than expected" );
 	}
 	
-	private void addRound(BracketType bracketType, Round round )
-	{
-		List<Round> bracketRounds  = rounds.get( bracketType );
-		bracketRounds.add( round );
-		rounds.put( bracketType	, bracketRounds );
-	}
+	
 
 	
 	@Override
 	public void setResult(Competitor com1, double score1, 
-			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException
+			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException 
 	{
-		if ( score1 != score2 )
-			getCurrentRound().setResult(com1, score1, score2, com2);
+		
+		if ( score1 == score2 )//there's a tie
+			return ;
+		
+		try 
+		{
+			if ( getActiveCompetitors().length ==  2 )//tournament final 
+			{
+				Round round = getCurrentRound( BracketType.TOURNAMENT_FINAL );
+				round.setResult( com1 , score1, score2, com2 );
+				addRound(BracketType.TOURNAMENT_FINAL , round );
+			}
+			else if ( !initialComplete )
+			{
+				Round round = getCurrentRound( BracketType.INITIAL_BRACKET );
+				round.setResult( com1 , score1, score2, com2);
+				addRound(BracketType.INITIAL_BRACKET , round );
+			}
+			else if ( !minorComplete )
+			{
+				Round minor  = getCurrentRound( BracketType.MINOR_BRACKET ) ;
+				Round winner  = getCurrentRound( BracketType.WINNERS_BRACKET ) ;
+				
+				try
+				{
+					minor.setResult( com1 , score1, score2, com2);
+					
+				}
+				catch (NoFixtureException e1)
+				{
+					winner.setResult(com1, score1, score2, com2);
+				
+				}	
+			}
+			else
+			{
+				Round major  = getCurrentRound( BracketType.MAJOR_BRACKET ) ;
+				major.setResult( com1 , score1, score2, com2);
+				
+			}
+			
+		}
+		catch(  RoundIndexOutOfBoundsException e )
+		{
+			e.printStackTrace();
+			throw new TournamentEndedException();
+			
+		}
+	}
+
+	
+
+
+	
+	
+	@Override
+	public void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException
+	{
+		
+		if ( !hasEnded() )
+			if ( !getCurrentRound().isComplete() )//contains pending fixtures or ties 
+				return ;
+			else if ( getActiveCompetitors().length  == 2 )
+			{
+				createNextRound();
+				incrementRoundNum() ;
+			}
+			else if( !initialComplete )
+			{
+				createNextRound();
+				initialComplete = true ;
+			}
+			else if ( !minorComplete )
+			{
+				minorComplete = true ;
+				createNextRound();
+				
+			}
+			else
+			{
+				minorComplete = false;
+				createNextRound();
+				incrementRoundNum();
+			}
+		else
+			throw new TournamentEndedException( "This tournament has ended." );
+		
+	}
+
+
+	private void createNextRound()
+	{
+		List<Competitor > winnerBracket = new ArrayList<>() ;
+		List<Competitor > loserBracket = new ArrayList<>() ;
+		List<Fixture> winnerFixes = new ArrayList<>();
+		List<Fixture> loserFixes = new ArrayList<>();
+		
+		//eliminate competitors and create brackets
+		Arrays.stream( getCompetitors() )
+			.filter( c -> !c.isEliminated() )
+			.forEach( c -> {
+				if( c.getNumberOfLoss() >= 2 )
+					c.setEliminated( true );
+				else if ( c.getNumberOfLoss() == 1 )
+					loserBracket.add( c );
+				else if ( c.getNumberOfLoss() == 0  )
+					winnerBracket.add( c );
+					
+					
+			});
+		
+		
+		
+		if ( getActiveCompetitors().length <= 1 )//tournament has ended 
+			return ; 
+		else if ( getActiveCompetitors().length  == 2 )
+		{
+			Fixture tourFinal = new Fixture( getActiveCompetitors()[ 0 ] , getActiveCompetitors()[ 1 ] ) ;
+			Fixture[] array = { tourFinal };
+			
+			addRound( BracketType.TOURNAMENT_FINAL , new Round( array ) );
+		}
+		else
+		{
+			if( winnerBracket.size() > 1 )
+				for ( int i = 0 ; i < winnerBracket.size() ; i+= 2 )
+					winnerFixes.add( new Fixture( winnerBracket.get( i ), winnerBracket.get( i + 1 )));
+		
+		
+			for ( int i = 0 ; i < loserBracket.size() ; i+= 2 )
+				loserFixes.add( new Fixture( loserBracket.get( i ), loserBracket.get( i + 1 )));
+			
+			if ( minorComplete )
+			{
+				addRound(BracketType.MAJOR_BRACKET , new Round( 
+						loserFixes.toArray(new Fixture[ loserFixes.size() ] ) ) );
+			}
+			else
+			{
+				addRound(BracketType.	MINOR_BRACKET , new Round( 
+						loserFixes.toArray(new Fixture[ loserFixes.size() ] ) ) );
+				addRound(BracketType.WINNERS_BRACKET , new Round( 
+						winnerFixes.toArray(new Fixture[ winnerFixes.size() ] ) ) );
+			}
+		}
+		
+		
 		
 	}
 
 	
-//	private void setResult(BracketType majorBracket, Competitor com1,
-//			double score1, double score2, Competitor com2) throws NoFixtureException
-//	{
-//		if ( score1 != score2 )
-//			getRound(getCurrentRoundNum()).setResult(com1, score1, score2, com2);
-//	}
 
+	
 	@Override
-	public void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException
+	public Round getCurrentRound() throws TournamentEndedException
 	{
-		if ( !hasEnded() )
-		{
-			if ( getCurrentRound().isComplete() 	)
+
+		List<Fixture> fixtures = 
+				new ArrayList<>( getActiveCompetitors().length / 2 );
+		
+		try
+		{ 
+			if ( getActiveCompetitors().length == 2 )
+				return getCurrentRound( BracketType.TOURNAMENT_FINAL );
+			else if ( !initialComplete )
+				return getCurrentRound( BracketType.INITIAL_BRACKET )  ;
+			else if ( minorComplete )
 			{
-				eliminateLosers();
-				createNextRound();
-				if ( !isWinnerRoundComplete() || getCurrentRoundNum() == 0  )
-					incrementRoundNum();
-				else if ( isWinnerRoundComplete())
-					toggleWinnerRoundComplete();
+				return getCurrentRound( BracketType.MAJOR_BRACKET ) ; 
 			}
-			else
-				throw new MoveToNextRoundException("The round is incomplete");
+			
+			fixtures.addAll( 
+					Arrays.asList( getCurrentRound( BracketType.MINOR_BRACKET ).getFixtures() ));
+			fixtures.addAll( 
+					Arrays.asList( getCurrentRound( BracketType.WINNERS_BRACKET ).getFixtures() ));
+			
+			return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] 	))  ;
 		}
-		else
+		catch ( RoundIndexOutOfBoundsException  e ) 
 		{
+			e.printStackTrace();
 			throw new TournamentEndedException();
 		}
 		
-	}
-
-	private void toggleWinnerRoundComplete()
-	{
-		winnerRoundComplete = !winnerRoundComplete;
 		
 	}
 
-	private void createNextRound()
+	
+	@Override
+	public Competitor getWinner()
 	{
-//		precondition: is that tournament has not ended
-		List<Competitor> loserBracket = new ArrayList<>();
-		
-		if ( !isWinnerRoundComplete() || getCurrentRoundNum() == 0 )
-		{
-			List<Competitor> winnerBracket = new ArrayList<>();
-			List<Fixture> loserFixtures = new ArrayList<>();
-			List<Fixture> winnerFixtures = new ArrayList<>();
-			
-			
-			Arrays.stream( getCompetitors() )
-				  .filter( c-> c.getNumberOfLoss() == 1 )
-				  .forEach( c-> loserBracket.add( c ) );
-			
-			Arrays.stream( getCompetitors() )
-			  .filter( c-> c.getNumberOfLoss() == 0 )
-			  .forEach( c-> winnerBracket.add( c ) );
-			
-			
-			for ( int i = 0 ; i< loserBracket.size() ; i+= 2 )
-			{
-				loserFixtures.add(new Fixture( loserBracket.get(i) ,
-									 loserBracket.get( i+1 ) ) );
-			}
-			
-			for ( int i = 0 ; i< winnerBracket.size() ; i+= 2 )
-			{
-				winnerFixtures.add(new Fixture( winnerBracket.get(i) ,
-						winnerBracket.get( i+1 ) ) );
-			}
-			
-			Round loserRound = new Round( 
-					loserFixtures.toArray( new Fixture[ loserFixtures.size() ] ) );
-			
-			Round winnerRound = new Round( 
-					winnerFixtures.toArray( new Fixture[ winnerFixtures.size() ] ) );
-			
-			addRound(BracketType.MINOR_BRACKET, loserRound );
-			addRound(BracketType.WINNERS_BRACKET, winnerRound );
-			
-		}
+		if ( getActiveCompetitors().length != 1 )
+			return null;
 		else
-		{
-			List<Fixture> loserFixtures = new ArrayList<>();
-			for ( int i = 0 ; i< loserBracket.size() ; i+= 2 )
-			{
-				loserFixtures.add(new Fixture( loserBracket.get(i) ,
-									 loserBracket.get( i+1 ) ) );	
-			}
-			Round loserRound = new Round( 
-					loserFixtures.toArray( new Fixture[ loserFixtures.size() ] ) );
-			addRound( BracketType.MAJOR_BRACKET , loserRound );
-		}
-		
-		
-		
-		
-	}
-
-	private void eliminateLosers()
-	{
-		Arrays.stream( getActiveCompetitors() )
-			   .forEach( c -> {
-				   if ( c.getNumberOfLoss() >= 2 )
-					   c.setEliminated( true );
-			   });
-		
+			return getActiveCompetitors()[ 0 ]; 
 	}
 
 	@Override
 	public boolean hasEnded()
 	{
 		if ( getActiveCompetitors().length == 1 )
-			return true;
-		return false ;
+			return true ;
+		return false ; 
 	}
 
-	@Override
-	public Round getCurrentRound() throws TournamentEndedException
-	{
-
-		List<Fixture > roundFixtures = new ArrayList<>();
-		
-		try
-		{
-			if (isWinnerRoundComplete() && currentRoundHasMajorFixture() )
-				roundFixtures.addAll(Arrays.asList(getBracketRound(getCurrentRoundNum(),
-						BracketType.MAJOR_BRACKET).getFixtures()) );
-			else
-			{
-				roundFixtures.addAll(Arrays.asList(getBracketRound(getCurrentRoundNum(),
-						BracketType.WINNERS_BRACKET).getFixtures()) );
-				
-				try
-				{
-					roundFixtures.addAll(Arrays.asList(getBracketRound(getCurrentRoundNum(),
-							BracketType.MINOR_BRACKET).getFixtures()) );
-				}
-				catch (RoundIndexOutOfBoundsException e ){}
-			}
-		}
-		catch (RoundIndexOutOfBoundsException e )
-		{
-			throw new TournamentEndedException( "The tournament has ended" 	);
-		}
-		
-		return new Round( roundFixtures.toArray( new Fixture[ roundFixtures.size() ] ) );
-		
-		
-	}
-
-	private boolean currentRoundHasMajorFixture()
-	{
-		try
-		{
-			getBracketRound(getCurrentRoundNum(),
-					BracketType.MAJOR_BRACKET).getFixtures() ;
-		}
-		catch (RoundIndexOutOfBoundsException e)
-		{
-			return false ;
-		} 
-		return true ;
-	}
-
-	@Override
-	public Competitor getWinner()
-	{
-		if ( hasEnded() 	)
-			return getActiveCompetitors()[ 0 ];
-		return null ;
-	}
-
+	
 	@Override
 	public Round[] getRoundArray()
 	{
-		List<Round> theRounds = new ArrayList<>( getCurrentRoundNum() + 1 );
+		LinkedList<Fixture > list = new LinkedList<>();
 		
-		try
-		{
-			theRounds.add( getBracketRound(0 , BracketType.WINNERS_BRACKET ) );
-			int roundNum = getCurrentRoundNum() ;
-			while( true )
-			{
-				theRounds.add( getBracketRound(roundNum , BracketType.WINNERS_BRACKET ) );
-				theRounds.add( getBracketRound(roundNum , BracketType.MINOR_BRACKET ) );
-				theRounds.add( getBracketRound(roundNum , BracketType.MAJOR_BRACKET ) );
-				roundNum++ ;
+		List<Round> rounds = new  LinkedList<>() ;
+		try 
+		{ 
+			for ( int i  = 0 ; i  < getCurrentRoundNum() ; i ++ )
+			{	
+				list.addAll(  Arrays.asList(  
+								getBracketRound( i ,  BracketType.MINOR_BRACKET ).getFixtures() 
+							) ) ; 
 				
+				list.addAll(  Arrays.asList(  
+						getBracketRound( i ,  BracketType.WINNERS_BRACKET ).getFixtures() 
+					) ) ; 
+				
+				list.addAll(  Arrays.asList(  
+						getBracketRound( i ,  BracketType.MAJOR_BRACKET ).getFixtures() 
+					) ) ; 
+				rounds.add( new Round ( list.toArray( new Fixture[ list.size() ] ) ) ) ;
 			}
+			
 		}
-		catch (RoundIndexOutOfBoundsException e){}
+		catch ( RoundIndexOutOfBoundsException e )
+		{
+			e.printStackTrace(); 
+		}
 		
-		if ( theRounds.size() > 0 )
-			return theRounds.toArray( new Round[ theRounds.size() ] );
-		else
-			return null ;
+		return rounds.toArray( new Round[ rounds.size() ] );
+		
 	}
 
-	public enum BracketType
-	{
-		MAJOR_BRACKET, 
-		MINOR_BRACKET,
-		WINNERS_BRACKET;
-	}
+	
 
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		if ( isWinnerRoundComplete() )
-			builder.append( "Loser Major\n" );
-		else
-			builder.append( "Winners and Loser Minor Brackets\n" );
 		
-		String message = null ;
-		switch( getActiveCompetitors().length )
+		int totalCompetitors = getActiveCompetitors().length;
+	
+		
+		if ( !minorComplete )
 		{
-		
-		case 1: 
-			message = "Tournament Ended: \nWinner is " + getWinner() ;
-			break ;
-		case 2 :
-			message = "Final" ;
-			break ;
-		case  4:
-			message = "Semifinal";
-			break;
-		case 8:
-			message = "Quarter-Final";
-			break;
-		case 16 :
-			message = "Round of 16";
-			break;
-		default:
-			message = "Round " + ( getCurrentRoundNum() +  1) ;
+			switch( totalCompetitors )
+			{
+			case 2 : 
+				builder.append( "Final" );
+				break;
+			case 4 :
+				builder.append( "Semi-Final" );
+				break;
+			case 8 :
+				builder.append( "Quarter-Final" );
+				break;
+			
+				default:
+					builder.append( "Round of " + totalCompetitors );
+					
+			}
+			
+			roundName = builder.toString() ;
+			return roundName ;
 		}
-		builder.append( message );
 		
-		return builder.toString();
+		return "Major " + roundName; 
+	}
+	
+
+	
+	public enum BracketType
+	{
+		MAJOR_BRACKET, 
+		MINOR_BRACKET,
+		WINNERS_BRACKET,
+		INITIAL_BRACKET,
+		TOURNAMENT_FINAL ;
 	}
 
-	public boolean isWinnerRoundComplete()
+	public boolean isMinorFixtureComplete()
 	{
-		return winnerRoundComplete;
+		return minorComplete;
 	}
-
-	public void setWinnerRoundComplete(boolean winnerRoundComplete)
+	
+	public boolean isFinal()
 	{
-		this.winnerRoundComplete = winnerRoundComplete;
+		return getActiveCompetitors().length  <= 2 ? true : false ;
 	}
 
 	

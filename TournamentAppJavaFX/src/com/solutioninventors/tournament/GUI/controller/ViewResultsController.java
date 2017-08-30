@@ -111,6 +111,8 @@ public class ViewResultsController {
 		} else {
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
+		
+		
 	}// end set current
 
 	@FXML

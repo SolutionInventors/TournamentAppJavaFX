@@ -15,7 +15,7 @@ public class TournamentEndedException extends Exception
 	 */
 	public TournamentEndedException()
 	{
-		this( "Tournament hasended" );
+		this( "Tournament has Ended" );
 	}
 
 	public TournamentEndedException(String arg0)

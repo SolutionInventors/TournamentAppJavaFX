@@ -15,8 +15,9 @@ import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.DoubleElimination;
-import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination.BracketType;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
@@ -40,7 +41,7 @@ public class DoubleEliminationTest
 		Competitor[] comps = { c1 , c2  , c3 , c4 , 
 				c5 , c6  , c7 , c8 }; 
 
-		DoubleElimination tournament = null ;
+		Tournament tournament = null ;
 		try
 		{
 			tournament = new DoubleElimination(comps);
@@ -56,45 +57,49 @@ public class DoubleEliminationTest
 		
 		while( ! tournament.hasEnded() 	)
 		{
-			Test.displayMessage("Welcome to the " + tournament.toString() );
+			Test.displayMessage("Welcome to  \nThe " + tournament.toString() );
+			
+			DoubleElimination doubleSpecific = (DoubleElimination) tournament ; 
+			try
+			{
+				
+				if ( !doubleSpecific.isMinorFixtureComplete() && ! doubleSpecific.isFinal() )
+				{
+					Test.displayMessage("Winner Bracket Fixtures" 	);
+					Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.WINNERS_BRACKET ).getFixtures() );
+					
+					Test.displayMessage("Minor Bracket Fixtures" 	);
+					Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.MINOR_BRACKET ).getFixtures() );
+				}
+				else if( ! doubleSpecific.isFinal() )
+				{
+					Test.displayMessage("Major Bracket Fixtures" 	);
+					Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.MAJOR_BRACKET ).getFixtures() );
+					
+				}
+			}
+			catch (RoundIndexOutOfBoundsException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 	
+			
 			
 			inputRoundResults(tournament);
 			
 			try
 			{
-				Test.displayMessage("Winner Bracket Results");
+				Test.displayMessage("Results");
 				
-				Test.displayRoundResults( tournament.getCurrentRound(
-						DoubleElimination.BracketType.WINNERS_BRACKET) );
+				Test.displayRoundResults( tournament.getCurrentRound() );
 				
-				
-				
-				if ( tournament.getCurrentRoundNum() > 0)
-				{
-					Test.displayMessage("Loser Minor Bracket Results");
-					Test.displayRoundResults( tournament.getCurrentRound(
-							DoubleElimination.BracketType.MINOR_BRACKET) );
-				}
-					
-				
-				if ( tournament.isWinnerRoundComplete())
-				{
-					Test.displayMessage("Loser Major Bracket Results");
-					
-					Test.displayRoundResults( tournament.getCurrentRound(
-							DoubleElimination.BracketType.MAJOR_BRACKET) );
-				}
 				tournament.moveToNextRound();
 			}
 			catch (MoveToNextRoundException e)
 			{
 				e.printStackTrace();
 			}
-			catch (RoundIndexOutOfBoundsException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner() );
@@ -102,11 +107,10 @@ public class DoubleEliminationTest
 
 	
 	
-	public static void inputRoundResults(DoubleElimination tournament) throws TournamentEndedException
+	public static void inputRoundResults(Tournament tournament) throws TournamentEndedException
 	{
 		StringBuilder builder = new StringBuilder( 400 );
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
-		Test.displayFixtures( currentFixtures );
 		
 		builder.delete(0 , builder.length() );
 		builder.append("Roound results are: \n" );
