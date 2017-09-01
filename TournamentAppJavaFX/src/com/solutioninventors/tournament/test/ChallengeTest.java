@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
@@ -20,7 +21,7 @@ import com.solutioninventors.tournament.utils.Fixture;
 
 public class ChallengeTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws OnlyOutstandingAreLeftException {
 		File file = new File("Arsenal.jpg");
 		
 		Competitor[] coms = { new Competitor("Chinedu", file), new Competitor("Chidi", file) };
@@ -45,7 +46,7 @@ public class ChallengeTest {
 
 	}
 
-	public static void simulateRound(Tournament tournament) throws TournamentEndedException
+	public static void simulateRound(Tournament tournament) throws TournamentEndedException, OnlyOutstandingAreLeftException
 	{
 		Test.displayMessage("Welcome to the " + tournament.toString());
 
@@ -59,7 +60,7 @@ public class ChallengeTest {
 		}
 	}
 
-	private static void inputRoundResults(Tournament tournament) throws TournamentEndedException {
+	private static void inputRoundResults(Tournament tournament) throws TournamentEndedException, OnlyOutstandingAreLeftException {
 		Test.displayFixtures(tournament.getCurrentRound().getFixtures());
 		Fixture fixture = tournament.getCurrentRound().getFixtures()[0];
 		Competitor com1 = fixture.getCompetitorOne();

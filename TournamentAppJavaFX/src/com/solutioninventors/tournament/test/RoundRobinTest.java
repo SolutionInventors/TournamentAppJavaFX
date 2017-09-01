@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.NoOutstandingException;
+import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
@@ -98,10 +100,18 @@ public class RoundRobinTest {
 			{
 				simulateRound(tournament );
 			}
+			catch (OnlyOutstandingAreLeftException e)
+			{
+				Test.displayMessage( "Only outstandings are left: ");
+				simulateOutstanding( (RoundRobinTournament) tournament );
+				
+			}
 			catch (TournamentEndedException e)
 			{
+				e.printStackTrace(); 
 				break;
 			}
+			
 		} 
 			
 			
@@ -110,7 +120,57 @@ public class RoundRobinTest {
 		
 	}
 
-	public static void simulateRound(Tournament tournament ) throws TournamentEndedException
+	public static void simulateOutstanding(RoundRobinTournament tournament) 
+	{
+		StringBuilder builder = new StringBuilder();
+		Fixture[] outstandings = null;
+		try
+		{
+			outstandings = tournament.getOutstanding();
+		}
+		catch (NoOutstandingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		
+		Test.displayMessage("The outstanding Fixtures are: " );
+		Test.displayFixtures( outstandings );
+		builder.delete(0 , builder.length() );
+		builder.append("Outstanding results are: \n" );
+		for( int i = 0 ; i< outstandings.length ;i++ )
+		{
+			Competitor com1 = outstandings[i].getCompetitorOne() ;
+			Competitor com2 = outstandings[i].getCompetitorTwo() ;
+			
+			double score1 = Double.parseDouble(
+					JOptionPane.showInputDialog( "Input score for " + com1 ));
+			double score2 = Double.parseDouble(
+					JOptionPane.showInputDialog( "Input score for " + com2 ));
+			
+			try
+			{
+				tournament.setOutstandingResult(com1, score1, score2, com2);
+			}
+			catch (NoFixtureException e)
+			{
+				Test.displayMessage(e.getMessage() );
+			}
+			builder.append(String.format("%s %.0f VS %.0f %s\n",
+					com1 , outstandings[ i ].getCompetitorOneScore() ,
+					outstandings[  i ].getCompetitorTwoScore() , com2 ));	
+		}
+		Test.displayMessage( builder.toString()  );
+		
+		Test.displayStandingTable(   
+				( (GroupTournament ) tournament)
+				.getTable().getStringTable() );
+		
+		
+	}
+
+	public static void simulateRound(Tournament tournament )
+			throws TournamentEndedException, OnlyOutstandingAreLeftException
 	{
 		StringBuilder builder = new StringBuilder();
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;

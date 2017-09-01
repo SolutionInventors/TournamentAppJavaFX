@@ -6,6 +6,7 @@
  */
 package com.solutioninventors.tournament.types.group;
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
+import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -212,8 +214,16 @@ public class RoundRobinTournament extends GroupTournament
 	
 	public boolean isCurrentRoundComplete() throws TournamentEndedException
 	{
-		if ( !hasEnded() && getCurrentRound().isComplete() )
-			return true;
+		try
+		{
+			if ( !hasEnded() && getCurrentRound().isComplete() )
+				return true;
+		}
+		catch (OnlyOutstandingAreLeftException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 	@Override
@@ -243,7 +253,7 @@ public class RoundRobinTournament extends GroupTournament
 				else
 				{
 					incrementRoundNum();
-					if ( getCurrentRoundNum() < getRoundArray().length && 
+					if ( getCurrentRoundNum() >= getRoundArray().length && 
 							outstandingMatches.size() > 0 )
 					{
 						String message = "Only outsanding matches are left";
@@ -255,6 +265,8 @@ public class RoundRobinTournament extends GroupTournament
 			{
 				throw new MoveToNextRoundException( e.getMessage() );
 			}
+			
+			
 		}
 		else if ( outstandingMatches.size() > 0 )
 		{
@@ -282,16 +294,24 @@ public class RoundRobinTournament extends GroupTournament
 	{	
 		try 
 		{
-			if ( Arrays.stream( getCurrentRound().getFixtures() )
-					.anyMatch( f -> f.hasFixture( com1 , com2  )) )
+			try
 			{
-				Arrays.stream( getCurrentRound().getFixtures() )
-				.filter( f -> f.hasFixture( com1 , com2  ) )
-				.forEach( f -> f.setResult(score1, score2) );
-				
+				if ( Arrays.stream( getCurrentRound().getFixtures() )
+						.anyMatch( f -> f.hasFixture( com1 , com2  )) )
+				{
+					Arrays.stream( getCurrentRound().getFixtures() )
+					.filter( f -> f.hasFixture( com1 , com2  ) )
+					.forEach( f -> f.setResult(score1, score2) );
+					
+				}
+				else
+					throw new NoFixtureException("The fixture does not exist") ;
 			}
-			else
-				throw new NoFixtureException("The fixture does not exist") ;
+			catch (OnlyOutstandingAreLeftException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		catch(  TournamentEndedException e )
 		{
@@ -302,7 +322,8 @@ public class RoundRobinTournament extends GroupTournament
 	}
 	
 	
-	public void setOutstandingResult( Competitor com1 , int score1 , int score2 , Competitor com2 )
+	public void setOutstandingResult( Competitor com1 , double score1 , double score2 , Competitor com2 ) 
+			throws NoFixtureException
 	{		
 		if ( outstandingMatches.stream()
 				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
@@ -312,11 +333,16 @@ public class RoundRobinTournament extends GroupTournament
 			{
 				if ( outstandingMatches.get( i ).hasFixture( com1, com2) )
 				{
-					outstandingMatches.get( i ).setResult( score1, score2);
+					outstandingMatches.get( i ).setResult(score1, score2);
 					outstandingMatches.remove( i );
+					getTable().updateTables(); 
 					break ;
 				}
 			}
+		}
+		else
+		{
+			throw new NoFixtureException( "Fixture not found in outstanding" );
 		}
 	}
 	
@@ -332,6 +358,17 @@ public class RoundRobinTournament extends GroupTournament
 		
 	}
 
+	@Override
+	public Round getCurrentRound() 
+			throws TournamentEndedException, OnlyOutstandingAreLeftException 
+	{
+		if (getCurrentRoundNum() < getRoundArray().length)
+			return getRoundArray()[getCurrentRoundNum()];
+		else if ( hasEnded() )
+			throw new TournamentEndedException( "This tournament is over");
+		else
+			throw new OnlyOutstandingAreLeftException("Only otustanding fixtures are left" );
+	}
 	public Competitor getWinner()
 	{
 		getTable().updateTables(); 

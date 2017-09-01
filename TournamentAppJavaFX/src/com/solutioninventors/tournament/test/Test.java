@@ -19,7 +19,7 @@ public class Test {
 		
 		if (stringTable[0].length == 8)
 			builder.append(String.format( "%-20s %s", "Name" , 
-					"W D L  GF GA  GD  Pts\n"));
+					"W D L F A GD  Pts\n"));
 		else
 			builder.append(String.format( "%-20s %s", "Name" , 
 					"W D L Pts\n"));
@@ -29,6 +29,7 @@ public class Test {
 			{
 				if ( col == 0 )
 					builder.append(String.format("%-20s ", stringTable[row][col]));
+				
 				else
 					builder.append(String.format("%s ", stringTable[row][col]));
 			}

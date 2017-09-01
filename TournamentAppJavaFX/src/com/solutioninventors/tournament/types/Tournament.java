@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
