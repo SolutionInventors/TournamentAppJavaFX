@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,44 +18,43 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class TournamentTypeScreenController implements Initializable {
 	String message;
-	String nextFxml = "KnockoutScreen.fxml";
+	String nextFxml = "Knockout.fxml";
 	Btn btn = new Btn();
-	@FXML
-	private RadioButton rbKnockOut;
-	@FXML
-	private ToggleGroup TorType;
-	@FXML
-	private TextField tournamentName;
-	@FXML
-	private RadioButton rbChallenge;
-	@FXML
-	private RadioButton rbMultiStage;
-	@FXML
-	private RadioButton rbGroup;
-	@FXML
-	private TextArea txtAdisplay;
-	@FXML
-	private Button finish;
+	@FXML private RadioButton rbKnockOut;
+	@FXML private ToggleGroup TorType;
+	@FXML private TextField tournamentName;
+	@FXML private RadioButton rbChallenge;
+	@FXML private RadioButton rbMultiStage;
+	@FXML private RadioButton rbGroup;
+	@FXML private Text txtAdisplay;
+	@FXML private Text txtTourHighlight;
+	@FXML private Button finish;
 
 	// Event Listener on RadioButton[#rbKnockOut].onAction
 	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
-			message = "In this format, champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
-			nextFxml = "ChallengeScreen.fxml";
+			message = "In a                                          champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
+			nextFxml = "Challenge.fxml";
+			txtTourHighlight.setText("CHALLENGE TOURNAMENT");
 		} else if (rbMultiStage.isSelected()) {
-			message = "Many tournaments are held in multiple stages, with the top teams in one stage progressing to the next.  A group stage (also known as pool play or the pool stage) is a round-robin stage in a multi-stage tournament. The competitors are divided into multiple groups, which play separate round-robins in parallel.";
-			nextFxml = "MultiStageScreen.fxml";
+			message = "In a                                     The competitors are divided into multiple groups, which play separate round-robins in parallel.Many tournaments are held in multiple stages, with the top teams in one stage progressing to the next.";
+			nextFxml = "MultiStage.fxml";
+			txtTourHighlight.setText("MULTISTAGE TOURNAMENT");
 		} else if (rbGroup.isSelected()) {
-			message = "A group tournament, league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture. Usually each competitor plays an equal number of fixtures, in which case rankings by total points and by average points are equivalent.";
-			nextFxml = "GroupStageScreen.fxml";
+			message = "In a                                   , league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture.";
+			nextFxml = "GroupStage.fxml";
+			txtTourHighlight.setText("GROUP TOURNAMENT");
 		} else {
-			message = "A knockout tournament is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
-			nextFxml = "KnockoutScreen.fxml";
+			message = "In a                                          is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
+			nextFxml = "Knockout.fxml";
+			txtTourHighlight.setText("KNOCKOUT TOURNAMENT");
 		} // end if
 
 		txtAdisplay.setText(message);
@@ -77,15 +77,15 @@ public class TournamentTypeScreenController implements Initializable {
 		
 		//to pass the tournament name to the next screen
 		switch (nextFxml) {
-		case "ChallengeScreen.fxml":
+		case "Challenge.fxml":
 			ChallengeScreenController ch = (ChallengeScreenController) loader.getController();
 			ch.setTournamentName(tournamentName.getText());
 			break;
-		case "MultiStageScreen.fxml":
+		case "MultiStage.fxml":
 			MultiStageScreenController ms = (MultiStageScreenController) loader.getController();
 			ms.setTournamentName(tournamentName.getText());
 			break;
-		case "GroupStageScreen.fxml":
+		case "GroupStage.fxml":
 			GroupStageScreenController gr = (GroupStageScreenController) loader.getController();
 			gr.setTournamentName(tournamentName.getText());
 			break;
@@ -114,4 +114,9 @@ public class TournamentTypeScreenController implements Initializable {
 
 	}
 
+	@FXML
+	public void close(MouseEvent event)  {
+		Platform.exit();
+	
+	}
 }// end class

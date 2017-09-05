@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class KnockoutScreenController {
 	@FXML private ToggleGroup ElimType;
@@ -21,6 +22,7 @@ public class KnockoutScreenController {
 	@FXML private CheckBox homeandAway;
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
+	@FXML private Text txtTourHighlight;
 		  private boolean singleDoubleElim = true;
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();

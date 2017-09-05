@@ -8,6 +8,7 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,14 +27,15 @@ public class WelcomeScreenController {
 	@FXML private Label About;
 	@FXML private Label Help;
 	@FXML private Text 	mainmenu;
-		  private Btn 	btn = new Btn();
+	@FXML private Text  close;
+		 // private Btn 	btn = new Btn();
 		  private Tournament tournament;
 	// Event Listener on Label[#NewT].onMouseClicked
 	@FXML
 	public void newTournament(MouseEvent event) throws IOException {
 		((Node)event.getSource()).getScene().getWindow().hide();
 		Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TournamentTypeScreen.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TourScreen.fxml"));
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -65,4 +67,10 @@ public class WelcomeScreenController {
 		primaryStage.setTitle(tournament.getName());
 	}//end continue tour
 
+	@FXML
+	public void closeApp(MouseEvent event)  {
+		Platform.exit();
+	
+	}
+	
 }

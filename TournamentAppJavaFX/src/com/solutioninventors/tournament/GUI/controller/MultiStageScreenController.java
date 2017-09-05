@@ -4,11 +4,13 @@ import java.io.IOException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -24,6 +26,7 @@ public class MultiStageScreenController {
 	@FXML private TextField txtdrawpoint;
 	@FXML private TextField txtlosspoint;
 	@FXML private Text		THeader;
+	@FXML private Text  close;
 			private String TournamentName;
 			private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 			private boolean singleDoubleElim = false;
@@ -84,8 +87,16 @@ public class MultiStageScreenController {
 
 	}
 	
+	//just to remove cancel error
+	@FXML
+	public void cancel(ActionEvent event)  {
+		
+	}
+	@FXML
+	public void closeApp(MouseEvent event)  {
+		Platform.exit();
 	
-	
+	}
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		System.out.println(TournamentName);

@@ -135,6 +135,28 @@ public class InputCompetitorController {
 
 	}
 
+	//JUST TO remove errors
+	@FXML
+	public void previous(ActionEvent event) {
+		
+	}
+	
+	@FXML
+	public void cancel(ActionEvent event) {
+		
+	}
+	
+	
+	@FXML
+	public void close(ActionEvent event) {
+		
+	}
+	
+	
+	
+	
+	
+	
 	@FXML
 	public void next(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException {
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };

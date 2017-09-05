@@ -2,10 +2,12 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class ChallengeScreenController {
@@ -36,5 +38,9 @@ public class ChallengeScreenController {
 		Btn.next(root, event, TournamentName);
 		
 	}
-
+	@FXML
+	public void closeApp(MouseEvent event)  {
+		Platform.exit();
+	
+	}
 }
