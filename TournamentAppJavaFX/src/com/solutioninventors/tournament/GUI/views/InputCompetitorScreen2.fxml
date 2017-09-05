@@ -10,12 +10,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+ <?import java.util.ArrayList?>
+<!--    <?import java.util.ArrayList?> -->
 
-<AnchorPane stylesheets="@multistage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputCompetitorController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputCompetitorController">
    <children>
       <ImageView fitHeight="553.0" fitWidth="651.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/views/TourBackdrop.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
@@ -57,7 +59,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1dfdf" height="251.0" layoutX="389.0" layoutY="169.0" stroke="RED" strokeType="INSIDE" width="216.0" />
       <TextField fx:id="txtfield1" layoutX="127.0" layoutY="175.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="170.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label layoutX="80.0" layoutY="175.0" text="1" textFill="WHITE">
+      <Label fx:id="sn1" layoutX="80.0" layoutY="175.0" text="1" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
@@ -77,16 +79,14 @@
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="171.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@no-logo.jpg" />
-         </image></ImageView>
+
+
       <Line endX="20.0" layoutX="97.0" layoutY="153.0" rotate="-90.0" stroke="RED" strokeWidth="2.0" />
       <Line endX="20.0" layoutX="380.0" layoutY="154.0" rotate="-90.0" stroke="RED" strokeWidth="2.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="229.0" stroke="RED" strokeType="INSIDE" width="283.0" />
       <TextField fx:id="txtfield2" layoutX="127.0" layoutY="234.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="229.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label layoutX="80.0" layoutY="234.0" text="2" textFill="WHITE">
+      <Label fx:id="sn2" layoutX="80.0" layoutY="234.0" text="2" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
@@ -94,7 +94,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="107.0" layoutY="289.0" stroke="RED" strokeType="INSIDE" width="283.0" />
       <TextField fx:id="txtfield3" layoutX="128.0" layoutY="294.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="65.0" layoutY="289.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label layoutX="81.0" layoutY="294.0" text="3" textFill="WHITE">
+      <Label fx:id="sn3" layoutX="81.0" layoutY="294.0" text="3" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
@@ -102,24 +102,24 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="357.0" stroke="RED" strokeType="INSIDE" width="283.0" />
       <TextField fx:id="txtfield4" layoutX="127.0" layoutY="362.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="357.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label layoutX="80.0" layoutY="362.0" text="4" textFill="WHITE">
+      <Label fx:id="sn4" layoutX="80.0" layoutY="362.0" text="4" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
       <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="229.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@no-logo.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg"/>
          </image>
       </ImageView>
       <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="288.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@no-logo.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg"/>
          </image>
       </ImageView>
       <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="347.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@no-logo.jpg" />
+           <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg"/>
          </image>
       </ImageView>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="505.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="FINISH" textAlignment="CENTER">
@@ -128,4 +128,31 @@
          </font>
       </Button>
    </children>
+   <fx:define>
+        <ArrayList fx:id="SNArray">
+            <fx:reference source="sn1" />
+            <fx:reference source="sn2" />
+            <fx:reference source="sn3" />
+            <fx:reference source="sn4" />
+            
+        </ArrayList>
+    </fx:define>
+    <fx:define>
+        <ArrayList fx:id="txtArray">
+            <fx:reference source="txtfield1" />
+            <fx:reference source="txtfield2" />
+            <fx:reference source="txtfield3" />
+            <fx:reference source="txtfield4" />
+            
+        </ArrayList>
+    </fx:define>
+    <fx:define>
+        <ArrayList fx:id="imgArray">
+            <fx:reference source="img1" />
+            <fx:reference source="img2" />
+            <fx:reference source="img3" />
+             <fx:reference source="img4" />
+            
+        </ArrayList>
+    </fx:define>
 </AnchorPane>

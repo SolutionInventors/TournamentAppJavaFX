@@ -127,7 +127,7 @@ public class InputCompetitorController {
 	
 	public void initialize() {
 		file = new File[noOfCompetitors];
-		Image image = new Image("file:arsenal.jpg");
+		Image image = new Image("file:nologo.jpg");
 		for (int i = 0; i < noOfCompetitors; i++) {
 			imgArray.get(i).setImage(image);
 			file[i] = new File("arsenal.jpg");

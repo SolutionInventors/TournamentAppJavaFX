@@ -2,6 +2,8 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
+import com.solutioninventors.tournament.GUI.utility.Paths;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +34,7 @@ public class ChallengeScreenController {
 	@FXML
 	public void next(ActionEvent event) throws IOException  {
 		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource("InputCompetitorScreen.fxml").openStream());
+		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
 		ic.setChallengeTournament(TournamentName,Integer.valueOf(txtnoOfrounds.getText()));
 		Btn.next(root, event, TournamentName);
