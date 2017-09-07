@@ -25,6 +25,12 @@ public class StandingTable implements Serializable {
 	 * String[][] table This class also uses the SportType enum in order to know
 	 * when to add GF , GA and GD However the info W , D , L , Pts are not sportType
 	 * dependent Operations of this class have been tested and debugged
+	 * 
+	 * This class also uses a TieBreaker object to create the tabke
+	 * This tie breaker must contains Breakers of type Breaeker.GROUP Or Breaker.BOTH
+	 * 
+	 * The class contains a bunch of getters but no setter 
+	 * Thus it is IMMUTABLE!
 	 */
 	private Competitor[] competitors;
 	private String[][] table;
@@ -39,7 +45,7 @@ public class StandingTable implements Serializable {
 	public StandingTable(SportType type, Competitor[] comptitors, double win, double draw, double loss,
 			TieBreaker breakers) {
 		sportType = type;
-		setCompetitors(comptitors);
+		competitors = comptitors;
 		table = new String[competitors.length][sportType == SportType.GOALS_ARE_SCORED ? 8 : 5];
 
 		POINT_FOR_WIN = win;
@@ -165,11 +171,7 @@ public class StandingTable implements Serializable {
 		return competitors;
 	}
 
-	public void setCompetitors(Competitor[] comps) {
-		if (comps != null)
-			competitors = comps;
-
-	}
+	
 
 	public String[][] getStringTable() {
 		return table;

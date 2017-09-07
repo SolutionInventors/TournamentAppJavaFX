@@ -212,20 +212,7 @@ public class RoundRobinTournament extends GroupTournament
 
 	
 	
-	public boolean isCurrentRoundComplete() throws TournamentEndedException
-	{
-		try
-		{
-			if ( !hasEnded() && getCurrentRound().isComplete() )
-				return true;
-		}
-		catch (OnlyOutstandingAreLeftException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
+	
 	@Override
 	public void moveToNextRound() throws MoveToNextRoundException
 	{

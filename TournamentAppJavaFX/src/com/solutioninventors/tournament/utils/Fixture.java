@@ -4,8 +4,16 @@ import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
+
 public class Fixture implements Serializable{
 
+	/**
+	 * This class encapsulates all the operations of a Fixuture in a tournament
+	 * It contains a boolean which is toggled true when fixture results have been set
+	 * The competitor scores are initially set to -1
+	 * This class is IMMUTABLE
+	 */
 	private final Competitor COMPETITOR_ONE;
 	private final Competitor COMPETITOR_TWO;
 	private double competitorOneScore;
@@ -15,7 +23,8 @@ public class Fixture implements Serializable{
 	public Fixture(Competitor competitorOne, Competitor competitorTwo) {
 		COMPETITOR_ONE = competitorOne;
 		COMPETITOR_TWO = competitorTwo;
-
+		competitorOneScore = -1 ;
+		competitorTwoScore = -1;
 	}
 
 	public void setResult(final double score1, final double score2)
@@ -61,16 +70,6 @@ public class Fixture implements Serializable{
 										getCompetitorTwoScore() , getCompetitorTwo().getName() );
 			JOptionPane.showMessageDialog( null , message );
 			
-
-
-			COMPETITOR_ONE.incrementGoalsScoredBy(score1);
-			COMPETITOR_ONE.incrementGoalsConcededBy(score2);
-			COMPETITOR_TWO.incrementGoalsScoredBy(score2);
-			COMPETITOR_TWO.incrementGoalsConcededBy(score1);
-
-			competitorOneScore = score1;
-			competitorTwoScore = score2;
-
 			complete = true;
 		} 
 	}
@@ -107,6 +106,7 @@ public class Fixture implements Serializable{
 
 	public Competitor getLoser() 
 	{
+		
 		if (hasLoser())
 			return getCompetitorOneScore() < getCompetitorTwoScore() ? getCompetitorOne() : getCompetitorTwo();
 
@@ -130,8 +130,9 @@ public class Fixture implements Serializable{
 		return COMPETITOR_TWO;
 	}
 
-	public double getCompetitorOneScore() {
+	public double getCompetitorOneScore()  {
 		return competitorOneScore;
+		
 	}
 
 	public double getCompetitorTwoScore() {
@@ -139,7 +140,9 @@ public class Fixture implements Serializable{
 	}
 
 	public void setResult(double score1, double score2, boolean b) {
-		if (b)
+		if ( !isComplete() )
+			return;
+		else if (b)
 			setResult(score1, score2);
 		else {
 			competitorOneScore = score1;
