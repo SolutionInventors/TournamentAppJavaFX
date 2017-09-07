@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
+import com.solutioninventors.tournament.GUI.utility.Transition;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -36,6 +38,7 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML private Text txtAdisplay;
 	@FXML private Text txtTourHighlight;
 	@FXML private Button finish;
+	@FXML private AnchorPane  rootPane;
 
 	// Event Listener on RadioButton[#rbKnockOut].onAction
 	@FXML public void radioSelected(ActionEvent event) {
@@ -102,6 +105,7 @@ public class TournamentTypeScreenController implements Initializable {
 	}// end previous
 
 	public void initialize() {
+		Transition.FadeIn(rootPane);
 		finish.disableProperty().set(true);
 	}
 	public void cancel(ActionEvent event) throws IOException {
