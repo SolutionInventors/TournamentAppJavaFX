@@ -6,7 +6,6 @@
  */
 package com.solutioninventors.tournament.types.group;
 
-import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

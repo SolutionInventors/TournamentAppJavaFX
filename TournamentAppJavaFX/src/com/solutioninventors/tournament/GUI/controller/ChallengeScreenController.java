@@ -10,9 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class ChallengeScreenController {
+	@FXML private AnchorPane  rootPane;
 	@FXML private TextField txtnoOfrounds;
 	
 	private String TournamentName;
@@ -29,7 +31,7 @@ public class ChallengeScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		System.out.println(TournamentName);
-		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");}
+		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");}
 	
 	@FXML
 	public void next(ActionEvent event) throws IOException  {
@@ -37,7 +39,7 @@ public class ChallengeScreenController {
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
 		ic.setChallengeTournament(TournamentName,Integer.valueOf(txtnoOfrounds.getText()));
-		Btn.next(root, event, TournamentName);
+		btn.next(rootPane, event, "InputCompetitorScreen.fxml");
 		
 	}
 	@FXML

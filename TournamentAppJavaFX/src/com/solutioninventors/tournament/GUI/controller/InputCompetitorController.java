@@ -26,6 +26,7 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,10 +38,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class InputCompetitorController {
+	@FXML private Text close;
+	@FXML private AnchorPane  rootPane;
+	 private Btn btn = new Btn();
+	
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
@@ -137,8 +144,8 @@ public class InputCompetitorController {
 
 	//JUST TO remove errors
 	@FXML
-	public void previous(ActionEvent event) {
-		
+	public void previous(ActionEvent event) throws IOException {
+		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}
 	
 	@FXML
@@ -148,8 +155,8 @@ public class InputCompetitorController {
 	
 	
 	@FXML
-	public void close(ActionEvent event) {
-		
+	public void close(MouseEvent event) {
+		Platform.exit();
 	}
 	
 	

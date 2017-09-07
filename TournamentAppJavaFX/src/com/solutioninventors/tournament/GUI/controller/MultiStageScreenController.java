@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -27,6 +28,8 @@ public class MultiStageScreenController {
 	@FXML private TextField txtlosspoint;
 	@FXML private Text		THeader;
 	@FXML private Text  close;
+	@FXML private AnchorPane  rootPane;
+			private	Btn btn = new Btn();
 			private String TournamentName;
 			private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 			private boolean singleDoubleElim = false;
@@ -83,7 +86,7 @@ public class MultiStageScreenController {
 				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, 
 				singleDoubleElim);
 		
-		Btn.next(root, event, TournamentName);
+		btn.next(rootPane, event, "InputCompetitorScreen.fxml");
 
 	}
 	
@@ -100,8 +103,8 @@ public class MultiStageScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		System.out.println(TournamentName);
-		Btn btn = new Btn();
-		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		
+		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}// end previous
 
 }// end class

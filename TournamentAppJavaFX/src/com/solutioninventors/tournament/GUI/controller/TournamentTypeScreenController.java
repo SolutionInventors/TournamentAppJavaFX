@@ -16,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -37,7 +36,6 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML private RadioButton rbGroup;
 	@FXML private Text txtAdisplay;
 	@FXML private Text txtTourHighlight;
-	@FXML private Button finish;
 	@FXML private AnchorPane  rootPane;
 
 	// Event Listener on RadioButton[#rbKnockOut].onAction
@@ -67,14 +65,14 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
-		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 
 	}// end previous
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
-		((Node) event.getSource()).getScene().getWindow().hide();
-		Stage primaryStage = new Stage();
+		//((Node) event.getSource()).getScene().getWindow().hide();
+		//Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+nextFxml).openStream());
 		
@@ -98,24 +96,19 @@ public class TournamentTypeScreenController implements Initializable {
 			break;
 		}//end switch
 
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament App");
+		btn.next(rootPane, event, nextFxml);
 	}// end previous
 
-	public void initialize() {
-		Transition.FadeIn(rootPane);
-		finish.disableProperty().set(true);
-	}
+	
+	
 	public void cancel(ActionEvent event) throws IOException {
-		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 		
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-
+		rootPane.setOpacity(0);
+		Transition.FadeIn(rootPane);
 	}
 
 	@FXML

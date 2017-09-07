@@ -40,14 +40,6 @@ public class WelcomeScreenController {
 	// Event Listener on Label[#NewT].onMouseClicked
 	@FXML
 	public void newTournament(MouseEvent event) throws IOException {
-/*		((Node)event.getSource()).getScene().getWindow().hide();
-		Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TourScreen.fxml"));
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament App");*/
-		
 		 trans.FadeOut(rootPane, "TourScreen.fxml");
 		
 	}
