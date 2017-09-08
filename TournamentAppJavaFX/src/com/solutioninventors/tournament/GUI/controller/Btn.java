@@ -26,68 +26,90 @@ public class Btn {
 	private Point2D anchorPt;
 	private Point2D previousLocation;
 	private static Stage PRIMARY_STAGE;
-	
-	/*public void previous(ActionEvent event, String fxml, String Cssfile, String title) throws IOException {
-		((Node)event.getSource()).getScene().getWindow().hide();
-		Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+fxml));
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		scene.getStylesheets().add(getClass().getResource(Paths.viewpath+Cssfile).toExternalForm());
-		primaryStage.show();
-		primaryStage.setTitle(title);
-		
-	
-	
-	}*/
-	
+
+	/*
+	 * public void previous(ActionEvent event, String fxml, String Cssfile, String
+	 * title) throws IOException {
+	 * ((Node)event.getSource()).getScene().getWindow().hide(); Stage primaryStage =
+	 * new Stage(); Parent root =
+	 * FXMLLoader.load(getClass().getResource(Paths.viewpath+fxml)); Scene scene =
+	 * new Scene(root); primaryStage.setScene(scene);
+	 * scene.getStylesheets().add(getClass().getResource(Paths.viewpath+Cssfile).
+	 * toExternalForm()); primaryStage.show(); primaryStage.setTitle(title);
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
+
 	public void previous(Pane root, ActionEvent event, String fxml, String Cssfile, String title) throws IOException {
-	Parent stageView;
-	try {
-		stageView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath+fxml));
-		Scene ns = new Scene(stageView);
-		ns.getStylesheets().add(getClass().getResource(Paths.viewpath+Cssfile).toExternalForm());
-		Stage cS = (Stage) root.getScene().getWindow();
-		
-		cS.setScene(ns);
-	
-	
-	} catch (IOException e) {
-		e.printStackTrace();
+		Parent stageView;
+		try {
+			stageView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath + fxml));
+			Scene ns = new Scene(stageView);
+			ns.getStylesheets().add(getClass().getResource(Paths.viewpath + Cssfile).toExternalForm());
+			Stage cS = (Stage) root.getScene().getWindow();
+
+			cS.setScene(ns);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	}
-/*	public static void next(Pane root, ActionEvent event, String title) throws IOException {
+
+	public static void go(Pane root, ActionEvent event, String title) throws IOException {
 		((Node) event.getSource()).getScene().getWindow().hide();
-		
-		
+
 		Stage primaryStage = new Stage();
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setTitle(title);
-		}*/
-	public void next(Pane root, ActionEvent event, String fxmlfile) throws IOException {
-		Parent newView;
+	}
+
+	public void nextagain(Pane root, String fxmlfile) throws IOException {
+		// Parent newView;
 		try {
-			newView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath+fxmlfile));
-			Scene newScene = new Scene(newView);
-			
-			
-		//	Stage currentStage = (Stage) root.getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader();
+			Pane root2 = loader
+					.load(getClass().getResource(Paths.viewpath + "InputCompetitorScreen.fxml").openStream());
+
+			// newView = FXMLLoader.load(getClass().getResource(Paths.viewpath+fxmlfile));
+			Scene newScene = new Scene(root2);
+			InputCompetitorController ic = (InputCompetitorController) loader.getController();
+			ic.setKOtournament("Test Tournament", 4, false, false);
+
+			// Stage currentStage = (Stage) root.getScene().getWindow();
 			PRIMARY_STAGE = (Stage) root.getScene().getWindow();
-			//	PRIMARY_STAGE = currentStage;
+			// PRIMARY_STAGE = currentStage;
 			initMovablePlayer();
 			PRIMARY_STAGE.setScene(newScene);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+	}
+
+	public void next(Pane root, ActionEvent event, String fxmlfile) throws IOException {
+		Parent newView;
+		try {
+			newView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath + fxmlfile));
+			Scene newScene = new Scene(newView);
+
+			// Stage currentStage = (Stage) root.getScene().getWindow();
+			PRIMARY_STAGE = (Stage) root.getScene().getWindow();
+			// PRIMARY_STAGE = currentStage;
+			initMovablePlayer();
+			PRIMARY_STAGE.setScene(newScene);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+
+	}
+
 	public void cancel(ActionEvent event) {
 	}
-	
-	
+
 	private void initMovablePlayer() {
 		Scene scene = PRIMARY_STAGE.getScene();
 		// starting initial anchor point
@@ -107,25 +129,5 @@ public class Btn {
 			previousLocation = new Point2D(PRIMARY_STAGE.getX(), PRIMARY_STAGE.getY());
 		});
 	}
-	
-	
-	
-	
-	//load next scene on the same window
-	private void loadNextScene(Pane firstPane, String fxmlfile) {
-		Parent stageView;
-		try {
-			stageView = (StackPane) FXMLLoader.load(getClass().getResource(fxmlfile));
-			Scene ns = new Scene(stageView);
-			
-			Stage cS = (Stage) firstPane.getScene().getWindow();
-			cS.setScene(ns);
-		
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	
-	
-	}
+
 }
