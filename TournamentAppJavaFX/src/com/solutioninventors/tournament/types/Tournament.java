@@ -31,9 +31,17 @@ import com.solutioninventors.tournament.utils.Round;
 
 public abstract class Tournament implements Serializable
 {
-	
+	/** 
+	 * This class contains static and object level methods that make simulation of a tournament possible
+	 * This class is abstract thus you can instantiate only its concrete subclasses including
+	 *  RounRobinTournament, SwissTournament, Challenge, Multistage, SingeElimination and DoubleElimination
+	 *  It also has some abstract subclasses including GroupTournmant and Elimination
+	 *  
+	 *  This class generally contains simple methods that perform general tasks
+	 *  required when simulating a tournament
+	 */
 	private static final File savedTournaments //stores all saved tournaments 
-		= new File("Saved Tournaments");
+		= new File("saved-tournaments.dll");
 	
 	private final Competitor[] competitors;
 	private File tournamentFile; //object keeps record of its owns file
@@ -129,7 +137,6 @@ public abstract class Tournament implements Serializable
 			throws FileNotFoundException , IOException, TournamentException
 			
 	{
-		
 		if ( tournament == null )
 			throw new TournamentException( "The tournament object is null" );
 		
@@ -196,7 +203,6 @@ public abstract class Tournament implements Serializable
 		}
 		catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return tourList.stream()
