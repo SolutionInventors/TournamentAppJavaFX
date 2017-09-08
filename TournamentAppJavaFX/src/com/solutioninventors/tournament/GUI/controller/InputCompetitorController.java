@@ -79,8 +79,7 @@ public class InputCompetitorController {
 	Competitor[] comps;
 	private int tournamenttype;
 
-	@FXML
-	public void chinedu() {
+	@FXML public void chinedu() {
 
 	}
 
@@ -94,7 +93,8 @@ public class InputCompetitorController {
 		TournamentType = TournamentTypes.KNOCKOUT;
 		homeandAway = homeAndAway;
 		sigleOrDouble = sigleTour;
-		initialize();
+		System.out.println("KnockOut tournament called");
+		loadcomponents();
 	}
 
 	public void setChallengeTournament(String tn, int rud) {
@@ -102,7 +102,7 @@ public class InputCompetitorController {
 		onOfRounds = rud;
 		noOfCompetitors = 2;
 		TournamentType = TournamentTypes.CHALLENGE;
-		initialize();
+		loadcomponents();
 	}
 
 	public void setGroupTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp, int tourType) {
@@ -114,7 +114,7 @@ public class InputCompetitorController {
 		drawpoint = drawp;
 		losspoint = lossp;
 		tournamenttype = tourType;
-		initialize();
+		loadcomponents();
 	}
 
 	public void setMultiStageTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp, int tourType, boolean KOSinDob) {
@@ -127,19 +127,21 @@ public class InputCompetitorController {
 		losspoint = lossp;
 		tournamenttype = tourType;
 		sigleOrDouble = KOSinDob;
-		initialize();
+		loadcomponents();
 	}
 			
 		
 	
-	public void initialize() {
+	public void loadcomponents() {
+		System.out.println("caqlled no of comp");
 		file = new File[noOfCompetitors];
-		Image image = new Image("file:nologo.jpg");
+		/*Image image = new Image("file:nologo.jpg");
 		for (int i = 0; i < noOfCompetitors; i++) {
 			imgArray.get(i).setImage(image);
-			file[i] = new File("arsenal.jpg");
-		}
-
+			file[i] = new File("nologo.jpg");
+		}*/
+System.out.println(noOfCompetitors);
+System.out.println("no fo comp");
 	}
 
 	//JUST TO remove errors
