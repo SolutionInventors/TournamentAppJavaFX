@@ -85,8 +85,10 @@ public abstract class GroupTournament extends Tournament
 		rounds[getCurrentRoundNum()] = new Round(fixes);
 	}
 
+
 	public Round getCurrentRound() 
 			throws TournamentEndedException, OnlyOutstandingAreLeftException 
+
 	{
 		if (getCurrentRoundNum() < getRoundArray().length)
 			return getRoundArray()[getCurrentRoundNum()];

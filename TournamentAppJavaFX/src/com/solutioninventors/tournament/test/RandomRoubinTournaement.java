@@ -7,6 +7,8 @@
 package com.solutioninventors.tournament.test;
 
 import java.io.File;
+import java.security.SecureRandom;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -26,7 +28,7 @@ import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
-public class RoundRobinTest {
+public class RandomRoubinTournaement {
 
 	public static void main(String[] args) throws NoFixtureException {
 		File file = new File("Arsenal.jpg");
@@ -138,16 +140,14 @@ public class RoundRobinTest {
 		Test.displayFixtures( outstandings );
 		builder.delete(0 , builder.length() );
 		builder.append("Outstanding results are: \n" );
+		SecureRandom rnd = new SecureRandom();
 		for( int i = 0 ; i< outstandings.length ;i++ )
 		{
 			Competitor com1 = outstandings[i].getCompetitorOne() ;
 			Competitor com2 = outstandings[i].getCompetitorTwo() ;
 			
-			double score1 = Double.parseDouble(
-					JOptionPane.showInputDialog( "Input score for " + com1 ));
-			double score2 = Double.parseDouble(
-					JOptionPane.showInputDialog( "Input score for " + com2 ));
-			
+			double score1 = rnd.nextDouble();
+			double score2 = rnd.nextDouble();
 			try
 			{
 				tournament.setOutstandingResult(com1, score1, score2, com2);
@@ -178,15 +178,14 @@ public class RoundRobinTest {
 		
 		builder.delete(0 , builder.length() );
 		builder.append("Roound results are: \n" );
+		Random rnd = new Random();
 		for( int i = 0 ; i< currentFixtures.length ;i++ )
 		{
 			Competitor com1 = currentFixtures[i].getCompetitorOne() ;
 			Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
 			
-			double score1 = Double.parseDouble(
-					JOptionPane.showInputDialog( "Input score for " + com1 ));
-			double score2 = Double.parseDouble(
-					JOptionPane.showInputDialog( "Input score for " + com2 ));
+			double score1 = rnd.nextInt(10);
+			double score2 = rnd.nextInt(10);
 			
 			try
 			{

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.WelcomeScreenController">
+<AnchorPane fx:id="rootPane" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.WelcomeScreenController">
    <children>
       <ImageView fitHeight="404.0" fitWidth="508.0" layoutX="-5.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,7 +19,7 @@
          </image>
       </ImageView>
       <Rectangle fx:id="rectop" arcHeight="5.0" arcWidth="5.0" height="62.0" stroke="BLACK" strokeType="INSIDE" width="475.0" />
-      <Rectangle fx:id="recbuttom" arcHeight="5.0" arcWidth="5.0" height="62.0" layoutX="1.0" layoutY="387.0" opacity="0.61" stroke="BLACK" strokeType="INSIDE" width="475.0" />
+      <Rectangle fx:id="recbuttom" arcHeight="5.0" arcWidth="5.0" height="62.0" layoutX="1.0" layoutY="387.0" opacity="0.61" stroke="BLACK" strokeType="INSIDE" width="473.0" />
       <Label fx:id="lblmainmenu" alignment="CENTER" layoutX="97.0" layoutY="78.0" prefHeight="62.0" prefWidth="282.0" text="MAIN MENU" textAlignment="CENTER" textFill="#e10000">
          <font>
             <Font name="Trebuchet MS Bold" size="51.0" />
@@ -57,7 +57,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="Help" alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="52.0" prefWidth="345.0" text="HELP" GridPane.rowIndex="4">
+            <Label fx:id="Help" alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="26.0" prefWidth="220.0" text="HELP" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -77,6 +77,16 @@
       <Text fill="#f2eeee" layoutX="49.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SOLUTION INVENTORS">
          <font>
             <Font name="Trebuchet MS" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="close" fill="RED" layoutX="425.0" layoutY="42.0" onMouseClicked="#closeApp" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
+         <font>
+            <Font name="Times New Roman Bold" size="19.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="401.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_">
+         <font>
+            <Font name="Times New Roman Bold" size="30.0" />
          </font>
       </Text>
    </children>

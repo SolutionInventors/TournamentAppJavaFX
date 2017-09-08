@@ -26,6 +26,7 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,10 +38,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class InputCompetitorController {
+	@FXML private Text close;
+	@FXML private AnchorPane  rootPane;
+	 private Btn btn = new Btn();
+	
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
@@ -127,7 +134,7 @@ public class InputCompetitorController {
 	
 	public void initialize() {
 		file = new File[noOfCompetitors];
-		Image image = new Image("file:arsenal.jpg");
+		Image image = new Image("file:nologo.jpg");
 		for (int i = 0; i < noOfCompetitors; i++) {
 			imgArray.get(i).setImage(image);
 			file[i] = new File("arsenal.jpg");
@@ -135,6 +142,28 @@ public class InputCompetitorController {
 
 	}
 
+	//JUST TO remove errors
+	@FXML
+	public void previous(ActionEvent event) throws IOException {
+		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+	}
+	
+	@FXML
+	public void cancel(ActionEvent event) {
+		
+	}
+	
+	
+	@FXML
+	public void close(MouseEvent event) {
+		Platform.exit();
+	}
+	
+	
+	
+	
+	
+	
 	@FXML
 	public void next(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException {
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };

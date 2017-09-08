@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
-import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
@@ -85,7 +84,7 @@ public abstract class Tournament implements Serializable
 			throw new 
 				TournamentHasNotBeenSavedException( errorMessage  );
 	}
-	private  void setTournamentFile( File file )
+	protected  void setTournamentFile( File file )
 	{
 		tournamentFile = file; 
 	}
@@ -125,7 +124,8 @@ public abstract class Tournament implements Serializable
 
 //	All static methods are declared here:
 	
-	public static void saveAs( Tournament tournament, File file ) 
+	public static <T extends Tournament> 
+		void saveAs( T tournament   , File file ) 
 			throws FileNotFoundException , IOException, TournamentException
 			
 	{
@@ -226,11 +226,11 @@ public abstract class Tournament implements Serializable
 		
 	}
 
-	public static Tournament loadTournament( File file  ) 
+	public static <T extends Tournament> T loadTournament( File file  ) 
 			throws FileNotFoundException , IOException, TournamentException
 			
 	{
-		Tournament tournament ;
+		T tournament ;
 		 if ( file.exists() )
 		{
 			ObjectInputStream input  = null ;
@@ -238,7 +238,7 @@ public abstract class Tournament implements Serializable
 			{
 				input  = 
 						new ObjectInputStream( new FileInputStream(file ));
-				tournament = (Tournament) input.readObject( );
+				tournament = (T) input.readObject( );
 				input.close();
 				
 			}

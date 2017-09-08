@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
+import com.solutioninventors.tournament.GUI.utility.Transition;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,18 +29,18 @@ public class WelcomeScreenController {
 	@FXML private Label About;
 	@FXML private Label Help;
 	@FXML private Text 	mainmenu;
-		  private Btn 	btn = new Btn();
+	@FXML private Text  close;
+	@FXML private AnchorPane  rootPane;
+	
+	
+	
+		 // private Btn 	btn = new Btn();
+	Transition trans = new Transition();
 		  private Tournament tournament;
 	// Event Listener on Label[#NewT].onMouseClicked
 	@FXML
 	public void newTournament(MouseEvent event) throws IOException {
-		((Node)event.getSource()).getScene().getWindow().hide();
-		Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TournamentTypeScreen.fxml"));
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament App");
+		 trans.FadeOut(rootPane, "TourScreen.fxml");
 		
 	}
 	@FXML
@@ -65,4 +68,10 @@ public class WelcomeScreenController {
 		primaryStage.setTitle(tournament.getName());
 	}//end continue tour
 
+	@FXML
+	public void closeApp(MouseEvent event)  {
+		Platform.exit();
+	
+	}
+	
 }

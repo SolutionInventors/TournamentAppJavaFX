@@ -1,48 +1,67 @@
-/**
- * 
- */
 package com.solutioninventors.tournament.GUI.utility;
 
-import javafx.application.Application;
+import java.io.IOException;
+
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-/**
- * @author ChineduKnight
- *
- */
+import javafx.util.Duration;
 
 
-public class GUITest  extends Application{
+
+public class Transition {
 	private Point2D anchorPt;
 	private Point2D previousLocation;
 	private static Stage PRIMARY_STAGE;
 	
 	
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"WelcomeScreen.fxml"));
-			Scene scene = new Scene(root);
-			PRIMARY_STAGE = primaryStage;
-			PRIMARY_STAGE.initStyle(StageStyle.TRANSPARENT);
-			PRIMARY_STAGE.centerOnScreen();
-			PRIMARY_STAGE.setScene(scene);
-			initMovablePlayer();
-			primaryStage.show();
-			scene.getStylesheets().add(getClass().getResource(Paths.viewpath+"lookfeel.css").toExternalForm());
-			primaryStage.setTitle("Tournament APP");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void FadeOut(Pane firstPane, String fxmlfile ) {
+		FadeTransition ft = new FadeTransition();
+		ft.setDuration(Duration.millis(1000));
+		ft.setNode(firstPane);
+		ft.setFromValue(1);
+		ft.setToValue(0);
+		ft.setOnFinished(e->{
+			loadNextScene(firstPane,fxmlfile);
+		});
+		ft.play();
 	}
 	
+	private void loadNextScene(Pane firstPane, String fxmlfile) {
+		Parent sv;
+		try {
+			sv = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath+fxmlfile));
+			Scene ns = new Scene(sv);
+			
+			Stage cS = (Stage) firstPane.getScene().getWindow();
+			PRIMARY_STAGE = cS;
+			initMovablePlayer();
+			cS.setScene(ns);
+		
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	
+	
+	}
+	
+	public static void FadeIn(Pane firstPane) {
+		FadeTransition ft = new FadeTransition();
+		ft.setDuration(Duration.millis(1000));
+		ft.setNode(firstPane);
+		ft.setFromValue(0);
+		ft.setToValue(1);
+		ft.play();
+		
+	}
+
 	private void initMovablePlayer() {
 		Scene scene = PRIMARY_STAGE.getScene();
 		// starting initial anchor point
@@ -63,7 +82,5 @@ public class GUITest  extends Application{
 		});
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
-}
+}//end class
+

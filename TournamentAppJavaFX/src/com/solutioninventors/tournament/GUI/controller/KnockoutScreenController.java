@@ -13,7 +13,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class KnockoutScreenController {
 	@FXML private ToggleGroup ElimType;
@@ -21,6 +23,8 @@ public class KnockoutScreenController {
 	@FXML private CheckBox homeandAway;
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
+	@FXML private Text txtTourHighlight;
+	@FXML private AnchorPane  rootPane;
 		  private boolean singleDoubleElim = true;
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();
@@ -71,7 +75,7 @@ public class KnockoutScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 	
-		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}
 
 	
@@ -81,7 +85,7 @@ public class KnockoutScreenController {
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
 		ic.setKOtournament(TournamentName,Integer.valueOf(txtNoofcompetitors.getText()),singleDoubleElim, HomeandAwayFixture);
-		Btn.next(root, event, "Tournament App");
+		btn.next(rootPane, event, "InputCompetitorScreen.fxml");
 	}
 	@FXML
 	public void cancel(ActionEvent event) {

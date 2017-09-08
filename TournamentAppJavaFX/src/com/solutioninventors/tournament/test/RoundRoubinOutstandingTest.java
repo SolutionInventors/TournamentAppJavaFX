@@ -1,8 +1,8 @@
 /**
  *@Author: Oguejiofor Chidiebere
- *RoundRobinTest.java
- *Aug 5, 2017
- *8:07:58 AM
+ *RoundRoubinOutstandingTest.java
+ *Sep 1, 2017
+ *12:46:09 PM
  */
 package com.solutioninventors.tournament.test;
 
@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
-import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -26,39 +25,26 @@ import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
-public class RoundRobinTest {
+public class RoundRoubinOutstandingTest
+{
 
-	public static void main(String[] args) throws NoFixtureException {
+	public static void main(String[] args)
+	{
 		File file = new File("Arsenal.jpg");
-				
+		
 		// File file = new File("golf.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
-		Competitor c3 = new Competitor("Joshua", file);
+		
 		Competitor c4 = new Competitor("Chinedu", file);
-
-		// Competitor c5 = new Competitor( "Ada" , file );
-		// Competitor c6 = new Competitor( "Oguejiofor", file );
-		// Competitor c7 = new Competitor( "Pio" , file );
-		// Competitor c8 = new Competitor( "Oloche" , file ) ;
-		//
-		// Competitor c9 = new Competitor( "Manchester" , "United", file );
-		// Competitor c10 = new Competitor( "Chealsea", file );
-		// Competitor c11 = new Competitor( "Arsenal" , file );
-		// Competitor c12 = new Competitor( "Real" , file ) ;
-		//
-		// Competitor c13 = new Competitor( "Barca" , file );
-		// Competitor c14 = new Competitor( "Atletico", file );
-		// Competitor c15 = new Competitor( "Lagos" , file );
-		// Competitor c16 = new Competitor( "NIgeria" , file ) ;
-
-		Competitor[] comps = { c1, c2, c3, c4 };
+		
+		Competitor[] comps = { c1, c2,  c4 };
 		
 		Test.displayMessage("Robin begins");
 		
 		
 		Breaker[] breakers = {
-				 Breaker.HEAD_TO_HEAD			 
+				 Breaker.GOALS_DIFFERENCE			 
 		};
 		
 		
@@ -72,12 +58,11 @@ public class RoundRobinTest {
 		}
 		catch (InvalidBreakerException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		StringBuilder builder = new StringBuilder( 300 );
-		
+		builder.append( "There are " + comps.length + " competitors in this tournament\n" );
 		builder.append( "The competitors are: \n" );
 		Competitor[] tournamentComps = tournament.getCompetitors() ;
 		
@@ -86,25 +71,25 @@ public class RoundRobinTest {
 			builder.append( (i+1) + ". " + tournamentComps[ i ] + " \n" ); 
 		}
 		
-		
+
 		Test.displayMessage( builder.toString() );
-		
 		printRounds( tournament.getRoundArray() );
 		Test.displayStandingTable(   
 				( (GroupTournament ) tournament)
-				.getTable().getStringTable() );// groupTournament specific
+				.getTable().getStringTable() );
 		
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
 			try
 			{
-				simulateRound(tournament );
+				simulateRound( (RoundRobinTournament) tournament );
 			}
 			catch (OnlyOutstandingAreLeftException e)
 			{
-				Test.displayMessage( "Only outstandings are left: ");
-				simulateOutstanding( (RoundRobinTournament) tournament );
 				
+				Test.displayMessage( "Only outstandings are left: ");
+				RoundRobinTest.
+					simulateOutstanding( (RoundRobinTournament) tournament );
 			}
 			catch (TournamentEndedException e)
 			{
@@ -113,64 +98,12 @@ public class RoundRobinTest {
 			}
 			
 		} 
-			
-			
-	
 		Test.displayMessage( "The winner is " + tournament.getWinner() ) ;
 		
 	}
 
-	public static void simulateOutstanding(RoundRobinTournament tournament) 
-	{
-		StringBuilder builder = new StringBuilder();
-		Fixture[] outstandings = null;
-		try
-		{
-			outstandings = tournament.getOutstanding();
-		}
-		catch (NoOutstandingException e1)
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} 
-		
-		Test.displayMessage("The outstanding Fixtures are: " );
-		Test.displayFixtures( outstandings );
-		builder.delete(0 , builder.length() );
-		builder.append("Outstanding results are: \n" );
-		for( int i = 0 ; i< outstandings.length ;i++ )
-		{
-			Competitor com1 = outstandings[i].getCompetitorOne() ;
-			Competitor com2 = outstandings[i].getCompetitorTwo() ;
-			
-			double score1 = Double.parseDouble(
-					JOptionPane.showInputDialog( "Input score for " + com1 ));
-			double score2 = Double.parseDouble(
-					JOptionPane.showInputDialog( "Input score for " + com2 ));
-			
-			try
-			{
-				tournament.setOutstandingResult(com1, score1, score2, com2);
-			}
-			catch (NoFixtureException e)
-			{
-				Test.displayMessage(e.getMessage() );
-			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , outstandings[ i ].getCompetitorOneScore() ,
-					outstandings[  i ].getCompetitorTwoScore() , com2 ));	
-		}
-		Test.displayMessage( builder.toString()  );
-		
-		Test.displayStandingTable(   
-				( (GroupTournament ) tournament)
-				.getTable().getStringTable() );
-		
-		
-	}
-
-	public static <T extends Tournament >void simulateRound(T tournament )
-			throws TournamentEndedException, OnlyOutstandingAreLeftException
+	private static void simulateRound( RoundRobinTournament  tournament)
+		throws TournamentEndedException, OnlyOutstandingAreLeftException
 	{
 		StringBuilder builder = new StringBuilder();
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
@@ -182,6 +115,15 @@ public class RoundRobinTest {
 		{
 			Competitor com1 = currentFixtures[i].getCompetitorOne() ;
 			Competitor com2 = currentFixtures[i].getCompetitorTwo() ;
+			
+			String message = String.format("Do you want to skip %s v %s?\n%s" , com1 , com2 , 
+										"Input 1 for yes ELSE no");
+			
+			String ans = JOptionPane.showInputDialog( message );
+			
+			if ( ans.equals( "1" ) )
+				continue;
+			
 			
 			double score1 = Double.parseDouble(
 					JOptionPane.showInputDialog( "Input score for " + com1 ));
@@ -216,6 +158,7 @@ public class RoundRobinTest {
 		Test.displayStandingTable(   
 				( (GroupTournament ) tournament)
 				.getTable().getStringTable() );// groupTournament specific
+		
 	}
 
 	private static void printRounds(Round[] rounds)
@@ -233,5 +176,6 @@ public class RoundRobinTest {
 		
 		
 	}
+
 
 }

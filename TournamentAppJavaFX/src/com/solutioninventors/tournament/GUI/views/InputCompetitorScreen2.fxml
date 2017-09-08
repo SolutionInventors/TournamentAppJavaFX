@@ -10,10 +10,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import java.util.ArrayList?>
+ <?import java.util.ArrayList?>
 <!--    <?import java.util.ArrayList?> -->
 
-<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputCompetitorController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputCompetitorController">
    <children>
       <ImageView fitHeight="553.0" fitWidth="651.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -107,19 +107,19 @@
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="229.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="229.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg"/>
          </image>
       </ImageView>
-      <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="288.0" onMouseClicked="#changeImage3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="288.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg"/>
          </image>
       </ImageView>
-      <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="347.0" onMouseClicked="#changeImage4" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="347.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-           <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
+           <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg"/>
          </image>
       </ImageView>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="505.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="FINISH" textAlignment="CENTER">
@@ -127,11 +127,6 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="171.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
-         </image>
-      </ImageView>
    </children>
    <fx:define>
         <ArrayList fx:id="SNArray">

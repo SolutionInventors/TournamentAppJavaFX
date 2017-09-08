@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -23,6 +24,7 @@ public class GroupStageScreenController {
 	@FXML private RadioButton swiss;
 	@FXML private RadioButton round;
 	@FXML private RadioButton doubleround;
+	@FXML private AnchorPane  rootPane;
 		  private String TournamentName;
 		  private Btn btn = new Btn();
 		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
@@ -61,7 +63,7 @@ public class GroupStageScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		
-		btn.previous(event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}
 
 	@FXML
@@ -72,7 +74,7 @@ public class GroupStageScreenController {
 		ic.setGroupTournament(TournamentName, Integer.valueOf(txtnoOfrounds.getText()),
 				Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
-		Btn.next(root, event, TournamentName);
+		btn.next(rootPane, event, "InputCompetitorScreen.fxml");
 
 	}
 }
