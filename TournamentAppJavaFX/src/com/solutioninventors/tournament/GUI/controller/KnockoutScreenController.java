@@ -2,8 +2,11 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
+import com.solutioninventors.tournament.GUI.utility.Paths;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
@@ -11,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class KnockoutScreenController {
@@ -77,12 +81,12 @@ public class KnockoutScreenController {
 	
 	@FXML
 	public void next(ActionEvent event) throws IOException {
-		//FXMLLoader loader = new FXMLLoader();
-		//Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+		FXMLLoader loader = new FXMLLoader();
+		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+		InputCompetitorController ic = (InputCompetitorController) loader.getController();
+		ic.setKOtournament(TournamentName, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
+		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
 		
-		//btn.next(rootPane, event, "InputCompetitorScreen.fxml");
-		//Btn.go(root, event, "InputCompetitorScreen.fxml");
-		btn.nextagain(rootPane, "InputCompetitorScreen.fxml");
 		
 	}
 	@FXML

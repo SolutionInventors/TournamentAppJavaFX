@@ -76,9 +76,7 @@ public class Btn {
 
 			// newView = FXMLLoader.load(getClass().getResource(Paths.viewpath+fxmlfile));
 			Scene newScene = new Scene(root2);
-			InputCompetitorController ic = (InputCompetitorController) loader.getController();
-			ic.setKOtournament("Test Tournament", 4, false, false);
-
+		
 			// Stage currentStage = (Stage) root.getScene().getWindow();
 			PRIMARY_STAGE = (Stage) root.getScene().getWindow();
 			// PRIMARY_STAGE = currentStage;
@@ -90,22 +88,29 @@ public class Btn {
 
 	}
 
-	public void next(Pane root, ActionEvent event, String fxmlfile) throws IOException {
+	public void next(Pane root, Pane nextView, String fxmlfile) throws IOException {
+		Parent newView = nextView;
+		Scene newScene = new Scene(newView);
+		PRIMARY_STAGE = (Stage) root.getScene().getWindow();
+		initMovablePlayer();
+		PRIMARY_STAGE.setScene(newScene);
+
+	}//end next button
+	
+
+	public void nextforGroup(Pane root, ActionEvent event, String fxmlfile,Pane root3) throws IOException {
 		Parent newView;
-		try {
-			newView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath + fxmlfile));
-			Scene newScene = new Scene(newView);
+		//newView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath + fxmlfile));
+		newView=root3;
+		Scene newScene = new Scene(newView);
 
-			// Stage currentStage = (Stage) root.getScene().getWindow();
-			PRIMARY_STAGE = (Stage) root.getScene().getWindow();
-			// PRIMARY_STAGE = currentStage;
-			initMovablePlayer();
-			PRIMARY_STAGE.setScene(newScene);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// Stage currentStage = (Stage) root.getScene().getWindow();
+		PRIMARY_STAGE = (Stage) root.getScene().getWindow();
+		// PRIMARY_STAGE = currentStage;
+		initMovablePlayer();
+		PRIMARY_STAGE.setScene(newScene);
 
-	}
+	}//end next button
 
 	public void cancel(ActionEvent event) {
 	}

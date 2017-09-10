@@ -8,8 +8,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -21,6 +23,7 @@ public class MultiStageScreenController {
 	@FXML private RadioButton doubleRound;
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
+	@FXML private Label noofround;
 	@FXML private TextField txtnoOfrounds;
 	@FXML private TextField txtnoOfcomps;
 	@FXML private TextField txtwinpoint;
@@ -38,27 +41,33 @@ public class MultiStageScreenController {
 	public void setTournamentName(String tournamentName) {
 		TournamentName = tournamentName;
 	}
+	
+	public void initialize() {
+		noofround.setVisible(false);}
+	
 
 	@FXML
 	public void radioSelected(ActionEvent event) {
+		String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
 		if (swiss.isSelected()) {
 			tourType = 1;
 			txtnoOfrounds.setText("2");
 			txtnoOfrounds.editableProperty().set(true);
 			txtnoOfrounds.setVisible(true);
+			noofround.setVisible(false);
 		//	message = "In a Swiss style group tournament, the number of results is attempted to be shortened or reduced. The fixtures are determined from the current standing. This is achieved by pairing the top and bottom competitors";
 		} else if (round.isSelected()) {
 			tourType = 2;
-			txtnoOfrounds.setText("2");
-			txtnoOfrounds.editableProperty().set(false);
 			txtnoOfrounds.setVisible(false);
+			noofround.setText(noofrnd);
+			noofround.setVisible(true);
 		//	message = "In a single round-robin tournament, each competitor plays every other competitor once. The no of rounds is determined by the no of competitors. The winner is determined by the ranking table which is based on the no of Wins, Draws , Goals Scored etc";
 			
 		}  else if (doubleRound.isSelected()) {
 			tourType = 3;
-			txtnoOfrounds.setText("2");
-			txtnoOfrounds.setVisible(true);
-			txtnoOfrounds.editableProperty().set(false);
+			txtnoOfrounds.setVisible(false);
+			noofround.setText(noofrnd);
+			noofround.setVisible(true);
 		//	message = "In a double-round-robin tournament, each competitor plays every other competitor twice.The no of rounds is determined by the no of competitors.  Most association football leagues in the world are organized on a double round-robin basis, in which every team plays all others in its league once at home and once away.";
 		}
 	//	THeader.setText(message);
@@ -75,6 +84,19 @@ public class MultiStageScreenController {
 		}
 	}
 	
+	@FXML
+	public void updaterud(KeyEvent event)  {
+		if (!txtnoOfcomps.getText().isEmpty()) {
+			try {
+				String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
+				noofround.setText(noofrnd);
+			} catch (NumberFormatException e) {
+				noofround.setText("Please input the correct no of competitors");
+			}
+		}//end if
+		
+	}
+	
 	
 	@FXML
 	public void next(ActionEvent event) throws IOException {
@@ -86,7 +108,7 @@ public class MultiStageScreenController {
 				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, 
 				singleDoubleElim);
 		
-		btn.next(rootPane, event, "InputCompetitorScreen.fxml");
+		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
 
 	}
 	

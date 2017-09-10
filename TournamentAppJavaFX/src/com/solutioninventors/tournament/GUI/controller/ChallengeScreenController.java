@@ -39,7 +39,7 @@ public class ChallengeScreenController {
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
 		ic.setChallengeTournament(TournamentName,Integer.valueOf(txtnoOfrounds.getText()));
-		btn.next(rootPane, event, "InputCompetitorScreen.fxml");
+		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
 		
 	}
 	@FXML

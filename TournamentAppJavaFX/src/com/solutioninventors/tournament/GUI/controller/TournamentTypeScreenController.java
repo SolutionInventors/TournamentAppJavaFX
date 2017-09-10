@@ -12,9 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -22,7 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class TournamentTypeScreenController implements Initializable {
 	String message;
@@ -96,7 +92,7 @@ public class TournamentTypeScreenController implements Initializable {
 			break;
 		}//end switch
 
-		btn.next(rootPane, event, nextFxml);
+		btn.next(rootPane, root, nextFxml);
 	}// end previous
 
 	
