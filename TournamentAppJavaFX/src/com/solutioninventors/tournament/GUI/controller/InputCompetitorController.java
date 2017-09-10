@@ -172,7 +172,9 @@ public class InputCompetitorController {
 	public void previous(ActionEvent event) throws MalformedURLException {
 		btnNext.setVisible(true);
 		btnPrevious.setVisible(startValue-4==0?false:true);
-		
+		for (int i = startValue; i < endValue; i++)
+			comps[i] = new Competitor(txtArray.get(i%4).getText(), file[i]);
+
 		if (!txtArray.get(3).isVisible()) {
 			for (int i = 0; i < 4; i++) {
 				txtArray.get(i).setVisible(true);
