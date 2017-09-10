@@ -135,6 +135,16 @@ public class Fixture implements Serializable{
 		
 	}
 
+	public double getCompetitorOneScore( boolean intValue )  {
+		return !intValue ? competitorOneScore : (int) competitorOneScore ;
+		
+	}
+	
+	public double getCompetitorOnTwoScore( boolean intValue )  {
+		return !intValue ? competitorTwoScore : (int) competitorTwoScore ;
+		
+	}
+	
 	public double getCompetitorTwoScore() {
 		return competitorTwoScore;
 	}

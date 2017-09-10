@@ -216,6 +216,7 @@ public enum Breaker implements Serializable
 			
 			if ( score1 > score2 )
 				return 1;
+			
 			return -1;
 			
 			

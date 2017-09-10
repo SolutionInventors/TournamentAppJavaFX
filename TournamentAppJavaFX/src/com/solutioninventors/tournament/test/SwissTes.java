@@ -37,7 +37,7 @@ public class SwissTes {
 		Competitor c4 = new Competitor("Chinedu", file);
 		
 	
-		Competitor[] comps = {c1, c2 ,c3,c4};	
+		Competitor[] comps = {c1, c2 ,c3 };	
 		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};
 		Tournament tournament = null ;
 		

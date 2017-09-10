@@ -41,9 +41,11 @@ public abstract class GroupTournament extends Tournament
 	private Round[] rounds;
 	
 	public GroupTournament(Competitor[] comps, SportType type, double pWin, double pDraw, double pLoss,
-			TieBreaker breaker) throws InvalidBreakerException {
+			TieBreaker breaker) throws InvalidBreakerException, TournamentException {
 		super(comps);
-
+		
+		if ( comps.length < 3 )
+			throw new TournamentException("A group tournament must have total comopettitors > 2" );
 		SPORT_TYPE = type ;
 		
 		if ( breaker == null || !Arrays.stream( breaker.getBreakers() )

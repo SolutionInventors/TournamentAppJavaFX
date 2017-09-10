@@ -23,6 +23,11 @@ import com.solutioninventors.tournament.utils.Round;
 public abstract class EliminationTournament extends Tournament implements Serializable
 {
 
+	/** 
+	 * This is the super class of all Elimination Types including Single and Double Elimination
+	 * Thus, this class contains methods that would be used to aid the creation of an elimination tournament
+	 * The methods here are relatively simple
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	

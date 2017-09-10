@@ -16,6 +16,7 @@ import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
@@ -58,7 +59,7 @@ public class RoundRobinTest {
 		
 		
 		Breaker[] breakers = {
-				 Breaker.HEAD_TO_HEAD			 
+				 Breaker.HEAD_TO_HEAD, Breaker.GOALS_DIFFERENCE 			 
 		};
 		
 		
@@ -70,10 +71,11 @@ public class RoundRobinTest {
 			tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 
 					3 , 1 , 0 , tieBreakers  , ans.equals("1" ) ? true : false  );
 		}
-		catch (InvalidBreakerException e)
+		catch (InvalidBreakerException | TournamentException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit( 1 );
 		}
 
 		StringBuilder builder = new StringBuilder( 300 );

@@ -15,6 +15,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
@@ -56,9 +57,10 @@ public class RoundRoubinOutstandingTest
 			tournament = new RoundRobinTournament( comps, SportType.GOALS_ARE_SCORED , 
 					3 , 1 , 0 , tieBreakers  , ans.equals("1" ) ? true : false  );
 		}
-		catch (InvalidBreakerException e)
+		catch (InvalidBreakerException | TournamentException e)
 		{
 			e.printStackTrace();
+			System.exit(0);
 		}
 
 		StringBuilder builder = new StringBuilder( 300 );

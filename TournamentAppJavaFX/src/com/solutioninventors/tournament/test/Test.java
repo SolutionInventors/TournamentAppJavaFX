@@ -17,12 +17,12 @@ public class Test {
 
 		
 		
-		if (stringTable[0].length == 8)
+		if (stringTable[0].length == 39)
 			builder.append(String.format( "%-20s %s", "Name" , 
-					"W D L F A GD  Pts\n"));
+					"P W D L F A GD  Pts\n"));
 		else
 			builder.append(String.format( "%-20s %s", "Name" , 
-					"W D L Pts\n"));
+					"P W D L Pts\n"));
 			
 		for (int row = 0; row < stringTable.length; row++) {
 			for (int col = 0; col < stringTable[row].length; col++)

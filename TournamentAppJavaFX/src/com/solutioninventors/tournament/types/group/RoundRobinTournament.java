@@ -19,6 +19,7 @@ import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
@@ -55,7 +56,7 @@ public class RoundRobinTournament extends GroupTournament
 	private List<Fixture> outstandingMatches ;
 	
 	public RoundRobinTournament(Competitor[] comps, SportType type , double winPoint ,
-								double drawPoint, double lossPoint , TieBreaker breaker , boolean away ) throws InvalidBreakerException
+								double drawPoint, double lossPoint , TieBreaker breaker , boolean away ) throws InvalidBreakerException, TournamentException
 	{
 		super(comps, type, winPoint , drawPoint, lossPoint , breaker  );
 		HOME_AND_AWAY_FIXTURES =  away ;
@@ -75,6 +76,7 @@ public class RoundRobinTournament extends GroupTournament
 		
 		int tempCurrentRound = 0 ;
 		int totalCompetitors = getCompetitors().length ;
+		
 		int[][] fixureCreator = new int [ hasBye() ? 
 											totalCompetitors + 1 : totalCompetitors/2 ][ 2 ];
 		

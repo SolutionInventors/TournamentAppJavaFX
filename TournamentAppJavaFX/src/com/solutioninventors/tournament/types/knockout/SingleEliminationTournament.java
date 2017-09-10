@@ -22,7 +22,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * this class simulates a single elimination tournament The class constructor
-	 * throwa a TournamentException if the number of competitors inputs is not a
+	 * throws a TournamentException if the number of competitors inputs is not a
 	 * power of 2 Utility method createTournament creates the tournament's first
 	 * fixture
 	 * 

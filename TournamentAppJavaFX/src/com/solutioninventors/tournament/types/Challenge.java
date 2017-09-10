@@ -22,6 +22,11 @@ import com.solutioninventors.tournament.utils.Round;
 public class Challenge extends Tournament 
 {
 
+	/** 
+	 * This relatively simple class is used to simulate a Challenge which is an alternative to TOurnament
+	 * The Challenge can only have two competitors
+	 * 
+	 */
 	private final Round[] ROUNDS;
 	
 	public Challenge( Competitor[] competitors , int numOfRounds 	)

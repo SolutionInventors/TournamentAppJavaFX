@@ -32,6 +32,21 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public class Multistage extends Tournament
 {
 
+	/**
+	 * This class is used in creating a MultistageTournament 
+	 * This class contains an array if GroupTournament objects which simulates the group rounds
+	 * The class currently, can only simulate SingleElimination knock-out stage
+	 * 
+	 * On initialization the constructor determines if there would be a fourth or third place ranking table
+	 * The constructor validates that the total competitors is a multiple of 4 
+	 * The constructor also creates the Tournament via a call to createTournament
+	 * The public constructors either creates a Robin groupStage or Swiss groupStage
+	 * 
+	 * This table is updated after every group round 
+	 * Thus this class contains a StandingTable object that is used to create this feature
+	 * 
+	 * This class provides some services required to manage the operations of this class
+	 */
 	private GroupTournament[] groupStage;
 	private EliminationTournament knockoutStage;
 	
@@ -66,7 +81,7 @@ public class Multistage extends Tournament
 		
 	}
 
-	public int calculateExtraQualifiers(int totalCompetitors)
+	private int calculateExtraQualifiers(int totalCompetitors)
 	{
 		int totalQualifiers = 1 ;
 		int totalFirstTwo = totalCompetitors/2 ;
@@ -266,6 +281,7 @@ public class Multistage extends Tournament
 		
 		try
 		{
+			
 			knockoutStage = new SingleEliminationTournament(
 					allQualifiers.toArray( 
 							new Competitor[ allQualifiers.size() ]) , 
@@ -306,6 +322,7 @@ public class Multistage extends Tournament
 			return "Group Stage";
 		return "Knockout Stage";
 	}
+	
 	public int numberOfGroupStageRounds()
 	{
 		return groupStage[ 0 ].getRoundArray().length;
@@ -469,8 +486,8 @@ public class Multistage extends Tournament
 	private enum GroupWinners
 	{
 		/** 
-		 * This enum encapsulates info about how the group winners would be chosen
-		 * If the extra qulifier is taken from position 4 then the winners are
+		 * This enumeration encapsulates info about how the group winners would be chosen
+		 * If the extra qualifier is taken from position 4 then the winners are
 		 * FIRST_THREE 
 		 * If the extra qualifier is taken from position 3 the the group winners are
 		 * the FIRST_TWO

@@ -46,7 +46,7 @@ public class StandingTable implements Serializable {
 			TieBreaker breakers) {
 		sportType = type;
 		competitors = comptitors;
-		table = new String[competitors.length][sportType == SportType.GOALS_ARE_SCORED ? 8 : 5];
+		table = new String[competitors.length][sportType == SportType.GOALS_ARE_SCORED ? 9 : 6];
 
 		POINT_FOR_WIN = win;
 		POINT_FOR_DRAW = draw;
@@ -89,6 +89,7 @@ public class StandingTable implements Serializable {
 	{
 		int numOfCompetitors = competitors.length ;
 		String[] nameColumn = new String[ numOfCompetitors ] ;
+		String[] playedColumn = new String[ numOfCompetitors ];
 		String[] winsColumn =  new String[ numOfCompetitors ] ;
 		String[] drawColumn = new String[ numOfCompetitors ]  ;
 		String[] lossColumn =  new String[ numOfCompetitors ]  ;
@@ -98,6 +99,11 @@ public class StandingTable implements Serializable {
 				   .map( Competitor :: getName )
 				   .collect( Collectors.toList() )
 				   .toArray( nameColumn );
+		
+		Arrays.stream( competitors )
+		   .map( c->String.valueOf(  c.getPlayedFixtures()  )  )
+		   .collect( Collectors.toList() )
+		   .toArray( playedColumn );
 		
 		 Arrays.stream( competitors )
 				   .map( com -> String.valueOf( com.getNumberOfWin() ) )
@@ -124,10 +130,11 @@ public class StandingTable implements Serializable {
 		for ( int row = 0 ; row < competitors.length ; row++ )
 		{
 			table[ row ][ 0 ] = nameColumn[ row ];
-			table[ row ][ 1 ] = winsColumn[ row ];
-			table[ row ][ 2 ] = drawColumn[ row ];
-			table[ row ][ 3 ] = lossColumn[ row ];
-			table[ row ][ 4 ] = pointColumn[ row ];
+			table[ row ][ 1 ] = playedColumn[ row ];
+			table[ row ][ 2 ] = winsColumn[ row ];
+			table[ row ][ 3 ] = drawColumn[ row ];
+			table[ row ][ 4 ] = lossColumn[ row ];
+			table[ row ][ 5 ] = pointColumn[ row ];
 			
 		}
 		
@@ -157,10 +164,10 @@ public class StandingTable implements Serializable {
 			
 			for ( int row = 0 ; row < competitors.length ; row++ )
 			{
-				table[ row ][ 4 ] = goalsScoredColumn[ row ];
-				table[ row ][ 5 ] = goalsConcededColumn[ row ];
-				table[ row ][ 6 ] = goalDifferenceColumn[ row ];
-				table[ row ][ 7 ] = pointColumn[ row ];
+				table[ row ][ 5 ] = goalsScoredColumn[ row ];
+				table[ row ][ 6 ] = goalsConcededColumn[ row ];
+				table[ row ][ 7 ] = goalDifferenceColumn[ row ];
+				table[ row ][ 8 ] = pointColumn[ row ];
 			}
 		}
 			

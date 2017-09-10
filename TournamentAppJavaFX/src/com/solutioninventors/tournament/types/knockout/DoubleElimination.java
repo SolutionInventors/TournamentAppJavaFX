@@ -25,16 +25,46 @@ import com.solutioninventors.tournament.utils.Round;
 
 public class DoubleElimination extends EliminationTournament
 {
+	/** 
+	 * This is used to create a double elimination tournament
+	 * The class rounds is stored in the Map< BracketType, List<Round> > object 
+	 * The BracketType objects stores the info about the bracket its values include 
+	 * BracketType.WINNERS_BRACKET , BracketType.MAJOR_BRACKET , BracketType.MINOR_BRACKET ,
+	 * BracketType.INITIAL_BRACKET , BracketType.TOURNAMENT_FINAL  
+	 * 
+	 * The first round is stored in the Map<BracketType, List<Round>> object as BracketType.INITIAL_BRACKET
+	 * After the first round, the winners and losers brackets are created and
+	 * Rounds are now  stored in BracketType.WINNERS_BRACKET , BracketType.MAJOR_BRACKET and BracketType.MINOR_BRACKET 
+	 * This is repeated for subsequent rounds with players being eliminated after each round
+	 * until only two competitors are left( the Tournament final )
+	 * At this point the round is stored in the map with key value BracketType.TOURNAMENT_FINAL
+	 * 
+	 * Note that a player is eliminated only when he has lost two games in the tournament 
+	 * 
+	 * Note also that rounds between the initial round( the first round ) and the tournament final
+	 * each round has a loserBracket minor Round and loserBracket major round
+	 * Thus boolean minorComplete is used to check the currentFixtures 
+	 * 
+	 * Also method moveToNextRound() does not always incrementROundNum. It determines whether the
+	 * major bracketRound has been played before incrementing
+	 * 
 
+	 * This class contains some operations that aid tournament simulation 
+	 * 
+	 * Currently this class does not allow away matches
+	 * 
+	 */
 	private boolean minorComplete;
 	private boolean initialComplete; 
 	
+	private boolean AWAY_MATCH;
 	private String roundName ;
 	private Map< BracketType , List<Round> > rounds;
 	
 	public DoubleElimination(Competitor[] comps) throws TournamentException
 	{
 		super(comps);
+		AWAY_MATCH = false ;
 		rounds = new HashMap<>();
 		List<Round> minor = new ArrayList<>(); //used to increase index to 1
 		List<Round> major = new ArrayList<>(); //used to increase index to 1
