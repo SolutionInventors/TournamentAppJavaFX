@@ -3,166 +3,143 @@ package com.solutioninventors.tournament.GUI.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.List;
 
+import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.types.Tournament;
-import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
-import com.solutioninventors.tournament.GUI.utility.Paths;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewResultsController {
 	@FXML
-	private List<Label> lblcompArray;
-	@FXML private Label stage;
-	@FXML private List<ImageView> imgArray;
+	private ScrollPane scrollPane;
 	@FXML
-	private List<Label> lblVsArray;
-	@FXML
-	private List<Label> lblGroupArray;
-	@FXML
-	private List<Label> lblresults;
-	@FXML
-	private Button btnnextgroup;
-	@FXML
-	private Button btnpregroup;
-	private Competitor[] competitors;
+	private Label tourStage;
+	private Label compName[];
+	private Label VS[];
+	private Label scores[];
+	private ImageView logo[];
+	// private Image img = new Image("file:nologo");
 	private Tournament tournament;
-	String[] abc = new String[4];
-
-	public void initialize() {
-		// hide all the components
-		for (Label lblcomp : lblcompArray)
-			lblcomp.setVisible(false);
-		for (Label lblcomp : lblVsArray)
-			lblcomp.setVisible(false);
-		for (Label lblcomp : lblGroupArray)
-			lblcomp.setVisible(false);
-		for (Label lblcomp : lblresults)
-			lblcomp.setVisible(false);
-
-	}// end method initialize
+	private Competitor comp1;
+	private Competitor comp2;
+	private Fixture[] currentFixtures;
 
 	public void setTournament(Tournament value) throws TournamentEndedException {
-
 		tournament = value;
 		if (!tournament.hasEnded()) {
-			stage.setText(tournament.toString());
-		
-		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
-		if (tournament instanceof EliminationTournament) {
-			competitors = ((EliminationTournament)tournament).getActiveCompetitors();
-		} else {
-			competitors = tournament.getCompetitors();
-		}
-		competitors = tournament.getCompetitors();
-		
-		int i = 0;
-		for (int j = 0; j < currentFixtures.length; j++) {
+			// GridPane settings
+			GridPane grid = new GridPane();
+			grid.setPadding(new Insets(25));
+			grid.setHgap(5);
+			grid.setVgap(5);
+			// ColumnSettings for all five columns
+			ColumnConstraints column1 = new ColumnConstraints(110); //
+			ColumnConstraints column2 = new ColumnConstraints(100); //
+			ColumnConstraints column3 = new ColumnConstraints(50);
+			ColumnConstraints column4 = new ColumnConstraints(50);
+			ColumnConstraints column5 = new ColumnConstraints(50);
+			ColumnConstraints column6 = new ColumnConstraints(50);
+			ColumnConstraints column7 = new ColumnConstraints(100);
 
-			lblcompArray.get(i).setVisible(true);
-			lblcompArray.get(i).setText(currentFixtures[j].getCompetitorOne().toString());
-			lblcompArray.get(i + 1).setVisible(true);
-			lblcompArray.get(i + 1).setText(currentFixtures[j].getCompetitorTwo().toString());
-			lblVsArray.get(j).setVisible(true);
-			lblVsArray.get(j).setText("VS");
-			if (j == 0) {
-				lblGroupArray.get(j).setVisible(true);
-				lblGroupArray.get(j).setText("GROUP 1");
+			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7);
+
+			tourStage.setText(tournament.toString());
+			currentFixtures = tournament.getCurrentRound().getFixtures();
+			compName = new Label[currentFixtures.length * 2];
+			VS = new Label[currentFixtures.length];
+			logo = new ImageView[currentFixtures.length * 2];
+			scores = new Label[currentFixtures.length * 2];
+			int i = 0;
+			for (int j = 0; j < currentFixtures.length; j++) {
+				compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
+				compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
+				VS[j] = new Label("VS");
+				try {
+					comp1 = currentFixtures[j].getCompetitorOne();
+					comp2 = currentFixtures[j].getCompetitorTwo();
+
+					String localUrl = comp1.getImage().toURI().toURL().toString();
+					String local2 = comp2.getImage().toURI().toURL().toString();
+					Image localImage1 = new Image(localUrl, false);
+					Image localImage2 = new Image(local2, false);
+					logo[i] = new ImageView(localImage1);
+					// logo[i].setImage(localImage1);
+					logo[i].setFitWidth(108);
+					logo[i].setFitHeight(65);
+					logo[i].setPreserveRatio(true);
+					logo[i + 1] = new ImageView(localImage2);
+					logo[i + 1].setFitWidth(108);
+					logo[i + 1].setFitHeight(65);
+					logo[i + 1].setPreserveRatio(true);
+
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+
+				// display results
+				scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
+				scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
+				i += 2;// increment i by 2
+
+			} // end for loop
+
+			int c = 0;
+			for (int temp = 0; temp < currentFixtures.length; temp++) {
+				grid.add(logo[c], 0, temp);
+				grid.add(compName[c], 1, temp);
+				grid.add(scores[c], 2, temp);
+				grid.add(VS[temp], 3, temp);
+				grid.add(scores[c + 1], 4, temp);
+				grid.add(compName[c + 1], 5, temp);
+				grid.add(logo[c + 1], 6, temp);
+				c += 2;
 			}
+			scrollPane.setContent(grid);
+		} // end if tournament has not ended
 
-			try {
-				String localUrl = competitors[i].getImage().toURI().toURL().toString();
-				String local2 = competitors[i + 1].getImage().toURI().toURL().toString();
-				Image localImage1 = new Image(localUrl, false);
-				Image localImage2 = new Image(local2, false);
-				imgArray.get(i).setImage(localImage1);
-				imgArray.get(i + 1).setImage(localImage2);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-
-			// display results
-			lblresults.get(i).setVisible(true);
-			lblresults.get(i).setText(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
-			lblresults.get(i + 1).setVisible(true);
-			lblresults.get(i + 1).setText(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
-			i += 2;// increment i by 2
-		} // end for loop
-		} else {
+		else {
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
-		
-		
 	}// end set current
 
 	@FXML
 	public void nextRound(ActionEvent event) throws IOException {
-		
-			try {
-				tournament.moveToNextRound();
-			} catch (TournamentEndedException e) {
-				//e.printStackTrace();
-				//System.out.println("Error tournament ended");
-			} catch (MoveToNextRoundException e) {
-				//e.printStackTrace();
-				//System.out.println("Error move to next round");
-			}
-			if (!tournament.hasEnded()) {
-		/*	((Node) event.getSource()).getScene().getWindow().hide();
-			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource(Paths.viewpath+"Fixtures.fxml").openStream());
-			FixturesController fc = (FixturesController) loader.getController();
-		fc.setTournament(tournament);
-			
-			//System.out.println(" passed tournament");
-			Stage primaryStage = new Stage();
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			primaryStage.setTitle("Tournament name");*/
-				System.out.println(tournament.toString());
-		} else {
-			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+		try {
+			tournament.moveToNextRound();
+		} catch (TournamentEndedException | MoveToNextRoundException e) {
+			e.printStackTrace();
 		}
+		if (tournament.hasEnded())
+			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 
-		
 	}// end nextRound
 	
-	
 	public void savetour(ActionEvent event)  {
-		//FileChooser fileChooser = new FileChooser();
-		//Stage primaryStage = new Stage();
-		//File tournamentFile = fileChooser.showSaveDialog(primaryStage);
 		try {
 			tournament.save();
 		} catch (IOException | TournamentException | TournamentHasNotBeenSavedException e) {
-			// FIXME Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("You haven't saved for the first time");
+			saveastour();
 		}
 	}
 	
-	
-	public void saveastour(ActionEvent event)  {
+	public void saveastour()  {
 		FileChooser fileChooser = new FileChooser();
 		Stage primaryStage = new Stage();
 		File tournamentFile = fileChooser.showSaveDialog(primaryStage);
@@ -172,49 +149,5 @@ public class ViewResultsController {
 			e.printStackTrace();
 		}
 	}
-	@FXML
-	public void viewTable(ActionEvent event) throws IOException {
-		//((Node) event.getSource()).getScene().getWindow().hide();
-		FXMLLoader loader = new FXMLLoader();
-		Parent root = loader.load(getClass().getResource(Paths.viewpath+"Standing.fxml").openStream());
-		StandingTable22Controller aa = (StandingTable22Controller) loader.getController();
-		aa.setTournament(tournament);
-		Stage primaryStage = new Stage();
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament name");
-	}
-	
-	@FXML
-	public void viewcompStat(ActionEvent event) throws IOException {
-		//((Node) event.getSource()).getScene().getWindow().hide();
-		FXMLLoader loader = new FXMLLoader();
-		Parent root = loader.load(getClass().getResource(Paths.GUIpath+"CompetitorTable/CompetitorStatus.fxml").openStream());
-		CompetitorStatusController cc = (CompetitorStatusController) loader.getController();
-		cc.setTournament(tournament);
-		Stage primaryStage = new Stage();
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament name");
-	}
-	@FXML
-	public void viewTab(ActionEvent event) throws IOException, TournamentEndedException {
-		//((Node) event.getSource()).getScene().getWindow().hide();
-		FXMLLoader loader = new FXMLLoader();
-		Parent root = loader.load(getClass().getResource(Paths.viewpath+"FRSCIScreen.fxml").openStream());
-		//Parent root = loader.load(getClass().getResource(Paths.GUIpath+"tabscollect/Tabsaa.fxml").openStream());
-		FRSCIScreenController ad = (FRSCIScreenController) loader.getController();
-		ad.setTournament(tournament);
-		ad.init();
-		Stage primaryStage = new Stage();
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament name");
-	}
-	
+
 }// end class
-
-

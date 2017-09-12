@@ -6,9 +6,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="practice14.Tabscollation.TemplateController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.InputResultsController">
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -16,13 +17,14 @@
          </image>
       </ImageView>
     
-      <Label fx:id="tourStage" layoutX="164.0" layoutY="27.0" text="TOURNAMENT TYPE" textFill="RED">
+      <Label fx:id="tourStage" alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="27.0" prefHeight="36.0" prefWidth="612.0" text="COMPETITOR STATUS" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font></Label>
       <Line endX="425.0" layoutX="218.0" layoutY="65.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="70.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
-      <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="89.0" prefHeight="401.0" prefWidth="612.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="72.0" layoutX="-3.0" layoutY="462.0" opacity="0.44" stroke="BLACK" strokeType="INSIDE" width="651.0" />
+      <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="89.0" prefHeight="367.0" prefWidth="612.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
