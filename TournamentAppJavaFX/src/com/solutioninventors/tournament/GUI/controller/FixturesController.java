@@ -16,18 +16,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class FixturesController {
-	@FXML
-	private List<Label> lblcompArray;
-	@FXML
-	private List<ImageView> imgArray;
+	@FXML private List<Label> lblcompArray;
+	@FXML private List<ImageView> imgArray;
 	@FXML private Label stage;
 	@FXML private List<Label> lblVsArray;
-	@FXML
-	private List<Label> lblGroupArray;
-	@FXML
-	private Button btnnextgroup;
-	@FXML
-	private Button btnpregroup;
+	@FXML private List<Label> lblGroupArray;
+	@FXML private Button btnnextgroup;
 	private Competitor[] competitors;
 	private Tournament tournament;
 	String[] abc = new String[4];
