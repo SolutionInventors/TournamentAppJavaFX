@@ -29,17 +29,19 @@ import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedExce
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 
+/** 
+ * This class contains static and object level methods that make simulation of a tournament possible
+ * This class is abstract thus you can instantiate only its concrete subclasses including
+ *  RounRobinTournament, SwissTournament, Challenge, Multistage, SingeElimination and DoubleElimination
+ *  It also has some abstract subclasses including GroupTournmant and Elimination
+ *  
+ *  This class generally contains simple methods that perform general tasks
+ *  required when simulating a tournament
+ */
+
 public abstract class Tournament implements Serializable
 {
-	/** 
-	 * This class contains static and object level methods that make simulation of a tournament possible
-	 * This class is abstract thus you can instantiate only its concrete subclasses including
-	 *  RounRobinTournament, SwissTournament, Challenge, Multistage, SingeElimination and DoubleElimination
-	 *  It also has some abstract subclasses including GroupTournmant and Elimination
-	 *  
-	 *  This class generally contains simple methods that perform general tasks
-	 *  required when simulating a tournament
-	 */
+	
 	private static final File savedTournaments //stores all saved tournaments 
 		= new File("saved-tournaments.dll");
 	

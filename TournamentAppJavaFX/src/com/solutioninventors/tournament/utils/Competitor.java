@@ -16,17 +16,139 @@ import java.io.Serializable;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 
-public class Competitor implements Serializable{
 
-	/**
-	 * This class encapsulates all the information about a competitor The class
-	 * stores the name, numberOFWins, numberOfDraws, numberOfLosses points , image
-	 * file , and a boolean which is true when the Competitor is eliminated
-	 */
+/**
+ * A {@code Competitor } object encapsulates informations about each Competitor in a Tournament<br/>
+ * {@code Competitor} objects contains the following properties:
+ * <table border = "1.0" width = " 730.0" >
+ * 		<tr>
+ * 			<td>{@code private final String FIRST_NAME}</td> 
+ * 			<td>Contains the first name of the competitor <br/>
+ * 				Can be retrieved via call to method {@code getFirstName }</td> 
+ * 		</tr>
+		<tr>
+		 	<td>{@code private final String LAST_NAME}</td> 
+			<td>Contains the last name of the competitor <br/>
+		 		Can be retrieved via call to method {@code getLastName }</td> 
+		</tr>
+		<tr>
+		 	<td>{@code private int numberOfWin}</td> 
+			<td>Stores the total number of {@code Fixture}s this Competitor has won <br/>
+		 		Can be retrieved via call to method {@code getNumberOfWin }</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private int numberOfLoss}</td> 
+			<td>Stores the total number of {@code Fixture}s this Competitor has lost <br/>
+		 		Can be retrieved via call to method {@code getNumberOfLoss}</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private int numberOfDraw} </td> 
+			<td>Stores the total number of {@code Fixture}s this Competitor has drawn <br/>
+		 		Can be retrieved via call to method {@code getNumberOfDraw }</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private int numberOfAwayWin} </td> 
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
+		 		Can be retrieved via call to method {@code getNumberOfWin }</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private int numberOfAwayWin} </td> 
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
+		 		Can be retrieved via call to method {@code getNumberOfWin }<br/>
+		 		It is used by {@code Breaker.AWAY_WIN} object when breaking ties</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private int numberOfHomeWin} </td> 
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
+		 		Can be retrieved via call to method {@code getNumberOfWin }<br/>
+		 		It is used by {@code Breaker.NUMBER_OF_HOME_WIN} object when breaking ties</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private int numberOfAwayWin} </td> 
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
+		 		Can be retrieved via call to method {@code getNumberOfAwayWin }<br/>
+		 		</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private double goalsScored} </td> 
+			<td>Stores the total number of goals scored by this  Competitor<br/>
+		 		Can be retrieved via call to method {@code getGoalsConceeded }<br/>
+		 		</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private double goalsConceeded} </td> 
+			<td>Stores the total number of goals scored by this  Competitor<br/>
+		 		Can be retrieved via call to method {@code getNumberOfGoalsConceeded }<br/>
+		 		It is used by {@code Breaker.GOALS_CONEEDED} object when breaking ties</td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private Map<Competitor, Double> awayGoals} </td> 
+			<td>Stores the away goals scored by this Competitor against an opponent<br/>
+				This property is incremented via {@code addAwayGoal(Competitor) }
+				Can retrieved via call to {@code getAwayGoal(Competitor) } </td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private Map<Competitor, Double> homeGoals} </td> 
+			<td>Stores the home goals scored by this Competitor against an opponent<br/>
+				 </td> 
+		</tr>
+		
+		<tr>
+		 	<td>{@code private File image} </td> 
+			<td>Stores this Competitor's logo/picture<br/>
+				It <b>MUST</b> inputed in this object's constructor
+				Can retrieved via call to {@code getAwayGoal(Competitor) } </td> 
+		</tr>
+		<tr>
+		 	<td>{@code private boolean eliminated} </td> 
+			<td>Stores {@code true} when Competitor has been eliminated from the {@code Tornament} else {@code false}<br/>
+				Can retrieved via call to {@code isEliminated()} </td> 
+		</tr>
+		
+		
+		
+		
+ * <table>
+ * 
+ * <p>
+ * A Competitor contains some protected methods because  a {@code Competitor } can only be mutated by a {@code Fixture } object<br/>
+ * Some common manipulations are: <br/>
+ * 
+ * 		{@code Competitor John = new Competitor( "John", "Oloche" , new File( "john.jpg") ) ; } <br/>
+ * 		
+ * 		{@code Competitor Fred = new Competitor( "Fred", "Williams", new File( "fred.jpg") ) ; } <br/> 
+ * 		
+ * 		{@code  Fixture fixture = new Fixture( John, Fred ) );}  <br/>
+ * 		{@code fixture.setResult( 2 ,3 ) }; <br/>
+ * 		{@code System.out.println( "John's goals = " + John.getGoalsScored() } <br/>
+ * 
+ * Prints:<br/> {@code John's goals = 2 }
+ * 
+ * @author Oguejiofor Chidiebere 
+ * @version  %I%, %G%
+ * @see {@link Fixture } , {@link Round },  {@link Breaker}
+ * @since  v1.0
+ * 
+ */
+
+public class Competitor implements Serializable
+{
+
 	private final String FIRST_NAME;
 	private final String LAST_NAME;
 
@@ -37,21 +159,39 @@ public class Competitor implements Serializable{
 	private int numberOfAwayWin;
 	private int numberOfHomeWin;
 	
-	private double numberOfAwayGoals;
 	
 	private double goalsScored;
 	private double goalsConceded;
 
-	private Map< Competitor , Double > headToHead ; 
+	private Map< Competitor , Double > headToHead ;
+	
 	private Map< Competitor , Double > awayGoals; 
+	private Map< Competitor , Double > homeGoals; 
+	
 	private File image;
 	private boolean eliminated;
 
+	/**
+	 * 
+	 * This constructor is used to create a {@code Competitor } object with the name and imageFile
+	 * <br/> The name is returned via call to {@code getName() } 
+	 *@param name
+	 *@param imageFile
+	 */
 	public Competitor(String name, File imageFile)
 	{
 		this(name, null, imageFile);
 	}
 
+	/**
+		This constructor is used to create a {@code Competitor } object with the first Name, 
+		last name and imageFile.
+	 * <br/> The lastName is returned via call to {@code getLastName() } 
+	 * <br/> The firstName is returned via call to {@code getFirstName() } 
+	 *@param first
+	 *@param last
+	 *@param imageFile
+	 */
 	public Competitor(String first, String last, File imageFile)
 	{
 
@@ -65,14 +205,24 @@ public class Competitor implements Serializable{
 
 		headToHead = new HashMap<Competitor , Double >();
 		awayGoals = new HashMap<Competitor , Double >();
+		homeGoals = new HashMap<Competitor , Double >();
 		
 	}
 
+	/**
+	 * 
+	 *@return String representation of this Competitor's firs tName
+	 */
 	public String getFirstName()
 	{
 		return FIRST_NAME;
 	}
 
+	/**
+	 * 
+	 
+	 *@return String representation of this {@code Competitor}'s last name
+	 */
 	public String getLastName() 
 	{
 		return LAST_NAME != null ? LAST_NAME : "";
@@ -88,7 +238,7 @@ public class Competitor implements Serializable{
 		return numberOfWin;
 	}
 
-	public void incrementWins() 
+	protected void incrementWins() 
 	{
 		numberOfWin++;
 	}
@@ -108,7 +258,7 @@ public class Competitor implements Serializable{
 		return numberOfLoss;
 	}
 
-	public void incrementLoss() 
+	protected void incrementLoss() 
 	{
 		numberOfLoss++;
 	}
@@ -133,7 +283,15 @@ public class Competitor implements Serializable{
 		return (getNumberOfWin() * pWin) + (getNumberOfDraw() * pDraw) + (getNumberOfLoss() * pLoss);
 	}
 
-	private void setImage(File imageFile) 
+	/**
+	 * 
+	 *void<br/>
+	 *Stores the imageFile argument to this Competitor's {@code image } property 
+	 *
+	 *@param imageFile
+	 *@throws ImageFormatException
+	 */
+	private void setImage(File imageFile) throws ImageFormatException  
 	{
 //		 This method copies the image file and stores it in the class dir
 //		 It first validates the file and its format
@@ -160,6 +318,12 @@ public class Competitor implements Serializable{
 			throw new ImageFormatException("The URL is not a file");
 	}
 
+	/**
+	 * 
+	 * void
+	 *@param fileToCopy
+	 *@param fileToPaste
+	 */
 	private void copyFile(File fileToCopy, File fileToPaste)
 	{
 		try 
@@ -181,6 +345,11 @@ public class Competitor implements Serializable{
 
 	}
 
+	/**
+	 * 
+	 *
+	 *@return The goalsScored by this Competitor
+	 */
 	public double getGoalsScored() 
 	{
 		return goalsScored;
@@ -201,6 +370,11 @@ public class Competitor implements Serializable{
 		goalsConceded += goals;
 	}
 
+	/**
+	 * 
+	 *double
+	 *@return difference between {@code getGoalsScored()} and {@code getGoalsConceded()} 
+	 */
 	public double getGoalDifference() 
 	{
 		return getGoalsScored() - getGoalsConceded();
@@ -219,7 +393,7 @@ public class Competitor implements Serializable{
 				getNumberOfLoss() ;
 	}
 	
-	public void addToHeadToHead( Competitor com , double score )
+	protected void addToHeadToHead( Competitor com , double score )
 	{
 		if ( headToHead.containsKey( com ) )
 			score += headToHead.get( com );
@@ -235,7 +409,7 @@ public class Competitor implements Serializable{
 	}
 	
 	
-	public void addAwayGoal( Competitor com , double score )
+	protected void addAwayGoal( Competitor com , double score )
 	{
 		if ( awayGoals.containsKey( com ) )
 			score += awayGoals.get( com );
@@ -243,12 +417,36 @@ public class Competitor implements Serializable{
 		awayGoals.put( com , score );
 	}
 	
-	public double getAwayGoal( Competitor com  )
+	protected void addHomeGoal( Competitor com , double score )
 	{
-		if( awayGoals.containsKey( com ) )
-			return awayGoals.get( com ) ;
+		if ( homeGoals.containsKey( com ) )
+			score += homeGoals.get( com );
+		
+		homeGoals.put( com , score );
+	}
+	
+	
+	/**
+	 * Returns the away goals that this competitor has scored against the
+	 * specified {@code Competitor opponent }
+	 *@param 
+	 *@return
+	 */
+	public double getAwayGoal( Competitor opponent  )
+	{
+		if( awayGoals.containsKey( opponent ) )
+			return awayGoals.get( opponent ) ;
 		return 0 ;
 	}
+	
+	/**
+	 * 
+	 *
+	 *@param com1
+	 *@param com2
+	 *@return Returns true if {@code com1}'s method {@code getName()} returns the same value as 
+	 *{@code com2}'s method {@code getName()}
+	 */
 	public static boolean isEqual( Competitor com1 , Competitor com2 )
 	{
 		if ( com1.getName().equals( com2.getName() ) )
@@ -278,13 +476,17 @@ public class Competitor implements Serializable{
 
 	public double getNumberOfAwayGoals()
 	{
-		return numberOfAwayGoals;
+		
+		double total = 0 ;
+		Set<Competitor> keys = awayGoals.keySet();
+		
+		for ( Competitor  k : keys)
+			total += awayGoals.get( k );
+		
+		return total;
 	}
 
 	
-	protected void incrementNumberOfAwayGoalsBy(double goals)
-	{
-		numberOfAwayGoals+= goals ;
-	}
+	
 	
 }

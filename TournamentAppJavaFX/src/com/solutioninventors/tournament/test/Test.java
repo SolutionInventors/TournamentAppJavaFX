@@ -17,7 +17,7 @@ public class Test {
 
 		
 		
-		if (stringTable[0].length == 39)
+		if (stringTable[0].length == 9)
 			builder.append(String.format( "%-20s %s", "Name" , 
 					"P W D L F A GD  Pts\n"));
 		else

@@ -33,12 +33,11 @@ public class SaveAsTest
 	public static void main( String[] args 	) throws TournamentEndedException
 	{
 		File file = new File("Arsenal.jpg");
-		File golfFile =  new File("golf.jpg" );
 		
-		Competitor c1 = new Competitor("Chidiebere", golfFile);
+		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
-		Competitor c4 = new Competitor("Chinedu", golfFile);
+		Competitor c4 = new Competitor("Chinedu", file);
 		Competitor c5 = new Competitor("Ada", file);
 		Competitor c6 = new Competitor("Oguejiofor", file);
 		Competitor c7 = new Competitor("Pio", file );

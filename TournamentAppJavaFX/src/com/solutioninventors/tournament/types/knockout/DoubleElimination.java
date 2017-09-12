@@ -26,6 +26,7 @@ import com.solutioninventors.tournament.utils.Round;
 public class DoubleElimination extends EliminationTournament
 {
 	/** 
+	 * 
 	 * This is used to create a double elimination tournament
 	 * The class rounds is stored in the Map< BracketType, List<Round> > object 
 	 * The BracketType objects stores the info about the bracket its values include 
@@ -51,7 +52,7 @@ public class DoubleElimination extends EliminationTournament
 
 	 * This class contains some operations that aid tournament simulation 
 	 * 
-	 * Currently this class does not allow away matches
+	 * Currently this class does not allow away matches however it may be added inn later versions
 	 * 
 	 */
 	private boolean minorComplete;
@@ -61,6 +62,13 @@ public class DoubleElimination extends EliminationTournament
 	private String roundName ;
 	private Map< BracketType , List<Round> > rounds;
 	
+	/**
+	 * 
+	 * Sep 11, 2017
+	 *@param comps
+	 *@throws TournamentException
+	 *
+	 */
 	public DoubleElimination(Competitor[] comps) throws TournamentException
 	{
 		super(comps);
@@ -78,8 +86,10 @@ public class DoubleElimination extends EliminationTournament
 		createTournament();
 	}
 	
+	
 	private void createTournament()
 	{
+		
 		Competitor[] competitors = getCompetitors();
 		
 		List<Fixture > roundFixtures = new ArrayList<Fixture >(competitors.length /2 );
@@ -114,6 +124,14 @@ public class DoubleElimination extends EliminationTournament
 	}
 	
 	
+	/**
+	 * 
+	 *This overloaded method 
+	 *It returns a Round object that encapsulates the fixtures of the current Round
+	 *@param type
+	 *@return {@link  Round }
+	 *@throws RoundIndexOutOfBoundsException
+	 */
 	public Round getCurrentRound( BracketType type ) 
 			throws RoundIndexOutOfBoundsException
 	{
@@ -142,9 +160,19 @@ public class DoubleElimination extends EliminationTournament
 	
 
 	
+	/**
+	 * This method is inherited from {@link Tournament}. It is used to set the reesult of the 
+	 * current {@link Round }. It sets the results by first verifying if the fixture is in the 
+	 * {@link BracketType } the current {@link Round }.  
+	 * 
+	 * 
+	 * Throws NoFixtureException if competitorOne and CompetitorTwo are not found in the current
+	 * Round object
+	 * @see {@link BracketType, Round }
+	 */
 	@Override
-	public void setResult(Competitor com1, double score1, 
-			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException 
+	public void setResult(Competitor competitorOne, double score1, 
+			double score2, Competitor competitorTwo) throws NoFixtureException, TournamentEndedException 
 	{
 		
 		if ( score1 == score2 )//there's a tie
@@ -155,13 +183,13 @@ public class DoubleElimination extends EliminationTournament
 			if ( getActiveCompetitors().length ==  2 )//tournament final 
 			{
 				Round round = getCurrentRound( BracketType.TOURNAMENT_FINAL );
-				round.setResult( com1 , score1, score2, com2 );
+				round.setResult( competitorOne , score1, score2, competitorTwo );
 				addRound(BracketType.TOURNAMENT_FINAL , round );
 			}
 			else if ( !initialComplete )
 			{
 				Round round = getCurrentRound( BracketType.INITIAL_BRACKET );
-				round.setResult( com1 , score1, score2, com2);
+				round.setResult( competitorOne , score1, score2, competitorTwo);
 				addRound(BracketType.INITIAL_BRACKET , round );
 			}
 			else if ( !minorComplete )
@@ -171,19 +199,19 @@ public class DoubleElimination extends EliminationTournament
 				
 				try
 				{
-					minor.setResult( com1 , score1, score2, com2);
+					minor.setResult( competitorOne , score1, score2, competitorTwo);
 					
 				}
 				catch (NoFixtureException e1)
 				{
-					winner.setResult(com1, score1, score2, com2);
+					winner.setResult(competitorOne, score1, score2, competitorTwo);
 				
 				}	
 			}
 			else
 			{
 				Round major  = getCurrentRound( BracketType.MAJOR_BRACKET ) ;
-				major.setResult( com1 , score1, score2, com2);
+				major.setResult( competitorOne , score1, score2, competitorTwo);
 				
 			}
 			

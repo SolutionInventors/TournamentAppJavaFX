@@ -6,7 +6,6 @@
  */
 package com.solutioninventors.tournament.types;
 
-import java.awt.HeadlessException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Function;
@@ -19,16 +18,32 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 
+/** 
+ * 
+ * This relatively simple class is used to simulate a Challenge which is an alternative to TOurnament
+ * The Challenge can only have two competitors @
+ * @author Chidiebere
+ * @since 2017
+ * @version 1.0
+ * @
+ */
+
 public class Challenge extends Tournament 
 {
 
-	/** 
-	 * This relatively simple class is used to simulate a Challenge which is an alternative to TOurnament
-	 * The Challenge can only have two competitors
-	 * 
-	 */
+	
 	private final Round[] ROUNDS;
 	
+	/**
+	 * The constructor creates all the rounds in the tournament via a calll to utikity method 
+	 * {@linkplain createTournament }. 
+	 * The rounds are created in such a way that one competitor does not  play too many consecutive home or aeay games 
+	 * This is very important in games like chess
+	 * 
+	 * @author Chidiebere
+	 * @param Competitor[] , {@code}int numOfRounds
+	 * @
+	 */
 	public Challenge( Competitor[] competitors , int numOfRounds 	)
 	{
 		super( competitors );
@@ -39,8 +54,11 @@ public class Challenge extends Tournament
 		
 	}
 
+	
+	
 	private void createTournament()
 	{
+		
 		Fixture fixture ;
 		for ( int i = 0 ; i < ROUNDS.length ; i++ )
 		{

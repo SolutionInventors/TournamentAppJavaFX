@@ -114,6 +114,12 @@ public class RoundRobinTest {
 				break;
 			}
 			
+			System.out.println( "Test " + 
+					comps[0].getNumberOfAwayGoals() + "  " + 
+					comps[1].getNumberOfAwayGoals() + " " +
+					comps[2].getNumberOfAwayGoals());
+			
+			
 		} 
 			
 			

@@ -40,6 +40,7 @@ public class ChallengeTest {
 			{
 				break;
 			}
+			
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner());
