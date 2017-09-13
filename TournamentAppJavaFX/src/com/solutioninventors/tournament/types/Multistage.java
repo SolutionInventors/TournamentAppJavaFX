@@ -14,6 +14,7 @@ import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsExceptio
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -356,7 +357,7 @@ public class Multistage extends Tournament
 	
 	@Override
 	public void setResult(Competitor com1, double score1, 
-			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException
+			double score2, Competitor com2) throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException
 	{
 		boolean found = false ; 
 		

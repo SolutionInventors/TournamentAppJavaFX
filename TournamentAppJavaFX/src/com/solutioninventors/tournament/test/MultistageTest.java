@@ -14,6 +14,7 @@ import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsExceptio
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Multistage;
@@ -26,7 +27,7 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class MultistageTest {
 
-	public static void main(String[] args) throws TournamentEndedException {
+	public static void main(String[] args) throws TournamentEndedException, ResultCannotBeSetException {
 		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
@@ -107,7 +108,7 @@ public class MultistageTest {
 				+ (int) tournament.getWinner().getGoalsScored());
 	}
 
-	public static void simulateRound(Tournament tournament ) throws TournamentEndedException
+	public static void simulateRound(Tournament tournament ) throws TournamentEndedException, ResultCannotBeSetException
 	{
 		StringBuilder builder = new StringBuilder( 300 );
 		Test.displayMessage( "Welcome to " + tournament );

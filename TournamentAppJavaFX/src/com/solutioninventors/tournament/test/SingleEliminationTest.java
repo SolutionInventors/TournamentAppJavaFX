@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -96,7 +97,7 @@ public class SingleEliminationTest {
 
 			try {
 				tournament.setResult(com1, score1, score2, com2);
-			} catch (NoFixtureException e) {
+			} catch (NoFixtureException | ResultCannotBeSetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -123,7 +124,7 @@ public class SingleEliminationTest {
 
 			try {
 				tournament.setResult(com1, score1, score2, com2);
-			} catch (NoFixtureException e) {
+			} catch (NoFixtureException | ResultCannotBeSetException e) {
 				e.printStackTrace();
 			}
 			builder.append(

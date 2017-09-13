@@ -15,6 +15,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -160,7 +161,7 @@ public class RoundRobinTest {
 			{
 				tournament.setOutstandingResult(com1, score1, score2, com2);
 			}
-			catch (NoFixtureException e)
+			catch (NoFixtureException | ResultCannotBeSetException e)
 			{
 				Test.displayMessage(e.getMessage() );
 			}
@@ -200,7 +201,7 @@ public class RoundRobinTest {
 			{
 				tournament.setResult( com1, score1, score2, com2);
 			}
-			catch (NoFixtureException e)
+			catch (NoFixtureException | ResultCannotBeSetException e)
 			{
 				Test.displayMessage(e.getMessage() );
 			}

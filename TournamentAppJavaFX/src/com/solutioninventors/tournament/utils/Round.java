@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 
 
 /**
@@ -106,10 +107,11 @@ public class Round implements Serializable
 	 *@param score2 the score of the away {@code Competitor } as {@code double}
 	 *@param com2 the away {@code Competitor} object
 	 *@throws NoFixtureException when the {@code Fixture } is not in this Round
+	 * @throws ResultCannotBeSetException 
 	 */
 	
 	public void  setResult( Competitor com1 , double score1 , 
-					double score2 , Competitor com2 ) throws NoFixtureException
+					double score2 , Competitor com2 ) throws NoFixtureException, ResultCannotBeSetException
 	{
 		Predicate<Fixture> tester =
 				f -> f.getCompetitorOne().getName().equals( com1.getName() ) &&
@@ -141,8 +143,9 @@ public class Round implements Serializable
 	 *@param score1 the home {@code Competitor}'s score
 	 *@param score2 the away {@code Competitor}'s score
 	 *@throws NoFixtureException when a match is not found
+	 * @throws ResultCannotBeSetException 
 	 */
-	public void  setResult( Fixture fixture , double score1 , double score2 ) throws NoFixtureException 
+	public void  setResult( Fixture fixture , double score1 , double score2 ) throws NoFixtureException, ResultCannotBeSetException 
 	{
 		setResult( fixture.getCompetitorOne() , score1, score2, fixture.getCompetitorTwo() );
 	}

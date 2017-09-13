@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -278,22 +280,14 @@ public class RoundRobinTournament extends GroupTournament
 	
 	@Override
 	public void setResult( Competitor com1 , double score1 , 
-			double score2 , Competitor com2 ) throws NoFixtureException
+			double score2 , Competitor com2 ) throws NoFixtureException, ResultCannotBeSetException
 	{	
 		try 
 		{
 			try
 			{
-				if ( Arrays.stream( getCurrentRound().getFixtures() )
-						.anyMatch( f -> f.hasFixture( com1 , com2  )) )
-				{
-					Arrays.stream( getCurrentRound().getFixtures() )
-					.filter( f -> f.hasFixture( com1 , com2  ) )
-					.forEach( f -> f.setResult(score1, score2) );
-					
-				}
-				else
-					throw new NoFixtureException("The fixture does not exist") ;
+				getCurrentRound().setResult(com1, score1, score2, com2);
+				
 			}
 			catch (OnlyOutstandingAreLeftException e)
 			{
@@ -311,7 +305,7 @@ public class RoundRobinTournament extends GroupTournament
 	
 	
 	public void setOutstandingResult( Competitor com1 , double score1 , double score2 , Competitor com2 ) 
-			throws NoFixtureException
+			throws NoFixtureException, ResultCannotBeSetException
 	{		
 		if ( outstandingMatches.stream()
 				.anyMatch( f -> f.hasFixture( com1 , com2  )) )

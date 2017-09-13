@@ -16,6 +16,7 @@ import java.util.Set;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -168,11 +169,12 @@ public class DoubleElimination extends EliminationTournament
 	 * 
 	 * Throws NoFixtureException if competitorOne and CompetitorTwo are not found in the current
 	 * Round object
+	 * @throws ResultCannotBeSetException 
 	 * @see {@link BracketType, Round }
 	 */
 	@Override
 	public void setResult(Competitor competitorOne, double score1, 
-			double score2, Competitor competitorTwo) throws NoFixtureException, TournamentEndedException 
+			double score2, Competitor competitorTwo) throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException 
 	{
 		
 		if ( score1 == score2 )//there's a tie

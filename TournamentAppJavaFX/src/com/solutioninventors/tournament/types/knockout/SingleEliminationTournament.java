@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -192,7 +193,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	@Override
 	public void setResult(Competitor com1, double score1, double score2, Competitor com2)
-			throws NoFixtureException, TournamentEndedException 
+			throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException 
 	{
 		if (!hasEnded()) {
 			if (activeTies.stream().anyMatch(f -> f.hasFixture(com1, com2))) {
@@ -238,7 +239,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		}
 	}
 
-	private void addToTieList(Competitor com1, double score1, double score2, Competitor com2) {
+	private void addToTieList(Competitor com1, double score1, double score2, Competitor com2) throws ResultCannotBeSetException  {
 		Fixture fixture = new Fixture(com1, com2);
 
 		fixture.setResult(score1, score2, false);

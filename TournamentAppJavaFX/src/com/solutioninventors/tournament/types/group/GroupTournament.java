@@ -12,6 +12,7 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -103,7 +104,7 @@ public abstract class GroupTournament extends Tournament
 	}
 
 	public abstract void setResult(Competitor com1, double score1, double score2, Competitor com2)
-			throws NoFixtureException, TournamentEndedException ;
+			throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException ;
 
 	public abstract void moveToNextRound() throws MoveToNextRoundException;
 

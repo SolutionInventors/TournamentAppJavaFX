@@ -17,6 +17,7 @@ import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.NoOutstandingException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -158,6 +159,11 @@ public class RandomRoubinTournaement {
 			{
 				Test.displayMessage(e.getMessage() );
 			}
+			catch (ResultCannotBeSetException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			builder.append(String.format("%s %.0f VS %.0f %s\n",
 					com1 , outstandings[ i ].getCompetitorOneScore() ,
 					outstandings[  i ].getCompetitorTwoScore() , com2 ));	
@@ -196,6 +202,11 @@ public class RandomRoubinTournaement {
 			catch (NoFixtureException e)
 			{
 				Test.displayMessage(e.getMessage() );
+			}
+			catch (ResultCannotBeSetException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			builder.append(String.format("%s %.0f VS %.0f %s\n",
 					com1 , currentFixtures[ i ].getCompetitorOneScore() ,

@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
@@ -122,7 +123,7 @@ public abstract class Tournament implements Serializable
 	public abstract void moveToNextRound()
 			throws TournamentEndedException, MoveToNextRoundException ;
 	public abstract void setResult( Competitor com1 , 
-			double score1 , double score2 , Competitor com2 ) throws NoFixtureException, TournamentEndedException;
+			double score1 , double score2 , Competitor com2 ) throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException;
 	public abstract boolean hasEnded() ;
 	public abstract Round getCurrentRound() throws TournamentEndedException ;
 	public abstract Competitor getWinner();

@@ -2,9 +2,7 @@ package com.solutioninventors.tournament.utils;
 
 import java.io.Serializable;
 
-import javax.swing.JOptionPane;
-
-import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 
 /**
  * This class encapsulates all the operations of a Fixuture in a tournament.<br> 
@@ -82,8 +80,10 @@ public class Fixture implements Serializable{
 	 @see Competitor
 	 *@param homeComScore
 	 *@param awayComScore
+	 * @throws ResultCannotBeSetException when this {@code Fixture } is already contains a result
 	 */
-	public void setResult(final double homeComScore, final double awayComScore)
+	public void setResult(final double homeComScore, final double awayComScore) 
+			throws ResultCannotBeSetException
 	{
 		if (!isComplete()) {
 			if (homeComScore > awayComScore) {
@@ -121,10 +121,7 @@ public class Fixture implements Serializable{
 		}
 		else
 		{
-			String message = String.format( "%s\n%s %.1f VS %.1f %s", "This fixture has a result" ,
-										getCompetitorOne().getName() , getCompetitorOneScore() , 
-										getCompetitorTwoScore() , getCompetitorTwo().getName() );
-			JOptionPane.showMessageDialog( null , message );
+			throw new ResultCannotBeSetException();
 		} 
 	}
 
@@ -274,18 +271,24 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * This method does nothing if this {@code Fixture } is complete but 
-	 * calls method {@code setResult( double score1, double score2 ) } if b = true
+	 * Sets the result of this {@code Fixture } when store = {@code true } but
+	 * only changes the {@code Competitor } score when store = {@code false } <br>
+	 * without changing the {@code Competitor } object's data
+	 * <br>
+	 * {@code store} should be set to false when storing ties 
 	 * <br>
 	 * This method sets the competitorOneScore and COmpetitorTwoScore if b = false 
 	 *@param score1 home {@code Competitor} score
 	 *@param score2 away {@code COmpetitor} score
 	 *@param b indicates whether to save the scores in the {@code Competitor} objects and toggle this {@code Fixture } to complete
+	 * @throws ResultCannotBeSetException when this object is complete 
 	 */
-	public void setResult(double score1, double score2, boolean b) {
-		if ( !isComplete() )
-			return;
-		else if (b)
+	
+	public void setResult(double score1, double score2, boolean store) throws ResultCannotBeSetException
+	{
+		if ( isComplete() )
+			throw new ResultCannotBeSetException();
+		else if ( store  )
 			setResult(score1, score2);
 		else {
 			competitorOneScore = score1;

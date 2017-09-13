@@ -9,6 +9,7 @@ import java.io.File;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
@@ -20,7 +21,7 @@ public class TestElimination {
 	 * 
 	 */
 	public static void main(String[] args) {
-		File file = new File("golf.jpg");
+		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor( "Chidiebere" , file );
 		Competitor c2 = new Competitor( "Fred", file );
 		Competitor c3 = new Competitor( "Joshua" , file );
@@ -35,7 +36,7 @@ public class TestElimination {
 			cp.moveToNextRound();
 		}
 		catch ( MoveToNextRoundException| NoFixtureException |
-				TournamentEndedException | TournamentException e)
+				TournamentEndedException | TournamentException | ResultCannotBeSetException e)
 		{
 			e.printStackTrace();
 		}

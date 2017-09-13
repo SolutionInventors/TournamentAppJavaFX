@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
@@ -66,6 +67,11 @@ public class SaveTournamentTest
 			
 		}
 		catch (TournamentEndedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (ResultCannotBeSetException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

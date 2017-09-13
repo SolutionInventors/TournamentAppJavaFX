@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -130,6 +131,11 @@ public class DoubleEliminationTest
 			}
 			catch (NoFixtureException e)
 			{
+				e.printStackTrace();
+			}
+			catch (ResultCannotBeSetException e)
+			{
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			builder.append(String.format("%s %.0f VS %.0f %s\n",
