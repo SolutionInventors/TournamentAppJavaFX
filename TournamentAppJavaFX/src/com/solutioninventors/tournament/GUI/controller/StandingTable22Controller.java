@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.solutioninventors.tournament.GUI.utility.StandingTable;
+import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
+import com.solutioninventors.tournament.test.Test;
 import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
@@ -46,12 +48,21 @@ public class StandingTable22Controller {
 
 		} // end if tournament is instance of
 		else if (tournament instanceof Multistage) {
-			try {
-				stringTable = (((Multistage) tournament).getGroup(0).getTable().getStringTable());
-				noOfGroups = ((Multistage) tournament).getNumberOfGroups();
-			} catch (Exception e) {
-				e.printStackTrace();
+			for (int i = 0; i < ((Multistage) tournament).getNumberOfGroups(); i++) {
+				try {
+					stringTable = (((Multistage) tournament).getGroup(i).getTable().getStringTable());
+					noOfGroups = ((Multistage) tournament).getNumberOfGroups();
+				} catch (GroupIndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
 			}
+
+			/*
+			 * try { stringTable = (((Multistage)
+			 * tournament).getGroup(0).getTable().getStringTable()); noOfGroups =
+			 * ((Multistage) tournament).getNumberOfGroups(); } catch (Exception e) {
+			 * e.printStackTrace(); }
+			 */
 			setupTable();// call utility method
 		}
 
@@ -114,14 +125,14 @@ public class StandingTable22Controller {
 			for (int j = 0; j < stringTable.length; j++) {
 				if (j == 0) {
 					map.put(i, items3.get(i))
-							.add(new StandingTable(stringTable[j][0], stringTable[j][1], stringTable[j][2], stringTable[j][3],
-									stringTable[j][4], stringTable[j][5], stringTable[j][6], stringTable[j][7],
-									stringTable[j][8]));
+							.add(new StandingTable(stringTable[j][0], stringTable[j][1], stringTable[j][2],
+									stringTable[j][3], stringTable[j][4], stringTable[j][5], stringTable[j][6],
+									stringTable[j][7], stringTable[j][8]));
 				}
 				map.put(i, items3.get(i))
-				.add(new StandingTable(stringTable[j][0], stringTable[j][1], stringTable[j][2], stringTable[j][3],
-						stringTable[j][4], stringTable[j][5], stringTable[j][6], stringTable[j][7],
-						stringTable[j][8]));
+						.add(new StandingTable(stringTable[j][0], stringTable[j][1], stringTable[j][2],
+								stringTable[j][3], stringTable[j][4], stringTable[j][5], stringTable[j][6],
+								stringTable[j][7], stringTable[j][8]));
 			}
 		}
 		for (int i = 0; i < noOfGroups; i++)
