@@ -28,10 +28,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class InputResultsController {
-	@FXML
-	private ScrollPane scrollPane;
-	@FXML
-	private Label tourStage;
+	@FXML private ScrollPane scrollPane;
+	@FXML private Label tourStage;
 	private Label compName[];
 	private Label VS[];
 	private TextField scores[];
