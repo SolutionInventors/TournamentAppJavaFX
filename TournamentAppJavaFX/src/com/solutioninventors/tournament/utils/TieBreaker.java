@@ -28,7 +28,7 @@ public class TieBreaker implements Serializable
 		comparator = comparator.reversed();
 		for ( int i = 0 ; i < getBreakers().length ;i ++ )
 		{
-			comparator = comparator.thenComparing( getBreakers()[i].getBreaker() );
+			comparator = comparator.thenComparing( getBreakers()[i].getComparator() );
 		}
 		
 		return Arrays.stream( comps )

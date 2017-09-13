@@ -28,7 +28,7 @@ public class DoubleElimination extends EliminationTournament
 	/** 
 	 * 
 	 * This is used to create a double elimination tournament
-	 * The class rounds is stored in the Map< BracketType, List<Round> > object 
+	 * The class rounds is stored in the Map&lt BracketType, List&ltRound&gt &gt object 
 	 * The BracketType objects stores the info about the bracket its values include 
 	 * BracketType.WINNERS_BRACKET , BracketType.MAJOR_BRACKET , BracketType.MINOR_BRACKET ,
 	 * BracketType.INITIAL_BRACKET , BracketType.TOURNAMENT_FINAL  

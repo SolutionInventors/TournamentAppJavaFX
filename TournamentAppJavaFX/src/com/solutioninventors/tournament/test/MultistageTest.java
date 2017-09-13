@@ -28,14 +28,13 @@ public class MultistageTest {
 
 	public static void main(String[] args) throws TournamentEndedException {
 		File file = new File("Arsenal.jpg");
-		File golfFile =  new File("golf.jpg" );
-		Competitor c1 = new Competitor("Chidiebere", golfFile);
+		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
-		Competitor c4 = new Competitor("Chinedu", golfFile);
+		Competitor c4 = new Competitor("Chinedu", file);
 
 		Competitor c5 = new Competitor("Ada", file);
-		Competitor c6 = new Competitor("Oguejiofor", golfFile);
+		Competitor c6 = new Competitor("Oguejiofor", file);
 		Competitor c7 = new Competitor("Pio", file);
 		Competitor c8 = new Competitor("Oloche", file);
 		//
@@ -179,7 +178,7 @@ public class MultistageTest {
 		Test.displayMessage("Tournament Groups are ");
 		for (int i = 0; i < tournament.getNumberOfGroups(); i++) {
 			try {
-				Test.displayStandingTable(tournament.getGroup(1).getTable().getStringTable());
+				Test.displayStandingTable(tournament.getGroup(i).getTable().getStringTable());
 			} catch (GroupIndexOutOfBoundsException e) {
 				e.printStackTrace();
 			}

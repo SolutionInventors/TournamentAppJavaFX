@@ -23,125 +23,120 @@ import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 
 
 /**
- * A {@code Competitor } object encapsulates informations about each Competitor in a Tournament<br/>
+ * A {@code Competitor } object encapsulates informations about each Competitor in a Tournament<br>
  * {@code Competitor} objects contains the following properties:
- * <table border = "1.0" width = " 730.0" >
+ * <table border = "1.0" width = " 730.0">
+ * 		<caption>Com</caption>
  * 		<tr>
  * 			<td>{@code private final String FIRST_NAME}</td> 
- * 			<td>Contains the first name of the competitor <br/>
+ * 			<td>Contains the first name of the competitor <br>
  * 				Can be retrieved via call to method {@code getFirstName }</td> 
  * 		</tr>
 		<tr>
 		 	<td>{@code private final String LAST_NAME}</td> 
-			<td>Contains the last name of the competitor <br/>
+			<td>Contains the last name of the competitor <br>
 		 		Can be retrieved via call to method {@code getLastName }</td> 
 		</tr>
 		<tr>
 		 	<td>{@code private int numberOfWin}</td> 
-			<td>Stores the total number of {@code Fixture}s this Competitor has won <br/>
+			<td>Stores the total number of {@code Fixture}s this Competitor has won <br>
 		 		Can be retrieved via call to method {@code getNumberOfWin }</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private int numberOfLoss}</td> 
-			<td>Stores the total number of {@code Fixture}s this Competitor has lost <br/>
+			<td>Stores the total number of {@code Fixture}s this Competitor has lost <br>
 		 		Can be retrieved via call to method {@code getNumberOfLoss}</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private int numberOfDraw} </td> 
-			<td>Stores the total number of {@code Fixture}s this Competitor has drawn <br/>
+			<td>Stores the total number of {@code Fixture}s this Competitor has drawn <br>
 		 		Can be retrieved via call to method {@code getNumberOfDraw }</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private int numberOfAwayWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
 		 		Can be retrieved via call to method {@code getNumberOfWin }</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private int numberOfAwayWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
-		 		Can be retrieved via call to method {@code getNumberOfWin }<br/>
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
+		 		Can be retrieved via call to method {@code getNumberOfWin }<br>
 		 		It is used by {@code Breaker.AWAY_WIN} object when breaking ties</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private int numberOfHomeWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
-		 		Can be retrieved via call to method {@code getNumberOfWin }<br/>
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
+		 		Can be retrieved via call to method {@code getNumberOfWin }<br>
 		 		It is used by {@code Breaker.NUMBER_OF_HOME_WIN} object when breaking ties</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private int numberOfAwayWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br/>
-		 		Can be retrieved via call to method {@code getNumberOfAwayWin }<br/>
+			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
+		 		Can be retrieved via call to method {@code getNumberOfAwayWin }<br>
 		 		</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private double goalsScored} </td> 
-			<td>Stores the total number of goals scored by this  Competitor<br/>
-		 		Can be retrieved via call to method {@code getGoalsConceeded }<br/>
+			<td>Stores the total number of goals scored by this  Competitor<br>
+		 		Can be retrieved via call to method {@code getGoalsConceeded }<br>
 		 		</td> 
 		</tr>
-		
 		<tr>
 		 	<td>{@code private double goalsConceeded} </td> 
-			<td>Stores the total number of goals scored by this  Competitor<br/>
-		 		Can be retrieved via call to method {@code getNumberOfGoalsConceeded }<br/>
+			<td>Stores the total number of goals scored by this  Competitor<br>
+		 		Can be retrieved via call to method {@code getNumberOfGoalsConceeded }<br>
 		 		It is used by {@code Breaker.GOALS_CONEEDED} object when breaking ties</td> 
-		</tr>
 		
+		</tr>
 		<tr>
 		 	<td>{@code private Map<Competitor, Double> awayGoals} </td> 
-			<td>Stores the away goals scored by this Competitor against an opponent<br/>
+			<td>Stores the away goals scored by this Competitor against an opponent<br>
 				This property is incremented via {@code addAwayGoal(Competitor) }
 				Can retrieved via call to {@code getAwayGoal(Competitor) } </td> 
-		</tr>
 		
+		</tr>
 		<tr>
 		 	<td>{@code private Map<Competitor, Double> homeGoals} </td> 
-			<td>Stores the home goals scored by this Competitor against an opponent<br/>
+			<td>Stores the home goals scored by this Competitor against an opponent<br>
 				 </td> 
-		</tr>
 		
+		</tr>
 		<tr>
 		 	<td>{@code private File image} </td> 
-			<td>Stores this Competitor's logo/picture<br/>
+			<td>Stores this Competitor's logo/picture<br>
 				It <b>MUST</b> inputed in this object's constructor
 				Can retrieved via call to {@code getAwayGoal(Competitor) } </td> 
 		</tr>
 		<tr>
 		 	<td>{@code private boolean eliminated} </td> 
-			<td>Stores {@code true} when Competitor has been eliminated from the {@code Tornament} else {@code false}<br/>
+			<td>Stores {@code true} when Competitor has been eliminated from the {@code Tornament} else {@code false}<br>
 				Can retrieved via call to {@code isEliminated()} </td> 
 		</tr>
 		
 		
+	</table>	
 		
-		
- * <table>
+ *
  * 
  * <p>
- * A Competitor contains some protected methods because  a {@code Competitor } can only be mutated by a {@code Fixture } object<br/>
- * Some common manipulations are: <br/>
+ * A Competitor contains some protected methods because  a {@code Competitor } can only be mutated by a {@code Fixture } object<br>
+ * Some common manipulations are: <br>
  * 
- * 		{@code Competitor John = new Competitor( "John", "Oloche" , new File( "john.jpg") ) ; } <br/>
+ * 		{@code Competitor John = new Competitor( "John", "Oloche" , new File( "john.jpg") ) ; } <br>
  * 		
- * 		{@code Competitor Fred = new Competitor( "Fred", "Williams", new File( "fred.jpg") ) ; } <br/> 
+ * 		{@code Competitor Fred = new Competitor( "Fred", "Williams", new File( "fred.jpg") ) ; } <br> 
  * 		
- * 		{@code  Fixture fixture = new Fixture( John, Fred ) );}  <br/>
- * 		{@code fixture.setResult( 2 ,3 ) }; <br/>
- * 		{@code System.out.println( "John's goals = " + John.getGoalsScored() } <br/>
+ * 		{@code  Fixture fixture = new Fixture( John, Fred ) );}  <br>
+ * 		{@code fixture.setResult( 2 ,3 ) }; <br>
+ * 		{@code System.out.println( "John's goals = " + John.getGoalsScored() } <br>
  * 
- * Prints:<br/> {@code John's goals = 2 }
+ * Prints:<br> {@code John's goals = 2 }
  * 
  * @author Oguejiofor Chidiebere 
- * @version  %I%, %G%
- * @see {@link Fixture } , {@link Round },  {@link Breaker}
+ * 
+ * @see Fixture  
+   @see Round  
+   @see Breaker
  * @since  v1.0
  * 
  */
@@ -174,9 +169,9 @@ public class Competitor implements Serializable
 	/**
 	 * 
 	 * This constructor is used to create a {@code Competitor } object with the name and imageFile
-	 * <br/> The name is returned via call to {@code getName() } 
-	 *@param name
-	 *@param imageFile
+	 * <br> The name is returned via call to {@code getName() } 
+	 *@param name The name of this {@code Competitor}
+	 *@param imageFile {@code File } that stores the image. This file must be in .jpg, .png or .jpeg formats
 	 */
 	public Competitor(String name, File imageFile)
 	{
@@ -186,11 +181,11 @@ public class Competitor implements Serializable
 	/**
 		This constructor is used to create a {@code Competitor } object with the first Name, 
 		last name and imageFile.
-	 * <br/> The lastName is returned via call to {@code getLastName() } 
-	 * <br/> The firstName is returned via call to {@code getFirstName() } 
-	 *@param first
-	 *@param last
-	 *@param imageFile
+	 * <br> The lastName is returned via call to {@code getLastName() } 
+	 * <br> The firstName is returned via call to {@code getFirstName() } 
+	 *@param first a {@code String } containing the first name of this {@code Competitor}
+	 *@param last a String containing the last name of the {@code Competitor}
+	 *@param imageFile The {@code File } object that contains a file in either .jpg, .png or .jpeg
 	 */
 	public Competitor(String first, String last, File imageFile)
 	{
@@ -285,7 +280,7 @@ public class Competitor implements Serializable
 
 	/**
 	 * 
-	 *void<br/>
+	 *void<br>
 	 *Stores the imageFile argument to this Competitor's {@code image } property 
 	 *
 	 *@param imageFile
@@ -427,11 +422,11 @@ public class Competitor implements Serializable
 	
 	
 	/**
-	 * Returns the away goals that this competitor has scored against the
-	 * specified {@code Competitor opponent }
-	 *@param 
-	 *@return
-	 */
+	 * Gets the away goals that this competitor has scored against the
+	 * specified opponent  
+	 *@param  opponent This {@code Competitor}'s opponent
+	 *@return double containing the away goal.Returns 0 if the two {@code Competitor}s have not met
+	 */ 
 	public double getAwayGoal( Competitor opponent  )
 	{
 		if( awayGoals.containsKey( opponent ) )
@@ -442,8 +437,8 @@ public class Competitor implements Serializable
 	/**
 	 * 
 	 *
-	 *@param com1
-	 *@param com2
+	 *@param com1 the first {@code Competitor }
+	 *@param com2 the second {@code Competitor } to compare
 	 *@return Returns true if {@code com1}'s method {@code getName()} returns the same value as 
 	 *{@code com2}'s method {@code getName()}
 	 */

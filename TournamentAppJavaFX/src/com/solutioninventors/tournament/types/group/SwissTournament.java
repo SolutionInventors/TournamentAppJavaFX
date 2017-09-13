@@ -21,20 +21,21 @@ import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+/**
+ * This class is used to simulate a swiss tournament. Its constructor takes a
+ * competitor array , SportType , pointing system and totalROunds Utility method
+ * createTournament creates the tournament rounds
+ * 
+ * Then it takes results via calls to setResult Method moveToNextRound moves to
+ * the next round
+ * 
+ * The class also contains some utility methods that aid its use
+ * 
+
+ * 
+ */
 public class SwissTournament extends GroupTournament {
-	/**
-	 * This class is used to simulate a swiss tournament. Its constructor takes a
-	 * competitor array , SportType , pointing system and totalROunds Utility method
-	 * createTournament creates the tournament rounds
-	 * 
-	 * Then it takes results via calls to setResult Method moveToNextRound moves to
-	 * the next round
-	 * 
-	 * The class also contains some utility methods that aid its use
-	 * 
-	 * @throws InvalidBreakerException
-	 * 
-	 */
+	
 	public SwissTournament(Competitor[] comps, SportType type, double winPoint, double drawPoint, double lossPoint,
 			TieBreaker breaker, int totalRounds) throws TournamentException, InvalidBreakerException {
 		super(comps, type, winPoint, drawPoint, lossPoint, breaker);

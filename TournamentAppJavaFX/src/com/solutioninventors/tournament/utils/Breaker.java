@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 /**
  * A Breaker object encapsulates the logic of how a {@link Tournament} would resolve ties
- * It is used when creating a {@link TieBreaker } object <br/>
- * It achieves this by creating a Comparator<Competitor> object that is created via calls to some {@code Competitor } 
+ * It is used when creating a {@link TieBreaker } object <br>
+ * It achieves this by creating a Comparator&lt;Competitor&gt; object that is created via calls to some {@code Competitor } 
  * methods
  * <p>
  * Constants {@code Breaker.GROUP_BREAKER, Breaker.KNOCKOUT_BREAKER, Breaker.BOTH } are the
@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
  * Note that these types cannot be used when creating a {@code TieBreaker } object. For example
  * 
  * <p>
- *  {@code Breaker[] breakers = { Breaker.BOTH, Breaker.GROUP_BREAKERS }; } <br/>
- *   {@code TieBreaker = new TieBreaker( breakers) // throws an InvalidBreakerException  } ;<br/>
+ *  {@code Breaker[] breakers = { Breaker.BOTH, Breaker.GROUP_BREAKERS }; } <br>
+ *   {@code TieBreaker = new TieBreaker( breakers) // throws an InvalidBreakerException  } ;<br>
  *   throws an {@link InvalidBreakerException }
  * 
  * <p>
@@ -39,22 +39,24 @@ import java.util.stream.Collectors;
  *  are all of type Breaker.GROUP_BREAKER
  *  
  *  <p>
- *  The Breaker.GROUP  can <b>ONLY</b> be used for creating {@link GroupTournament}s. {@code Breaker.KOCKOUT_BREAKER}
+ *  The {@code Breaker.GROUP}  can <b>ONLY</b> be used for creating {@link GroupTournament}s. {@code Breaker.KOCKOUT_BREAKER}
  *   can <b>ONLY</b> be used in creating {@link EliminationTournament } objects 
  *   {@code Breaker.BOTH } may be used for any {@code Tournament } object
  *   
  *   <p>
  *   
- *   The class contains public methods {@code getType, getName and getBreaker}<br/>
+ *   The class contains public methods {@code getType, getName and getBreaker}<br>
  *   Method {@code getBreaker } returns a {@code Comparator } object 
  *    <p>
  *    
  *    @author  Oguejiofor Chidiebere
- *    @version 1.0
- *    @see
- *    {@link Tournament}, {@link TieBreaker}, {@link InvalidBreakerException} , 
- *    {@link GroupTournament}, {@link EliminationTournament}
- *    @since Aug 10, 2017
+ *    @see Tournament
+ *    @see TieBreaker
+ *    @see InvalidBreakerException
+ *    @see GroupTournament
+ *    @see EliminationTournament
+ *   
+ *    @since v1.0
  *   
  *    
  */
@@ -72,7 +74,7 @@ public enum Breaker implements Serializable
 	
 	COIN_TOSS( BOTH  , getCoinToss() , "COIN TOSS")  ,
 
-	AWAY_WIN( GROUP_BREAKER , getAwayWin() ,"AWAY_WIN" ) ,
+	NUMBER_OF_AWAY_WIN( GROUP_BREAKER , getNumberOfAwayWin() ,"AWAY_WIN" ) ,
 	GOALS_SCORED( GROUP_BREAKER , getGoalsScored() , "GOALS SCORED") ,
 	GOALS_CONCEDED( GROUP_BREAKER , getGoalsConceded() , "GOALS CONCEDDED") ,
 	GOALS_DIFFERENCE( GROUP_BREAKER , getGoalsDifference(), "GOAL DIFFERENCE" ) ,
@@ -87,6 +89,14 @@ public enum Breaker implements Serializable
 	private final Breaker type ;
 	private final String name ;
 	
+	/**
+	 * 
+	 * Creates a Breaker constant with only the name 
+	 * Used to create types
+	 *@param name
+	 *@author  Oguejiofor Chidiebere
+ *    @since 1.0
+	 */
 	private Breaker(String name )
 	{
 		this( null , null, name  );
@@ -94,6 +104,18 @@ public enum Breaker implements Serializable
 	
 	
 
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *total number of away goals scored by the {@code Competitor}s. This method is used to create Breaker.NUMBER_OF_AWAY_GOALS object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *@author  Oguejiofor Chidiebere
+ *    @since 1.0
+	 *
+	 */
 	private static Comparator<Competitor> getNumberOfAwayGoals()
 	{
 		Function< Competitor, Double >  function = Competitor:: getNumberOfAwayGoals;
@@ -102,12 +124,38 @@ public enum Breaker implements Serializable
 	}
 
 
-
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *number of away goal against a particular competitor. This method is used to create Breaker.AWAY_WIN object.<br/>
+	 *
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *@author  Oguejiofor Chidiebere
+ *    @since 1.0
+	 *
+	 */
+	
 	private static Comparator< Competitor>  getAwayGoalBreaker()
 	{
 		return new AwayGoal();
 	}
 
+	/**
+	 * 
+	 *Creates a {@code Breaker } object 
+	 *@param comparator Is a Comparator&ltCompetitor&gt object which encapsulates the logic used to break the tie
+	 *@param typeName Can either be Breaker.GROUP_BRREAKERS, Breaker.kNOCKOUT_BREAKERS, Breaker.BOTH
+	 *@param theName The name of the Breaker object stored as String
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *@author  Oguejiofor Chidiebere
+ *    @since 1.0
+	 */
+	
 	private Breaker( Breaker typeName, Comparator<Competitor> comparator, String theName )
 	{
 		type = typeName;
@@ -115,12 +163,38 @@ public enum Breaker implements Serializable
 		name = theName;
 	}
 	
-	private static Comparator< Competitor> getAwayWin()
+	
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *number of away {@code Fixture }s won by the {@code Competitor}s. 
+	 *This method is used to create Breaker.NUMBER_OF_AWAY_WINS object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 
+ *    
+	 *
+	 */
+	private static Comparator< Competitor> getNumberOfAwayWin()
 	{
 		Function< Competitor, Integer >  function = Competitor:: getNumberOfAwayWin;
 
 		return Comparator.comparing( function ).reversed();
 	}
+	
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *number of home {@code Fixture }s won by the {@code Competitor}s. 
+	 *This method is used to create Breaker.NUMBER_OF_HOME_WIN object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
 	
 	private static Comparator<Competitor> getNumberOfHomeWin()
 	{
@@ -130,11 +204,35 @@ public enum Breaker implements Serializable
 	}
 	
 	
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via a coin toss. 
+	 *This method is used to create Breaker.COIN_TOSS object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
 	private static Comparator< Competitor> getCoinToss()
 	{
 		return new CoinTossBreaker();
 	}
 
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via their head to head record. 
+	 *This method is used to create Breaker.HEAD_TO_HEAD object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
 	private static Comparator< Competitor> getHeadToHead()
 	{
 		return new Head_To_Head();
@@ -144,8 +242,10 @@ public enum Breaker implements Serializable
 
 	/**
 	 * 
-	 *Returns either {@code Breaker.GROUP_BREAKERS }, {@code Breaker.BOTH } or {@code Breaker.KNOCKOUT_BREAKERS}
-	 *@return Breaker
+	 *Gets the type of @c{@code Breaker } as  {@code Breaker.GROUP_BREAKERS }, {@code Breaker.BOTH } or {@code Breaker.KNOCKOUT_BREAKERS}
+	 *@return the type of this {@code Breaker } as Breaker
+	 *@author  Oguejiofor Chidiebere
+ *    @since 1.0
 	 */
 	public Breaker getType()
 	{
@@ -153,23 +253,43 @@ public enum Breaker implements Serializable
 	}
 
 	/**
-	 * Returns a {@code Comparator<Competitor> } that encapsulates the logic of Comparison
+	 * Gets the  {@code Comparator<Competitor> } that encapsulates the logic used to break ties
 	 *
 	 *@author Oguejiofor Chidiebere
 	 *@return {@code Comparator<Competitor> }
+	 **@since v1.0
+	 *@see Competitor
 	 */
-	public Comparator< Competitor> getBreaker()
+	public Comparator< Competitor> getComparator()
 	{
 		return breaker;
 	}
 	
-	
+	/**
+	 * Gets a Comparator&ltCompetitor&gt that encapsulates the logic for breaking ties ageainst 
+	 * two {@code COmpetitor}s with their total goals scored
+	 *@author Oguejiofor Chidiebere
+	 **@since v1.0
+	 *@see Competitor 
+	 */
 	private static Comparator<Competitor> getGoalsScored()
 	{
 		Function< Competitor, Double >  function = Competitor:: getGoalsScored;
 
 		return Comparator.comparing( function ).reversed();
 	}
+	
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via their goalDifference. 
+	 *This method is used to create Breaker.GOAL_DIFFERENCE object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
 	
 	private static Comparator<Competitor> getGoalsDifference()
 	{
@@ -178,6 +298,16 @@ public enum Breaker implements Serializable
 		return Comparator.comparing( function ).reversed();
 	}
 	
+	/**
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via their goal conceeded. 
+	 *This method is used to create Breaker.GOAL_CONCEEDED object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
 	
 	private static Comparator<Competitor> getGoalsConceded()
 	{
@@ -185,6 +315,18 @@ public enum Breaker implements Serializable
 
 		return Comparator.comparing( function );
 	}
+	
+
+	/**
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via their number of wins. 
+	 *This method is used to create Breaker.NUMBER_OF_WIN object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
 	
 	private static Comparator<Competitor> getNumberOfWins()
 	{
@@ -209,6 +351,16 @@ public enum Breaker implements Serializable
 	}
 
 	
+
+	/**
+	 *This class is used to create a Comparator&ltCompetitor&gt object that 
+	 *breaks ties between two Competitors via their head to head record
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
 	private static class Head_To_Head implements Comparator< Competitor >
 	{
 		@Override
@@ -229,14 +381,19 @@ public enum Breaker implements Serializable
 		}
 	}
 	
+
+	/**
+	 *This class is used to create a Comparator&ltCompetitor&gt object that 
+	 *breaks ties between two Competitors via their away goal against each other
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
 	
 	private static class AwayGoal implements Comparator< Competitor >
 	{
-		/**
-		 *
-		 * @return Returns a {@code Comparator<Competitor> } object that randomly selects either of the {@code CCompetitor}s
-		 * 
-		 */
+		
 		@Override
 		public int compare(Competitor com1, Competitor com2)
 		{
@@ -253,12 +410,19 @@ public enum Breaker implements Serializable
 		}
 	}
 	
+
+	/**
+	 *This class is used to create a Comparator&ltCompetitor&gt object that 
+	 *breaks ties between two Competitors by simulating a coin toss
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
 	private static class CoinTossBreaker implements  Comparator<Competitor>
 	{
-		/**
-		 * This compares two Competitors and randomly returns either 1 or -1
-		 * @return 1 or -1 which indicates that com1 or com2 is greater respectively
-		 */
+		
 		@Override
 		public int compare(Competitor com1, Competitor com2)
 		{
@@ -278,8 +442,10 @@ public enum Breaker implements Serializable
 	
 	/**
 	 * 
-	 *Returns a {@code Breaker } array that contains all {@code Breaker}s of type {@code Breaker.GROUP_BREAKERS}
+	 *Gets a  all {@code Breaker}s of type {@code Breaker.GROUP_BREAKERS}
 	 *@return Breaker[]
+	 **@author Oguejiofor Chidiebere
+	 **@since v1.0
 	 */
 	public static Breaker[] getGroupBreakers()
 	{
@@ -299,9 +465,11 @@ public enum Breaker implements Serializable
 	
 	/**
 	 * 
-	 *Returns a {@code Breaker } array that contains all {@code Breaker}s of type {@code Breaker.KNOCKOUT_BREAKERS}
+	 *Gets all {@code Breaker}s of type {@code Breaker.KNOCKOUT_BREAKERS}
 	 *@author Oguejiofor Chidiebere
+	 *@since v1.0
 	 *@return Breaker[]
+	 *
 	 *
 	 */
 	public static Breaker[] getKnockoutBreakers()
@@ -316,13 +484,20 @@ public enum Breaker implements Serializable
 			  
 	}
 	
+	@Override
 	public String toString()
 	{
 		return getName();
 	}
 
 
-
+	/**
+	 * 
+	 *Gets the name of this {@code Breaker} as {@code String}
+	 *@return A {@code String } containing the Breaker name
+	 **@author Oguejiofor Chidiebere
+	 **@since v1.0
+	 */
 	public String getName()
 	{
 		return name;

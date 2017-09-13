@@ -7,31 +7,32 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 
 /**
- * This class encapsulates all the operations of a Fixuture in a tournament.<br/> 
+ * This class encapsulates all the operations of a Fixuture in a tournament.<br> 
  * It contains a boolean which is toggled true when fixture results have been set
  * The competitor scores are initially set to -1
  * <table border = "1.0" width = " 730.0" >
+ * 		<caption>{@code Fixture} properties </caption>
  * 		<tr>
  * 			<td>{@code private final Competitor COMPETITOR_ONE}</td> 
- * 			<td>Stores the home {@code  Competitor } in this {@code Fixture} <br/>
+ * 			<td>Stores the home {@code  Competitor } in this {@code Fixture} <br>
  * 				Can be retrieved via call to method {@code getCompetitorOne()}</td> 
  * 		</tr>
 		<tr>
 		 	<td>{@code private final Competitor COMPETITOR_TWO}</td> 
- * 			<td>Stores the away {@code  Competitor } in this {@code Fixture} <br/>
+ * 			<td>Stores the away {@code  Competitor } in this {@code Fixture} <br>
  * 				Can be retrieved via call to method {@code getCompetitorTwo()}</td>  
 		</tr>
 		<tr>
 		 	<td>{@code private int competitorOneScore}</td> 
-			<td>Stores the home {@code Competitor}'s score <br/>
-				It is initialised to -1 when this object is created<br/>
+			<td>Stores the home {@code Competitor}'s score <br>
+				It is initialised to -1 when this object is created<br>
 				Can be retrieved via method call {@code getCompetitorOneScore }</td> 
 		</tr>
 		
 		<tr>
 		 	<td>{@code private int competitorTwoScore}</td> 
-			<td>Stores the away {@code Competitor}'s score <br/>
-				It is initialized to -1 when this object is created<br/>
+			<td>Stores the away {@code Competitor}'s score <br>
+				It is initialized to -1 when this object is created<br>
 				Can be retrieved via method call {@code getCompetitorTwoScore }</td> 
 		</tr>
 		
@@ -41,7 +42,7 @@ import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 				That is when method {@code setResult( double score1 , double score2 ) } or method
 				{@code setResult(double score1, double score2, boolean b)} is called with true has been called</td> 
 		</tr>
- * <table>
+</table>
  
  */
 
@@ -74,12 +75,13 @@ public class Fixture implements Serializable{
 
 	/**
 	 This method sets the CompetitorOne and COmpetitorTwoScore and also increments 
-	 the {@code Competitor } objects' data such as the number of wins, goals scored, <br/>
+	 the {@code Competitor } objects' data such as the number of wins, goals scored, <br>
 	 goals conceded etc. as appropriate and sets this Fixture's complete to {@code true}
 	 
 	 @since v1.0
 	 @see Competitor
-	 *@param 
+	 *@param homeComScore
+	 *@param awayComScore
 	 */
 	public void setResult(final double homeComScore, final double awayComScore)
 	{
@@ -263,6 +265,8 @@ public class Fixture implements Serializable{
 	}
 	
 	/**
+	 * Gets the the away {@code Competitor}'s score
+	 * Returns -1 if this {@code Fixture } is incomplete
 	 *@return The away {@code Competitor}'s score as {@code double }
 	 */
 	public double getCompetitorTwoScore() {
@@ -272,11 +276,11 @@ public class Fixture implements Serializable{
 	/**
 	 * This method does nothing if this {@code Fixture } is complete but 
 	 * calls method {@code setResult( double score1, double score2 ) } if b = true
-	 * <br/>
+	 * <br>
 	 * This method sets the competitorOneScore and COmpetitorTwoScore if b = false 
-	 *@param score1
-	 *@param score2
-	 *@param b
+	 *@param score1 home {@code Competitor} score
+	 *@param score2 away {@code COmpetitor} score
+	 *@param b indicates whether to save the scores in the {@code Competitor} objects and toggle this {@code Fixture } to complete
 	 */
 	public void setResult(double score1, double score2, boolean b) {
 		if ( !isComplete() )

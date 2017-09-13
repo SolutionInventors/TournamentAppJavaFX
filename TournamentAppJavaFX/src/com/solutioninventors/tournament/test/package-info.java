@@ -1,5 +1,5 @@
 /**
- *@Author: Oguejiofor Chidiebere
+ *@author Oguejiofor Chidiebere
  *package-info.java
  *Aug 5, 2017
  *8:06:32 AM

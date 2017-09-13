@@ -23,18 +23,20 @@ import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+/**
+ * This is the su[er class of all the group tournament types
+ * Its sub classes include RoundRobin and SwissTournamnet types 
+ * The class stores the StandingTable object to be  used by all its sub class
+ * It also stores a Round array and the sportType
+ * The SportType object here is used to create the StandingTable object
+ * This is a relatively simple class that contains some abstract methods and a 
+ * bunch of getters and setters 
+ * 
+ */
+
 public abstract class GroupTournament extends Tournament 
 {
-	/**
-	 * This is the su[er class of all the group tournament types
-	 * Its sub classes include RoundRobin and SwissTournamnet types 
-	 * The class stores the StandingTable object to be  used by all its sub class
-	 * It also stores a Round array and the sportType
-	 * The SportType object here is used to create the StandingTable object
-	 * This is a relatively simple class that contains some abstract methods and a 
-	 * bunch of getters and setters 
-	 * 
-	 */
+	
 	private StandingTable table;
 	
 	private final SportType SPORT_TYPE;
