@@ -1,7 +1,6 @@
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.net.MalformedURLException;
-import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -10,92 +9,94 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 
 public class FixturesController {
-	@FXML
-	private List<Label> lblcompArray;
-	@FXML
-	private List<ImageView> imgArray;
-	@FXML private Label stage;
-	@FXML private List<Label> lblVsArray;
-	@FXML
-	private List<Label> lblGroupArray;
-	@FXML
-	private Button btnnextgroup;
-	@FXML
-	private Button btnpregroup;
-	private Competitor[] competitors;
+	@FXML private ScrollPane scrollPane;
+	@FXML private Label tourStage;
+	private Label compName[];
+	private Label VS[];
+	private ImageView logo[];
+	//private Image img = new Image("file:nologo");
 	private Tournament tournament;
-	String[] abc = new String[4];
-
-	public void initialize() {
-		for (Label lblcomp : lblcompArray)
-			lblcomp.setVisible(false);
-		for (Label lblcomp : lblVsArray)
-			lblcomp.setVisible(false);
-		for (Label lblcomp : lblGroupArray)
-			lblcomp.setVisible(false);
-		
-
-	}// end method initialize
+	private Competitor comp1;
+	private Competitor comp2;
+	private Fixture[] currentFixtures;
 
 	public void setTournament(Tournament value) throws TournamentEndedException {
-	
 		tournament = value;
-		if(!tournament.hasEnded()) {
-			stage.setText(tournament.toString());
-		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
-		competitors = tournament.getCompetitors();
-		int i = 0;
-		for (int j = 0; j < currentFixtures.length; j++) {
-			
-			lblcompArray.get(i).setVisible(true);
-			lblcompArray.get(i).setText(currentFixtures[j].getCompetitorOne().toString());
-			lblcompArray.get(i+1).setVisible(true);
-			lblcompArray.get(i+1).setText(currentFixtures[j].getCompetitorTwo().toString());
-			lblVsArray.get(j).setVisible(true);
-			lblVsArray.get(j).setText("VS");
-			if (j==0) {
-				lblGroupArray.get(j).setVisible(true);
-				lblGroupArray.get(j).setText("GROUP 1");
-			}
-			
-			try {
-				String localUrl = competitors[i].getImage().toURI().toURL().toString();
-				String local2 = competitors[i+1].getImage().toURI().toURL().toString();
-				Image localImage1 = new Image(localUrl, false);
-				Image localImage2 = new Image(local2, false);
-				imgArray.get(i).setImage(localImage1);
-				imgArray.get(i+1).setImage(localImage2);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-			
-			i+=2;//increment i by 2
-		}//end for loop
-	   }//end if tournament has not ended
-	 else {
-		AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
-	}
-	}// end set current
-	
-	/*@FXML
-	public void inputresults(ActionEvent event) throws IOException {
-		//((Node) event.getSource()).getScene().getWindow().hide();
-	//	Stage primaryStage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputResults.fxml").openStream());
-		InputResultsController vr = (InputResultsController) loader.getController();
-		vr.setTournament(tournament);
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle("Tournament Name");
-		Btn.next(root, event, tournament.getName());
-	}*/
+		if (!tournament.hasEnded()) {
+			// GridPane settings
+			GridPane grid = new GridPane();
+			grid.setPadding(new Insets(25));
+			grid.setHgap(5);
+			grid.setVgap(5);
+			// ColumnSettings for all five columns
+			ColumnConstraints column1 = new ColumnConstraints(110); // 
+			ColumnConstraints column2 = new ColumnConstraints(100); // 
+			ColumnConstraints column3 = new ColumnConstraints(100);
+			ColumnConstraints column4 = new ColumnConstraints(130);
+			ColumnConstraints column5 = new ColumnConstraints(100);
 
-}// end class
+			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5);
+			
+			tourStage.setText(tournament.toString());
+			currentFixtures = tournament.getCurrentRound().getFixtures();
+			compName = new Label[currentFixtures.length*2];
+			VS = new Label[currentFixtures.length];
+			logo = new ImageView[currentFixtures.length*2];
+			int i = 0;
+			for (int j = 0; j < currentFixtures.length; j++) {
+				compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
+				compName[i+ 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
+				VS[j] = new Label("VS");
+				try {
+					comp1= currentFixtures[j].getCompetitorOne();
+					comp2= currentFixtures[j].getCompetitorTwo();
+					
+					String localUrl = comp1.getImage().toURI().toURL().toString();
+					String local2 = comp2.getImage().toURI().toURL().toString();
+					Image localImage1 = new Image(localUrl, false);
+					Image localImage2 = new Image(local2, false);
+					logo[i] = new ImageView(localImage1);
+					//logo[i].setImage(localImage1);
+					logo[i].setFitWidth(108);
+					logo[i].setFitHeight(65);
+					logo[i].setPreserveRatio(true);
+					logo[i+1] = new ImageView(localImage2);
+					logo[i+ 1].setFitWidth(108);
+					logo[i+ 1].setFitHeight(65);
+					logo[i+ 1].setPreserveRatio(true);
+					
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+
+				i += 2;// increment i by 2
+				
+			} // end for loop
+			
+			int c = 0;
+			for (int temp = 0; temp < currentFixtures.length; temp++) {
+				grid.add(logo[c], 0, temp);
+				grid.add(compName[c], 1, temp);
+				grid.add(VS[temp], 2, temp);
+				grid.add(compName[c + 1], 3, temp);
+				grid.add(logo[c + 1], 4, temp);
+				c += 2;
+			}
+			scrollPane.setContent(grid);
+		} // end if tournament has not ended
+		
+		else {
+			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+		}
+	}// end set current
+
+}

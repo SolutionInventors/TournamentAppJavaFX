@@ -155,6 +155,7 @@ public class InputCompetitorController {
 		}
 
 		btnPrevious.setVisible(false);
+		btnNext.setVisible(noOfCompetitors<=4 ? false:true);
 	}//end loadcomponents
 
 	@FXML
