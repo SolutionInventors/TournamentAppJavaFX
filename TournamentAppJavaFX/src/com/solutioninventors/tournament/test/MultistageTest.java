@@ -49,8 +49,8 @@ public class MultistageTest {
 		// Competitor c15 = new Competitor( "Lagos" , file );
 		// Competitor c16 = new Competitor( "NIgeria" , file ) ;
 
-		//Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8, c9, c10, c11, c12 };
-		Competitor[] comps = { c1, c2, c3, c4};
+		Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8, c9, c10, c11, c12 };
+		//Competitor[] comps = { c1, c2, c3, c4};
 
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.GOALS_CONCEDED,
 				Breaker.NUMBER_OF_WINS, Breaker.AWAY_GOAL};
