@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -24,6 +25,7 @@ public class KnockoutScreenController {
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
 	@FXML private Text txtTourHighlight;
+	@FXML private Label  lblhomeAway;
 	@FXML private AnchorPane  rootPane;
 		  private boolean singleDoubleElim = true;
 		  private boolean HomeandAwayFixture = false;
@@ -51,8 +53,14 @@ public class KnockoutScreenController {
 	public void tourselected(ActionEvent e) {
 		if (singleelim.isSelected()) {
 			singleDoubleElim=true;
+			lblhomeAway.setVisible(true);
+			homeandAway.setVisible(true);
+			HomeandAwayFixture = false;
 		} else if (doubleelim.isSelected()) {
 			singleDoubleElim=false;
+			lblhomeAway.setVisible(false);
+			homeandAway.setVisible(false);
+			HomeandAwayFixture = false;
 		}
 	}
 	
