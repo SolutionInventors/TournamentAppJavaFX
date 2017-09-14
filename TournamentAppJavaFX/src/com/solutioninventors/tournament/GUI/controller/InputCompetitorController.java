@@ -153,9 +153,18 @@ public class InputCompetitorController {
 		for (int j = 0; j < 4; j++) {
 			imgArray.get(j).setImage(image);
 		}
-
+		
 		btnPrevious.setVisible(false);
 		btnNext.setVisible(noOfCompetitors<=4 ? false:true);
+		
+		if (TournamentType == TournamentTypes.CHALLENGE) {
+			for (int i = 2; i < 4; i++) {
+				txtArray.get(i).setVisible(false);
+				imgArray.get(i).setVisible(false);
+				SNArray.get(i).setVisible(false);
+			}
+			endValue = 2;
+		}
 	}//end loadcomponents
 
 	@FXML
@@ -338,8 +347,24 @@ public class InputCompetitorController {
 
 	public void changeImage1(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
-		File file1 = fc.showOpenDialog(null);
+		 
+		//fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
+		/*yourFileChooser.setCurrentDirectory(new File  
+(System.getProperty("user.home") + System.getProperty("file.separator")+ "Music"));
+		 * FileChooser.ExtensionFilter imageFilter
+        = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+
+    FileChooser fc = new FileChooser();
+    fc.getExtensionFilters().add(imageFilter);
+		 * 
+		 * 
+		 * */
+		 FileChooser.ExtensionFilter imageFilter
+	        = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+		 
+		 fc.setInitialDirectory(new File(System.getProperty("user.home")+ System.getProperty("file.separator")+ "Pictures"));
+		 fc.getExtensionFilters().add(imageFilter);
+		 File file1 = fc.showOpenDialog(null);
 		file[img1] = new File(file1.toURI());
 		// for the image
 		if (file1 != null) {
@@ -352,7 +377,7 @@ public class InputCompetitorController {
 
 	public void changeImage2(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File(System.getProperty("user.home")+ System.getProperty("file.separator")+ "Pictures"));
 		File file2 = fc.showOpenDialog(null);
 		file[img2] = new File(file2.toURI());
 		//System.out.println(file2);
@@ -366,7 +391,7 @@ public class InputCompetitorController {
 
 	public void changeImage3(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File(System.getProperty("user.home")+ System.getProperty("file.separator")+ "Pictures"));
 		File file3 = fc.showOpenDialog(null);
 		file[img3] = new File(file3.toURI());
 		// for the image
@@ -379,7 +404,7 @@ public class InputCompetitorController {
 
 	public void changeImage4(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
+		fc.setInitialDirectory(new File(System.getProperty("user.home")+ System.getProperty("file.separator")+ "Pictures"));
 		File file4 = fc.showOpenDialog(null);
 		file[img4] = new File(file4.toURI());
 		// for the image
