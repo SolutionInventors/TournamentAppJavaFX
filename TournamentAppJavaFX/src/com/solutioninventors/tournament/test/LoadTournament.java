@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
@@ -96,9 +97,17 @@ public class LoadTournament
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				builder.append(String.format("%s %.0f VS %.0f %s\n",
-						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
+				try
+				{
+					builder.append(String.format("%s %.0f VS %.0f %s\n",
+							com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+							currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
+				}
+				catch (IncompleteFixtureException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
 			}

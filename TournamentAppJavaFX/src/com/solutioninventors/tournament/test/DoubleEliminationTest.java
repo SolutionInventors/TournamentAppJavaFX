@@ -10,6 +10,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
@@ -21,6 +22,7 @@ import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.DoubleElimination.BracketType;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.SportType;
 
 public class DoubleEliminationTest
 {
@@ -45,7 +47,7 @@ public class DoubleEliminationTest
 		Tournament tournament = null ;
 		try
 		{
-			tournament = new DoubleElimination(comps);
+			tournament = new DoubleElimination( SportType.GOALS_ARE_SCORED, comps);
 		}
 		catch (TournamentException e)
 		{
@@ -128,6 +130,9 @@ public class DoubleEliminationTest
 			try
 			{
 				tournament.setResult( com1, score1, score2, com2);
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
 			}
 			catch (NoFixtureException e)
 			{
@@ -138,9 +143,12 @@ public class DoubleEliminationTest
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-					currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
+			catch (IncompleteFixtureException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			
 		}

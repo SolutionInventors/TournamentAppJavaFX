@@ -9,29 +9,32 @@ package com.solutioninventors.tournament.types.group;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import javax.rmi.CORBA.Tie;
 
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+
+/***
+ * This class encapsulates the operation of a standingTable in a group
+ * Tournament The input of the class is a competitor array while the output is a
+ * String[][] table This class also uses the SportType enum in order to know
+ * when to add GF , GA and GD However the info W , D , L , Pts are not sportType
+ * dependent Operations of this class have been tested and debugged
+ * 
+ * This class also uses a TieBreaker object to create the tabke
+ * This tie breaker must contains Breakers of type Breaeker.GROUP Or Breaker.BOTH
+ * 
+ * The class contains a bunch of getters but no setter 
+ * Thus it is IMMUTABLE!
+ */
+
 public class StandingTable implements Serializable {
 
-	/***
-	 * This class encapsulates the operation of a standingTable in a group
-	 * Tournament The input of the class is a competitor array while the output is a
-	 * String[][] table This class also uses the SportType enum in order to know
-	 * when to add GF , GA and GD However the info W , D , L , Pts are not sportType
-	 * dependent Operations of this class have been tested and debugged
-	 * 
-	 * This class also uses a TieBreaker object to create the tabke
-	 * This tie breaker must contains Breakers of type Breaeker.GROUP Or Breaker.BOTH
-	 * 
-	 * The class contains a bunch of getters but no setter 
-	 * Thus it is IMMUTABLE!
-	 */
 	private Competitor[] competitors;
 	private String[][] table;
 
@@ -70,9 +73,17 @@ public class StandingTable implements Serializable {
 
 	public void updateTables() {
 		//
-		competitors = getTieBreaker().breakTies(competitors, getPointForWin(), getPointForDraw(), getPointForLoss());
-		updateStringTable(); // updates StringTable
+		competitors = getTable();
+		updateStringTable( getTable(), table, TieBreaker.AWAY_FIXTURES + TieBreaker.HOME_FIXTURES  ); // updates StringTable
 
+	}
+
+	public Competitor[] getTable()
+	{
+		return getTieBreaker().breakTies( 
+				TieBreaker.HOME_FIXTURES + TieBreaker.AWAY_FIXTURES,
+				competitors, getPointForWin(), 
+				getPointForDraw(), getPointForLoss());
 	}
 
 	public Competitor getCompetitor(int position) {
@@ -85,7 +96,8 @@ public class StandingTable implements Serializable {
 	}
 	
 	
-	private void updateStringTable()
+	private String[][] updateStringTable( Competitor[] competitors,  String[][] table,
+											int tieBreakerType )
 	{
 		int numOfCompetitors = competitors.length ;
 		String[] nameColumn = new String[ numOfCompetitors ] ;
@@ -95,37 +107,8 @@ public class StandingTable implements Serializable {
 		String[] lossColumn =  new String[ numOfCompetitors ]  ;
 		String[] pointColumn =  new String[ numOfCompetitors ]  ;
 		
-		Arrays.stream( competitors )
-				   .map( Competitor :: getName )
-				   .collect( Collectors.toList() )
-				   .toArray( nameColumn );
-		
-		Arrays.stream( competitors )
-		   .map( c->String.valueOf(  c.getPlayedFixtures()  )  )
-		   .collect( Collectors.toList() )
-		   .toArray( playedColumn );
-		
-		 Arrays.stream( competitors )
-				   .map( com -> String.valueOf( com.getNumberOfWin() ) )
-				   .collect( Collectors.toList() )
-				   .toArray( winsColumn );
-		 
-		Arrays.stream( competitors )
-				   .map( com -> String.valueOf( com.getNumberOfDraw() )  )
-				   .collect( Collectors.toList() )
-				   .toArray( drawColumn );
-		
-		Arrays.stream( competitors )
-				   .map( com -> String.valueOf( com.getNumberOfLoss() )  )
-				   .collect( Collectors.toList() )
-				   .toArray( lossColumn) ;
-		
-		
-		Arrays.stream( competitors )
-		   .map( com -> String.valueOf( 
-				   			com.getPoint( getPointForWin() , getPointForDraw() ,getPointForLoss()) ) )
-		   .collect( Collectors.toList() )
-		   .toArray ( pointColumn ) ;
+		createNoGoalColumns(competitors, nameColumn, playedColumn, winsColumn, 
+				drawColumn, lossColumn, pointColumn, tieBreakerType);
 		
 		for ( int row = 0 ; row < competitors.length ; row++ )
 		{
@@ -144,23 +127,8 @@ public class StandingTable implements Serializable {
 			String[] goalsConcededColumn =  new String[ numOfCompetitors ] ; 
 			String[] goalDifferenceColumn = new String[ numOfCompetitors ] ;
 			
-			Arrays.stream( competitors )
-					   .map( com -> String.valueOf( (int) com.getGoalsScored() ) )
-					   .collect( Collectors.toList() )
-					   .toArray( goalsScoredColumn );
-			
-			
-				Arrays.stream( competitors )
-				   .map( com -> String.valueOf( (int) com.getGoalsConceded() ) )
-				   .collect( Collectors.toList() )
-				   .toArray(goalsConcededColumn );
-				
-				
-			
-			Arrays.stream( competitors )
-				   .map( com -> String.valueOf( (int) com.getGoalDifference() ) )
-				   .collect( Collectors.toList() )
-				   .toArray( goalDifferenceColumn );
+			createGoalScoredColumns(competitors, goalsScoredColumn, goalsConcededColumn, 
+					goalDifferenceColumn, tieBreakerType);
 			
 			for ( int row = 0 ; row < competitors.length ; row++ )
 			{
@@ -170,7 +138,128 @@ public class StandingTable implements Serializable {
 				table[ row ][ 8 ] = pointColumn[ row ];
 			}
 		}
+		return table;
 			
+	}
+
+	private void createGoalScoredColumns(Competitor[] competitors , String[] goalsScoredColumn, String[] goalsConcededColumn,
+			String[] goalDifferenceColumn, int tieBreakerType)
+	{
+		Function<Competitor, String> goalsScoredFunction = null;
+		Function<Competitor, String> goalsDiffFunction = null;
+		Function<Competitor, String> goalsConceededFunction = null;
+		
+		if ( tieBreakerType ==  TieBreaker.AWAY_FIXTURES)
+		{
+
+			goalsScoredFunction = com -> String.valueOf( com.getAwayGoalsScored() );
+			goalsConceededFunction = com -> String.valueOf( com.getAwayGoalsConceded() );
+			goalsDiffFunction = com -> String.valueOf( com.getAwayGoalDifference() );
+			
+		}
+		else if( tieBreakerType == TieBreaker.HOME_FIXTURES )
+		{
+			goalsScoredFunction = com -> String.valueOf( com.getHomeGoalsScored() );
+			goalsConceededFunction = com -> String.valueOf( com.getHomeGoalsConceded() );
+			goalsDiffFunction = com -> String.valueOf( com.getHomeGoalDifference() );
+			
+		}
+		else
+		{
+			goalsScoredFunction = com -> String.valueOf( com.getGoalsScored() );
+			goalsConceededFunction = com -> String.valueOf( com.getGoalsConceded() );
+			goalsDiffFunction = com -> String.valueOf( com.getGoalDifference() );
+			
+			
+		}
+		
+		Arrays.stream( competitors )
+				   .map( com -> String.valueOf( (int) com.getGoalsScored() ) )
+				   .collect( Collectors.toList() )
+				   .toArray( goalsScoredColumn );
+		
+		
+			Arrays.stream( competitors )
+			   .map( com -> String.valueOf( (int) com.getGoalsConceded() ) )
+			   .collect( Collectors.toList() )
+			   .toArray(goalsConcededColumn );
+			
+			
+		
+		Arrays.stream( competitors )
+			   .map( com -> String.valueOf( (int) com.getGoalDifference() ) )
+			   .collect( Collectors.toList() )
+			   .toArray( goalDifferenceColumn );
+	}
+
+	public void createNoGoalColumns(Competitor[] competitors, String[] nameColumn, String[] playedColumn, String[] winsColumn, String[] drawColumn,
+			String[] lossColumn, String[] pointColumn, int type)
+	{
+		Function<Competitor, String> winFunction = null;
+		Function<Competitor, String> lossFunction = null;
+		Function<Competitor, String> drawFunction = null;
+		Function<Competitor, String> pointFunction = null ;
+		if ( type == TieBreaker.AWAY_FIXTURES )
+		{
+			
+			winFunction = com -> String.valueOf( com.getNumberOfAwayWin() );
+			lossFunction = com -> String.valueOf( com.getNumberOfAwayLoss() );
+			drawFunction = com -> String.valueOf( com.getNumberOfAwayDraw() );
+			pointFunction = com -> 
+			String.valueOf( com.getAwayPoint(
+					getPointForWin(), getPointForDraw(), getPointForLoss())  );
+			
+		}
+		else if( type == TieBreaker.HOME_FIXTURES )
+		{
+			winFunction = com -> String.valueOf( com.getNumberOfHomeWin() );
+			lossFunction = com -> String.valueOf( com.getNumberOfHomeLoss() );
+			drawFunction = com -> String.valueOf( com.getNumberOfHomeDraw() );
+			pointFunction = com -> 
+			String.valueOf( com.getHomePoint(
+					getPointForWin(), getPointForDraw(), getPointForLoss())  );
+		}
+		else
+		{
+			winFunction = com -> String.valueOf( com.getNumberOfWin() );
+			lossFunction = com -> String.valueOf( com.getNumberOfLoss() );
+			drawFunction = com -> String.valueOf( com.getNumberOfDraw() );
+			pointFunction = com -> 
+				String.valueOf( com.getPoint(
+						getPointForWin(), getPointForDraw(), getPointForLoss())  );
+			
+		}
+		
+		Arrays.stream( competitors )
+				   .map( Competitor :: getName )
+				   .collect( Collectors.toList() )
+				   .toArray( nameColumn );
+		
+		Arrays.stream( competitors )
+		   .map( c->String.valueOf(  c.getPlayedFixtures()  )  )
+		   .collect( Collectors.toList() )
+		   .toArray( playedColumn );
+		
+		 Arrays.stream( competitors )
+				   .map( winFunction )
+				   .collect( Collectors.toList() )
+				   .toArray( winsColumn );
+		 
+		Arrays.stream( competitors )
+				   .map( drawFunction  )
+				   .collect( Collectors.toList() )
+				   .toArray( drawColumn );
+		
+		Arrays.stream( competitors )
+				   .map( lossFunction  )
+				   .collect( Collectors.toList() )
+				   .toArray( lossColumn) ;
+		
+		
+		Arrays.stream( competitors )
+		   .map( pointFunction )
+		   .collect( Collectors.toList() )
+		   .toArray ( pointColumn ) ;
 	}
 		
 
@@ -186,5 +275,45 @@ public class StandingTable implements Serializable {
 
 	public TieBreaker getTieBreaker() {
 		return TIE_BREAKER;
+	}
+	
+	
+	public Competitor[] getHomeTable()
+	{
+		return getTieBreaker().breakTies( 
+				TieBreaker.HOME_FIXTURES ,
+				competitors, getPointForWin(), 
+				getPointForDraw(), getPointForLoss());
+
+	}
+	
+	public String[][] getHomeStringTable()
+	{
+		String[][] homeTable =  new String[ table.length ][ table[0].length ];
+		
+		return updateStringTable( getHomeTable() , homeTable, TieBreaker.HOME_FIXTURES  );
+	}
+	
+	public Competitor[] getAwayTable()
+	{
+		return getTieBreaker().breakTies( 
+				TieBreaker.AWAY_FIXTURES ,
+				competitors, getPointForWin(), 
+				getPointForDraw(), getPointForLoss());
+
+	}
+	
+	public String[][] getAwayStringTable()
+	{
+		String[][] awayTable =  new String[ table.length ][ table[0].length ];
+		
+		return updateStringTable( getAwayTable() , awayTable, TieBreaker.AWAY_FIXTURES );
+	}
+	
+	private enum TableType
+	{
+		HOME,
+		AWAY,
+		HOME_AND_AWAY
 	}
 }

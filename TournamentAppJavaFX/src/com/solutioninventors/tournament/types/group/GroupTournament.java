@@ -40,30 +40,23 @@ public abstract class GroupTournament extends Tournament
 	
 	private StandingTable table;
 	
-	private final SportType SPORT_TYPE;
 	private Round[] rounds;
 	
 	public GroupTournament(Competitor[] comps, SportType type, double pWin, double pDraw, double pLoss,
 			TieBreaker breaker) throws InvalidBreakerException, TournamentException {
-		super(comps);
+		super(type, comps);
 		
 		if ( comps.length < 3 )
 			throw new TournamentException("A group tournament must have total comopettitors > 2" );
-		SPORT_TYPE = type ;
 		
 		if ( breaker == null || !Arrays.stream( breaker.getBreakers() )
 				.allMatch( b -> b.getType() == Breaker.GROUP_BREAKER ||
 							b.getType() ==  Breaker.BOTH ))
 			throw new InvalidBreakerException("The breaker is invalid");
-		table = new StandingTable(SPORT_TYPE, comps, pWin, pDraw, pLoss, breaker);
+		table = new StandingTable( getSportType(), comps, pWin, pDraw, pLoss, breaker);
 		setName("");
 	}
 
-	
-
-	public SportType getSportType() {
-		return SPORT_TYPE;
-	}
 
 	public StandingTable getTable() {
 		return table;

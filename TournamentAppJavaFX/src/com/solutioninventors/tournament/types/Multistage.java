@@ -98,7 +98,7 @@ public class Multistage extends Tournament
 			boolean knockoutHomeAndAway , GroupStageType groupStageType ) 
 					throws TournamentException, InvalidBreakerException
 	{
-		super(coms);
+		super(type, coms);
 		groupAwayMatches = groupHomeAndAway;
 		knockoutAwayMatches = knockoutHomeAndAway ;
 		WIN_POINT = pWin ;
@@ -283,7 +283,7 @@ public class Multistage extends Tournament
 		try
 		{
 			
-			knockoutStage = new SingleEliminationTournament(
+			knockoutStage = new SingleEliminationTournament( getSportType(), 
 					allQualifiers.toArray( 
 							new Competitor[ allQualifiers.size() ]) , 
 							hasKnockoutAwayMatches() );

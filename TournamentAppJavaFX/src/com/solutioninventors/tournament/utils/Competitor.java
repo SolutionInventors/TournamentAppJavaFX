@@ -207,7 +207,7 @@ public class Competitor implements Serializable
 	}
 
 	/**
-	 * Gets this {@code COmpetitor}'s first name  or his entire name
+	 * Gets this {@code Competitor}'s first name  or his entire name
 	 * if this was created with {@code Competitor(String name, File imageFile)  } constructor 
 	 *@return String representation of this Competitor's firs tName
 	 */
@@ -433,7 +433,7 @@ public class Competitor implements Serializable
 	 */
 	public double getGoalsScored() 
 	{
-		return goalsScored;
+		return getHomeGoalsScored() + getAwayGoalsScored();
 	}
 
 	/**
@@ -560,6 +560,15 @@ public class Competitor implements Serializable
 		return 0 ;
 	}
 	
+	
+	public double getTotalAwayGoal()
+	{
+		double total = 0 ;
+		for ( Competitor k : awayGoals.keySet() )
+			total+= awayGoals.get( k );
+		return  total ; 
+	}
+	
 	/**
 	 * 
 	 *
@@ -616,18 +625,70 @@ public class Competitor implements Serializable
 	 *double
 	 *@return number of away goals as {@code double }
 	 */
-	public double getNumberOfAwayGoals()
+	public double getAwayGoalsScored()
 	{
 		
 		double total = 0 ;
-		Set<Competitor> keys = awayGoals.keySet();
 		
-		for ( Competitor  k : keys)
+		for ( Competitor  k : awayGoals.keySet())
 			total += awayGoals.get( k );
 		
 		return total;
 	}
 
+	public double getHomePoint(double pWin, double pDraw, double pLoss)
+	{
+		return (getNumberOfHomeWin() * pWin) + (getNumberOfHomeDraw() * pDraw) + (getNumberOfHomeLoss() * pLoss);
+	}
+
+	public double getAwayPoint(double pWin, double pDraw, double pLoss)
+	{
+		return (getNumberOfAwayWin() * pWin) + 
+				(getNumberOfAwayDraw() * pDraw) + 
+				(getNumberOfAwayLoss() * pLoss);
+	}
+
+	public double getHomeGoalsScored()
+	{
+		double total = 0 ; 
+		for ( Competitor k : homeGoals.keySet() )
+			total+= homeGoals.get(k);
+		return total;
+	}
+
+	public double getHomeGoalsConceded()
+	{
+		double totalGoalsConceeded = 0 ;
+		for( Competitor opponent : headToHead.keySet() )
+			totalGoalsConceeded+= opponent.getHomeGoal( Competitor.this);
+		return totalGoalsConceeded ;
+	}
+
+	
+	public double getHomeGoal(Competitor opponent)
+	{
+		if( homeGoals.containsKey( opponent ) )
+			return homeGoals.get( opponent ) ;
+		return 0 ;
+	}
+
+	public double getHomeGoalDifference()
+	{
+		return getHomeGoalsScored() - getHomeGoalsConceded();
+	}
+	
+	public double getAwayGoalDifference()
+	{
+		return getAwayGoalsScored() - getAwayGoalsConceded();
+	}
+	
+	public double getAwayGoalsConceded()
+	{
+		double totalGoalsConceeded = 0 ;
+		for( Competitor opponent : headToHead.keySet() )
+			totalGoalsConceeded+= opponent.getAwayGoal( Competitor.this);
+		return totalGoalsConceeded ;
+	}
 	
 	
 	

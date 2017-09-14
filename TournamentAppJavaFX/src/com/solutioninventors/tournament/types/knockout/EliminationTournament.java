@@ -12,13 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
-import com.solutioninventors.tournament.exceptions.NoFixtureException;
-import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
+import com.solutioninventors.tournament.utils.SportType;
 
 public abstract class EliminationTournament extends Tournament implements Serializable
 {
@@ -31,9 +29,9 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	private static final long serialVersionUID = 1L;
 	
 	
-	public EliminationTournament ( Competitor[] comps ) throws TournamentException
+	public EliminationTournament ( SportType type, Competitor[] comps ) throws TournamentException
 	{
-		super( comps );
+		super( type, comps );
 		double validator = ( Math.log( comps.length ) )/
 				( Math.log( 2 ) );
 		if ( ! ( validator % 1 == 0.0f)  ) //the number is invalid 

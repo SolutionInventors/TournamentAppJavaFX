@@ -131,7 +131,7 @@ public class RoundRobinTournament extends GroupTournament
 		
 		for ( int i = 0 ; i < fixtures.length ; i ++ )
 		{
-			fixtures[ i ] = new Fixture ( competitors[ fixes[ i + skip ][ 0 ]  - 1 ],
+			fixtures[ i ] = new Fixture ( getSportType(), competitors[ fixes[ i + skip ][ 0 ]  - 1 ],
 			                              competitors[ fixes[ i + skip ][ 1 ] - 1 ] );
 		}
 		
@@ -152,7 +152,7 @@ public class RoundRobinTournament extends GroupTournament
 		
 		for ( int i = 0 ; i < rounds.length ; i++ )
 		{
-			inverseRounds[ i ] = rounds[ i ].invertHomeAndAway() ;
+			inverseRounds[ i ] = rounds[ i ].invertHomeAndAway( getSportType() ) ;
 			Collections.shuffle( Arrays.asList( inverseRounds[ i ].getFixtures() )); 
 		}
 		

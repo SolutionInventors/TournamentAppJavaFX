@@ -22,7 +22,8 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 public class TieBreaker implements Serializable
 {
 	private final Breaker[] BREAKERS;
-	
+	public static final int HOME_FIXTURES =1;
+	public static final int AWAY_FIXTURES =2 ;
 	
 	/**
 	 * 
@@ -42,20 +43,44 @@ public class TieBreaker implements Serializable
 	
 	/**
 	 * 
-	 *Creates this {@code TieBreaker} with a {@code Breaker[]} object
-	 *@author Oguejiofor Chidiebere 
-	 *@since v1.0
-	 *@param comps An array of {@code Competitor}s before ties are broken
-	 *@param pWin The point for win
-	 *@param pDraw The point for a draw
-	 *@param pLoss The point for a loss
-	 *@return a {@code Competitor[] } This array contains the {@code Competitor}s in the right
-	 *order after breaking the ties
+	 * Sorts an array of {@code Competitor}s, breaks ties between the {@code Competitor}s if any
+	 *  and returns a {@code Competitor[] } object with the {@code Competitor}s sroted 
+	 *  <p>
+	 * The {@code scope} argument specifies which point this method would use for the initial comparison
+	 * . For example, if scope = {@code TieBreaker.HOME } then this method<br>
+	 * would initially sort the competitors with their number of home points.
+	 * If it is set to {@code TieBreaker.AWAY} then this method initially sort the competitors
+	 * with <br>their number of away points.
+	 * If scope is {@code TieBreaker.HOME + TieBreaker.AWAY} then it initially considers the 
+ 	 * the total points. 
+ 	 * This scope variable is important when retrieving a home table, an away table and
+ 	 * a table from a {@link com.solutioninventors.tournament.types.group.StandingTable} 
+ 	 * <p>
+ 	 * 
+ 	 * Typically, this method takes all the {@code COmpetitor}s in a {@code GroupTournmant}
+ 	 * and returns then sorted with this {@code TieBreaker}'s {@code Breaker}s 
+ 	 * 
+	 *@param scope specifies the point to be used for the comparison. It can be set to
+	 *TieBreaker.HOME( or 1) , TieBreaker.AWAY ( or 2 )  or TieBreker.HOME + TieBreaker.AWAY( or 3 )
+	 *<br> if scope is not within the range 1 <= scope <=3 then this method would assume
+	 *{@code Breaker. HOME} + {@code TieBreaker.AWAY } 
+	 *@param comps the {@code Competitor[]} to be sorted
+	 *@param pWin the point for win
+	 *@param pDraw the point for draw
+	 *@param pLoss the point for loss
+	 *@return a sorted {@code Competitor[]} object with all ties broken
 	 */
-	public Competitor[] breakTies( Competitor[] comps, double pWin, double pDraw, double pLoss)
+	public Competitor[] breakTies( int scope , Competitor[] comps, double pWin, double pDraw, double pLoss)
 	{
-		Comparator< Competitor > comparator = 
-				Comparator.comparing(c-> c.getPoint( pWin , pDraw , pLoss) );
+		Comparator< Competitor > comparator = null;
+		
+		
+		if ( scope == AWAY_FIXTURES )
+			comparator = Comparator.comparing(c-> c.getAwayPoint( pWin , pDraw , pLoss) );
+		else if ( scope == HOME_FIXTURES )
+			comparator = Comparator.comparing(c-> c.getHomePoint( pWin , pDraw , pLoss) );
+		else
+			comparator  = Comparator.comparing(c-> c.getPoint( pWin , pDraw , pLoss) );
 		
 		comparator = comparator.reversed();
 		for ( int i = 0 ; i < getBreakers().length ;i ++ )

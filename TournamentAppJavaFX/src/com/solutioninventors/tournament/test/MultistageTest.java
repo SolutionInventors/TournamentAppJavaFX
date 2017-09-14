@@ -11,6 +11,7 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -137,9 +138,17 @@ public class MultistageTest {
 			{
 				Test.displayMessage(e.getMessage() );
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-					currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
+			try
+			{
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));
+			}
+			catch (IncompleteFixtureException  e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		
 		Test.displayMessage( builder.toString()  );

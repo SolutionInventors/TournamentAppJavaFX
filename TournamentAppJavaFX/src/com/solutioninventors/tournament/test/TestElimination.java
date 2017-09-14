@@ -14,6 +14,7 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
+import com.solutioninventors.tournament.utils.SportType;
 
 public class TestElimination {
 
@@ -30,7 +31,7 @@ public class TestElimination {
 		
 		try 
 		{
-			SingleEliminationTournament cp = new SingleEliminationTournament(comps);
+			SingleEliminationTournament cp = new SingleEliminationTournament( SportType.GOALS_ARE_SCORED, comps);
 			cp.setResult(c1, 2, 5, c2);
 			cp.setResult(c3, 2, 5, c4);
 			cp.moveToNextRound();

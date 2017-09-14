@@ -18,6 +18,7 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
+import com.solutioninventors.tournament.utils.SportType;
 
 /** 
  * 
@@ -45,9 +46,9 @@ public class Challenge extends Tournament
 	 * @param Competitor[] , {@code}int numOfRounds
 	 * @
 	 */
-	public Challenge( Competitor[] competitors , int numOfRounds 	)
+	public Challenge( SportType type, Competitor[] competitors , int numOfRounds 	)
 	{
-		super( competitors );
+		super( type ,  competitors );
 		
 		ROUNDS = new Round[ numOfRounds ];
 		
@@ -63,7 +64,7 @@ public class Challenge extends Tournament
 		Fixture fixture ;
 		for ( int i = 0 ; i < ROUNDS.length ; i++ )
 		{
-			fixture = new Fixture(getCompetitors()[ i % 2 == 0 ? 0 : 1], 
+			fixture = new Fixture( getSportType(),  getCompetitors()[ i % 2 == 0 ? 0 : 1], 
 					getCompetitors()[ i % 2 == 0 ? 1 : 0 ] );
 			getRoundArray()[ i ] = new Round( fixture );
 		}

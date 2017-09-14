@@ -10,6 +10,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -136,14 +137,15 @@ public class RoundRoubinOutstandingTest
 			try
 			{
 				tournament.setResult( com1, score1, score2, com2);
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
 			}
-			catch (NoFixtureException | ResultCannotBeSetException e)
+			catch (NoFixtureException | ResultCannotBeSetException | IncompleteFixtureException e)
 			{
 				Test.displayMessage(e.getMessage() );
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-					currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
+			
 		}
 		
 		Test.displayMessage( builder.toString()  );

@@ -10,14 +10,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
+import com.solutioninventors.tournament.utils.SportType;
 
 public class SingleEliminationTournament extends EliminationTournament {
 	private static final long serialVersionUID = 1L;
@@ -44,8 +47,8 @@ public class SingleEliminationTournament extends EliminationTournament {
 	private List<Fixture> activeTies;
 	private final boolean AWAY;
 
-	public SingleEliminationTournament(Competitor[] comps, boolean away) throws TournamentException {
-		super(comps);
+	public SingleEliminationTournament(SportType type, Competitor[] comps, boolean away) throws TournamentException {
+		super( type, comps);
 
 		roundList = new ArrayList<>();
 		AWAY = away;
@@ -55,9 +58,9 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	}
 	
-	public SingleEliminationTournament(Competitor[] comps) throws TournamentException
+	public SingleEliminationTournament(SportType type, Competitor[] comps) throws TournamentException
 	{
-		this( comps , false );
+		this( type,  comps , false );
 	}
 
 
@@ -67,14 +70,14 @@ public class SingleEliminationTournament extends EliminationTournament {
 		Fixture[] fixtures = new Fixture[tempComps.length / 2];
 
 		for (int i = 0; i < tempComps.length; i += 2) {
-			fixtures[i / 2] = new Fixture(tempComps[i], tempComps[i + 1]);
+			fixtures[i / 2] = new Fixture( getSportType(), tempComps[i], tempComps[i + 1]);
 
 		}
 
 		roundList.add(new Round(fixtures));
 
 		if (hasAway())
-			roundList.add(new Round(fixtures).invertHomeAndAway());
+			roundList.add(new Round(fixtures).invertHomeAndAway( getSportType() ));
 	}
 
 	public boolean hasAway() {
@@ -94,34 +97,40 @@ public class SingleEliminationTournament extends EliminationTournament {
 	@Override
 	public void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException {
 		if (!hasEnded() && getCurrentRound().isComplete()) {
-			if (hasAway()) {
-				if (getActiveCompetitors().length == 2)// it is the final
-				{
-					Fixture fix = getCurrentRound().getFixtures()[0];
+			try
+			{
+				if (hasAway()) {
+					if (getActiveCompetitors().length == 2)// it is the final
+					{
+						Fixture fix = getCurrentRound().getFixtures()[0];
 
-					if (fix.getCompetitorOneScore() > fix.getCompetitorTwoScore())
-						eliminateLoser(fix.getCompetitorTwo());
-					else
-						eliminateLoser(fix.getCompetitorOne());
-				} else if (getCurrentRoundNum() % 2 == 0) // is first leg
-					incrementRoundNum();
-				else // second leg fixture
-				{
-					createNextRound();
+						fix.eliminateLoser();
+					} else if (getCurrentRoundNum() % 2 == 0) // is first leg
+						incrementRoundNum();
+					else // second leg fixture
+					{
+						createNextRound();
+					}
+				} 
+				else {
+					if (!getCurrentRound().hasDraw()) // no ties
+					{
+						createNextRound();
+					} else
+						throw new MoveToNextRoundException("Some fixtures are incomplete");
 				}
-			} else {
-				if (!getCurrentRound().hasDraw()) // no ties
-				{
-					createNextRound();
-				} else
-					throw new MoveToNextRoundException("Some fixtures are incomplete");
 			}
+			catch (IncompleteFixtureException e)
+			{
+				throw new MoveToNextRoundException( e.getMessage() );
+			}
+			
 		} else
 			throw new TournamentEndedException();
 
 	}
 
-	public void createNextRound() {
+	public void createNextRound() throws IncompleteFixtureException {
 
 		eliminateLosers();
 		incrementRoundNum();
@@ -131,28 +140,26 @@ public class SingleEliminationTournament extends EliminationTournament {
 			Fixture[] fixtures = new Fixture[comps.length / 2];
 
 			for (int i = 0; i < comps.length; i += 2) {
-				fixtures[i / 2] = new Fixture(comps[i], comps[i + 1]);
+				fixtures[i / 2] = new Fixture( getSportType(), comps[i], comps[i + 1]);
 
 			}
 
 			roundList.add(new Round(fixtures));
 			if (hasAway() && getActiveCompetitors().length > 2)
-				roundList.add(new Round(fixtures).invertHomeAndAway());
+				roundList.add(new Round(fixtures).invertHomeAndAway( getSportType()));
 		}
 	}
 
-	private void eliminateLosers() {
+	private void eliminateLosers() throws IncompleteFixtureException {
 
 		if (!hasAway()) {
 			Arrays.stream(getCurrentRound().getFixtures()).forEach(f -> {
-				if (f.getCompetitorOneScore() > f.getCompetitorTwoScore()) {
-					f.getCompetitorTwo().setEliminated(true);
-				} else {
-					f.getCompetitorOne().setEliminated(true);
-				}
+				f.eliminateLoser();
 
 			});
-		} else {
+		} 
+		else if ( getSportType() ==  SportType.GOALS_ARE_SCORED ) //implement away goal rule
+		{
 			List<Fixture> firstLeg = new ArrayList<>();
 			List<Fixture> secondLeg = new ArrayList<>();
 
@@ -163,25 +170,39 @@ public class SingleEliminationTournament extends EliminationTournament {
 				Competitor com1 = firstLeg.get(i).getCompetitorOne();
 				Competitor com2 = firstLeg.get(i).getCompetitorTwo();
 
-				double totalComOneScore = firstLeg.get(i).getCompetitorOneScore()
-						+ secondLeg.get(i).getCompetitorTwoScore();
-
-				double totalComTwoScore = firstLeg.get(i).getCompetitorTwoScore()
-						+ secondLeg.get(i).getCompetitorOneScore();
-
-				if (totalComOneScore > totalComTwoScore)
+				
+			double totalComOneScore = firstLeg.get(i).getCompetitorOneScore()
+					+ secondLeg.get(i).getCompetitorTwoScore();
+			double totalComTwoScore = firstLeg.get(i).getCompetitorTwoScore()
+					+ secondLeg.get(i).getCompetitorOneScore();
+			
+			if (totalComOneScore > totalComTwoScore)
+				eliminateLoser(com2);
+			else if (totalComOneScore < totalComTwoScore)
+				eliminateLoser(com1);
+			else {
+				if (com1.getAwayGoal(com2) > com2.getAwayGoal(com1))
 					eliminateLoser(com1);
-				else if (totalComOneScore < totalComTwoScore)
+				else
 					eliminateLoser(com2);
-				else {
-					if (com1.getAwayGoal(com2) > com2.getAwayGoal(com1))
-						eliminateLoser(com2);
-					else
-						eliminateLoser(com1);
-				}
+			}
+				
+
+				
+
+				
 
 			}
 		}
+	}
+
+	private void eliminateLoser(Competitor com1)
+	{
+		Arrays.stream( getActiveCompetitors() )
+			.filter( c -> Competitor.isEqual( c, com1 ) )
+			.findFirst()
+			.get().setEliminated( true );
+		
 	}
 
 	@Override
@@ -231,16 +252,10 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	}
 
-	private void eliminateLoser(Competitor com1) {
-		Competitor[] comps = getActiveCompetitors();
-
-		if (Arrays.stream(comps).anyMatch(c -> Competitor.isEqual(c, com1))) {
-			Arrays.stream(comps).filter(c -> Competitor.isEqual(c, com1)).forEach(c -> c.setEliminated(true));
-		}
-	}
+	
 
 	private void addToTieList(Competitor com1, double score1, double score2, Competitor com2) throws ResultCannotBeSetException  {
-		Fixture fixture = new Fixture(com1, com2);
+		Fixture fixture = new Fixture( getSportType(), com1, com2);
 
 		fixture.setResult(score1, score2, false);
 		tieList.add(fixture);

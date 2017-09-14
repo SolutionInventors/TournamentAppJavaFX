@@ -82,7 +82,7 @@ public class SwissTournament extends GroupTournament {
 		Fixture[] fixtures = new Fixture[temp.length / 2];
 
 		for (int i = 0; i < temp.length; i += 2) {
-			fixtures[i / 2] = new Fixture(temp[i], temp[i + 1]);
+			fixtures[i / 2] = new Fixture( getSportType(), temp[i], temp[i + 1]);
 
 		}
 

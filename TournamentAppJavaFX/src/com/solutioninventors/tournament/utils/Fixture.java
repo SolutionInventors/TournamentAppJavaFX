@@ -2,6 +2,7 @@ package com.solutioninventors.tournament.utils;
 
 import java.io.Serializable;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 
 /**
@@ -52,7 +53,8 @@ public class Fixture implements Serializable{
 	private double competitorOneScore;
 	private double competitorTwoScore;
 	private boolean complete;
-
+	private final SportType TYPE;
+	
 	/**
 	 * 
 	* This constructor creates initializes this {@code Fixture } object with the two {@code Competitor} 
@@ -64,23 +66,29 @@ public class Fixture implements Serializable{
 	 *@param homeCompetitor the {@code Competitor } that is home( or white in chess) 
 	 *@param awayCompetitor the {@code COmpetitor } that is away( or black in chess)
 	 */
-	public Fixture(Competitor homeCompetitor, Competitor awayCompetitor) {
+	public Fixture( SportType type , Competitor homeCompetitor, Competitor awayCompetitor) {
 		COMPETITOR_ONE = homeCompetitor;
 		COMPETITOR_TWO = awayCompetitor;
 		competitorOneScore = -1 ;
 		competitorTwoScore = -1;
+		TYPE = type;
 	}
 
 	/**
 	 This method sets the CompetitorOne and COmpetitorTwoScore and also increments 
 	 the {@code Competitor } objects' data such as the number of wins, goals scored, <br>
 	 goals conceded etc. as appropriate and sets this Fixture's complete to {@code true}
-	 
+	 <p>
+	 If this {@code Fixture}'s {@code SportType} is set to {@code SportType.GOALS_ARE_NOT_SCORED}
+	 this method sets the winner score to 1, draw to 0 and loss to -1 
+	 <br>It stores the argument of the homeComSccore and awayComScore if it's {@code SportType} is
+	 	{@code SportType.GOALS_ARE_SCORED}
 	 @since v1.0
+	 @see SportType
 	 @see Competitor 
-	 *@param homeComScore the home {@code Competitor}'s score
-	 *@param awayComScore the away {@code Competitor}'s score
-	 * @throws ResultCannotBeSetException when this {@code Fixture } is already contains a result
+	 @param homeComScore the home {@code Competitor}'s score
+	 @param awayComScore the away {@code Competitor}'s score
+	 @throws ResultCannotBeSetException when this {@code Fixture } is already contains a result
 	 */
 	public void setResult(final double homeComScore, final double awayComScore) 
 			throws ResultCannotBeSetException
@@ -89,32 +97,40 @@ public class Fixture implements Serializable{
 			if (homeComScore > awayComScore) {
 				getCompetitorOne().incrementHomeWin();
 				getCompetitorTwo().incrementAwayLoss();
+				competitorOneScore = 1;
+				competitorTwoScore = -1;
 			} 
 			else if (homeComScore == awayComScore) // match is a draw
 			{
 				getCompetitorOne().incrementHomeDraw();
 				getCompetitorTwo().incrementAwayDraw();
+				competitorOneScore = 0;
+				competitorTwoScore = 0;
 			}
 			else 
 			{
 				getCompetitorOne().incrementAwayLoss();
 				getCompetitorTwo().incrementAwayWin();
+				competitorOneScore = -1;
+				competitorTwoScore = 1;
 				
 			}
 
 			
-			getCompetitorOne().incrementGoalsScoredBy( homeComScore );
-			getCompetitorOne().incrementGoalsConcededBy( awayComScore );
-			getCompetitorTwo().incrementGoalsScoredBy( awayComScore );
-			getCompetitorTwo().incrementGoalsConcededBy( homeComScore );
-			getCompetitorOne().addToHeadToHead( getCompetitorTwo() , homeComScore ); 
-			getCompetitorTwo().addToHeadToHead(getCompetitorOne(), awayComScore );
-			
-			getCompetitorTwo().addAwayGoal( getCompetitorOne(), awayComScore);//adds away goal
-			getCompetitorOne().addHomeGoal( getCompetitorTwo(), homeComScore);//adds home goal
-			competitorOneScore = homeComScore ;
-			competitorTwoScore = awayComScore ;
-			
+			if ( TYPE == SportType.GOALS_ARE_SCORED )
+			{
+				getCompetitorOne().incrementGoalsScoredBy( homeComScore );
+				getCompetitorOne().incrementGoalsConcededBy( awayComScore );
+				getCompetitorTwo().incrementGoalsScoredBy( awayComScore );
+				getCompetitorTwo().incrementGoalsConcededBy( homeComScore );
+				getCompetitorOne().addToHeadToHead( getCompetitorTwo() , homeComScore ); 
+				getCompetitorTwo().addToHeadToHead(getCompetitorOne(), awayComScore );
+				
+				getCompetitorTwo().addAwayGoal( getCompetitorOne(), awayComScore);//adds away goal
+				getCompetitorOne().addHomeGoal( getCompetitorTwo(), homeComScore);//adds home goal
+				competitorOneScore = homeComScore ;
+				competitorTwoScore = awayComScore ;
+			}
 			complete = true ;
 		}
 		else
@@ -140,7 +156,8 @@ public class Fixture implements Serializable{
 	 *
 	 */
 	public boolean isDraw() {
-		if (isComplete() && (getCompetitorOneScore() == getCompetitorTwoScore()))
+		
+		if (isComplete() && ( competitorOneScore == competitorTwoScore))
 			return true;
 		else
 			return false;
@@ -154,10 +171,7 @@ public class Fixture implements Serializable{
 	 */
 	
 	public boolean hasWinner() {
-		if (isComplete() && (getCompetitorOneScore() > getCompetitorTwoScore() && isDraw()))
-			return true;
-		else
-			return false;
+		return !isDraw();
 	}
 
 	/**
@@ -179,7 +193,8 @@ public class Fixture implements Serializable{
 	 */
 	public Competitor getWinner() {
 		if (hasWinner())
-			return getCompetitorOneScore() > getCompetitorTwoScore() ? getCompetitorOne() : getCompetitorTwo();
+			return competitorOneScore > competitorTwoScore ?
+					getCompetitorOne() : getCompetitorTwo();
 
 		return null;
 
@@ -195,7 +210,8 @@ public class Fixture implements Serializable{
 	{
 		
 		if (hasLoser())
-			return getCompetitorOneScore() < getCompetitorTwoScore() ? getCompetitorOne() : getCompetitorTwo();
+			return competitorOneScore < competitorTwoScore ?
+					getCompetitorOne() : getCompetitorTwo();
 
 		return null;
 
@@ -240,47 +256,78 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * Gets th
+	 * Gets the away {@code Competitor}'s score.
+	 * When this {@code Fixture}'s {@code SportType} is {@code SpoortType.GOALS_ARE_NOT_SCORED}
+	 * this method returns 1, 0 or -1 to indicate a win, draw or loss respectively
 	 *@return The home {@code Competitor}'s score as {@code double }
+	 * @throws IncompleteFixtureException when this {@code Fixture} is does not contain a result
+	 * 
 	 */
 	
-	public double getCompetitorOneScore()  {
-		return competitorOneScore;
+	public double getCompetitorOneScore() 
+			throws IncompleteFixtureException {
+		
+		if ( isComplete() )
+			return competitorOneScore;
+		
+		throw new IncompleteFixtureException("This fixture does not contain a restult" );
 		
 	}
 
 	/**
 	 * Gets an {@code Integer} representation of the home {@code Competitor}'s score when 
 	 * the boolean is {@code true}. Else gets the {@code Double } representation
+	 * When this {@code Fixture}'s {@code SportType} is {@code SpoortType.GOALS_ARE_NOT_SCORED}
+	 * this method returns 1, 0 or -1 to indicate a win, draw or loss respectively
+	 * @author Oguwjiofor Chidiebere
 	 *@param intValue  when {@code true} gets an {@code Integer }
 	 *@return The home {@code Competitor}'s score as an {@code Number}
+		@throws IncompleteFixtureException when this {@code Fixture} is does not contain a result
+	 
 	 */
-	public Number getCompetitorOneScore( boolean intValue )  {
-		return !intValue ? competitorOneScore : (int) competitorOneScore ;
+	public Number getCompetitorOneScore( boolean intValue ) 
+			throws IncompleteFixtureException {
+		return !intValue ? getCompetitorOneScore() : 
+			(int) getCompetitorOneScore() ;
 		
 	}
 	
 	/**
 	 * Gets the away teams score as a {@code Number} object
-	 *@param intValue returns an {@code }
+	 * When this {@code Fixture}'s {@code SportType} is {@code SpoortType.GOALS_ARE_NOT_SCORED}
+	 * this method returns 1, 0 or -1 to indicate a win, draw or loss respectively
+	 * @author Oguejiofor Chidiebere 
+	 *@param intValue returns an {@code int	} if {@code true }
 	 *@return The away {@code Competitor}'s score as an {@code int } if {@code intValue} = {@code true}
 	 *Else returns the score as {@code double}
+	 *@throws IncompleteFixtureException when this {@code Fixture} is does not contain a result
 	 */
 	
-	public  Number getCompetitorTwoScore( boolean intValue )  {
+	public  Number getCompetitorTwoScore( boolean intValue ) 
+			throws IncompleteFixtureException  {
 		
-		return !intValue ? competitorTwoScore : (int) competitorTwoScore ;
+		return !intValue ? getCompetitorTwoScore() : 
+			(int) getCompetitorTwoScore() ;
 		
 		
 	}
 	
 	/**
 	 * Gets the the away {@code Competitor}'s score
-	 * Returns -1 if this {@code Fixture } is incomplete
+	 * When this {@code Fixture}'s {@code SportType} is {@code SpoortType.GOALS_ARE_NOT_SCORED}
+	 * this method returns 1, 0 or -1 to indicate a win, draw or loss respectively
+	 * @author Oguejiofor Chidiebere
 	 *@return The away {@code Competitor}'s score as {@code double }
+	 @throws IncompleteFixtureException when this {@code Fixture} is does not contain a result
+	
 	 */
-	public double getCompetitorTwoScore() {
-		return competitorTwoScore;
+	public double getCompetitorTwoScore() 
+			throws IncompleteFixtureException {
+		if ( isComplete() )
+			return competitorTwoScore;
+		
+		throw new IncompleteFixtureException("This fixture does not contain a restult" );
+		
 	}
 
 	/**
@@ -310,4 +357,10 @@ public class Fixture implements Serializable{
 
 	}
 
+	public void eliminateLoser()
+	{
+		if ( isComplete() )
+			getLoser().setEliminated( true );
+		
+	}
 }

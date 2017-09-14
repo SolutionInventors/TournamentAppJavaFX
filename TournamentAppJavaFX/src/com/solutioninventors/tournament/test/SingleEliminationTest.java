@@ -10,6 +10,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
@@ -19,6 +20,7 @@ import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.SportType;
 
 public class SingleEliminationTest {
 
@@ -41,7 +43,7 @@ public class SingleEliminationTest {
 		Tournament tournament = null;
 		try 
 		{
-			tournament = new SingleEliminationTournament(comps , homeAndAway );
+			tournament = new SingleEliminationTournament(SportType.GOALS_ARE_SCORED , comps , homeAndAway );
 		} catch (TournamentException e) {
 			Test.displayMessage(e.getMessage());
 			System.exit(1);
@@ -124,12 +126,13 @@ public class SingleEliminationTest {
 
 			try {
 				tournament.setResult(com1, score1, score2, com2);
-			} catch (NoFixtureException | ResultCannotBeSetException e) {
+				builder.append(
+						String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
+						currentFixtures[i].getCompetitorTwoScore(), com2));
+			} catch (NoFixtureException | ResultCannotBeSetException | IncompleteFixtureException e) {
 				e.printStackTrace();
 			}
-			builder.append(
-					String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
-					currentFixtures[i].getCompetitorTwoScore(), com2));
+			
 
 		}
 

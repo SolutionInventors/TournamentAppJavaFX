@@ -8,6 +8,7 @@ package com.solutioninventors.tournament.test;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 
@@ -78,8 +79,16 @@ public class Test {
 		StringBuilder builder = new StringBuilder(500);
 		builder.append("Round Results: \n");
 		for (Fixture fixture : fixtures) {
-			builder.append(String.format("%s %.1f VS %.1f %s\n", fixture.getCompetitorOne(),
-					fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), fixture.getCompetitorTwo()));
+			try
+			{
+				builder.append(String.format("%s %.1f VS %.1f %s\n", fixture.getCompetitorOne(),
+						fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), fixture.getCompetitorTwo()));
+			}
+			catch (IncompleteFixtureException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return builder.toString();
 	}

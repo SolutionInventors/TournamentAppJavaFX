@@ -10,6 +10,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
@@ -19,6 +20,7 @@ import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.SportType;
 
 public class ChallengeTest {
 
@@ -27,7 +29,7 @@ public class ChallengeTest {
 		
 		Competitor[] coms = { new Competitor("Chinedu", file), new Competitor("Chidi", file) };
 
-		Tournament tournament = new Challenge(coms, 2);
+		Tournament tournament = new Challenge( SportType.GOALS_ARE_SCORED, coms, 2);
 
 		Test.displayMessage("Challenge between \n" + coms[0] + " and " + coms[1] + "begins");
 
@@ -77,8 +79,16 @@ public class ChallengeTest {
 			e.printStackTrace();
 		}
 
-		Test.displayMessage("Round results:\n" + String.format("%s %.0f VS %.0f %s\n", com1,
-				fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), com2));
+		try
+		{
+			Test.displayMessage("Round results:\n" + String.format("%s %.0f VS %.0f %s\n", com1,
+					fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), com2));
+		}
+		catch (IncompleteFixtureException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

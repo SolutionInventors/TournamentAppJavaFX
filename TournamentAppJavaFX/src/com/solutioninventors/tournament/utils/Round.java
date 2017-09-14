@@ -162,7 +162,7 @@ public class Round implements Serializable
 	 *@since v1.0
 	 *@return a {@code Round} with all the {@link Fixture }s in this object inverted
 	 */
-	public Round invertHomeAndAway()
+	public Round invertHomeAndAway( SportType type )
 	{
 		Fixture[] inverseFixtures = new Fixture[ getFixtures().length ];
 		
@@ -170,7 +170,7 @@ public class Round implements Serializable
 		
 		for ( int i = 0 ; i < inverseFixtures.length ; i ++ )
 		{
-			inverseFixtures[ i ] = new Fixture( currentFixture[ i ].getCompetitorTwo() ,
+			inverseFixtures[ i ] = new Fixture( type, currentFixture[ i ].getCompetitorTwo() ,
 												currentFixture[ i ].getCompetitorOne() 	);
 		}
 		

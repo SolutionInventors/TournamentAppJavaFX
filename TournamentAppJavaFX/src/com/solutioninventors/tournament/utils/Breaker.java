@@ -118,7 +118,7 @@ public enum Breaker implements Serializable
 	 */
 	private static Comparator<Competitor> getNumberOfAwayGoals()
 	{
-		Function< Competitor, Double >  function = Competitor:: getNumberOfAwayGoals;
+		Function< Competitor, Double >  function = Competitor:: getAwayGoalsScored;
 
 		return Comparator.comparing( function ).reversed();
 	}

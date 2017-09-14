@@ -29,6 +29,7 @@ import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
+import com.solutioninventors.tournament.utils.SportType;
 
 /** 
  * This class contains static and object level methods that make simulation of a tournament possible
@@ -50,14 +51,15 @@ public abstract class Tournament implements Serializable
 	private File tournamentFile; //object keeps record of its owns file
 	private File tournamentIcon;
 	
+	private final SportType SPORT_TYPE;
 	private int currentRoundNum;
 	private String name;	
 	
-	public Tournament ( Competitor[] coms )
+	public Tournament ( SportType type , Competitor[] coms )
 	{
 		competitors = coms ;
 		currentRoundNum = 0 ; 
-		
+		SPORT_TYPE = type;
 		setName( "Tournament App" );
 	}
 
@@ -67,6 +69,11 @@ public abstract class Tournament implements Serializable
 	}
 
 
+	public SportType getSportType()
+	{
+		return SPORT_TYPE;
+	}
+	
 	public int getCurrentRoundNum()
 	{
 		return currentRoundNum;
@@ -285,5 +292,7 @@ public abstract class Tournament implements Serializable
 		return nameList.toArray( new String[ nameList.size() ] );
 			
 	}
+
+	
 	
 }

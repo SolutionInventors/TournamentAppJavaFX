@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -20,9 +19,11 @@ import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
+import com.solutioninventors.tournament.utils.SportType;
 
 public class DoubleElimination extends EliminationTournament
 {
@@ -70,9 +71,9 @@ public class DoubleElimination extends EliminationTournament
 	 *@throws TournamentException
 	 *
 	 */
-	public DoubleElimination(Competitor[] comps) throws TournamentException
+	public DoubleElimination( SportType type, Competitor[] comps) throws TournamentException
 	{
-		super(comps);
+		super(type, comps);
 		AWAY_MATCH = false ;
 		rounds = new HashMap<>();
 		List<Round> minor = new ArrayList<>(); //used to increase index to 1
@@ -97,7 +98,7 @@ public class DoubleElimination extends EliminationTournament
 		
 		for ( int i = 0 ; i < competitors.length ; i+= 2 )
 		{
-			roundFixtures.add( new Fixture( competitors[ i ] , competitors[ i+ 1] ) );
+			roundFixtures.add( new Fixture( getSportType(), competitors[ i ] , competitors[ i+ 1] ) );
 		}
 		
 		
@@ -293,7 +294,7 @@ public class DoubleElimination extends EliminationTournament
 			return ; 
 		else if ( getActiveCompetitors().length  == 2 )
 		{
-			Fixture tourFinal = new Fixture( getActiveCompetitors()[ 0 ] , getActiveCompetitors()[ 1 ] ) ;
+			Fixture tourFinal = new Fixture( getSportType(), getActiveCompetitors()[ 0 ] , getActiveCompetitors()[ 1 ] ) ;
 			Fixture[] array = { tourFinal };
 			
 			addRound( BracketType.TOURNAMENT_FINAL , new Round( array ) );
@@ -302,11 +303,11 @@ public class DoubleElimination extends EliminationTournament
 		{
 			if( winnerBracket.size() > 1 )
 				for ( int i = 0 ; i < winnerBracket.size() ; i+= 2 )
-					winnerFixes.add( new Fixture( winnerBracket.get( i ), winnerBracket.get( i + 1 )));
+					winnerFixes.add(  new Fixture( getSportType(),  winnerBracket.get( i ), winnerBracket.get( i + 1 )));
 		
 		
 			for ( int i = 0 ; i < loserBracket.size() ; i+= 2 )
-				loserFixes.add( new Fixture( loserBracket.get( i ), loserBracket.get( i + 1 )));
+				loserFixes.add( new Fixture( getSportType(),  loserBracket.get( i ), loserBracket.get( i + 1 )));
 			
 			if ( minorComplete )
 			{

@@ -12,6 +12,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -154,6 +155,9 @@ public class RandomRoubinTournaement {
 			try
 			{
 				tournament.setOutstandingResult(com1, score1, score2, com2);
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , outstandings[ i ].getCompetitorOneScore() ,
+						outstandings[  i ].getCompetitorTwoScore() , com2 ));
 			}
 			catch (NoFixtureException e)
 			{
@@ -164,9 +168,12 @@ public class RandomRoubinTournaement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , outstandings[ i ].getCompetitorOneScore() ,
-					outstandings[  i ].getCompetitorTwoScore() , com2 ));	
+			catch (IncompleteFixtureException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		Test.displayMessage( builder.toString()  );
 		
@@ -198,6 +205,9 @@ public class RandomRoubinTournaement {
 			try
 			{
 				tournament.setResult( com1, score1, score2, com2);
+				builder.append(String.format("%s %.0f VS %.0f %s\n",
+						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
+						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
 			}
 			catch (NoFixtureException e)
 			{
@@ -208,9 +218,12 @@ public class RandomRoubinTournaement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n",
-					com1 , currentFixtures[ i ].getCompetitorOneScore() ,
-					currentFixtures[  i ].getCompetitorTwoScore() , com2 ));	
+			catch (IncompleteFixtureException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		Test.displayMessage( builder.toString()  );
