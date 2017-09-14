@@ -11,7 +11,7 @@ public class AACustomtest extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"Input.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();

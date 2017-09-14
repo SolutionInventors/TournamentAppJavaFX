@@ -83,9 +83,10 @@ public class KnockoutScreenController {
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+		
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
 		ic.setKOtournament(TournamentName, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
-		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+		btn.next(rootPane, root, "Input.fxml");
 		
 		
 	}
