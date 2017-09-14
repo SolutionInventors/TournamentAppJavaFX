@@ -106,8 +106,11 @@ public class Round implements Serializable
 	 *@param score1 the score of the home {@code Competitor } as {@code double}
 	 *@param score2 the score of the away {@code Competitor } as {@code double}
 	 *@param com2 the away {@code Competitor} object
-	 *@throws NoFixtureException when the {@code Fixture } is not in this Round
-	 * @throws ResultCannotBeSetException 
+	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException when the {@code Fixture } is not in this Round
+	 * @throws com.solutioninventors.tournament.exceptions.ResultCannotBeSetException 
+	 * 		when this {@code Round } contains the {@code Fixture } but the {@code Fixture } is complete
+	 * @see Fixture
+	 * @since v1.0
 	 */
 	
 	public void  setResult( Competitor com1 , double score1 , 
@@ -142,8 +145,9 @@ public class Round implements Serializable
 	 *@param fixture the {@code Fixture } object that encapsulates the home and away {@code Competitor}'s
 	 *@param score1 the home {@code Competitor}'s score
 	 *@param score2 the away {@code Competitor}'s score
-	 *@throws NoFixtureException when a match is not found
-	 * @throws ResultCannotBeSetException 
+	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException when a match is not found
+	 * @throws com.solutioninventors.tournament.exceptions.ResultCannotBeSetException 
+	 * 		when the {@code Fixture} is in this {@code Round } but is complete
 	 */
 	public void  setResult( Fixture fixture , double score1 , double score2 ) throws NoFixtureException, ResultCannotBeSetException 
 	{

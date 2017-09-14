@@ -60,9 +60,9 @@ public class Fixture implements Serializable{
 	 *
 	 *@author Chidiebere Oguejiofor Chidiebere
 	 *@since v1.0
-	 *@see Competitor
-	 *@param homeCompetitor
-	 *@param awayCompetitor
+	 *@see Competitor 
+	 *@param homeCompetitor the {@code Competitor } that is home( or white in chess) 
+	 *@param awayCompetitor the {@code COmpetitor } that is away( or black in chess)
 	 */
 	public Fixture(Competitor homeCompetitor, Competitor awayCompetitor) {
 		COMPETITOR_ONE = homeCompetitor;
@@ -77,9 +77,9 @@ public class Fixture implements Serializable{
 	 goals conceded etc. as appropriate and sets this Fixture's complete to {@code true}
 	 
 	 @since v1.0
-	 @see Competitor
-	 *@param homeComScore
-	 *@param awayComScore
+	 @see Competitor 
+	 *@param homeComScore the home {@code Competitor}'s score
+	 *@param awayComScore the away {@code Competitor}'s score
 	 * @throws ResultCannotBeSetException when this {@code Fixture } is already contains a result
 	 */
 	public void setResult(final double homeComScore, final double awayComScore) 
@@ -87,20 +87,18 @@ public class Fixture implements Serializable{
 	{
 		if (!isComplete()) {
 			if (homeComScore > awayComScore) {
-				getCompetitorOne().incrementNumberOfHomeWin();
-				getCompetitorOne().incrementWins();
-				getCompetitorTwo().incrementLoss();
+				getCompetitorOne().incrementHomeWin();
+				getCompetitorTwo().incrementAwayLoss();
 			} 
 			else if (homeComScore == awayComScore) // match is a draw
 			{
-				getCompetitorOne().incrementDraw();
-				getCompetitorTwo().incrementDraw();
+				getCompetitorOne().incrementHomeDraw();
+				getCompetitorTwo().incrementAwayDraw();
 			}
 			else 
 			{
-				getCompetitorOne().incrementLoss();
-				getCompetitorTwo().incrementNumberOfAwayWin();
-				getCompetitorTwo().incrementWins();
+				getCompetitorOne().incrementAwayLoss();
+				getCompetitorTwo().incrementAwayWin();
 				
 			}
 
@@ -126,7 +124,8 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 *
+	 *Checks if this {@code Fixture } is complete. Once this is {@code true} this {@code Fixture} 
+	 *results cannot be modified
 	 *@return true when this {@code Fixture } contains a result
 	 */
 	public boolean isComplete() {
@@ -134,7 +133,8 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * 
+	 * Checks if this {@code Fixture } contains result AND  is a draw( that is the twi 
+	 * competitors have thesame score ) 
 	 *@return true when this {@code Fixture } is complete and the  home and away {@code Competitor}s
 	 *have thesame score
 	 *
@@ -147,7 +147,7 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * 
+	 * Checks if this {@code Fixture } has a winner( that is no draw and is complete )
 	 *@return true when this {@code Fixture } is complete and the  home and away {@code Competitor}s
 	 *have different scores
 	 *
@@ -161,7 +161,7 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * 
+	 * Checks if this {@code Fixture } has a loser
 	 *@return true when this {@code Fixture } is complete and the  home and away {@code Competitor}s
 	 *have different scores
 	 *
@@ -172,7 +172,8 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * 
+	 * Gets the {@code Competitor } that won this {@code Fixture }
+	 * Returns {@code null  } when this {@code Fixture } is incomplete or contains draw
 	 *@return the {@code Competitor } object of the winner if this {@code Fixture } has a winner else
 	 *returns {@code null }
 	 */
@@ -185,7 +186,8 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 * 
+	 * Gets the loser of this {@code Fixture }. Returns {@code null } when this {@code Fixture}
+	 * does not have a loser
 	 *@return the {@code Competitor } object of the loser if this {@code Fixture } has a winner else
 	 *returns {@code null }
 	 */
@@ -200,12 +202,15 @@ public class Fixture implements Serializable{
 	}
 	
 	/**
-	 * 
-	 *@param com1
-	 *@param com2
+	 * Checks if this {@code Fixture } contains the specified {@code Competitor}s
+	 * Returns {@code false } if either the home or away {@code Competitor} is misplaced
+	 * @author Oguejiofor Chidiebere
+	 *@param com1 the home {@code Competitor}
+	 *@param com2 the away {@code Competitor}
 	 *@return {@code true } when the com1 and com2 are equal to this {@code FIxture}'s {@code CompetitorOne} and
 	 * {@code CompetitorTwo } data. If not returns {@code false }
 	 * @since v1.0
+	 * @see Competitor
 	 */
 	public boolean hasFixture(Competitor com1, Competitor com2) {
 		// returns true if com1 equals COMPETITOR_ONE AND con2 = COMPETITOR_TWO
@@ -216,6 +221,8 @@ public class Fixture implements Serializable{
 	}
 
 	/**
+	 * Gets the home {@code Competitor} 
+	 * @author Oguejiofor Chidiebere
 	 * @since v1.0
 	 *@return The home {@code Competitor } object
 	 */
@@ -224,6 +231,7 @@ public class Fixture implements Serializable{
 	}
 
 	/**
+	 * Gets the away {@code Competitor}
 	 *@return The away {@code Competitor}object 
 	 *@since v1.0
 	 */
@@ -232,6 +240,7 @@ public class Fixture implements Serializable{
 	}
 
 	/**
+	 * Gets th
 	 *@return The home {@code Competitor}'s score as {@code double }
 	 */
 	
@@ -241,23 +250,27 @@ public class Fixture implements Serializable{
 	}
 
 	/**
-	 *@param intValue
-	 *@return The home {@code Competitor}'s score as an {@code int } if {@code intValue} = {@code true}
-	 *Else returns the score as {@code double}
+	 * Gets an {@code Integer} representation of the home {@code Competitor}'s score when 
+	 * the boolean is {@code true}. Else gets the {@code Double } representation
+	 *@param intValue  when {@code true} gets an {@code Integer }
+	 *@return The home {@code Competitor}'s score as an {@code Number}
 	 */
-	public double getCompetitorOneScore( boolean intValue )  {
+	public Number getCompetitorOneScore( boolean intValue )  {
 		return !intValue ? competitorOneScore : (int) competitorOneScore ;
 		
 	}
 	
 	/**
-	 *@param intValue
+	 * Gets the away teams score as a {@code Number} object
+	 *@param intValue returns an {@code }
 	 *@return The away {@code Competitor}'s score as an {@code int } if {@code intValue} = {@code true}
 	 *Else returns the score as {@code double}
 	 */
 	
-	public double getCompetitorOnTwoScore( boolean intValue )  {
+	public  Number getCompetitorTwoScore( boolean intValue )  {
+		
 		return !intValue ? competitorTwoScore : (int) competitorTwoScore ;
+		
 		
 	}
 	
@@ -277,10 +290,10 @@ public class Fixture implements Serializable{
 	 * <br>
 	 * {@code store} should be set to false when storing ties 
 	 * <br>
-	 * This method sets the competitorOneScore and COmpetitorTwoScore if b = false 
+	 * This method sets the competitorOneScore and CompetitorTwoScore if b = false 
 	 *@param score1 home {@code Competitor} score
 	 *@param score2 away {@code COmpetitor} score
-	 *@param b indicates whether to save the scores in the {@code Competitor} objects and toggle this {@code Fixture } to complete
+	 *@param store indicates whether to save the scores in the {@code Competitor} objects and toggle this {@code Fixture } to complete
 	 * @throws ResultCannotBeSetException when this object is complete 
 	 */
 	

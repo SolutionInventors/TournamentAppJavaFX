@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * A Breaker object encapsulates the logic of how a {@link Tournament} would resolve ties
+ * A Breaker object encapsulates the logic of how a {@link com.solutioninventors.tournament.types.Tournament} would resolve ties
  * It is used when creating a {@link TieBreaker } object <br>
  * It achieves this by creating a Comparator&lt;Competitor&gt; object that is created via calls to some {@code Competitor } 
  * methods
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * <p>
  *  {@code Breaker[] breakers = { Breaker.BOTH, Breaker.GROUP_BREAKERS }; } <br>
  *   {@code TieBreaker = new TieBreaker( breakers) // throws an InvalidBreakerException  } ;<br>
- *   throws an {@link InvalidBreakerException }
+ *   throws an {@link com.solutioninventors.tournament.exceptions.InvalidBreakerException }
  * 
  * <p>
  *  Constants {@code Breaker.AWAY_GOAL , Breaker.SHOOTOUT, Breaker.COIN_TOSS } are of type {@code Breaker.BOTH}
@@ -39,8 +39,8 @@ import java.util.stream.Collectors;
  *  are all of type Breaker.GROUP_BREAKER
  *  
  *  <p>
- *  The {@code Breaker.GROUP}  can <b>ONLY</b> be used for creating {@link GroupTournament}s. {@code Breaker.KOCKOUT_BREAKER}
- *   can <b>ONLY</b> be used in creating {@link EliminationTournament } objects 
+ *  The {@code Breaker.GROUP}  can <b>ONLY</b> be used for creating {@link com.solutioninventors.tournament.types.group.GroupTournament}s. {@code Breaker.KOCKOUT_BREAKER}
+ *   can <b>ONLY</b> be used in creating {@link com.solutioninventors.tournament.types.knockout.EliminationTournament } objects 
  *   {@code Breaker.BOTH } may be used for any {@code Tournament } object
  *   
  *   <p>
@@ -50,11 +50,11 @@ import java.util.stream.Collectors;
  *    <p>
  *    
  *    @author  Oguejiofor Chidiebere
- *    @see Tournament
+ *    @see com.solutioninventors.tournament.types.Tournament
  *    @see TieBreaker
- *    @see InvalidBreakerException
- *    @see GroupTournament
- *    @see EliminationTournament
+ *    @see com.solutioninventors.tournament.exceptions.InvalidBreakerException
+ *    @see com.solutioninventors.tournament.types.group.GroupTournament
+ *    @see com.solutioninventors.tournament.types.knockout.EliminationTournament
  *   
  *    @since v1.0
  *   

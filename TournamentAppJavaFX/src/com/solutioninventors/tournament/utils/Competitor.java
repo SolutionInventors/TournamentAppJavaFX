@@ -147,12 +147,14 @@ public class Competitor implements Serializable
 	private final String FIRST_NAME;
 	private final String LAST_NAME;
 
-	private int numberOfWin;
-	private int numberOfDraw;
-	private int numberOfLoss;
-
-	private int numberOfAwayWin;
-	private int numberOfHomeWin;
+	private int homeWin;
+	private int awayWin;
+	
+	private int homeDraw;
+	private int awayDraw;
+	
+	private int homeLoss;
+	private int awayLoss;
 	
 	
 	private double goalsScored;
@@ -205,7 +207,8 @@ public class Competitor implements Serializable
 	}
 
 	/**
-	 * 
+	 * Gets this {@code COmpetitor}'s first name  or his entire name
+	 * if this was created with {@code Competitor(String name, File imageFile)  } constructor 
 	 *@return String representation of this Competitor's firs tName
 	 */
 	public String getFirstName()
@@ -214,8 +217,8 @@ public class Competitor implements Serializable
 	}
 
 	/**
+	 * Gets the last name of the Competitor
 	 * 
-	 
 	 *@return String representation of this {@code Competitor}'s last name
 	 */
 	public String getLastName() 
@@ -223,56 +226,146 @@ public class Competitor implements Serializable
 		return LAST_NAME != null ? LAST_NAME : "";
 	}
 
+	/**
+	 * Gets the name of this {@code Competitor}
+	 *@return name as {@code String}
+	 */
 	public String getName() 
 	{
 		return getFirstName() + " " + getLastName();
 	}
 
+	/**
+	 * Gets this {@code Competitor}'s number of wins
+	 *@return an int of this Competitor's number of win
+	 */
 	public int getNumberOfWin() 
 	{
-		return numberOfWin;
+		return getNumberOfAwayWin() + getNumberOfHomeWin();
 	}
 
-	protected void incrementWins() 
-	{
-		numberOfWin++;
-	}
-
+	
+	/**
+	 *Gets the number of draws this {@code Competitor } has
+	 *@return number of draw as int
+	 */
 	public int getNumberOfDraw() 
 	{
-		return numberOfDraw;
+		return getNumberOfAwayDraw() + getNumberOfHomeDraw();
 	}
 
-	protected void incrementDraw() 
+	public int getNumberOfHomeDraw()
 	{
-		numberOfDraw++;
+		return homeDraw;
 	}
 
+	/**
+	 * Increases this {@code Competitor}'s home draw by 1
+	 *void
+	 */
+	protected void incrementHomeDraw()
+	{
+		homeDraw++;
+	}
+	
+	/**
+	 *Gets this {@code Competitor}'s number of away draw
+	 *@return away draw as int
+	 */
+	public int getNumberOfAwayDraw()
+	{
+		return awayDraw;
+	}
+	
+	/**
+	 * Increases this {@code Competitor}'s away draw by one
+	 */
+	protected void incrementAwayDraw()
+	{
+		awayDraw++;
+	}
+
+	
+
+	/**
+	 * Gets this {@code Comepetitor } number of loss
+	 * @return the number of loss as {@code int}
+	 */
 	public int getNumberOfLoss() 
 	{
-		return numberOfLoss;
+		return getNumberOfHomeLoss() +  getNumberOfAwayLoss();
 	}
 
-	protected void incrementLoss() 
+	/**
+	 * Gets the total away games this {@code Competitor } lost
+	 *@return
+	 */
+	public int getNumberOfAwayLoss()
 	{
-		numberOfLoss++;
+		return awayLoss;
 	}
 
+	/**
+	 * Increase this {@code Competitor}'s number of away loss by one
+	 *void
+	 */
+	protected void incrementAwayLoss()
+	{
+		awayLoss++;
+	}
+
+	/**
+	 *Gets the number of {@code Fixture}s this {@code Competitor} lost at home
+	 *@return an int
+	 */
+	public int getNumberOfHomeLoss()
+	{
+		return homeLoss;
+	}
+
+	/**
+	 * Increases this {@code Comepetitor}'s home loss by 1
+	 */
+	protected void incrementHomeLoss() 
+	{
+		homeLoss++;
+	}
+
+	/**
+	 * Gets a file containing this {@code Competitor} image
+	 * @return a {@code File }object 
+	 */
 	public File getImage() 
 	{
 		return image;
 	}
 
+	/**
+	 *Checks if this {@code Competitor } is eliminated from a {@code Tournament}
+	 *Typically used by {@code Multistage} and {@code EliminationTournament}
+	 *@see com.solutioninventors.tournament.types.Multistage
+	 *@see com.solutioninventors.tournament.types.knockout.EliminationTournament
+	 @return true when this {@code COmpetitor } is eliminated
+	 */
 	public boolean isEliminated() 
 	{
 		return eliminated;
 	}
 
+	
 	public void setEliminated(boolean eliminated)
 	{
 		this.eliminated = eliminated;
 	}
 
+	/**
+	 * Calculates the point this {@code Competitor} has in this tournament
+	 * using data provided as its argument
+	 *@param pWin The point for a win
+	 *@param pDraw  Thw point for a draw
+	 *@param pLoss The point for a loss
+	 *@return the total point as {@code double}
+	 */
 	public double getPoint(double pWin, double pDraw, double pLoss) 
 	{
 		return (getNumberOfWin() * pWin) + (getNumberOfDraw() * pDraw) + (getNumberOfLoss() * pLoss);
@@ -280,7 +373,6 @@ public class Competitor implements Serializable
 
 	/**
 	 * 
-	 *void<br>
 	 *Stores the imageFile argument to this Competitor's {@code image } property 
 	 *
 	 *@param imageFile
@@ -294,13 +386,7 @@ public class Competitor implements Serializable
 
 		if (imageFile.exists() || imageName.indexOf(".") < 0) {
 			String format = imageName.substring(imageName.indexOf("."), imageName.length()); // get the format
-//			System.out.println("still comp");
-//			System.out.println(format);
-			
-//			System.out.println(format);
-//			NOTE: after abt an hour of troubleshooting my code
-//			I realized that the problem was from here
-//			so I had to set this to lowercase to match all checks
+
 			format = format.toLowerCase();
 			if (format.matches(".png|.jpg|.jpeg")) {
 				image = new File(getName() + format);
@@ -314,10 +400,10 @@ public class Competitor implements Serializable
 	}
 
 	/**
-	 * 
-	 * void
-	 *@param fileToCopy
-	 *@param fileToPaste
+	 * Copies the file in its first argument and pastes it to its 
+	 * second argument
+	 *@param fileToCopy The file to be copied
+	 *@param fileToPaste The destination file
 	 */
 	private void copyFile(File fileToCopy, File fileToPaste)
 	{
@@ -341,7 +427,7 @@ public class Competitor implements Serializable
 	}
 
 	/**
-	 * 
+	 * Gets the total goals scored by this {@code Competitor} 
 	 *
 	 *@return The goalsScored by this Competitor
 	 */
@@ -350,24 +436,36 @@ public class Competitor implements Serializable
 		return goalsScored;
 	}
 
-	protected void incrementGoalsScoredBy(double score1) 
+	/**
+	 *Increases this {@code Competitor}'s goals scored by its argument
+	 *@param score The value to increment by
+	 */
+	protected void incrementGoalsScoredBy(double score) 
 	{
-		goalsScored += score1;
+		goalsScored += score;
 	}
 
+	/**
+	 * Gets the goals conceeded by this {@code Competitor}
+	 *@return a double 
+	 */
 	public double getGoalsConceded() 
 	{
 		return goalsConceded;
 	}
 
+	/**
+	 * Increments the goals conceeded by this {@code Competitor  } its argument
+	 * 
+	 *@param goals a 
+	 */
 	public void incrementGoalsConcededBy(double goals)
 	{
 		goalsConceded += goals;
 	}
 
 	/**
-	 * 
-	 *double
+	 * Gets this {@code Competitor}'s goal difference
 	 *@return difference between {@code getGoalsScored()} and {@code getGoalsConceded()} 
 	 */
 	public double getGoalDifference() 
@@ -381,6 +479,11 @@ public class Competitor implements Serializable
 		return getName();
 	}
 	
+	/**
+	 *Gets the total {@code Fixture}s this {@code Competitor} has played
+	 *
+	 *@return an int
+	 */
 	public int getPlayedFixtures()
 	{
 		return getNumberOfDraw() + 
@@ -388,6 +491,12 @@ public class Competitor implements Serializable
 				getNumberOfLoss() ;
 	}
 	
+	/**
+	 * Adds this {@code Competitor}the head to head score against of this 
+	 * {@code Competitor} against an opponent
+	 *@param com the opponent
+	 *@param score this {@code Competitor }score
+	 */
 	protected void addToHeadToHead( Competitor com , double score )
 	{
 		if ( headToHead.containsKey( com ) )
@@ -396,6 +505,13 @@ public class Competitor implements Serializable
 		headToHead.put( com , score );
 	}
 	
+	/**
+	 *Gets this {@code Competitor}'s score against a specified opponent
+	 *Returns 0 if this {@code Competitor } has not met the specified
+	 *opponent
+	 *@param com the opponent
+	 *@return a double
+	 */
 	public double getHeadToHeadScore( Competitor com  )
 	{
 		if( headToHead.containsKey( com ) )
@@ -403,7 +519,12 @@ public class Competitor implements Serializable
 		return 0 ;
 	}
 	
-	
+	/**
+	 *Increases this {@code Competitor}'s total away goals by against a particular oppponent by
+	 *the specified score
+	 *@param com the opponent
+	 *@param score this {@code Competitor}'s score
+	 */
 	protected void addAwayGoal( Competitor com , double score )
 	{
 		if ( awayGoals.containsKey( com ) )
@@ -412,6 +533,11 @@ public class Competitor implements Serializable
 		awayGoals.put( com , score );
 	}
 	
+	/**
+	 * Increases this {@code Competitor}'s home goals against an opponet by score
+	 *@param com the opponent
+	 *@param score this {@code Competitor}'s score
+	 */
 	protected void addHomeGoal( Competitor com , double score )
 	{
 		if ( homeGoals.containsKey( com ) )
@@ -449,26 +575,47 @@ public class Competitor implements Serializable
 		return false;
 	}
 
+	/**
+	 * Gets the number of games won away by this {@code Competitor}
+	 *@return this {@code Competitor}'s number of away win
+	 */
 	public int getNumberOfAwayWin()
 	{
-		return numberOfAwayWin;
+		return awayWin;
 	}
 
-	protected void incrementNumberOfAwayWin()
+	/**
+	 * Increases this {@code Competitor}'s number of away win
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 */
+	protected void incrementAwayWin()
 	{
-		numberOfAwayWin++ ;
+		awayWin++;
 	}
 	
+	/**
+	 * Gets the number of home wins by this {@code Competitor}
+	 *@return int
+	 */
 	public int getNumberOfHomeWin()
 	{
-		return numberOfHomeWin;
+		return homeWin;
 	}
 
-	protected void incrementNumberOfHomeWin()
+	/**
+	 * Increase  this {@code Competitor}'s number of home win by 1 
+	 */
+	protected void incrementHomeWin()
 	{
-		numberOfHomeWin++ ;
+		homeWin++ ;
 	}
 
+	/**
+	 * Gets the number of away goals scored by this {@code Competitor}
+	 *double
+	 *@return number of away goals as {@code double }
+	 */
 	public double getNumberOfAwayGoals()
 	{
 		
