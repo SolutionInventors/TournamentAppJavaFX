@@ -37,7 +37,7 @@ public class SwissTes {
 		Competitor c4 = new Competitor("Chinedu", file);
 		
 	
-		Competitor[] comps = {c1, c2 ,c3 };	
+		Competitor[] comps = {c1, c2 ,c3,c4 };	
 		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};
 		Tournament tournament = null ;
 		
@@ -45,7 +45,7 @@ public class SwissTes {
 		try
 		{
 			TieBreaker tieBreakers = new TieBreaker( breakers );
-			tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 
+			tournament = new SwissTournament( comps, SportType.GOALS_ARE_NOT_SCORED , 
 					3 , 1 , 0 , tieBreakers , numOfRounds );
 		}
 		catch (TournamentException e )

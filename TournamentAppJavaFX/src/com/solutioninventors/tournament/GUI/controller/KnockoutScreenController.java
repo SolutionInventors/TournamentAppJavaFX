@@ -30,6 +30,7 @@ public class KnockoutScreenController {
 		  private boolean singleDoubleElim = true;
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();
+		  private Boolean goalScored;
 	
 	//Spinner(int min, int max, int initialValue, int amountToStepBy)
 	// Value factory.
@@ -44,9 +45,9 @@ public class KnockoutScreenController {
 	int abc;
 	// public KnockoutScreenController() {
 	// spinner.setValueFactory(valueFactory);}
-	public void setTournamentName(String tournamentName) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
-
+		this.goalScored = goalScored;
 	}
 	
 	@FXML
@@ -93,7 +94,7 @@ public class KnockoutScreenController {
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setKOtournament(TournamentName, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
+		ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
 		btn.next(rootPane, root, "Input.fxml");
 		
 		

@@ -109,7 +109,7 @@ public enum Breaker implements Serializable
 	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
 	 *total number of away goals scored by the {@code Competitor}s. This method is used to create Breaker.NUMBER_OF_AWAY_GOALS object
 	 *@return a Comparator<Competitor> object used to break tie
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *@author  Oguejiofor Chidiebere
@@ -355,7 +355,7 @@ public enum Breaker implements Serializable
 	/**
 	 *This class is used to create a Comparator&ltCompetitor&gt object that 
 	 *breaks ties between two Competitors via their head to head record
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
@@ -385,7 +385,7 @@ public enum Breaker implements Serializable
 	/**
 	 *This class is used to create a Comparator&ltCompetitor&gt object that 
 	 *breaks ties between two Competitors via their away goal against each other
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
@@ -414,7 +414,7 @@ public enum Breaker implements Serializable
 	/**
 	 *This class is used to create a Comparator&ltCompetitor&gt object that 
 	 *breaks ties between two Competitors by simulating a coin toss
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *

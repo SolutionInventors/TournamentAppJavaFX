@@ -62,6 +62,9 @@ public class InputCompetitorController {
 	private String TournamentName;
 	private int noOfCompetitors;
 	private int onOfRounds;
+	private Boolean goalScored;
+	private SportType goalsOrNoGoals;
+	
 	// for group
 	private double winpoint;
 	private double drawpoint;
@@ -97,8 +100,9 @@ public class InputCompetitorController {
 		TournamentName = tournamentName;
 	}
 
-	public void setKOtournament(String tn, int noofcomp, boolean sigleTour, boolean homeAndAway) {
+	public void setKOtournament(String tn,Boolean goalScored, int noofcomp, boolean sigleTour, boolean homeAndAway) {
 		TournamentName = tn;
+		this.goalScored = goalScored;
 		noOfCompetitors = noofcomp;
 		TournamentType = TournamentTypes.KNOCKOUT;
 		homeandAway = homeAndAway;
@@ -107,17 +111,19 @@ public class InputCompetitorController {
 		loadcomponents();
 	}
 
-	public void setChallengeTournament(String tn, int rud) {
+	public void setChallengeTournament(String tn,Boolean goalScored, int rud) {
 		TournamentName = tn;
+		this.goalScored = goalScored;
 		onOfRounds = rud;
 		noOfCompetitors = 2;
 		TournamentType = TournamentTypes.CHALLENGE;
 		loadcomponents();
 	}
 
-	public void setGroupTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp,
+	public void setGroupTournament(String tn,Boolean goalScored, int rud, int noofcomp, double winp, double drawp, double lossp,
 			int tourType) {
 		TournamentName = tn;
+		this.goalScored = goalScored;
 		onOfRounds = rud;
 		noOfCompetitors = noofcomp;
 		TournamentType = TournamentTypes.GROUP;
@@ -128,9 +134,10 @@ public class InputCompetitorController {
 		loadcomponents();
 	}
 
-	public void setMultiStageTournament(String tn, int rud, int noofcomp, double winp, double drawp, double lossp,
+	public void setMultiStageTournament(String tn, Boolean goalScored, int rud, int noofcomp, double winp, double drawp, double lossp,
 			int tourType, boolean KOSinDob) {
 		TournamentName = tn;
+		this.goalScored = goalScored;
 		onOfRounds = rud;
 		noOfCompetitors = noofcomp;
 		TournamentType = TournamentTypes.MULTISTAGE;

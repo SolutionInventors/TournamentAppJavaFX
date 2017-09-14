@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -21,8 +22,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class TournamentTypeScreenController implements Initializable {
-	String message;
-	String nextFxml = "Knockout.fxml";
+	private String message;
+	private String nextFxml = "Knockout.fxml";
+	private Boolean goalScored = true;
 	Btn btn = new Btn();
 	@FXML private RadioButton rbKnockOut;
 	@FXML private ToggleGroup TorType;
@@ -33,7 +35,8 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML private Text txtAdisplay;
 	@FXML private Text txtTourHighlight;
 	@FXML private AnchorPane  rootPane;
-
+	@FXML private CheckBox goalsScored;
+	
 	// Event Listener on RadioButton[#rbKnockOut].onAction
 	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
@@ -59,6 +62,16 @@ public class TournamentTypeScreenController implements Initializable {
 	}// end radio select
 
 	@FXML
+	public void updateGoalScored(ActionEvent event){
+		if (goalsScored.isSelected()) {
+			goalScored = true;
+		} else {
+			goalScored = false;
+		}
+	}// end updateGoalScored
+	
+	
+	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
 		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
@@ -76,19 +89,19 @@ public class TournamentTypeScreenController implements Initializable {
 		switch (nextFxml) {
 		case "Challenge.fxml":
 			ChallengeScreenController ch = (ChallengeScreenController) loader.getController();
-			ch.setTournamentName(tournamentName.getText());
+			ch.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		case "MultiStage.fxml":
 			MultiStageScreenController ms = (MultiStageScreenController) loader.getController();
-			ms.setTournamentName(tournamentName.getText());
+			ms.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		case "GroupStage.fxml":
 			GroupStageScreenController gr = (GroupStageScreenController) loader.getController();
-			gr.setTournamentName(tournamentName.getText());
+			gr.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		default:
 			KnockoutScreenController ko = (KnockoutScreenController) loader.getController();
-			ko.setTournamentName(tournamentName.getText());
+			ko.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		}//end switch
 

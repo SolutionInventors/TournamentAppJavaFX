@@ -32,10 +32,12 @@ public class GroupStageScreenController {
 		  private String TournamentName;
 		  private Btn btn = new Btn();
 		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
-		private String message;
+		  private String message;
+		  private Boolean goalScored;
 
-	public void setTournamentName(String tournamentName) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
+		this.goalScored = goalScored;
 	}
 	public void initialize() {
 		noofround.setVisible(false);
@@ -99,7 +101,7 @@ public class GroupStageScreenController {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setGroupTournament(TournamentName, Integer.valueOf(txtnoOfrounds.getText()),
+		ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
 				Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
 		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
