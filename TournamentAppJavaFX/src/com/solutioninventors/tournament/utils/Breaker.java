@@ -172,7 +172,7 @@ public enum Breaker implements Serializable
 	 *number of away {@code Fixture }s won by the {@code Competitor}s. 
 	 *This method is used to create Breaker.NUMBER_OF_AWAY_WINS object
 	 *@return a Comparator<Competitor> object used to break tie
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 
@@ -192,7 +192,7 @@ public enum Breaker implements Serializable
 	 *number of home {@code Fixture }s won by the {@code Competitor}s. 
 	 *This method is used to create Breaker.NUMBER_OF_HOME_WIN object
 	 *@return a Comparator<Competitor> object used to break tie
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
@@ -500,7 +500,7 @@ public enum Breaker implements Serializable
 	/**
 	 *This class is used to create a Comparator&ltCompetitor&gt object that 
 	 *breaks ties between two Competitors via their head to head record
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
@@ -530,7 +530,7 @@ public enum Breaker implements Serializable
 	/**
 	 *This class is used to create a Comparator&ltCompetitor&gt object that 
 	 *breaks ties between two Competitors via their away goal against each other
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
@@ -559,7 +559,7 @@ public enum Breaker implements Serializable
 	/**
 	 *This class is used to create a Comparator&lt;Competitor&gt; object that 
 	 *breaks ties between two Competitors by simulating a coin toss
-	 *@author Oguejifor Chidiebere 
+	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
