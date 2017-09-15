@@ -51,7 +51,7 @@ public abstract class GroupTournament extends Tournament
 		
 		if ( breaker == null || !Arrays.stream( breaker.getBreakers() )
 				.allMatch( b -> b.getType() == Breaker.GROUP_BREAKER ||
-							b.getType() ==  Breaker.BOTH ))
+							b.getType() ==  Breaker.ALL ))
 			throw new InvalidBreakerException("The breaker is invalid");
 		table = new StandingTable( getSportType(), comps, pWin, pDraw, pLoss, breaker);
 		setName("");

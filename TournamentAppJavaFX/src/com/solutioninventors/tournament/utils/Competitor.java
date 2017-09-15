@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 
@@ -157,8 +159,6 @@ public class Competitor implements Serializable
 	private int awayLoss;
 	
 	
-	private double goalsScored;
-	private double goalsConceded;
 
 	private Map< Competitor , Double > headToHead ;
 	
@@ -435,34 +435,47 @@ public class Competitor implements Serializable
 	{
 		return getHomeGoalsScored() + getAwayGoalsScored();
 	}
-
+	
 	/**
-	 *Increases this {@code Competitor}'s goals scored by its argument
-	 *@param score The value to increment by
+	 * Gets the total goals scored by this {@code Competitor} as a {@code Number}
+	 *
+	 *@return The goalsScored by this Competitor
 	 */
-	protected void incrementGoalsScoredBy(double score) 
+	
+	public Number getGoalsScored( boolean intValue) 
 	{
-		goalsScored += score;
+		if ( intValue)
+			return (int)  getGoalsScored() ;
+		return getGoalsScored();
 	}
+	
 
+	
 	/**
 	 * Gets the goals conceeded by this {@code Competitor}
 	 *@return a double 
 	 */
-	public double getGoalsConceded() 
+	public double getGoalsConceeded() 
 	{
-		return goalsConceded;
+		return getHomeGoalsConceeded() + getAwayGoalsConceeded() ;
 	}
-
+	
 	/**
-	 * Increments the goals conceeded by this {@code Competitor  } its argument
-	 * 
-	 *@param goals a 
+	 * Gets the total goals conceeded by this {@code Competitor} as a {@code Number}
+	 *
+	 *@return The goalsScored by this Competitor
 	 */
-	public void incrementGoalsConcededBy(double goals)
+	
+	public Number getGoalsConceeded( boolean intValue) 
 	{
-		goalsConceded += goals;
+		if ( intValue )
+			return new Integer( (int) getGoalsConceeded() );
+		
+		return  getGoalsConceeded() ;
+		
 	}
+	
+
 
 	/**
 	 * Gets this {@code Competitor}'s goal difference
@@ -470,8 +483,21 @@ public class Competitor implements Serializable
 	 */
 	public double getGoalDifference() 
 	{
-		return getGoalsScored() - getGoalsConceded();
+		return getGoalsScored() - getGoalsConceeded();
 	}
+	
+	/**
+	 * Gets this {@code Competitor}'s goal difference
+	 *@return difference between {@code getGoalsScored()} and {@code getGoalsConceded()} 
+	 */
+	public Number getGoalDifference( boolean intValue) 
+	{
+		if ( intValue)
+			return (int) getGoalDifference();
+		return getGoalDifference();
+	}
+
+	
 
 	@Override
 	public String toString() 
@@ -656,11 +682,11 @@ public class Competitor implements Serializable
 		return total;
 	}
 
-	public double getHomeGoalsConceded()
+	public double getHomeGoalsConceeded()
 	{
 		double totalGoalsConceeded = 0 ;
-		for( Competitor opponent : headToHead.keySet() )
-			totalGoalsConceeded+= opponent.getHomeGoal( Competitor.this);
+		for( Competitor opponent : homeGoals.keySet() )
+			totalGoalsConceeded+= opponent.getAwayGoal( Competitor.this);
 		return totalGoalsConceeded ;
 	}
 
@@ -674,20 +700,80 @@ public class Competitor implements Serializable
 
 	public double getHomeGoalDifference()
 	{
-		return getHomeGoalsScored() - getHomeGoalsConceded();
+		return getHomeGoalsScored() - getHomeGoalsConceeded();
 	}
 	
 	public double getAwayGoalDifference()
 	{
-		return getAwayGoalsScored() - getAwayGoalsConceded();
+		return getAwayGoalsScored() - getAwayGoalsConceeded();
 	}
 	
-	public double getAwayGoalsConceded()
+	public double getAwayGoalsConceeded()
 	{
 		double totalGoalsConceeded = 0 ;
-		for( Competitor opponent : headToHead.keySet() )
-			totalGoalsConceeded+= opponent.getAwayGoal( Competitor.this);
+		for( Competitor opponent : awayGoals.keySet() )
+			totalGoalsConceeded+= opponent.getHomeGoal( Competitor.this);
 		return totalGoalsConceeded ;
+	}
+
+	public int getFixturesPlayedHome()
+	{
+		return getNumberOfHomeWin() +
+				getNumberOfHomeDraw() +
+				getNumberOfHomeLoss();
+	}
+	
+	public int getFixturesPlayedAway()
+	{
+		return getNumberOfAwayWin() +
+				getNumberOfAwayDraw() +
+				getNumberOfAwayLoss();
+	}
+
+	public  Number getAwayGoalsScored(boolean intValue)
+	{
+		if ( intValue)
+			return (int) getAwayGoalsScored();
+				
+		return getAwayGoalsScored();
+	}
+	
+	public  Number getAwayGoalsConceeded(boolean intValue)
+	{
+		if (  intValue )
+			return (int) getAwayGoalsConceeded();
+		
+		return  getAwayGoalsConceeded() ;
+	}
+	
+	public  Number getAwayGoalsDifference(boolean intValue)
+	{
+		if ( intValue) 
+			return (int) getAwayGoalDifference();
+
+		return getAwayGoalDifference();
+	}
+	
+	public  Number getHomeGoalsScored(boolean intValue)
+	{
+		if ( intValue)
+			return (int) getHomeGoalsScored();
+		
+		return getHomeGoalsScored();
+	}
+	
+	public  Number getHomeGoalsConceeded(boolean intValue )
+	{
+		if ( intValue)
+			return (int)  getHomeGoalsConceeded();
+		return getHomeGoalsConceeded();
+	}
+	
+	public  Number getHomeGoalsDifference(boolean intValue)
+	{
+		if ( intValue)
+			return (int) getHomeGoalDifference();
+		return getHomeGoalDifference();
 	}
 	
 	

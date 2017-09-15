@@ -61,7 +61,9 @@ public class SaveTourJavaFX extends Application{
 
 	
 		Competitor[] comps = {c1, c2 ,c3,c4};	
-		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};
+		Breaker[] breakers =
+			{Breaker.getBreakers(Breaker.GROUP_BREAKER , Breaker.ALL)[ 0 ], 
+				Breaker.getBreakers(Breaker.GROUP_BREAKER , Breaker.ALL)[1]};
 		Tournament tournament = null ;
 		
 		int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("input the number of Round"));

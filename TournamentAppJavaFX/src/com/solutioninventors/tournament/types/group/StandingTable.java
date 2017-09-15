@@ -152,42 +152,42 @@ public class StandingTable implements Serializable {
 		if ( tieBreakerType ==  TieBreaker.AWAY_FIXTURES)
 		{
 
-			goalsScoredFunction = com -> String.valueOf( com.getAwayGoalsScored() );
-			goalsConceededFunction = com -> String.valueOf( com.getAwayGoalsConceded() );
-			goalsDiffFunction = com -> String.valueOf( com.getAwayGoalDifference() );
+			goalsScoredFunction = com -> String.valueOf( com.getAwayGoalsScored( true ) );
+			goalsConceededFunction = com -> String.valueOf( com.getAwayGoalsConceeded( true ) );
+			goalsDiffFunction = com -> String.valueOf( com.getAwayGoalsDifference( true ) );
 			
 		}
 		else if( tieBreakerType == TieBreaker.HOME_FIXTURES )
 		{
-			goalsScoredFunction = com -> String.valueOf( com.getHomeGoalsScored() );
-			goalsConceededFunction = com -> String.valueOf( com.getHomeGoalsConceded() );
-			goalsDiffFunction = com -> String.valueOf( com.getHomeGoalDifference() );
+			goalsScoredFunction = com -> String.valueOf(  com.getHomeGoalsScored( true ) );
+			goalsConceededFunction = com -> String.valueOf(  com.getHomeGoalsConceeded( true ) );
+			goalsDiffFunction = com -> String.valueOf( com.getHomeGoalsDifference( true ) );
 			
 		}
 		else
 		{
-			goalsScoredFunction = com -> String.valueOf( com.getGoalsScored() );
-			goalsConceededFunction = com -> String.valueOf( com.getGoalsConceded() );
-			goalsDiffFunction = com -> String.valueOf( com.getGoalDifference() );
+			goalsScoredFunction = com -> String.valueOf( com.getGoalsScored(true ) );
+			goalsConceededFunction = com -> String.valueOf( com.getGoalsConceeded(true ) );
+			goalsDiffFunction = com -> String.valueOf( com.getGoalDifference( true ) );
 			
 			
 		}
 		
 		Arrays.stream( competitors )
-				   .map( com -> String.valueOf( (int) com.getGoalsScored() ) )
+				   .map( goalsScoredFunction )
 				   .collect( Collectors.toList() )
 				   .toArray( goalsScoredColumn );
 		
 		
 			Arrays.stream( competitors )
-			   .map( com -> String.valueOf( (int) com.getGoalsConceded() ) )
+			   .map( goalsConceededFunction )
 			   .collect( Collectors.toList() )
 			   .toArray(goalsConcededColumn );
 			
 			
 		
 		Arrays.stream( competitors )
-			   .map( com -> String.valueOf( (int) com.getGoalDifference() ) )
+			   .map( goalsDiffFunction )
 			   .collect( Collectors.toList() )
 			   .toArray( goalDifferenceColumn );
 	}
@@ -195,13 +195,14 @@ public class StandingTable implements Serializable {
 	public void createNoGoalColumns(Competitor[] competitors, String[] nameColumn, String[] playedColumn, String[] winsColumn, String[] drawColumn,
 			String[] lossColumn, String[] pointColumn, int type)
 	{
+		Function<Competitor, String> playedFunction = null;
 		Function<Competitor, String> winFunction = null;
 		Function<Competitor, String> lossFunction = null;
 		Function<Competitor, String> drawFunction = null;
 		Function<Competitor, String> pointFunction = null ;
 		if ( type == TieBreaker.AWAY_FIXTURES )
 		{
-			
+			playedFunction = com -> String.valueOf( com.getFixturesPlayedAway() );
 			winFunction = com -> String.valueOf( com.getNumberOfAwayWin() );
 			lossFunction = com -> String.valueOf( com.getNumberOfAwayLoss() );
 			drawFunction = com -> String.valueOf( com.getNumberOfAwayDraw() );
@@ -212,6 +213,7 @@ public class StandingTable implements Serializable {
 		}
 		else if( type == TieBreaker.HOME_FIXTURES )
 		{
+			playedFunction = com -> String.valueOf( com.getFixturesPlayedHome() );
 			winFunction = com -> String.valueOf( com.getNumberOfHomeWin() );
 			lossFunction = com -> String.valueOf( com.getNumberOfHomeLoss() );
 			drawFunction = com -> String.valueOf( com.getNumberOfHomeDraw() );
@@ -221,6 +223,7 @@ public class StandingTable implements Serializable {
 		}
 		else
 		{
+			playedFunction = com -> String.valueOf( com.getPlayedFixtures() );
 			winFunction = com -> String.valueOf( com.getNumberOfWin() );
 			lossFunction = com -> String.valueOf( com.getNumberOfLoss() );
 			drawFunction = com -> String.valueOf( com.getNumberOfDraw() );
@@ -236,7 +239,7 @@ public class StandingTable implements Serializable {
 				   .toArray( nameColumn );
 		
 		Arrays.stream( competitors )
-		   .map( c->String.valueOf(  c.getPlayedFixtures()  )  )
+		   .map(playedFunction )
 		   .collect( Collectors.toList() )
 		   .toArray( playedColumn );
 		

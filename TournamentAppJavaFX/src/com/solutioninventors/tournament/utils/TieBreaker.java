@@ -33,7 +33,7 @@ public class TieBreaker implements Serializable
 	 *@param breakers The {@code Breaker[]} object
 	 *@throws InvalidBreakerException when its argument is {@code null}
 	 */
-	public TieBreaker( Breaker[] breakers ) throws InvalidBreakerException
+	public TieBreaker( Breaker ... breakers ) throws InvalidBreakerException
 	{
 		if ( breakers !=null )
 			BREAKERS = breakers;

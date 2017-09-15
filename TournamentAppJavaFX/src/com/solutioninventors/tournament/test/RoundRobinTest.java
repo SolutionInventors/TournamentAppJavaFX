@@ -40,16 +40,16 @@ public class RoundRobinTest {
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
 
-		// Competitor c5 = new Competitor( "Ada" , file );
-		// Competitor c6 = new Competitor( "Oguejiofor", file );
-		// Competitor c7 = new Competitor( "Pio" , file );
-		// Competitor c8 = new Competitor( "Oloche" , file ) ;
-		//
-		// Competitor c9 = new Competitor( "Manchester" , "United", file );
-		// Competitor c10 = new Competitor( "Chealsea", file );
-		// Competitor c11 = new Competitor( "Arsenal" , file );
-		// Competitor c12 = new Competitor( "Real" , file ) ;
-		//
+//		 Competitor c5 = new Competitor( "Ada" , file );
+//		 Competitor c6 = new Competitor( "Oguejiofor", file );
+//		 Competitor c7 = new Competitor( "Pio" , file );
+//		 Competitor c8 = new Competitor( "Oloche" , file ) ;
+//		
+//		 Competitor c9 = new Competitor( "Manchester" , "United", file );
+//		 Competitor c10 = new Competitor( "Chealsea", file );
+//		 Competitor c11 = new Competitor( "Arsenal" , file );
+//		 Competitor c12 = new Competitor( "Real" , file ) ;
+//		
 		// Competitor c13 = new Competitor( "Barca" , file );
 		// Competitor c14 = new Competitor( "Atletico", file );
 		// Competitor c15 = new Competitor( "Lagos" , file );
@@ -92,11 +92,11 @@ public class RoundRobinTest {
 		
 		
 		Test.displayMessage( builder.toString() );
-		
+		builder.delete(0 , builder.length() );
+
 		printRounds( tournament.getRoundArray() );
-		Test.displayStandingTable(   
-				( (GroupTournament ) tournament)
-				.getTable().getStringTable() );// groupTournament specific
+		Test.displayMessage( Test.getAllTables( 
+				((GroupTournament) tournament).getTable())); 
 		
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
@@ -116,10 +116,6 @@ public class RoundRobinTest {
 				break;
 			}
 			
-			System.out.println( "Test " + 
-					comps[0].getNumberOfAwayGoals() + "  " + 
-					comps[1].getNumberOfAwayGoals() + " " +
-					comps[2].getNumberOfAwayGoals());
 			
 			
 		} 
@@ -173,9 +169,8 @@ public class RoundRobinTest {
 		}
 		Test.displayMessage( builder.toString()  );
 		
-		Test.displayStandingTable(   
-				( (GroupTournament ) tournament)
-				.getTable().getStringTable() );
+		Test.displayMessage( Test.getAllTables( 
+				((GroupTournament) tournament).getTable())); 
 		
 		
 	}
@@ -225,9 +220,9 @@ public class RoundRobinTest {
 			e.printStackTrace();
 		} 
 		
-		Test.displayStandingTable(   
-				( (GroupTournament ) tournament)
-				.getTable().getStringTable() );// groupTournament specific
+		Test.displayMessage( Test.getAllTables( 
+				((GroupTournament) tournament).getTable())); 
+		
 	}
 
 	private static void printRounds(Round[] rounds)

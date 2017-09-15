@@ -54,7 +54,7 @@ public class MultistageTest {
 		//Competitor[] comps = { c1, c2, c3, c4};
 
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.GOALS_CONCEDED,
-				Breaker.NUMBER_OF_WINS, Breaker.AWAY_GOAL};
+				Breaker.TOTAL_WINS, Breaker.AWAY_GOALS_SCORED};
 
 		
 

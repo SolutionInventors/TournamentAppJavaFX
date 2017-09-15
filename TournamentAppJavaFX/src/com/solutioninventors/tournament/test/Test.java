@@ -9,15 +9,22 @@ package com.solutioninventors.tournament.test;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
+import com.solutioninventors.tournament.types.group.StandingTable;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 
 public class Test {
 	public static void displayStandingTable(String[][] stringTable) {
-		StringBuilder builder = new StringBuilder(1000);
 
 		
+		displayMessage("The table is \n" + getTableToDisplay(stringTable));
 		
+
+	}
+
+	public static String getTableToDisplay(String[][] stringTable )
+	{
+		StringBuilder builder  = new StringBuilder(1000);
 		if (stringTable[0].length == 9)
 			builder.append(String.format( "%-20s %s", "Name" , 
 					"P W D L F A GD  Pts\n"));
@@ -38,9 +45,7 @@ public class Test {
 			builder.append("\n");
 
 		}
-		displayMessage("The table is \n" + builder.toString());
-		;
-
+		return builder.toString() ;
 	}
 
 	public static void displayFixtures(Fixture[] currentFixtures) {
@@ -49,6 +54,22 @@ public class Test {
 
 	}
 
+	public static String getAllTables(StandingTable table)
+	{
+		StringBuilder builder = new StringBuilder(400);
+		
+		builder.append( "The Tournament Tables are:\n\n" );
+		builder.append( "Home Fixtures:\n" );
+		builder.append( Test.getTableToDisplay( table.getHomeStringTable()  ) );
+		
+		builder.append( "\nAway Fixtures:\n" );
+		builder.append( Test.getTableToDisplay( table.getAwayStringTable()  ) );
+		
+		builder.append( "\nAll Fixtures:\n" );
+		builder.append( Test.getTableToDisplay( table.getStringTable()  ) );
+		return builder.toString();
+	}
+	
 	public static String getFixutures(Fixture[] currentFixtures)
 	{
 		StringBuilder builder = new StringBuilder(500);

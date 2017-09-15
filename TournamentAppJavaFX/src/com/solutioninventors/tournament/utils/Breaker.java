@@ -8,11 +8,11 @@ package com.solutioninventors.tournament.utils;
 
 import java.io.Serializable;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * <p>
  * Constants {@code Breaker.GROUP_BREAKER, Breaker.KNOCKOUT_BREAKER, Breaker.BOTH } are the
  * different types of breakers and are used to group other breaker objects.
- * Note that these types cannot be used when creating a {@code TieBreaker } object. For example
+ * Thus these types cannot be used when creating a {@code TieBreaker } object. For example
  * 
  * <p>
  *  {@code Breaker[] breakers = { Breaker.BOTH, Breaker.GROUP_BREAKERS }; } <br>
@@ -44,7 +44,6 @@ import java.util.stream.Collectors;
  *   {@code Breaker.BOTH } may be used for any {@code Tournament } object
  *   
  *   <p>
- *   
  *   The class contains public methods {@code getType, getName and getBreaker}<br>
  *   Method {@code getBreaker } returns a {@code Comparator } object 
  *    <p>
@@ -62,32 +61,74 @@ import java.util.stream.Collectors;
  */
 public enum Breaker implements Serializable
 {
+	/**
+	 * Specifies the type of a {@code Breaker}. It specifies that a breaker can be used to in {@code GroupTournament}s
+	 * Should not be used when creating {@code TieBreaker}s
+	 */
+	GROUP_BREAKER ,
+	/**
+	 * A type of {@code Breaker}. It specifies that a breaker can be used to in {@code EliminationTournament}s
+	 * Should not be used when creating {@code TieBreaker}s
+	 */
+	KNOCKOUT_BREAKER ,
+	/**
+	 * A type of {@code Breaker}. It specifies that a breaker is goal dependent ( e.g goals scored , goals against etc ).
+	 * Should not be used when creating {@code TieBreaker}s
+	 */
+	GOAL_DEPENDENT ,
+	/**
+	 * Specifies that a breaker is not goal dependent.
+	 * Should not be used when creating {@code TieBreaker}s
+	 */
+	NOT_GOAL_DEPENDENT ,
+	/**
+	 * A type of {@code Breaker}. It specifies that a breaker can be used for all {@code Tournament}s .
+	 * Should not be used when creating {@code TieBreaker}s
+	 */
+	ALL , 
+	
+	AWAY_GOAL_AGAINST_AN_OPPONENT( ALL , getAwayGoalBreaker(), GOAL_DEPENDENT ),
+	SHOOT_OUT( KNOCKOUT_BREAKER , null , NOT_GOAL_DEPENDENT),
 	
 	
-	GROUP_BREAKER("GROUP BREAKER") ,
-	KNOCKOUT_BREAKER( "KNOCKOUT BREAKER") , 
-	BOTH( null ) , 
-	
-	AWAY_GOAL( BOTH , getAwayGoalBreaker(), "AWAY GOAL" ),
-	SHOOT_OUT( KNOCKOUT_BREAKER , null , "SHOOT OUT" ),
-	
-	
-	COIN_TOSS( BOTH  , getCoinToss() , "COIN TOSS")  ,
+	COIN_TOSS( ALL  , getCoinToss(), NOT_GOAL_DEPENDENT)  ,
 
-	NUMBER_OF_AWAY_WIN( GROUP_BREAKER , getNumberOfAwayWin() ,"AWAY_WIN" ) ,
-	GOALS_SCORED( GROUP_BREAKER , getGoalsScored() , "GOALS SCORED") ,
-	GOALS_CONCEDED( GROUP_BREAKER , getGoalsConceded() , "GOALS CONCEDDED") ,
-	GOALS_DIFFERENCE( GROUP_BREAKER , getGoalsDifference(), "GOAL DIFFERENCE" ) ,
-	NUMBER_OF_HOME_WIN( GROUP_BREAKER , getNumberOfHomeWin() ,"NUMBER OF HOME WIN" ) ,
-	NUMBER_OF_AWAY_GOALS( GROUP_BREAKER , getNumberOfAwayGoals() , "NUMBER OF AWAY GOAL" ), 
-	NUMBER_OF_WINS( GROUP_BREAKER , getNumberOfWins(), "NUMBER OF WINS" ) ,
-	NUMBER_OF_DRAWS( GROUP_BREAKER, getNumberOfDraw(), "NUMBER OF DRAWS" ) ,
-	NUMBER_OF_LOSS( GROUP_BREAKER , getNumberOfLoss(), "NUMBER OF LOSS" ) ,
-	HEAD_TO_HEAD( GROUP_BREAKER , getHeadToHead() , "HEAD TO HEAD")  ;
+	
+	GOALS_SCORED( GROUP_BREAKER , getGoalsScored() , GOAL_DEPENDENT ) ,
+	GOALS_CONCEDED( GROUP_BREAKER , getGoalsConceded()  , GOAL_DEPENDENT ) ,
+	GOALS_DIFFERENCE( GROUP_BREAKER , getGoalsDifference(), GOAL_DEPENDENT  ) ,
+	
+
+	AWAY_GOALS_SCORED( GROUP_BREAKER , getAwayGoalsScored() , GOAL_DEPENDENT  ), 
+	AWAY_GOALS_CONCEEDED( GROUP_BREAKER , getAwayGoalsConceded()  , GOAL_DEPENDENT), 
+	AWAY_GOALS_DIFFERENCE( GROUP_BREAKER , getAwayGoalDifference() , GOAL_DEPENDENT ), 
+	
+	HOME_GOALS_SCORED( GROUP_BREAKER , getHomeGoalsScored()  , GOAL_DEPENDENT ), 
+	HOME_GOALS_CONCEEDED( GROUP_BREAKER , getHomeGoalConceeded() , GOAL_DEPENDENT  ), 
+	HOME_GOALS_DIFFERENCE( GROUP_BREAKER , getHomeGoalDifference()  , GOAL_DEPENDENT ), 
+	
+	
+	HOME_WINS( GROUP_BREAKER , getNumberOfHomeWin() ,NOT_GOAL_DEPENDENT ) ,
+	HOME_DRAWS( GROUP_BREAKER , getNumberOfHomeWin()  , NOT_GOAL_DEPENDENT) ,
+	HOME_LOSS( GROUP_BREAKER , getNumberOfHomeWin() , NOT_GOAL_DEPENDENT ) ,
+	
+	AWAY_WINS(GROUP_BREAKER , getNumberOfAwayWin() , NOT_GOAL_DEPENDENT ) ,
+	AWAY_DRAWS( GROUP_BREAKER , getNumberOfHomeWin() , NOT_GOAL_DEPENDENT ) ,
+	AWAY_LOSS( GROUP_BREAKER , getNumberOfHomeWin() , NOT_GOAL_DEPENDENT ) ,
+	
+	
+	
+	TOTAL_WINS( GROUP_BREAKER , getNumberOfWins(),  NOT_GOAL_DEPENDENT) ,
+	TOTAL_DRAWS( GROUP_BREAKER, getNumberOfDraw(), NOT_GOAL_DEPENDENT) ,
+	TOTAL_LOSS( GROUP_BREAKER , getNumberOfLoss(), NOT_GOAL_DEPENDENT ) ,
+	
+	HEAD_TO_HEAD( GROUP_BREAKER , getHeadToHead() , NOT_GOAL_DEPENDENT)  ;
 	
 	private final  Comparator< Competitor> breaker;
 	private final Breaker type ;
-	private final String name ;
+	private final Breaker goalsType;
+	
+	
 	
 	/**
 	 * 
@@ -97,71 +138,32 @@ public enum Breaker implements Serializable
 	 *@author  Oguejiofor Chidiebere
  *    @since 1.0
 	 */
-	private Breaker(String name )
+	private Breaker()
 	{
-		this( null , null, name  );
+		this( null , null, null  );
 	}
 	
 	
-
 	/**
+	 * Initializes  this {@code Breaker } object by storing the arguments
 	 * 
-	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
-	 *total number of away goals scored by the {@code Competitor}s. This method is used to create Breaker.NUMBER_OF_AWAY_GOALS object
-	 *@return a Comparator<Competitor> object used to break tie
-	 *@author Oguejifor Chidiebere 
-	 *@since v1.0
-	 *@see Competitor
-	 *@author  Oguejiofor Chidiebere
- *    @since 1.0
+	 *@param typeName - specifies the {@code Tournament } type that this {@code Breaker} would be used. <br>
+	 *	Must be set to {@code Breaker.GROUP}, {@code Breaker.KNOCKOUT or Breker.BOTH}.
 	 *
+	 *@param comparator - a {@code Comparator&lt;Competitor}&gt; that specifies the logic to be used to break the tie
+	 *@param goalDependent - a {@code Breaker}  that specifies if this {@code Breaker} uses goals to 
+	 *break ties. <br> Must be set to {@code Breaker.GOAL_DEPENDENT } or {@code Breaker.NOT_GOAL_DEPENDENT} 
+	 * @author Oguejiofor Chidiebere
 	 */
-	private static Comparator<Competitor> getNumberOfAwayGoals()
-	{
-		Function< Competitor, Double >  function = Competitor:: getAwayGoalsScored;
-
-		return Comparator.comparing( function ).reversed();
-	}
-
-
-	/**
-	 * 
-	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
-	 *number of away goal against a particular competitor. This method is used to create Breaker.AWAY_WIN object.<br/>
-	 *
-	 *@return a Comparator<Competitor> object used to break tie
-	 *@author Oguejifor Chidiebere 
-	 *@since v1.0
-	 *@see Competitor
-	 *@author  Oguejiofor Chidiebere
- *    @since 1.0
-	 *
-	 */
-	
-	private static Comparator< Competitor>  getAwayGoalBreaker()
-	{
-		return new AwayGoal();
-	}
-
-	/**
-	 * 
-	 *Creates a {@code Breaker } object 
-	 *@param comparator Is a Comparator&ltCompetitor&gt object which encapsulates the logic used to break the tie
-	 *@param typeName Can either be Breaker.GROUP_BRREAKERS, Breaker.kNOCKOUT_BREAKERS, Breaker.BOTH
-	 *@param theName The name of the Breaker object stored as String
-	 *@author Oguejifor Chidiebere 
-	 *@since v1.0
-	 *@see Competitor
-	 *@author  Oguejiofor Chidiebere
- *    @since 1.0
-	 */
-	
-	private Breaker( Breaker typeName, Comparator<Competitor> comparator, String theName )
+	private Breaker( Breaker typeName, Comparator<Competitor> comparator, 
+			 Breaker goalDependent )
 	{
 		type = typeName;
 		breaker = comparator;
-		name = theName;
+		
+		goalsType = goalDependent ;
 	}
+	
 	
 	
 	/**
@@ -203,6 +205,89 @@ public enum Breaker implements Serializable
 		return Comparator.comparing( function ).reversed();
 	}
 	
+
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *number of goals scored at home. 
+	 *This method is used to create Breaker.HOME_GOAL_DIFFERENCE object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
+	private static Comparator<Competitor> getHomeGoalDifference()
+	{
+		Function< Competitor, Double >  function = Competitor:: getHomeGoalDifference;
+
+		return Comparator.comparing( function ).reversed();
+	}
+
+
+
+
+
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *number of goals conceeded at home. 
+	 *This method is used to create Breaker.HOME_GOAL_CONCEEDED object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
+	private static Comparator<Competitor> getHomeGoalConceeded()
+	{
+		Function< Competitor, Double >  function = Competitor:: getHomeGoalsConceeded;
+
+		return Comparator.comparing( function );
+	}
+
+
+	/**
+	 * 
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *goal difference in all away {@code Fixture}'s . 
+	 *This method is used to create Breaker.HOME_GOAL_CONCEEDED object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
+	private static Comparator<Competitor> getAwayGoalDifference()
+	{
+		Function< Competitor, Double >  function = Competitor:: getAwayGoalDifference;
+
+		return Comparator.comparing( function ).reversed();
+	}
+
+	/**
+	 * 
+	 Gets the a {@code Comparator&lt;Competitor&gt; } that breaks ties between two {@code Competitor}'s 
+	 based on the away goal that each has scored against his opponent.<p>
+	 This can be used to implement away goal rule in knockout tournaments and may also be used in
+	 group tournament 
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 * @since v1.0
+	 *
+	 */
+	
+	private static Comparator< Competitor>  getAwayGoalBreaker()
+	{
+		return new AwayGoal();
+	}
+
+	
 	
 	/**
 	 * 
@@ -237,8 +322,6 @@ public enum Breaker implements Serializable
 	{
 		return new Head_To_Head();
 	}
-
-	
 
 	/**
 	 * 
@@ -280,6 +363,35 @@ public enum Breaker implements Serializable
 	}
 	
 	/**
+	 * Gets a Comparator&ltCompetitor&gt that encapsulates the logic for breaking ties ageainst 
+	 * two {@code COmpetitor}s with their home goals scored
+	 *@author Oguejiofor Chidiebere
+	 **@since v1.0
+	 *@see Competitor 
+	 */
+	private static Comparator<Competitor> getHomeGoalsScored()
+	{
+		Function< Competitor, Double >  function = Competitor:: getHomeGoalsScored;
+
+		return Comparator.comparing( function ).reversed();
+	}
+	
+	/**
+	 * Gets a Comparator&ltCompetitor&gt that encapsulates the logic for breaking ties ageainst 
+	 * two {@code COmpetitor}s with their home goals scored
+	 *@author Oguejiofor Chidiebere
+	 **@since v1.0
+	 *@see Competitor 
+	 */
+	private static Comparator<Competitor> getAwayGoalsScored()
+	{
+		Function< Competitor, Double >  function = Competitor:: getAwayGoalsScored;
+
+		return Comparator.comparing( function ).reversed();
+	}
+	
+	
+	/**
 	 * 
 	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
 	 *between two {@code Competitor}'s via their goalDifference. 
@@ -311,11 +423,29 @@ public enum Breaker implements Serializable
 	
 	private static Comparator<Competitor> getGoalsConceded()
 	{
-		Function< Competitor, Double >  function = Competitor:: getGoalsConceded;
+		Function< Competitor, Double >  function = Competitor:: getGoalsConceeded;
 
 		return Comparator.comparing( function );
 	}
 	
+	 /**Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via their away goal conceeded. 
+	 *This method is used to create Breaker.AWAY_GOAL_CONCEEDED object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
+	private static Comparator<Competitor> getAwayGoalsConceded()
+	{
+		Function< Competitor, Double >  function = Competitor:: getAwayGoalsConceeded;
+
+		return Comparator.comparing( function );
+	}
+	
+	 
 
 	/**
 	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
@@ -335,6 +465,16 @@ public enum Breaker implements Serializable
 		return Comparator.comparing( function ).reversed();
 	}
 	
+	/**
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
+	 *between two {@code Competitor}'s via their total number of draw. 
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejifor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *
+	 */
+	
 	private static Comparator<Competitor> getNumberOfDraw()
 	{
 		Function< Competitor, Integer >  function = Competitor:: getNumberOfDraw;
@@ -342,8 +482,13 @@ public enum Breaker implements Serializable
 		return Comparator.comparing( function ).reversed();
 	}
 	
-	
-	private static Comparator<Competitor> getNumberOfLoss()
+	/**
+	 * 
+	 *Gets a Comparator&lt;Competitor&gt; that encapsulates the logic for breaking ties with the
+	 *{@code Competitor}'s total number of win
+	 *@return {@code Comparator&lt;Competitor&gt;}
+	 */
+	 private static Comparator<Competitor> getNumberOfLoss()
 	{
 		Function< Competitor, Integer >  function = Competitor:: getNumberOfLoss;
 
@@ -412,7 +557,7 @@ public enum Breaker implements Serializable
 	
 
 	/**
-	 *This class is used to create a Comparator&ltCompetitor&gt object that 
+	 *This class is used to create a Comparator&lt;Competitor&gt; object that 
 	 *breaks ties between two Competitors by simulating a coin toss
 	 *@author Oguejifor Chidiebere 
 	 *@since v1.0
@@ -439,57 +584,6 @@ public enum Breaker implements Serializable
 			
 		}
 	}
-	
-	/**
-	 * 
-	 *Gets a  all {@code Breaker}s of type {@code Breaker.GROUP_BREAKERS}
-	 *@return Breaker[]
-	 **@author Oguejiofor Chidiebere
-	 **@since v1.0
-	 */
-	public static Breaker[] getGroupBreakers()
-	{
-		
-		Breaker[] vals = Breaker.values();
-		
-		List< Breaker > list = new ArrayList<>();
-		
-		for ( int i = 0 ;i < vals.length;i++ )
-			if ( vals[i].getType() != Breaker.KNOCKOUT_BREAKER && vals[i].getType() != null )
-				list.add(vals[ i ] );
-		
-		
-		return list.toArray( new Breaker[ list.size() ] );
-			  
-	}
-	
-	/**
-	 * 
-	 *Gets all {@code Breaker}s of type {@code Breaker.KNOCKOUT_BREAKERS}
-	 *@author Oguejiofor Chidiebere
-	 *@since v1.0
-	 *@return Breaker[]
-	 *
-	 *
-	 */
-	public static Breaker[] getKnockoutBreakers()
-	{
-		List<Breaker> knockoutBreakers  = 
-				Arrays.stream( Breaker.values() )
-				  .filter(b -> b.getType() != Breaker.GROUP_BREAKER  &&
-						  	b.getType()!= null )
-				  .collect(Collectors.toList() );
-		
-		return knockoutBreakers.toArray( new Breaker[ knockoutBreakers.size() ] );
-			  
-	}
-	
-	@Override
-	public String toString()
-	{
-		return getName();
-	}
-
 
 	/**
 	 * 
@@ -500,6 +594,59 @@ public enum Breaker implements Serializable
 	 */
 	public String getName()
 	{
-		return name;
+		return toString().replace( '_', ' ' ).trim();
+	}
+
+	/**
+	 * Gets an array of {@code Breaker}'s based on the type and goal dependence specifiedby the
+	 * arguments
+	 * @author Oguejiofor Chidiebere
+	 *@param breakerType - Specifies the type of tournament that the {@code Breaker}s would bew used<br>
+	 *Must be set to {@code Breaker.GROUP}, {@code Breaker.KNOCKOUT} or {@code Breaker.ALL}
+	 *
+	 *@param dependence - Specifies if the returned {@code Breaker}s would be goal dependent or not<br>
+	 *When set to {@code Breaker.GOAL_DEPENDENT} this method gets all the goal dependent {@code Breaker}s
+	 *<br> When set to {@code Breaker.NOT_GOAL_DEPENDENT} this method gets all the breakers that are not goal dependent
+	 * <br>If this argument is set to any other value( preferably {@code Breaker.ALL} )  then goal dependence is ignored.
+	 *
+	 *@since v1.0
+	 *@return an array of {@code Breaker}s
+	 */
+	public static Breaker[] getBreakers( Breaker breakerType, Breaker dependence )
+	{
+		final Breaker  val ;
+		Predicate<Breaker> predicate = null;
+		if ( dependence == Breaker.GOAL_DEPENDENT || dependence == Breaker.NOT_GOAL_DEPENDENT)
+			predicate = b-> b.getType() == breakerType &&
+							b.getGoalDependence() == dependence;
+		else //gets all the breaker type
+			predicate = b-> b.getType() == breakerType ;	
+			
+		val = dependence ;
+		
+		if(  breakerType == Breaker.KNOCKOUT_BREAKER || breakerType == Breaker.GROUP_BREAKER ||
+						breakerType == Breaker.ALL)
+		{
+			List<Breaker> list = Arrays.stream( values() )
+					.filter( predicate )
+					.collect( Collectors.toList() );
+				
+				return list.toArray( new Breaker[ list.size() ] );
+					
+		}
+		
+		return null;
+	}
+
+	
+	/**
+	 * Gets the goal dependence of this {@code Breaker} 
+	 *@author Oguejiofor Chidiebere 
+	 *@since v1.0
+	 *@return Either {@code Breaker.GOAL_DEPENDENT} or  {@code Breaker.NOT_GOAL_DEPENDENT}
+	 */
+	public Breaker getGoalDependence()
+	{
+		return goalsType;
 	}
 }

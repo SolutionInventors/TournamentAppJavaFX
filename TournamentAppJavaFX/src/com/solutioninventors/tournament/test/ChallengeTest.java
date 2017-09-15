@@ -11,6 +11,7 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
@@ -18,9 +19,12 @@ import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.group.StandingTable;
+import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class ChallengeTest {
 
@@ -43,12 +47,29 @@ public class ChallengeTest {
 			{
 				break;
 			}
-			
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner());
-
+		System.out.println(coms[0].getAwayGoalsDifference(true));
+		try
+		{
+			StandingTable table = new StandingTable(tournament.getSportType() ,
+					coms ,  3, 1, 0,  new TieBreaker( Breaker.GOALS_DIFFERENCE , 
+							Breaker.AWAY_GOALS_SCORED , Breaker.AWAY_WINS ));
+			
+		
+			
+			Test.displayMessage( Test.getAllTables(table) );
+		}
+		catch (InvalidBreakerException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
+
+	
 
 	public static void simulateRound(Tournament tournament) throws TournamentEndedException, OnlyOutstandingAreLeftException
 	{

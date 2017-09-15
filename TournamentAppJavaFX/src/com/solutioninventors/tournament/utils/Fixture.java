@@ -119,10 +119,7 @@ public class Fixture implements Serializable{
 			
 			if ( TYPE == SportType.GOALS_ARE_SCORED )
 			{
-				getCompetitorOne().incrementGoalsScoredBy( homeComScore );
-				getCompetitorOne().incrementGoalsConcededBy( awayComScore );
-				getCompetitorTwo().incrementGoalsScoredBy( awayComScore );
-				getCompetitorTwo().incrementGoalsConcededBy( homeComScore );
+				
 				getCompetitorOne().addToHeadToHead( getCompetitorTwo() , homeComScore ); 
 				getCompetitorTwo().addToHeadToHead(getCompetitorOne(), awayComScore );
 				

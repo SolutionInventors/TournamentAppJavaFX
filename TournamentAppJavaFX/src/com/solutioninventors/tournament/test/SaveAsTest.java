@@ -48,7 +48,7 @@ public class SaveAsTest
 		
 		Competitor[] comps = {c1, c2 ,c3,c4, c5 , c6 , c7,  c8 };	
 		
-		Breaker[] breakers ={Breaker.GOALS_DIFFERENCE ,Breaker.NUMBER_OF_WINS };
+		Breaker[] breakers ={Breaker.GOALS_DIFFERENCE ,Breaker.TOTAL_WINS };
 		Tournament tournament = null ;
 		
 		int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("input the number of Round"));
