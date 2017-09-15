@@ -19,13 +19,15 @@ public class ChallengeScreenController {
 	
 	private String TournamentName;
 	private Btn btn = new Btn();
+	private Boolean goalScored;
 	
 	public String getTournamentName() {
 		return TournamentName;
 	}
 
-	public void setTournamentName(String tournamentName) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
+		this.goalScored = goalScored;
 	}
 
 	@FXML
@@ -38,7 +40,7 @@ public class ChallengeScreenController {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setChallengeTournament(TournamentName,Integer.valueOf(txtnoOfrounds.getText()));
+		ic.setChallengeTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()));
 		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
 		
 	}

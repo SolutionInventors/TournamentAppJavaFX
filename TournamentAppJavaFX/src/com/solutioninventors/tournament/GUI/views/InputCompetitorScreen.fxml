@@ -55,9 +55,9 @@
             <Font name="Arial Black" size="20.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="286.0" layoutX="64.0" layoutY="133.0" stroke="RED" strokeType="INSIDE" width="541.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="339.0" layoutX="64.0" layoutY="133.0" stroke="RED" strokeType="INSIDE" width="541.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="170.0" stroke="RED" strokeType="INSIDE" width="283.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1dfdf" height="251.0" layoutX="389.0" layoutY="169.0" stroke="RED" strokeType="INSIDE" width="216.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1dfdf" height="290.0" layoutX="389.0" layoutY="169.0" stroke="RED" strokeType="INSIDE" width="216.0" />
       <TextField fx:id="txtfield1" layoutX="127.0" layoutY="175.0" text="First" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="170.0" stroke="RED" strokeType="INSIDE" width="43.0" />
       <Label fx:id="sn1" layoutX="80.0" layoutY="175.0" text="1" textFill="WHITE">
@@ -84,41 +84,41 @@
 
       <Line endX="20.0" layoutX="97.0" layoutY="153.0" rotate="-90.0" stroke="RED" strokeWidth="2.0" />
       <Line endX="20.0" layoutX="380.0" layoutY="154.0" rotate="-90.0" stroke="RED" strokeWidth="2.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="229.0" stroke="RED" strokeType="INSIDE" width="283.0" />
-      <TextField fx:id="txtfield2" layoutX="127.0" layoutY="234.0" text="Second" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="229.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label fx:id="sn2" layoutX="80.0" layoutY="234.0" text="2" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="240.0" stroke="RED" strokeType="INSIDE" width="283.0" />
+      <TextField fx:id="txtfield2" layoutX="127.0" layoutY="245.0" text="Second" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="240.0" stroke="RED" strokeType="INSIDE" width="43.0" />
+      <Label fx:id="sn2" layoutX="80.0" layoutY="245.0" text="2" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="107.0" layoutY="289.0" stroke="RED" strokeType="INSIDE" width="283.0" />
-      <TextField fx:id="txtfield3" layoutX="128.0" layoutY="294.0" text="Third" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="65.0" layoutY="289.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label fx:id="sn3" layoutX="81.0" layoutY="294.0" text="3" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="107.0" layoutY="309.0" stroke="RED" strokeType="INSIDE" width="283.0" />
+      <TextField fx:id="txtfield3" layoutX="128.0" layoutY="314.0" text="Third" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="65.0" layoutY="309.0" stroke="RED" strokeType="INSIDE" width="43.0" />
+      <Label fx:id="sn3" layoutX="81.0" layoutY="314.0" text="3" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="357.0" stroke="RED" strokeType="INSIDE" width="283.0" />
-      <TextField fx:id="txtfield4" layoutX="127.0" layoutY="362.0" text="Fourth" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="357.0" stroke="RED" strokeType="INSIDE" width="43.0" />
-      <Label fx:id="sn4" layoutX="80.0" layoutY="362.0" text="4" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d5959" height="36.0" layoutX="106.0" layoutY="379.0" stroke="RED" strokeType="INSIDE" width="283.0" />
+      <TextField fx:id="txtfield4" layoutX="127.0" layoutY="384.0" text="Fourth" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="64.0" layoutY="379.0" stroke="RED" strokeType="INSIDE" width="43.0" />
+      <Label fx:id="sn4" layoutX="80.0" layoutY="384.0" text="4" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="229.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="242.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="288.0" onMouseClicked="#changeImage3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img3" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="311.0" onMouseClicked="#changeImage3" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="347.0" onMouseClicked="#changeImage4" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="379.0" onMouseClicked="#changeImage4" pickOnBounds="true" preserveRatio="true">
          <image>
            <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
          </image>
@@ -128,12 +128,14 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="171.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="172.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/com/solutioninventors/tournament/GUI/views/nologo.jpg" />
          </image>
       </ImageView>
    </children>
+   
+   
    <fx:define>
         <ArrayList fx:id="SNArray">
             <fx:reference source="sn1" />

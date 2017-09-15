@@ -147,8 +147,19 @@ public enum Breaker implements Serializable
 	/**
 	 * Initializes  this {@code Breaker } object by storing the arguments
 	 * 
+<<<<<<< HEAD
 	 *@param typeName - specifies the {@code Tournament } type that this {@code Breaker} would be used. <br>
 	 *	Must be set to {@code Breaker.GROUP}, {@code Breaker.KNOCKOUT or Breker.BOTH}.
+=======
+	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties with the {@code Competitor}'s<br/>
+	 *total number of away goals scored by the {@code Competitor}s. This method is used to create Breaker.NUMBER_OF_AWAY_GOALS object
+	 *@return a Comparator<Competitor> object used to break tie
+	 *@author Oguejiofor Chidiebere 
+	 *@since v1.0
+	 *@see Competitor
+	 *@author  Oguejiofor Chidiebere
+ *    @since 1.0
+>>>>>>> refs/remotes/origin/master
 	 *
 	 *@param comparator - a {@code Comparator&lt;Competitor}&gt; that specifies the logic to be used to break the tie
 	 *@param goalDependent - a {@code Breaker}  that specifies if this {@code Breaker} uses goals to 

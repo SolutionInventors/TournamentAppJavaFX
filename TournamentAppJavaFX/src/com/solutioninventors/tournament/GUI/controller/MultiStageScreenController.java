@@ -36,10 +36,11 @@ public class MultiStageScreenController {
 			private String TournamentName;
 			private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 			private boolean singleDoubleElim = false;
+			private Boolean goalScored;
 			
-			
-	public void setTournamentName(String tournamentName) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
+		this.goalScored = goalScored;
 	}
 	
 	public void initialize() {
@@ -103,7 +104,7 @@ public class MultiStageScreenController {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setMultiStageTournament(TournamentName, Integer.valueOf(txtnoOfrounds.getText()),
+		ic.setMultiStageTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()),
 				Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, 
 				singleDoubleElim);
@@ -124,9 +125,7 @@ public class MultiStageScreenController {
 	}
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
-		System.out.println(TournamentName);
-		
-		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+				btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 	}// end previous
 
 }// end class

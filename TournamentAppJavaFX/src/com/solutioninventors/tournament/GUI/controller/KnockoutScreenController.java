@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -24,10 +25,12 @@ public class KnockoutScreenController {
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
 	@FXML private Text txtTourHighlight;
+	@FXML private Label  lblhomeAway;
 	@FXML private AnchorPane  rootPane;
 		  private boolean singleDoubleElim = true;
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();
+		  private Boolean goalScored;
 	
 	//Spinner(int min, int max, int initialValue, int amountToStepBy)
 	// Value factory.
@@ -42,17 +45,23 @@ public class KnockoutScreenController {
 	int abc;
 	// public KnockoutScreenController() {
 	// spinner.setValueFactory(valueFactory);}
-	public void setTournamentName(String tournamentName) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
-
+		this.goalScored = goalScored;
 	}
 	
 	@FXML
 	public void tourselected(ActionEvent e) {
 		if (singleelim.isSelected()) {
 			singleDoubleElim=true;
+			lblhomeAway.setVisible(true);
+			homeandAway.setVisible(true);
+			HomeandAwayFixture = false;
 		} else if (doubleelim.isSelected()) {
 			singleDoubleElim=false;
+			lblhomeAway.setVisible(false);
+			homeandAway.setVisible(false);
+			HomeandAwayFixture = false;
 		}
 	}
 	
@@ -83,9 +92,10 @@ public class KnockoutScreenController {
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+		
 		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setKOtournament(TournamentName, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
-		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+		ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
+		btn.next(rootPane, root, "Input.fxml");
 		
 		
 	}
