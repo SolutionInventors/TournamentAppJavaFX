@@ -38,26 +38,17 @@ public class SwissTes {
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
 		
-	
-<<<<<<< HEAD
-		Competitor[] comps = {c1, c2 ,c3 };	
-=======
+
 		Competitor[] comps = {c1, c2 ,c3,c4 };	
-		Breaker[] breakers ={Breaker.getGroupBreakers()[ 0 ], Breaker.getGroupBreakers()[1]};
->>>>>>> refs/remotes/origin/master
+		
 		Tournament tournament = null ;
 		
 		int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("input the number of Round"));
 		try
 		{
-<<<<<<< HEAD
-			TieBreaker tieBreakers = new TieBreaker( Breaker.GOALS_DIFFERENCE, Breaker.AWAY_GOALS_DIFFERENCE );
-			tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 
-=======
-			TieBreaker tieBreakers = new TieBreaker( breakers );
+			TieBreaker tieBreakers = new TieBreaker( Breaker.GOALS_DIFFERENCE );
 			tournament = new SwissTournament( comps, SportType.GOALS_ARE_NOT_SCORED , 
->>>>>>> refs/remotes/origin/master
-					3 , 1 , 0 , tieBreakers , numOfRounds );
+				3 , 1 , 0 , tieBreakers , numOfRounds );
 		}
 		catch (TournamentException e )
 		{
