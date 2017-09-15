@@ -63,7 +63,7 @@ public enum Breaker implements Serializable
 {
 	/**
 	 * Specifies the type of a {@code Breaker}. It specifies that a breaker can be used to in {@code GroupTournament}s
-	 * Should not be used when creating {@code TieBreaker}s
+	 * Must not be used when creating {@code TieBreaker}s
 	 */
 	GROUP_BREAKER ,
 	/**
