@@ -27,98 +27,6 @@ import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 /**
  * A {@code Competitor } object encapsulates informations about each Competitor in a Tournament<br>
  * {@code Competitor} objects contains the following properties:
- * <table border = "1.0" width = " 730.0">
- * 		<caption>Com</caption>
- * 		<tr>
- * 			<td>{@code private final String FIRST_NAME}</td> 
- * 			<td>Contains the first name of the competitor <br>
- * 				Can be retrieved via call to method {@code getFirstName }</td> 
- * 		</tr>
-		<tr>
-		 	<td>{@code private final String LAST_NAME}</td> 
-			<td>Contains the last name of the competitor <br>
-		 		Can be retrieved via call to method {@code getLastName }</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfWin}</td> 
-			<td>Stores the total number of {@code Fixture}s this Competitor has won <br>
-		 		Can be retrieved via call to method {@code getNumberOfWin }</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfLoss}</td> 
-			<td>Stores the total number of {@code Fixture}s this Competitor has lost <br>
-		 		Can be retrieved via call to method {@code getNumberOfLoss}</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfDraw} </td> 
-			<td>Stores the total number of {@code Fixture}s this Competitor has drawn <br>
-		 		Can be retrieved via call to method {@code getNumberOfDraw }</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfAwayWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
-		 		Can be retrieved via call to method {@code getNumberOfWin }</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfAwayWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
-		 		Can be retrieved via call to method {@code getNumberOfWin }<br>
-		 		It is used by {@code Breaker.AWAY_WIN} object when breaking ties</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfHomeWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
-		 		Can be retrieved via call to method {@code getNumberOfWin }<br>
-		 		It is used by {@code Breaker.NUMBER_OF_HOME_WIN} object when breaking ties</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private int numberOfAwayWin} </td> 
-			<td>Stores the total number of away {@code Fixture}s this Competitor has won <br>
-		 		Can be retrieved via call to method {@code getNumberOfAwayWin }<br>
-		 		</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private double goalsScored} </td> 
-			<td>Stores the total number of goals scored by this  Competitor<br>
-		 		Can be retrieved via call to method {@code getGoalsConceeded }<br>
-		 		</td> 
-		</tr>
-		<tr>
-		 	<td>{@code private double goalsConceeded} </td> 
-			<td>Stores the total number of goals scored by this  Competitor<br>
-		 		Can be retrieved via call to method {@code getNumberOfGoalsConceeded }<br>
-		 		It is used by {@code Breaker.GOALS_CONEEDED} object when breaking ties</td> 
-		
-		</tr>
-		<tr>
-		 	<td>{@code private Map<Competitor, Double> awayGoals} </td> 
-			<td>Stores the away goals scored by this Competitor against an opponent<br>
-				This property is incremented via {@code addAwayGoal(Competitor) }
-				Can retrieved via call to {@code getAwayGoal(Competitor) } </td> 
-		
-		</tr>
-		<tr>
-		 	<td>{@code private Map<Competitor, Double> homeGoals} </td> 
-			<td>Stores the home goals scored by this Competitor against an opponent<br>
-				 </td> 
-		
-		</tr>
-		<tr>
-		 	<td>{@code private File image} </td> 
-			<td>Stores this Competitor's logo/picture<br>
-				It <b>MUST</b> inputed in this object's constructor
-				Can retrieved via call to {@code getAwayGoal(Competitor) } </td> 
-		</tr>
-		<tr>
-		 	<td>{@code private boolean eliminated} </td> 
-			<td>Stores {@code true} when Competitor has been eliminated from the {@code Tornament} else {@code false}<br>
-				Can retrieved via call to {@code isEliminated()} </td> 
-		</tr>
-		
-		
-	</table>	
-		
- *
  * 
  * <p>
  * A Competitor contains some protected methods because  a {@code Competitor } can only be mutated by a {@code Fixture } object<br>
@@ -146,26 +54,62 @@ import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 public class Competitor implements Serializable
 {
 
+	/**Contains the first name of the competitor <br>
+	 * Can be retrieved via call to method {@code getFirstName }
+	 */
+	
 	private final String FIRST_NAME;
+	/**Contains the last name of the competitor <br>
+		Can be retrieved via call to method {@code getLastName }
+	*/
 	private final String LAST_NAME;
 
+	/**Stores the total number of {@code Fixture}s this {@code Competitor} has won at home
+	*/
 	private int homeWin;
+	/**Stores the total number of {@code Fixture}s this {@code Competitor} has won at away<br>
+*/
 	private int awayWin;
 	
+	/**Stores the total number of {@code Fixture}s this {@code Competitor} has drawn at home
+	*/
+
 	private int homeDraw;
+	
+	/**Stores the total number of away {@code Fixture}s this {@code Competitor} has drawn 
+	*/
 	private int awayDraw;
 	
+	/**Stores the total number of home {@code Fixture}s this {@code Competitor} has lost 
+	*/
 	private int homeLoss;
+	/**Stores the total number of away {@code Fixture}s this {@code Competitor} has lost 
+	*/
 	private int awayLoss;
 	
 	
-
+	
 	private Map< Competitor , Double > headToHead ;
 	
+	/**
+	 * Stores the away goals scored by this Competitor against an home opponent<br>
+	 */
 	private Map< Competitor , Double > awayGoals; 
+	
+	/**
+	 * Stores the home goals scored by this Competitor against an away opponent<br>
+	 */
 	private Map< Competitor , Double > homeGoals; 
 	
+	/**
+	 * Stores this Competitor's logo/picture. It is inputed in this object's constructor.
+	 */
 	private File image;
+	
+	
+	/** Stores {@code true} when Competitor has been eliminated from the {@code Tornament} else {@code false}<br>
+		Can retrieved via call to {@code isEliminated()}
+	*/
 	private boolean eliminated;
 
 	/**
@@ -254,6 +198,12 @@ public class Competitor implements Serializable
 		return getNumberOfAwayDraw() + getNumberOfHomeDraw();
 	}
 
+	/**
+	 * Gets the number of {@code Fixture}s this {@code Competior} has drawn at home
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@return - an {@code int } containing the home draw
+	 */
 	public int getNumberOfHomeDraw()
 	{
 		return homeDraw;
@@ -261,7 +211,6 @@ public class Competitor implements Serializable
 
 	/**
 	 * Increases this {@code Competitor}'s home draw by 1
-	 *void
 	 */
 	protected void incrementHomeDraw()
 	{
@@ -298,7 +247,8 @@ public class Competitor implements Serializable
 
 	/**
 	 * Gets the total away games this {@code Competitor } lost
-	 *@return
+	 *@return - the number of away {@code Fixture}s this {@code Competitor} has lost as {@code int}
+	 *@see Fixture
 	 */
 	public int getNumberOfAwayLoss()
 	{
@@ -438,7 +388,7 @@ public class Competitor implements Serializable
 	
 	/**
 	 * Gets the total goals scored by this {@code Competitor} as a {@code Number}
-	 *
+	 *@param intValue - returns int when true
 	 *@return The goalsScored by this Competitor
 	 */
 	
@@ -462,7 +412,7 @@ public class Competitor implements Serializable
 	
 	/**
 	 * Gets the total goals conceeded by this {@code Competitor} as a {@code Number}
-	 *
+	 *@param intValue - returns int when this argument is true else returns {@code false}
 	 *@return The goalsScored by this Competitor
 	 */
 	
@@ -488,7 +438,8 @@ public class Competitor implements Serializable
 	
 	/**
 	 * Gets this {@code Competitor}'s goal difference
-	 *@return difference between {@code getGoalsScored()} and {@code getGoalsConceded()} 
+	 * @param intValue - this method returns int when this argument is true else returns {@code false}
+	 * @return difference between {@code getGoalsScored()} and {@code getGoalsConceded()} 
 	 */
 	public Number getGoalDifference( boolean intValue) 
 	{

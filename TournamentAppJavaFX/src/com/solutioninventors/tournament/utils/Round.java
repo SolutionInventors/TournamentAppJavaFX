@@ -166,7 +166,7 @@ public class Round implements Serializable
 	/**
 	 This method scans through all the {@code Fixture}s in this {@code Round } and 
 	 * sets the score of the {@code Fixture } that matches the home and away {@code Competitor}s <br>
-	 * encapsulated in the {@code Fixture } agrgument 
+	 * encapsulated in the {@code Fixture } agrument 
 	 * This method calls {@code Fixture}'s {@code setResult( score1, score2, store} method and passes
 	 * the store argument to   the {@code Fixture}.<br>
 	 * See {@code Fixture}'s method setResult( score1, score2, boolean) for more info
@@ -176,9 +176,13 @@ public class Round implements Serializable
 	* @author Oguejiofor Chidiebere 
 	* @see Fixture
 	* @since v1.0
-	 *@param fixture the {@code Fixture } object that encapsulates the home and away {@code Competitor}'s
+	 *@param com1- the home {@code Competitor}
+	 *@param com2- the away {@code Competitor}
 	 *@param score1 the home {@code Competitor}'s score
 	 *@param score2 the away {@code Competitor}'s score
+	 *@param store - updates the two {@code Competitor}s if set to true else 
+	 *changes only the {@code Fixture}. Should be false if setting  a {@code Fixture } for a tie
+	 *where the goals should not be saved
 	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException when a match is not found
 	 * @throws com.solutioninventors.tournament.exceptions.ResultCannotBeSetException 
 	 * 		when the {@code Fixture} is in this {@code Round } but is complete
@@ -208,7 +212,11 @@ public class Round implements Serializable
 	 *<br> It does not change this object but reeturns a new object
 	 *@author Oguejiofor Chidiebere 
 	 *@see Fixture
+	 *@see SportType
 	 *@since v1.0
+	 *@param type  - used to create the {@code Fixture}s. The returned {@code Round} would contain only
+	 *{@code Fixture}s with the sopecified {@code SportType} in this argument
+	 * 
 	 *@return a {@code Round} with all the {@link Fixture }s in this object inverted
 	 */
 	public Round invertHomeAndAway( SportType type )

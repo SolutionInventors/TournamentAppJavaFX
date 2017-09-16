@@ -70,7 +70,7 @@ public class Fixture implements Serializable{
 	* objects and initializes {@code competitorScoreOne } and {@code competitorScoreTwo } to -1.<p>
 	* If the {@code SportType} specifies {@code SportType.GOALS_ARE_SCORED} then when method {@code setResult}
 	* is called this {@code Fixture}'s home team's and aeay team's score would be set to the specified
-	* home and away score's <br
+	* home and away score's <br>
 	* If the{@code SportType} is set to {@code SportType.GOALS_ARE_NOT_SCORED} then this {@code Fixture}
 	* would store -1 for the winning team, 0 for a draw and -1 for the losing team when 
 	* {@code setResult } is called
@@ -80,7 +80,7 @@ public class Fixture implements Serializable{
 	 *@see Competitor 
 	 *@param homeCompetitor the {@code Competitor } that is home( or white in chess) 
 	 *@param awayCompetitor the {@code COmpetitor } that is away( or black in chess)
-	 *@param ttype Indicates the {@code SportType} of this {@code Fixtures}
+	 *@param type Indicates the {@code SportType} of this {@code Fixtures}
 	 */
 	public Fixture( SportType type , Competitor homeCompetitor, Competitor awayCompetitor) {
 		COMPETITOR_ONE = homeCompetitor;

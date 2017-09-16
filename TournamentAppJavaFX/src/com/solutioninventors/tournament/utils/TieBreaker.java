@@ -50,7 +50,7 @@ public class TieBreaker implements Serializable
 	 * when its argument is {@code null} or when
 	 *any of the {@code Breaker}s is set to
 	 *{@code Breaker.KNOCKOUT_BREAKER , Breaker.GROUP_BREAKER , Breaker.ALL, Breaker.GOALS_SCORED or
-	 *Breker.NOT_GOALS_SCORED
+	 *Breker.NOT_GOALS_SCORED}
 	 *@see Breaker
 	 */
 	public TieBreaker( Breaker ... breakers ) throws InvalidBreakerException
@@ -87,7 +87,7 @@ public class TieBreaker implements Serializable
  	 * 
 	 *@param scope specifies the point to be used for the comparison. It can be set to
 	 *TieBreaker.HOME( or 1) , TieBreaker.AWAY ( or 2 )  or TieBreker.HOME + TieBreaker.AWAY( or 3 )
-	 *<br> if scope is not within the range 1 <= scope <=3 then this method would assume
+	 *<br> if scope is not less than 1 and less than or equal to 3 then this method would assume
 	 *{@code Breaker. HOME} + {@code TieBreaker.AWAY } 
 	 *@param comps the {@code Competitor[]} to be sorted
 	 *@param pWin the point for win

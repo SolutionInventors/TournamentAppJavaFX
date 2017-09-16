@@ -29,7 +29,7 @@ public class BreakerTest
 //		Method 1:
 		
 		Breaker[] breakers = 
-			{Breaker.HOME_WINS, Breaker.GOALS_DIFFERENCE} ;
+			{Breaker.HOME_WINS, Breaker.GOALS_DIFFERENCE, Breaker.SHOOT_OUT} ;
 		
 		TieBreaker tieBreaker = null;
 		try
