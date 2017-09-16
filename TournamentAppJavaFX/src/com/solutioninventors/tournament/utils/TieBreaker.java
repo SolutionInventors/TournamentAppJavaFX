@@ -21,24 +21,49 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
  */
 public class TieBreaker implements Serializable
 {
+	/**
+	 * The {@code Breaker}s  array to be used to break ties
+	 */
 	private final Breaker[] BREAKERS;
-	public static final int HOME_FIXTURES =1;
-	public static final int AWAY_FIXTURES =2 ;
+	/**
+	 *A constant to be used when breaking ties for home fixtures by a {@code StandingTabel}
+	 *when creating a home fixuture table
+	 */
+	public static final int HOME_FIXTURES = 1;
+	/**
+	 *A constant to be used when breaking ties for away fixtures by a {@code StandingTabel}
+	 *when creating a away fixuture table
+	 */
+	public static final int AWAY_FIXTURES = 2 ;
 	
 	/**
 	 * 
-	 *Creates this {@code TieBreaker} with a {@code Breaker[]} object
+	 *Creates this {@code TieBreaker} with a {@code Breaker}s 
+	 *The order in which the {@link Breaker}s appear determines the order in 
+	 *which the ties would be broken.
+	 *
 	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@param breakers The {@code Breaker[]} object
-	 *@throws InvalidBreakerException when its argument is {@code null}
+	 *
+	 *@throws com.solutioninventors.tournament.exceptions.InvalidBreakerException - 
+	 * when its argument is {@code null} or when
+	 *any of the {@code Breaker}s is set to
+	 *{@code Breaker.KNOCKOUT_BREAKER , Breaker.GROUP_BREAKER , Breaker.ALL, Breaker.GOALS_SCORED or
+	 *Breker.NOT_GOALS_SCORED
+	 *@see Breaker
 	 */
 	public TieBreaker( Breaker ... breakers ) throws InvalidBreakerException
 	{
-		if ( breakers !=null )
-			BREAKERS = breakers;
-		else
+		boolean invalid = 
+			Arrays.stream( breakers)
+				.anyMatch( b-> b.getType() == null );
+		
+		if ( breakers ==null || invalid )
 			throw new InvalidBreakerException( "The breaker array is null  " );
+		else
+			BREAKERS = breakers;
+			
 	}
 	
 	/**

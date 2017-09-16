@@ -627,11 +627,13 @@ public enum Breaker implements Serializable
 	{
 		final Breaker  val ;
 		Predicate<Breaker> predicate = null;
-		if ( dependence == Breaker.GOAL_DEPENDENT || dependence == Breaker.NOT_GOAL_DEPENDENT)
-			predicate = b-> b.getType() == breakerType &&
+		if ( dependence == Breaker.GOAL_DEPENDENT || 
+				dependence == Breaker.NOT_GOAL_DEPENDENT)
+			predicate = b-> (b.getType() == breakerType || 
+									b.getType() == Breaker.ALL ) &&
 							b.getGoalDependence() == dependence;
 		else //gets all the breaker type
-			predicate = b-> b.getType() == breakerType ;	
+			predicate = b-> b.getType() == breakerType || b.getType() == Breaker.ALL;	
 			
 		val = dependence ;
 		
