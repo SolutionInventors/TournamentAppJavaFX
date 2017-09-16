@@ -103,7 +103,7 @@ public class Test {
 			try
 			{
 				builder.append(String.format("%s %.1f VS %.1f %s\n", fixture.getCompetitorOne(),
-						fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), fixture.getCompetitorTwo()));
+						fixture.getCompetitorOneScore(true), fixture.getCompetitorTwoScore(true), fixture.getCompetitorTwo()));
 			}
 			catch (IncompleteFixtureException e)
 			{

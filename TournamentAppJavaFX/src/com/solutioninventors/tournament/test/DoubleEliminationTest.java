@@ -40,9 +40,11 @@ public class DoubleEliminationTest
 		Competitor c7 = new Competitor( "Pio" , file );
 		Competitor c8 = new Competitor( "Oloche" ,  file ) ;
 		
-
-		Competitor[] comps = { c1 , c2  , c3 , c4 , 
-				c5 , c6  , c7 , c8 }; 
+		
+		
+		Competitor[] comps = { 
+				c1 , c2  , c3 , c4 
+				}; 
 
 		Tournament tournament = null ;
 		try
@@ -60,52 +62,64 @@ public class DoubleEliminationTest
 		
 		while( ! tournament.hasEnded() 	)
 		{
-			Test.displayMessage("Welcome to  \nThe " + tournament.toString() );
-			
-			DoubleElimination doubleSpecific = (DoubleElimination) tournament ; 
-			try
-			{
-				
-				if ( !doubleSpecific.isMinorFixtureComplete() && ! doubleSpecific.isFinal() )
-				{
-					Test.displayMessage("Winner Bracket Fixtures" 	);
-					Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.WINNERS_BRACKET ).getFixtures() );
-					
-					Test.displayMessage("Minor Bracket Fixtures" 	);
-					Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.MINOR_BRACKET ).getFixtures() );
-				}
-				else if( ! doubleSpecific.isFinal() )
-				{
-					Test.displayMessage("Major Bracket Fixtures" 	);
-					Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.MAJOR_BRACKET ).getFixtures() );
-					
-				}
-			}
-			catch (RoundIndexOutOfBoundsException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 	
-			
-			
-			inputRoundResults(tournament);
-			
-			try
-			{
-				Test.displayMessage("Results");
-				
-				Test.displayRoundResults( tournament.getCurrentRound() );
-				
-				tournament.moveToNextRound();
-			}
-			catch (MoveToNextRoundException e)
-			{
-				e.printStackTrace();
-			}
-			
+			simulateRound(tournament);
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner() );
+	}
+
+
+
+	public static void simulateRound(Tournament tournament) throws TournamentEndedException
+	{
+		Test.displayMessage("Welcome to  \nThe " + tournament.toString() );
+		
+		DoubleElimination doubleSpecific = (DoubleElimination) tournament ; 
+		try
+		{
+			if ( !doubleSpecific.isInitialComplete() )
+			{
+				Test.displayMessage("Initial Round Fixtures" 	);
+				Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.INITIAL_BRACKET ).getFixtures() );
+				
+			}
+			else if ( !doubleSpecific.isMinorFixtureComplete() && ! doubleSpecific.isFinal() )
+			{
+				Test.displayMessage("Winner Bracket Fixtures" 	);
+				Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.WINNERS_BRACKET ).getFixtures() );
+				
+				Test.displayMessage("Minor Bracket Fixtures" 	);
+				Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.MINOR_BRACKET ).getFixtures() );
+			}
+			else if( ! doubleSpecific.isFinal() )
+			{
+				Test.displayMessage("Major Bracket Fixtures" 	);
+				Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.MAJOR_BRACKET ).getFixtures() );
+				
+			}
+		}
+		catch (RoundIndexOutOfBoundsException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 	
+		
+		
+		inputRoundResults(tournament);
+		
+		Test.displayMessage("Results");
+		
+		Test.displayRoundResults( tournament.getCurrentRound() );
+		
+		try
+		{
+			tournament.moveToNextRound();
+		}
+		catch (MoveToNextRoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.solutioninventors.tournament.GUI.controller.KnockoutScreenController;
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -22,6 +23,7 @@ import com.solutioninventors.tournament.types.group.GroupTournament;
 import com.solutioninventors.tournament.types.group.RoundRobinTournament;
 import com.solutioninventors.tournament.types.group.StandingTable;
 import com.solutioninventors.tournament.types.group.SwissTournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -30,24 +32,27 @@ import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+/**
+ * This class is used in creating a Multistage Tournament 
+ * This class contains a collection of {@link GroupTournament}s which simulates the group rounds
+ * and a {@code EliminationTournament} that simulates the knock out stage.
+ * 
+ * On initialization the constructor determines if there would be a fourth or third place ranking table
+ * The constructor validates that the total competitors is a multiple of 4 
+ * The constructor also creates the Tournament via a call to createTournament
+ * The public constructors either creates a Robin groupStage or Swiss groupStage
+ * 
+ * This table is updated after every group round 
+ * Thus this class contains a StandingTable object that is used to create this feature
+ * 
+ * This class provides some services required to manage the operations of this class
+ */
+
+
 public class Multistage extends Tournament
 {
 
-	/**
-	 * This class is used in creating a MultistageTournament 
-	 * This class contains an array if GroupTournament objects which simulates the group rounds
-	 * The class currently, can only simulate SingleElimination knock-out stage
-	 * 
-	 * On initialization the constructor determines if there would be a fourth or third place ranking table
-	 * The constructor validates that the total competitors is a multiple of 4 
-	 * The constructor also creates the Tournament via a call to createTournament
-	 * The public constructors either creates a Robin groupStage or Swiss groupStage
-	 * 
-	 * This table is updated after every group round 
-	 * Thus this class contains a StandingTable object that is used to create this feature
-	 * 
-	 * This class provides some services required to manage the operations of this class
-	 */
+	
 	private GroupTournament[] groupStage;
 	private EliminationTournament knockoutStage;
 	
@@ -63,39 +68,129 @@ public class Multistage extends Tournament
 	
 	private final GroupWinners numberOfGroupWinners;
 	private final GroupStageType groupType;
+	private final KnockoutType knockoutType;
 	
+	/**
+	 * Creates this {@code Multistage} {@link Tournament} whose group stage would be a {@link SwissTournament} style and 
+	 * its knokoutStage would be a {@link SingleElimination}
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@param coms - the {@code Competitor}s that would be in this {@code Multistage} tournament
+	 *@param type - the {@code SportType} of the  {@code Multistage} 
+	 *@param pWin - the point for win in the group stage
+	 *@param pDraw - the point for a draw in the group stage
+	 *@param pLoss- the point for a loss in the group stage
+	 *@param breaker - a list of {@link TieBreaker}s that would be used when breaking ties in the group stage
+	 *@param numOfGroupRound - the number of rounds that the {@link SwissTournament } would have
+	 *@param knockoutHomeAndAway - true indicates that the {@link SingleElimination} would be home and away.
+	 *@throws TournamentException - when invalid parameters are passed as argument
+	 *@throws InvalidBreakerException- when the {@link  TieBreaker} is invalid 
+	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , int numOfGroupRound,  boolean knockoutHomeAndAway) 
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , knockoutHomeAndAway,
-				GroupStageType.SWISS );
+				GroupStageType.SWISS, KnockoutType.SINGLE );
 		
 	}
 	
+	/**
+	 * Creates a {@code Multistage} with the groupStage played as a {@link SwissTournament}  and 
+	 * the knock-out stage played as a {@link DoubleElimination}
+	  * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	  *@param coms - the {@code Competitor}s that would be in this {@code Multistage} tournament
+	 *@param type - the {@link SportType} of the  {@code Multistage} 
+	 *@param pWin - the point for win in the group stage
+	 *@param pDraw - the point for a draw in the group stage
+	 *@param pLoss- the point for a loss in the group stage
+	 *@param breaker - a {@link TieBreaker}s that would be used when breaking ties in the group stage
+	 *@param numOfGroupRound - the number of rounds that the {@link SwissTournament } would have
+	 *@throws TournamentException
+	 *@throws InvalidBreakerException
+	 */
+	
+	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
+			double pLoss , TieBreaker breaker , int numOfGroupRound) 
+					throws TournamentException, InvalidBreakerException
+	{
+		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , false,
+				GroupStageType.SWISS, KnockoutType.DOUBLE );
+		
+	}
+	
+	/**
+	 * Creates a {@code Multistage} with the group stage played as a {@link RoundRobin} and 
+	 * the knock-out stage played as {@link SingleElimination}
+	 *  @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@param coms - the {@code Competitor}s in the {@code Multistage}
+	 *@param type - the {@link SportType} of this {@code Multistage}
+	 *@param pWin - the point for win in the group stage
+	 *@param pDraw - the point for a draw in the group stage
+	 *@param pLoss- the point for a loss in the group stage
+	 *@param breaker - a  {@link TieBreaker}s that would be used when breaking ties in the group stage
+	 *@param knockoutHomeAndAway - indicates whether the knockout stage would be home and away
+	 *@param knockoutHomeAndAway indicates if the group stage would be home and away when set to {@code true}
+	 *@throws TournamentException - when any parameter is invalid
+	 *@throws InvalidBreakerException when the {@link TieBreaker} is invalid
+	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , boolean groupHomeAndAway , boolean knockoutHomeAndAway) 
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type , pWin , pDraw ,pLoss, breaker , 
-				0 , groupHomeAndAway ,knockoutHomeAndAway , GroupStageType.ROUND_ROBIN 	 );
+				0 , groupHomeAndAway ,knockoutHomeAndAway , GroupStageType.ROUND_ROBIN, KnockoutType.SINGLE 	 );
 		
 	}
 
-	private int calculateExtraQualifiers(int totalCompetitors)
+	/**
+	 * Creates a {@code Multistage} with the groupstage played as a {@link RoundRobin} and
+	 * the lnockout stage played as a {@link DoubleElimination}. Note that 
+	 * {@link DoubleElimination} knockout stage cannot be home and away and 
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@param coms - the {@code Competitor}s in the {@code Multistage}
+	 *@param type - the {@link SportType} of this {@code Multistage}
+	 *@param pWin - the point for win in the group stage
+	 *@param pDraw - the point for a draw in the group stage
+	 *@param pLoss- the point for a loss in the group stage
+	 *@param breaker - a  {@link TieBreaker}s that would be used when breaking ties in the group stage
+	 *@param groupHomeAndAway - indicates if the round robin would be home and away
+	 *@throws TournamentException- when invalid parameter is passed as an argument
+	 *@throws InvalidBreakerException when the {@link TieBreaker} is invalid
+	 */
+	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
+			double pLoss , TieBreaker breaker , boolean groupHomeAndAway ) 
+					throws TournamentException, InvalidBreakerException
 	{
-		int totalQualifiers = 1 ;
-		int totalFirstTwo = totalCompetitors/2 ;
-		while( totalQualifiers <  totalFirstTwo)
-			totalQualifiers *= 2 ;
+		this( coms , type , pWin , pDraw ,pLoss, breaker , 
+				0 , groupHomeAndAway ,false , GroupStageType.ROUND_ROBIN , KnockoutType.DOUBLE	 );
 		
-		int factor = totalQualifiers - totalFirstTwo;
-		return factor;
 	}
-
+	
+	/**
+	 * Used to create a {@code Multistage} with any specification. 
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 **@param coms - the {@code Competitor}s in the {@code Multistage}
+	 *@param type - the {@link SportType} of this {@code Multistage}
+	 *@param pWin - the point for win in the group stage
+	 *@param pDraw - the point for a draw in the group stage
+	 *@param pLoss- the point for a loss in the group stage
+	 *@param breaker - a  {@link TieBreaker}s that would be used when breaking ties in the group stage
+	 *@param groupHomeAndAway - indicates if the round robin would be home and away
+	 *@param numOfGroupRound - indicates if the group stage would be home and away
+	 *@param knockoutHomeAndAway- indicates if the group stage would be home and away
+	 *@param groupStageType - indicates if the {@link GroupStageType} that is ROUND_ROUBIN or SWISS
+	 *@param knockout - indicates if the {@link KnockoutType}  that is DOUBLE or SINGLE that
+	 *@throws TournamentException
+	 *@throws InvalidBreakerException
+	 */
 	private Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , int numOfGroupRound, boolean groupHomeAndAway,
-			boolean knockoutHomeAndAway , GroupStageType groupStageType ) 
+			boolean knockoutHomeAndAway , GroupStageType groupStageType, KnockoutType knockout ) 
 					throws TournamentException, InvalidBreakerException
 	{
 		super(type, coms);
@@ -104,6 +199,7 @@ public class Multistage extends Tournament
 		WIN_POINT = pWin ;
 		DRAW_POINT = pDraw;
 		LOSS_POINT = pLoss ;
+		knockoutType =  knockout;
 		
 		if( coms.length % 4 != 0 )
 			throw new TournamentException("The total competitors must be a multiple of 4 " );
@@ -118,6 +214,20 @@ public class Multistage extends Tournament
 		
 		createTournament( type , breaker , numOfGroupRound );
 	}
+	
+	
+	private int calculateExtraQualifiers(int totalCompetitors)
+	{
+		int totalQualifiers = 1 ;
+		int totalFirstTwo = totalCompetitors/2 ;
+		while( totalQualifiers <  totalFirstTwo)
+			totalQualifiers *= 2 ;
+		
+		int factor = totalQualifiers - totalFirstTwo;
+		return factor;
+	}
+
+	
 	
 	private void createTournament( SportType type , TieBreaker breaker , int numOfGroupRound ) 
 			throws InvalidBreakerException, TournamentException
@@ -204,6 +314,29 @@ public class Multistage extends Tournament
 		return round ; 
 		
 	}
+	
+	public boolean hasGroupStageEnded()
+	{
+		try
+		{
+			return getGroup( 0 ).hasEnded();
+		}
+		catch (GroupIndexOutOfBoundsException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
+	public boolean hasKnockoutStageEnded()
+	{
+		if ( knockoutStage != null )
+			return knockoutStage.hasEnded();
+		return false;
+	}
+	
 	@Override
 	public void moveToNextRound() throws MoveToNextRoundException, TournamentEndedException
 	{
@@ -235,6 +368,10 @@ public class Multistage extends Tournament
 		
 	}
 
+	public EliminationTournament getKnockoutStage()
+	{
+		return knockoutStage;
+	}
 	public int getNumberOfGroupRounds()
 	{
 		try
@@ -283,10 +420,15 @@ public class Multistage extends Tournament
 		try
 		{
 			
-			knockoutStage = new SingleEliminationTournament( getSportType(), 
-					allQualifiers.toArray( 
-							new Competitor[ allQualifiers.size() ]) , 
-							hasKnockoutAwayMatches() );
+			if ( knockoutType == KnockoutType.SINGLE )
+				knockoutStage = new SingleEliminationTournament( getSportType(), 
+						allQualifiers.toArray( 
+								new Competitor[ allQualifiers.size() ]) , 
+								hasKnockoutAwayMatches() );
+			else
+				knockoutStage = new DoubleElimination(getSportType(), allQualifiers.toArray( 
+								new Competitor[ allQualifiers.size() ] ) ) ;
+			
 		}
 		catch (TournamentException e)
 		{
@@ -387,8 +529,9 @@ public class Multistage extends Tournament
 	public boolean hasEnded()
 	{
 		if ( knockoutStage != null )
-			return getCurrentRoundNum() < numberOfGroupStageRounds() +
-							knockoutStage.getRoundArray().length ? false : true ;
+//			return getCurrentRoundNum() < numberOfGroupStageRounds() +
+//							knockoutStage.getRoundArray().length ? false : true ;
+			return knockoutStage.hasEnded();
 		return false ;
 	}
 
@@ -512,5 +655,11 @@ public class Multistage extends Tournament
 	private enum GroupStageType
 	{
 		SWISS , ROUND_ROBIN;
+	}
+	
+	
+	private enum KnockoutType
+	{
+		SINGLE , DOUBLE;
 	}
 }

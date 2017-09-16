@@ -38,7 +38,7 @@ public class SaveTournamentTest
 		{
 			tournament = Tournament.loadTournament( fileChooser.getSelectedFile() );
 		}
-		catch (IOException | TournamentException e1)
+		catch (IOException e1)
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -54,7 +54,7 @@ public class SaveTournamentTest
 			else if ( tournament instanceof RoundRobinTournament )
 				RoundRobinTest.simulateRound( tournament );
 			else if ( tournament instanceof Multistage )
-				MultistageTest.simulateRound( tournament );
+				MultistageTest.simulateRound( (Multistage) tournament );
 			else if ( tournament instanceof Challenge )
 				ChallengeTest.simulateRound( tournament );	
 				

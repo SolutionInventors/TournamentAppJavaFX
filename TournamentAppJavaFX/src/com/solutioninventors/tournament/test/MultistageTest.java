@@ -20,6 +20,8 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -28,7 +30,7 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class MultistageTest {
 
-	public static void main(String[] args) throws TournamentEndedException, ResultCannotBeSetException {
+	public static void main(String[] args) {
 		File file = new File("Arsenal.jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
@@ -102,14 +104,56 @@ public class MultistageTest {
 //		
 		while( !tournament.hasEnded() )//tournament is ongoing
 		{
-			simulateRound(tournament );
+			try
+			{
+				simulateRound((Multistage) tournament );
+			}
+			catch (TournamentEndedException | ResultCannotBeSetException | MoveToNextRoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		Test.displayMessage("The winner is " + tournament.getWinner() + " and his total goals scored is "
 				+ (int) tournament.getWinner().getGoalsScored());
 	}
 
-	public static void simulateRound(Tournament tournament ) throws TournamentEndedException, ResultCannotBeSetException
+	public static void simulateRound(Multistage tournament ) throws TournamentEndedException, ResultCannotBeSetException, MoveToNextRoundException
+	{
+		if ( tournament.isGroupStageOver() && 
+				tournament.getKnockoutStage() instanceof DoubleElimination )
+			DoubleEliminationTest.simulateRound( tournament.getKnockoutStage() );
+		else if ( tournament.isGroupStageOver() && 
+				tournament.getKnockoutStage() instanceof SingleEliminationTournament )
+			SingleEliminationTest.simulateRound( tournament); 
+		else
+			simulateGroupRound( tournament );
+			
+		
+		
+		Multistage multiStageSpecific = ( Multistage )  tournament;
+				
+		if (  tournament.getCurrentRoundNum() <=
+				multiStageSpecific.getNumberOfGroupRounds()
+				) 
+		{
+			displayGroupStanding( multiStageSpecific );
+			if (multiStageSpecific.getNumberOfExtraQualifiers() != 0) 
+			{
+			String position = 
+					multiStageSpecific.getNumberOfGroups() == 3 ? "3rd" : "4th";
+		
+			Test.displayMessage(
+					String.format("The %s place ranking able is shown ", position) );
+			Test.displayStandingTable( multiStageSpecific.getPossibleQualifierTable()
+										.getStringTable());
+			}
+		}
+	}
+
+	public static void simulateGroupRound(Tournament tournament)
+			throws TournamentEndedException, ResultCannotBeSetException
 	{
 		StringBuilder builder = new StringBuilder( 300 );
 		Test.displayMessage( "Welcome to " + tournament );
@@ -161,38 +205,24 @@ public class MultistageTest {
 		catch (MoveToNextRoundException e)
 		{
 			e.printStackTrace();
-		} 
-		
-		
-		Multistage multiStageSpecific = ( Multistage )  tournament;
-				
-		if (  tournament.getCurrentRoundNum() <=
-				multiStageSpecific.getNumberOfGroupRounds()
-				) 
-		{
-			displayGroupStanding( multiStageSpecific );
-			if (multiStageSpecific.getNumberOfExtraQualifiers() != 0) 
-			{
-			String position = 
-					multiStageSpecific.getNumberOfGroups() == 3 ? "3rd" : "4th";
-		
-			Test.displayMessage(
-					String.format("The %s place ranking able is shown ", position) );
-			Test.displayStandingTable( multiStageSpecific.getPossibleQualifierTable()
-										.getStringTable());
-			}
 		}
 	}
 
 	public static void displayGroupStanding(Multistage tournament) {
 		Test.displayMessage("Tournament Groups are ");
+		StringBuilder builder = new StringBuilder(10000);
 		for (int i = 0; i < tournament.getNumberOfGroups(); i++) {
 			try {
-				Test.displayStandingTable(tournament.getGroup(i).getTable().getStringTable());
+				
+				builder.append( Test.getAllTables(tournament.getGroup(i).getTable()) );
+				builder.append( "\n" );
+				
 			} catch (GroupIndexOutOfBoundsException e) {
 				e.printStackTrace();
 			}
 		}
+		
+		Test.displayMessage( builder.toString() 	);
 	}
 
 }

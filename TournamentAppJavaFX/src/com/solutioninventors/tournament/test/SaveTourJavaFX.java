@@ -206,7 +206,7 @@ public class SaveTourJavaFX extends Application{
 			Test.displayMessage("Retrieving from file...... ");
 			tournament = Tournament.loadTournament( tournamentFile);
 		}
-		catch (IOException | TournamentException e)
+		catch (IOException  e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

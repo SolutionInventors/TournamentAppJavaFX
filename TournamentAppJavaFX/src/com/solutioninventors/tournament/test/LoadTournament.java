@@ -49,7 +49,7 @@ public class LoadTournament
 			tournament = Tournament.loadTournament( file );
 		}
 		
-		catch (IOException | TournamentException e )
+		catch (IOException e )
 		{
 			Test.displayMessage("Error in loading file..." );
 			System.exit( 0 );

@@ -6,6 +6,7 @@
  */
 package com.solutioninventors.tournament.types.knockout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,6 +28,9 @@ import com.solutioninventors.tournament.utils.SportType;
 
 public class DoubleElimination extends EliminationTournament
 {
+	
+
+	private static final long serialVersionUID = 3157150642503299616L;
 	/** 
 	 * 
 	 * This is used to create a double elimination tournament
@@ -60,13 +64,12 @@ public class DoubleElimination extends EliminationTournament
 	private boolean minorComplete;
 	private boolean initialComplete; 
 	
-	private boolean AWAY_MATCH;
+	
 	private String roundName ;
 	private Map< BracketType , List<Round> > rounds;
 	
 	/**
 	 * 
-	 * Sep 11, 2017
 	 *@param comps
 	 *@throws TournamentException
 	 *
@@ -74,7 +77,6 @@ public class DoubleElimination extends EliminationTournament
 	public DoubleElimination( SportType type, Competitor[] comps) throws TournamentException
 	{
 		super(type, comps);
-		AWAY_MATCH = false ;
 		rounds = new HashMap<>();
 		List<Round> minor = new ArrayList<>(); //used to increase index to 1
 		List<Round> major = new ArrayList<>(); //used to increase index to 1
@@ -134,6 +136,7 @@ public class DoubleElimination extends EliminationTournament
 	 *@return {@link  Round }
 	 *@throws RoundIndexOutOfBoundsException
 	 */
+	
 	public Round getCurrentRound( BracketType type ) 
 			throws RoundIndexOutOfBoundsException
 	{
@@ -229,7 +232,10 @@ public class DoubleElimination extends EliminationTournament
 
 	
 
-
+	public boolean isInitialComplete()
+	{
+		return initialComplete;
+	}
 	
 	
 	@Override
@@ -241,24 +247,24 @@ public class DoubleElimination extends EliminationTournament
 				return ;
 			else if ( getActiveCompetitors().length  == 2 )
 			{
-				createNextRound();
+				createNextRound( CurrentFixture.FINAL);
 				incrementRoundNum() ;
 			}
 			else if( !initialComplete )
 			{
-				createNextRound();
+				createNextRound( CurrentFixture.INITIAL);
 				initialComplete = true ;
 			}
 			else if ( !minorComplete )
 			{
 				minorComplete = true ;
-				createNextRound();
+				createNextRound( CurrentFixture.WINNER_BRACKET );
 				
 			}
 			else
 			{
 				minorComplete = false;
-				createNextRound();
+				createNextRound( CurrentFixture.LOSER_MAJOR_BRACKET );
 				incrementRoundNum();
 			}
 		else
@@ -266,68 +272,133 @@ public class DoubleElimination extends EliminationTournament
 		
 	}
 
-
-	private void createNextRound()
+	private void createNextRound(CurrentFixture current)
 	{
 		List<Competitor > winnerBracket = new ArrayList<>() ;
 		List<Competitor > loserBracket = new ArrayList<>() ;
-		List<Fixture> winnerFixes = new ArrayList<>();
-		List<Fixture> loserFixes = new ArrayList<>();
-		
-		//eliminate competitors and create brackets
-		Arrays.stream( getCompetitors() )
-			.filter( c -> !c.isEliminated() )
-			.forEach( c -> {
-				if( c.getNumberOfLoss() >= 2 )
-					c.setEliminated( true );
-				else if ( c.getNumberOfLoss() == 1 )
-					loserBracket.add( c );
-				else if ( c.getNumberOfLoss() == 0  )
-					winnerBracket.add( c );
-					
-					
-			});
-		
-		
-		
-		if ( getActiveCompetitors().length <= 1 )//tournament has ended 
-			return ; 
-		else if ( getActiveCompetitors().length  == 2 )
+		try
 		{
-			Fixture tourFinal = new Fixture( getSportType(), getActiveCompetitors()[ 0 ] , getActiveCompetitors()[ 1 ] ) ;
-			Fixture[] array = { tourFinal };
-			
-			addRound( BracketType.TOURNAMENT_FINAL , new Round( array ) );
-		}
-		else
-		{
-			if( winnerBracket.size() > 1 )
-				for ( int i = 0 ; i < winnerBracket.size() ; i+= 2 )
-					winnerFixes.add(  new Fixture( getSportType(),  winnerBracket.get( i ), winnerBracket.get( i + 1 )));
-		
-		
-			for ( int i = 0 ; i < loserBracket.size() ; i+= 2 )
-				loserFixes.add( new Fixture( getSportType(),  loserBracket.get( i ), loserBracket.get( i + 1 )));
-			
-			if ( minorComplete )
+			switch ( current )
 			{
-				addRound(BracketType.MAJOR_BRACKET , new Round( 
-						loserFixes.toArray(new Fixture[ loserFixes.size() ] ) ) );
-			}
-			else
-			{
+			
+			case INITIAL:
+				Arrays.stream(getCurrentRound( BracketType.INITIAL_BRACKET ).getFixtures()  )
+				  .map( f -> f.getLoser() )
+				  .forEach( c-> loserBracket.add( c ) );
+				Arrays.stream(getCurrentRound( BracketType.INITIAL_BRACKET ).getFixtures()  )
+				  .forEach( f -> winnerBracket.add(  f.getWinner()) );
+				
+				
+				
 				addRound(BracketType.	MINOR_BRACKET , new Round( 
-						loserFixes.toArray(new Fixture[ loserFixes.size() ] ) ) );
+						fixesCreator( loserBracket )
+						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
 				addRound(BracketType.WINNERS_BRACKET , new Round( 
-						winnerFixes.toArray(new Fixture[ winnerFixes.size() ] ) ) );
+						fixesCreator( winnerBracket )
+						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
+				break;
+				
+			case LOSER_MAJOR_BRACKET:
+				Arrays.stream( getCurrentRound( BracketType.MAJOR_BRACKET).getFixtures() )
+				  .forEach( f -> f.getLoser().setEliminated( true ) );
+				
+				Arrays.stream( getCurrentRound( BracketType.MAJOR_BRACKET).getFixtures() )
+				  .forEach( f -> loserBracket.add(f.getWinner() ) );
+				
+				if ( loserBracket.size()  > 1 )
+					addRound(BracketType.	MINOR_BRACKET , new Round( 
+							fixesCreator( loserBracket)
+							.toArray(new Fixture[ fixesCreator( loserBracket).size() ] ) ) );
+				else
+				{
+					Competitor wFinalist = Arrays.stream( getActiveCompetitors() )
+							.filter( c ->! Competitor.isEqual(c, loserBracket.get(0) ))
+							.findFirst()
+							.get();
+					
+					Fixture finale = new Fixture( getSportType(), wFinalist, loserBracket.get( 0 ) );
+					addRound(BracketType.TOURNAMENT_FINAL , new Round( finale) );
+					
+					
+					
+					
+				}
+				break;
+			case WINNER_BRACKET:
+				
+				Arrays.stream( getCurrentRound( BracketType.MINOR_BRACKET).getFixtures() )
+				  .forEach( f -> f.getLoser().setEliminated( true ) );
+				
+				Arrays.stream( getCurrentRound( BracketType.WINNERS_BRACKET).getFixtures() )
+				  .forEach( f -> loserBracket.add( f.getLoser())  );
+				
+				Arrays.stream( getCurrentRound( BracketType.WINNERS_BRACKET).getFixtures() )
+				  .forEach( f -> winnerBracket.add( f.getWinner())  );
+				
+				
+				Arrays.stream( getCurrentRound( BracketType.MINOR_BRACKET).getFixtures() )
+				  .forEach( f -> loserBracket.add( f.getWinner())  );
+				
+				if( winnerBracket.size() > 1 )
+					addRound( BracketType.WINNERS_BRACKET , 
+								new Round( fixesCreator( winnerBracket )
+								.toArray(new Fixture[ fixesCreator( winnerBracket ).size() ] ) ) 
+						);
+				
+				
+				
+				addRound(BracketType.MAJOR_BRACKET , new Round( 
+						fixesCreator( loserBracket )
+						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
+				break;
+			
+			case FINAL:
+				
+				Round round = getCurrentRound( BracketType.TOURNAMENT_FINAL );
+				Fixture  f =  round.getFixtures()[0];
+				
+				int roundNum = getNumberOfRounds( BracketType.TOURNAMENT_FINAL );
+				if ( roundNum == 2  )
+				{
+					if ( Competitor.isEqual( f.getCompetitorTwo() , f.getLoser() ))
+						Arrays.stream( round.getLosers()  )
+							.forEach( c -> c.setEliminated( true ) );
+					else
+						addRound(BracketType.TOURNAMENT_FINAL   , 
+								new Round( new Fixture( getSportType(),  f.getCompetitorTwo(), f.getCompetitorOne()) ) );
+					
+				}
+				else
+				{
+					Arrays.stream( round.getLosers()  )
+					.forEach( c -> c.setEliminated( true ) );
+				}
+
+				
+				break;
 			}
 		}
-		
-		
+		catch(  RoundIndexOutOfBoundsException e )
+		{
+			e.printStackTrace();
+			System.exit(0);
+		}
 		
 	}
-
 	
+	private int getNumberOfRounds( BracketType type )
+	{
+		return rounds.get(type).size();
+	}
+	private List<Fixture> fixesCreator( List<Competitor> bracket )
+	{
+		List<Fixture> list =  new ArrayList<>();
+		for ( int i = 0 ; i < bracket.size() ; i+= 2 )
+			list.add(  new Fixture( getSportType(), 
+					bracket.get( i ), bracket.get( i + 1 )));
+
+		return list;
+	}
 
 	
 	@Override
@@ -474,6 +545,12 @@ public class DoubleElimination extends EliminationTournament
 		return getActiveCompetitors().length  <= 2 ? true : false ;
 	}
 
-	
+	private enum CurrentFixture
+	{
+		LOSER_MAJOR_BRACKET,
+		FINAL,
+		INITIAL,
+		WINNER_BRACKET;
+	}
 	
 }
