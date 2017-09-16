@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -88,22 +89,13 @@ public class Challenge extends Tournament
 	}
 	
 	public void setResult(Competitor com1 , double score1 , double score2 , Competitor com2) 
-			throws TournamentEndedException, ResultCannotBeSetException
+			throws TournamentEndedException, ResultCannotBeSetException, NoFixtureException
 	{
 		
 		
 		if ( !hasEnded() )
 		{
-			if ( Arrays.stream( getCurrentRound().getFixtures() )
-					.anyMatch( f-> f.hasFixture(com1,  com2)))
-			{
-				
-				Arrays.stream( getCurrentRound().getFixtures() )
-				.filter( f-> f.hasFixture(com1,  com2))
-				.findFirst()
-				.get().setResult(score1, score2);
-				
-			}
+			getCurrentRound().setResult(com1, score1, score2, com2);
 		}
 	}
 	

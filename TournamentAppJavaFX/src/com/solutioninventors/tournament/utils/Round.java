@@ -92,8 +92,6 @@ public class Round implements Serializable
 	{
 		return fixtures;
 	}
-
-	
 	
 	/**
 	 * This method scans through all the {@code Fixture}s in this {@code Round } and 
@@ -116,20 +114,7 @@ public class Round implements Serializable
 	public void  setResult( Competitor com1 , double score1 , 
 					double score2 , Competitor com2 ) throws NoFixtureException, ResultCannotBeSetException
 	{
-		Predicate<Fixture> tester =
-				f -> f.getCompetitorOne().getName().equals( com1.getName() ) &&
-				f.getCompetitorTwo().getName().equals( com2.getName() ) ;
-		
-		if ( Arrays.stream( getFixtures() ).anyMatch( tester ) )
-		{
-			Arrays.stream( getFixtures() )
-			.filter( tester )
-			.findFirst()
-			.get().setResult( score1 , score2 );
-			
-		}
-		else
-			throw new NoFixtureException( "Fixture does not exist" );
+		setResult( com1, score1, score2, com2, true );
 	}
 	
 	/**
@@ -147,11 +132,75 @@ public class Round implements Serializable
 	 *@param score2 the away {@code Competitor}'s score
 	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException when a match is not found
 	 * @throws com.solutioninventors.tournament.exceptions.ResultCannotBeSetException 
-	 * 		when the {@code Fixture} is in this {@code Round } but is complete
+	 * 	when the {@code Fixture} is in this {@code Round } but is complete
 	 */
 	public void  setResult( Fixture fixture , double score1 , double score2 ) throws NoFixtureException, ResultCannotBeSetException 
 	{
 		setResult( fixture.getCompetitorOne() , score1, score2, fixture.getCompetitorTwo() );
+	}
+	
+	/**
+	 This method scans through all the {@code Fixture}s in this {@code Round } and 
+	 * sets the score of the {@code Fixture } that matches the home and away {@code Competitor}s <br>
+	 * encapsulated in the {@code Fixture } agrgument
+	 * <p>
+	 * throws a NoFixtureException when such a {@code Fixture} is not found 
+
+	* @author Oguejiofor Chidiebere 
+	* @see Fixture
+	* @since v1.0
+	 *@param fixture the {@code Fixture } object that encapsulates the home and away {@code Competitor}'s
+	 *@param score1 the home {@code Competitor}'s score
+	 *@param score2 the away {@code Competitor}'s score
+	 **@param store determines if the {@code Competitor}'s data would be changed
+	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException when a match is not found
+	 * @throws com.solutioninventors.tournament.exceptions.ResultCannotBeSetException 
+	 * 		when the {@code Fixture} is in this {@code Round } but is complete
+	 */
+	public void  setResult( Fixture fixture , double score1 , double score2, boolean store  ) throws NoFixtureException, ResultCannotBeSetException 
+	{
+		setResult( fixture.getCompetitorOne() , score1, score2, fixture.getCompetitorTwo(), store );
+	}
+	
+	
+	/**
+	 This method scans through all the {@code Fixture}s in this {@code Round } and 
+	 * sets the score of the {@code Fixture } that matches the home and away {@code Competitor}s <br>
+	 * encapsulated in the {@code Fixture } agrgument 
+	 * This method calls {@code Fixture}'s {@code setResult( score1, score2, store} method and passes
+	 * the store argument to   the {@code Fixture}.<br>
+	 * See {@code Fixture}'s method setResult( score1, score2, boolean) for more info
+	 * <p>
+	 * throws a NoFixtureException when such a {@code Fixture} is not found 
+
+	* @author Oguejiofor Chidiebere 
+	* @see Fixture
+	* @since v1.0
+	 *@param fixture the {@code Fixture } object that encapsulates the home and away {@code Competitor}'s
+	 *@param score1 the home {@code Competitor}'s score
+	 *@param score2 the away {@code Competitor}'s score
+	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException when a match is not found
+	 * @throws com.solutioninventors.tournament.exceptions.ResultCannotBeSetException 
+	 * 		when the {@code Fixture} is in this {@code Round } but is complete
+	 */
+	
+	public void setResult( Competitor com1 , double score1,
+			double score2 , Competitor com2,  boolean store) throws ResultCannotBeSetException, NoFixtureException
+	{
+		Predicate<Fixture> tester =
+				f -> f.getCompetitorOne().getName().equals( com1.getName() ) &&
+				f.getCompetitorTwo().getName().equals( com2.getName() ) ;
+		
+		if ( Arrays.stream( getFixtures() ).anyMatch( tester ) )
+		{
+			Arrays.stream( getFixtures() )
+			.filter( tester )
+			.findFirst()
+			.get().setResult( score1 , score2 , store );
+			
+		}
+		else
+			throw new NoFixtureException( "Fixture does not exist" );
 	}
 	
 	/**
@@ -203,7 +252,9 @@ public class Round implements Serializable
 	
 	
 	/**
+	 * Checks if all the {@code Fixture}s' result in this {@code Round} have been set
 	 * @author Oguejiofor Chidiebere
+	 * @see Fixture
 	 *@since v1.0
 	 *@return {@code true } when all the {@code Fixture}s are complete
 	 */

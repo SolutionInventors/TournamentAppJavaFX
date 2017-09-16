@@ -8,9 +8,11 @@ package com.solutioninventors.tournament.test;
 
 import java.io.File;
 
+import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 
 public class CompetitorTest
@@ -23,11 +25,12 @@ public class CompetitorTest
 
 		Fixture fixture = new Fixture( SportType.GOALS_ARE_SCORED , coms[0],coms[1]	);
 		
+		Round round = new Round( fixture );
 		try
 		{
-			fixture.setResult( 4 , 3 );
+			round.setResult(coms[0], 4 , 3 , coms[1]);
 		}
-		catch (ResultCannotBeSetException e)
+		catch (ResultCannotBeSetException | NoFixtureException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

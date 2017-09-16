@@ -315,7 +315,11 @@ public class RoundRobinTournament extends GroupTournament
 			{
 				if ( outstandingMatches.get( i ).hasFixture( com1, com2) )
 				{
-					outstandingMatches.get( i ).setResult(score1, score2);
+					Fixture f =  outstandingMatches.get( i );
+					Round temp = new Round( f );
+					
+					
+					temp.setResult( f.getCompetitorOne(), score1, score2, f.getCompetitorOne());
 					outstandingMatches.remove( i );
 					getTable().updateTables(); 
 					break ;

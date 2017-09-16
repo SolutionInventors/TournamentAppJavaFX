@@ -253,11 +253,18 @@ public class SingleEliminationTournament extends EliminationTournament {
 	}
 
 	
-
+	
 	private void addToTieList(Competitor com1, double score1, double score2, Competitor com2) throws ResultCannotBeSetException  {
 		Fixture fixture = new Fixture( getSportType(), com1, com2);
 
-		fixture.setResult(score1, score2, false);
+		
+		Round temp = new Round ( fixture);
+		try
+		{
+			temp.setResult(fixture, score1, score2, false);
+		}
+		catch (NoFixtureException e)
+		{}
 		tieList.add(fixture);
 		activeTies.add(fixture);
 	}

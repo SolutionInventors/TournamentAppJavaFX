@@ -8,63 +8,79 @@ import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 /**
  * This class encapsulates all the operations of a Fixuture in a tournament.<br> 
  * It contains a boolean which is toggled true when fixture results have been set
- * The competitor scores are initially set to -1
- * <table border = "1.0" width = " 730.0" >
- * 		<caption>{@code Fixture} properties </caption>
- * 		<tr>
- * 			<td>{@code private final Competitor COMPETITOR_ONE}</td> 
- * 			<td>Stores the home {@code  Competitor } in this {@code Fixture} <br>
- * 				Can be retrieved via call to method {@code getCompetitorOne()}</td> 
- * 		</tr>
-		<tr>
-		 	<td>{@code private final Competitor COMPETITOR_TWO}</td> 
- * 			<td>Stores the away {@code  Competitor } in this {@code Fixture} <br>
- * 				Can be retrieved via call to method {@code getCompetitorTwo()}</td>  
-		</tr>
-		<tr>
-		 	<td>{@code private int competitorOneScore}</td> 
-			<td>Stores the home {@code Competitor}'s score <br>
-				It is initialised to -1 when this object is created<br>
-				Can be retrieved via method call {@code getCompetitorOneScore }</td> 
-		</tr>
+ * The competitor scores are both initially set to -1
+ * <p>
+ * This class stores results in different ways depending on the value of its {@code SportType}.
+ * If GOAL_ARE_SCORED then when method {@code setResult } is called, it stores the home and away
+ * team goals as competitorOneScore and ComotitorTwoScore respctivvely and changes the 
+ * {@code Competitor}s'	goals data(e.g goals scored, goals conceeded etc) and sto<br>
+ * If GOALS_ARE_NOT_SCORED then method {@code setResult} stores 1 for the winner's score,
+ * 0 for both {@code Comptitor}'s if there is a draw and -1 for the loser score
+ * <p>
+ * Changes to this class should be made in a {@code Round } object thus some method {@code setResult}
+ *  in this class is {@code protected}
+ * 
+ * @author Oguejiofor Chidiebere
+ * @see Competitor
+ * @see Round
 		
-		<tr>
-		 	<td>{@code private int competitorTwoScore}</td> 
-			<td>Stores the away {@code Competitor}'s score <br>
-				It is initialized to -1 when this object is created<br>
-				Can be retrieved via method call {@code getCompetitorTwoScore }</td> 
-		</tr>
-		
-		<tr>
-		 	<td>{@code private boolean complete} </td> 
-			<td>true when this {@code Fixture } contains a result  
-				That is when method {@code setResult( double score1 , double score2 ) } or method
-				{@code setResult(double score1, double score2, boolean b)} is called with true has been called</td> 
-		</tr>
-</table>
  
  */
 
 public class Fixture implements Serializable{
 
-	
+	/**
+	 * Stores the home {@code  Competitor } object in this {@code Fixture} <br>
+  		Can be retrieved via call to method {@code getCompetitorOne()}
+	 */
 	private final Competitor COMPETITOR_ONE;
+	/**
+	 * Stores the away {@code  Competitor } object in this {@code Fixture} <br>
+  		Can be retrieved via call to method {@code getCompetitorTwo()}
+	 */
 	private final Competitor COMPETITOR_TWO;
+	/**
+	 * Stores the home {@code Competitor}'s score.
+		It is initialized to -1 when this object is created<br>
+		Can be retrieved via method call {@code getCompetitorOneScore }
+	 */
 	private double competitorOneScore;
+	/**
+	 * Stores the away {@code Competitor}'s score.
+		It is initialized to -1 when this object is created<br>
+		Can be retrieved via method call {@code getCompetitorOneScore }
+	 */
 	private double competitorTwoScore;
+	/**
+	 * {@code true} when this {@code Fixture } contains a result  
+		That is when method {@code setResult( double score1 , double score2 ) } or method
+		{@code setResult(double score1, double score2, boolean b)} is called with true has been called
+	 */
 	private boolean complete;
+	
+	/**
+	 * Stores this {@code Fixture}'s {@code SportType}
+	 * @see SportType
+	 */
 	private final SportType TYPE;
 	
 	/**
 	 * 
 	* This constructor creates initializes this {@code Fixture } object with the two {@code Competitor} 
-	* objects and initializes {@code competitorScoreOne } and {@code competitorScoreTwo } to -1
+	* objects and initializes {@code competitorScoreOne } and {@code competitorScoreTwo } to -1.<p>
+	* If the {@code SportType} specifies {@code SportType.GOALS_ARE_SCORED} then when method {@code setResult}
+	* is called this {@code Fixture}'s home team's and aeay team's score would be set to the specified
+	* home and away score's <br
+	* If the{@code SportType} is set to {@code SportType.GOALS_ARE_NOT_SCORED} then this {@code Fixture}
+	* would store -1 for the winning team, 0 for a draw and -1 for the losing team when 
+	* {@code setResult } is called
 	 *
 	 *@author Chidiebere Oguejiofor Chidiebere
 	 *@since v1.0
 	 *@see Competitor 
 	 *@param homeCompetitor the {@code Competitor } that is home( or white in chess) 
 	 *@param awayCompetitor the {@code COmpetitor } that is away( or black in chess)
+	 *@param ttype Indicates the {@code SportType} of this {@code Fixtures}
 	 */
 	public Fixture( SportType type , Competitor homeCompetitor, Competitor awayCompetitor) {
 		COMPETITOR_ONE = homeCompetitor;
@@ -90,7 +106,7 @@ public class Fixture implements Serializable{
 	 @param awayComScore the away {@code Competitor}'s score
 	 @throws ResultCannotBeSetException when this {@code Fixture } is already contains a result
 	 */
-	public void setResult(final double homeComScore, final double awayComScore) 
+	protected void setResult(final double homeComScore, final double awayComScore) 
 			throws ResultCannotBeSetException
 	{
 		if (!isComplete()) {
@@ -332,16 +348,17 @@ public class Fixture implements Serializable{
 	 * only changes the {@code Competitor } score when store = {@code false } <br>
 	 * without changing the {@code Competitor } object's data
 	 * <br>
-	 * {@code store} should be set to false when storing ties 
+	 * {@code store} should be set to {@code false} when storing ties 
 	 * <br>
-	 * This method sets the competitorOneScore and CompetitorTwoScore if b = false 
+	 * This {@code Fixture}'s competitorOneScore and CompetitorTwoScore would be the only thing
+	 * that would be changed if b = {@code false} 
 	 *@param score1 home {@code Competitor} score
 	 *@param score2 away {@code COmpetitor} score
 	 *@param store indicates whether to save the scores in the {@code Competitor} objects and toggle this {@code Fixture } to complete
 	 * @throws ResultCannotBeSetException when this object is complete 
 	 */
 	
-	public void setResult(double score1, double score2, boolean store) throws ResultCannotBeSetException
+	protected void setResult(double score1, double score2, boolean store) throws ResultCannotBeSetException
 	{
 		if ( isComplete() )
 			throw new ResultCannotBeSetException();
