@@ -59,15 +59,15 @@ public class StandingTable implements Serializable {
 
 	}
 
-	private double getPointForWin() {
+	public double getWinPoint() {
 		return POINT_FOR_WIN;
 	}
 
-	private double getPointForDraw() {
+	public double getDrawPoint() {
 		return POINT_FOR_DRAW;
 	}
 
-	private double getPointForLoss() {
+	public double getLossPoint() {
 		return POINT_FOR_LOSS;
 	}
 
@@ -82,8 +82,8 @@ public class StandingTable implements Serializable {
 	{
 		return getTieBreaker().breakTies( 
 				TieBreaker.HOME_FIXTURES + TieBreaker.AWAY_FIXTURES,
-				competitors, getPointForWin(), 
-				getPointForDraw(), getPointForLoss());
+				competitors, getWinPoint(), 
+				getDrawPoint(), getLossPoint());
 	}
 
 	public Competitor getCompetitor(int position) {
@@ -208,7 +208,7 @@ public class StandingTable implements Serializable {
 			drawFunction = com -> String.valueOf( com.getNumberOfAwayDraw() );
 			pointFunction = com -> 
 			String.valueOf( com.getAwayPoint(
-					getPointForWin(), getPointForDraw(), getPointForLoss())  );
+					getWinPoint(), getDrawPoint(), getLossPoint())  );
 			
 		}
 		else if( type == TieBreaker.HOME_FIXTURES )
@@ -219,7 +219,7 @@ public class StandingTable implements Serializable {
 			drawFunction = com -> String.valueOf( com.getNumberOfHomeDraw() );
 			pointFunction = com -> 
 			String.valueOf( com.getHomePoint(
-					getPointForWin(), getPointForDraw(), getPointForLoss())  );
+					getWinPoint(), getDrawPoint(), getLossPoint())  );
 		}
 		else
 		{
@@ -229,7 +229,7 @@ public class StandingTable implements Serializable {
 			drawFunction = com -> String.valueOf( com.getNumberOfDraw() );
 			pointFunction = com -> 
 				String.valueOf( com.getPoint(
-						getPointForWin(), getPointForDraw(), getPointForLoss())  );
+						getWinPoint(), getDrawPoint(), getLossPoint())  );
 			
 		}
 		
@@ -285,8 +285,8 @@ public class StandingTable implements Serializable {
 	{
 		return getTieBreaker().breakTies( 
 				TieBreaker.HOME_FIXTURES ,
-				competitors, getPointForWin(), 
-				getPointForDraw(), getPointForLoss());
+				competitors, getWinPoint(), 
+				getDrawPoint(), getLossPoint());
 
 	}
 	
@@ -301,8 +301,8 @@ public class StandingTable implements Serializable {
 	{
 		return getTieBreaker().breakTies( 
 				TieBreaker.AWAY_FIXTURES ,
-				competitors, getPointForWin(), 
-				getPointForDraw(), getPointForLoss());
+				competitors, getWinPoint(), 
+				getDrawPoint(), getLossPoint());
 
 	}
 	

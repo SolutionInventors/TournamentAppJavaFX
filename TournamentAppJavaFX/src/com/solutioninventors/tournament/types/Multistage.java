@@ -37,37 +37,67 @@ import com.solutioninventors.tournament.utils.TieBreaker;
  * This class contains a collection of {@link GroupTournament}s which simulates the group rounds
  * and a {@code EliminationTournament} that simulates the knock out stage.
  * 
- * On initialization the constructor determines if there would be a fourth or third place ranking table
+ * On initialization the constructor determines if there would be a fourth-place; third place; or no; ranking table
  * The constructor validates that the total competitors is a multiple of 4 
- * The constructor also creates the Tournament via a call to createTournament
- * The public constructors either creates a Robin groupStage or Swiss groupStage
- * 
- * This table is updated after every group round 
- * Thus this class contains a StandingTable object that is used to create this feature
- * 
- * This class provides some services required to manage the operations of this class
+ * This class provides constructors for creating a {@code Multistage } woth any combination
+ * @see Tournament
+ * @author Oguejiofor Chidiebere
+ * @since v1.0
  */
 
 
 public class Multistage extends Tournament
 {
 
-	
+	/**
+	 * Contains the different groups in the group stage of the tournament.
+	 */
 	private GroupTournament[] groupStage;
+	/**
+	 * The knockoutstage of this {@code Multistage} tornament
+	 */
 	private EliminationTournament knockoutStage;
 	
+	/**
+	 * {@code true } when the group stage has home and away fixtures
+	 */
 	private final boolean groupAwayMatches;
+	
+	/**
+	 * {@code true } when the knockout stage has home and away fixtures 
+	 * Can only be true if knockout stage is a {@code SingleElimination}
+	 * @see SingleEliminationTournament
+	 */
 	private final boolean knockoutAwayMatches;
 	
-	private final double WIN_POINT;
-	private final double DRAW_POINT;
-	private final double LOSS_POINT;
-	
+	/**
+	 * The point for win in the groupStage
+	 */
+
+	/**
+	 * Stores the third or fourth place ranking table
+	 * It is set to null if such a table is not required
+	 */
 	private  StandingTable extraQualifierTable;
+	/**
+	 * Stores the number of extra qualifiers that would be gotten from
+	 * third place or fourth place ranking table
+	 */
 	private final int NUMBER_OF_EXTRA_QUALIFIERS ;
 	
+	/**
+	 * Stores the total number of winners in a group
+	 */
 	private final GroupWinners numberOfGroupWinners;
+	/**
+	 * Stores {@code GroupStageType} of this {@code Multistage} group stage
+	 * @see GroupStageType
+	 */
 	private final GroupStageType groupType;
+	/**
+	 * Stores {@code KnockoutType} of this {@code Multistage} group stage
+	 * @see KnockoutType
+	 */
 	private final KnockoutType knockoutType;
 	
 	/**
@@ -196,9 +226,7 @@ public class Multistage extends Tournament
 		super(type, coms);
 		groupAwayMatches = groupHomeAndAway;
 		knockoutAwayMatches = knockoutHomeAndAway ;
-		WIN_POINT = pWin ;
-		DRAW_POINT = pDraw;
-		LOSS_POINT = pLoss ;
+		
 		knockoutType =  knockout;
 		
 		if( coms.length % 4 != 0 )
@@ -216,6 +244,14 @@ public class Multistage extends Tournament
 	}
 	
 	
+	/**
+	 * This utility method calculates the number of extra qualifiers in this {@code Multistage}
+	 * If the total number of groups is a power of 2 ( that is 4, 8, 16 etc) then this method
+	 * returns zero<br>
+	 * 
+	 *@param totalCompetitors
+	 *@return
+	 */
 	private int calculateExtraQualifiers(int totalCompetitors)
 	{
 		int totalQualifiers = 1 ;
@@ -228,7 +264,16 @@ public class Multistage extends Tournament
 	}
 
 	
-	
+	/** 
+	 * Creates the group stage of this {@code Multistage} tournament based on 
+	 * specifications. 
+	 * @author Oguejiofor Chidiebere
+	 *@param type the {@code SportType} of this {@code Multistage}
+	 *@param breaker the {@code TieBreaker} to be used in the group stage
+	 *@param numOfGroupRound the number of group rounds to be used when creating a {@link SwissTournament}
+	 *@throws InvalidBreakerException when the {@code TieBreaker} is invalid for {@code GroupTournament}
+	 *@throws TournamentException when an error occured while creating the {@code GroupTournament}
+	 */
 	private void createTournament( SportType type , TieBreaker breaker , int numOfGroupRound ) 
 			throws InvalidBreakerException, TournamentException
 	{
@@ -256,6 +301,7 @@ public class Multistage extends Tournament
 		}
 	}
 
+	
 	@Override
 	public Round[] getRoundArray()
 	{
@@ -286,6 +332,13 @@ public class Multistage extends Tournament
 		
 	}
 
+	/**
+	 * Gets the a {@code Round} object based on the round number.
+	 * Note that when roundNum is 0 this method returns the first round
+	 *@param roundNum the round number indexed 0 
+	 *@return a {@code Round} object containing the specified {@code Round}}
+	 *@throws RoundIndexOutOfBoundsException when the roundNum is invalid
+	 */
 	public Round getRound( int roundNum ) throws RoundIndexOutOfBoundsException
 	{
 		Round round = null ; 
@@ -315,6 +368,10 @@ public class Multistage extends Tournament
 		
 	}
 	
+	/**
+	 * Returns true when the group stage has ended
+	 *@return {@code true} when this {@code Multistage }group stage has ended
+	 */
 	public boolean hasGroupStageEnded()
 	{
 		try
@@ -330,6 +387,10 @@ public class Multistage extends Tournament
 		return true;
 	}
 	
+	/**
+	 * Checks if the knockoutstage has ended
+	 *@return {@code true } when the group stage has ended
+	 */
 	public boolean hasKnockoutStageEnded()
 	{
 		if ( knockoutStage != null )
@@ -337,6 +398,10 @@ public class Multistage extends Tournament
 		return false;
 	}
 	
+	/**
+	 * Determines if this {@code Multistage} is in its group stage or knockout stage
+	 * and then coalates the results of the current round 
+	 */
 	@Override
 	public void moveToNextRound() throws MoveToNextRoundException, TournamentEndedException
 	{
@@ -368,10 +433,24 @@ public class Multistage extends Tournament
 		
 	}
 
+	/**
+	 * Gets an {@code ElimiantionTournament} that encapsulaets the knockoutstage
+	 * of this {@code Multistage} {@code Tournament}
+	 * @see EliminationTournament
+	   @author Oguejifor Chidiebere
+	   @a
+	 *@return EliminationTournament
+	 */
 	public EliminationTournament getKnockoutStage()
 	{
 		return knockoutStage;
 	}
+	
+	/**
+	 * Gets the number of rounds in the group stage
+	 * @author Oguejiofor Chidiebere
+	 *@return the number pf rounds in each group as  {@code int } 
+	 */
 	public int getNumberOfGroupRounds()
 	{
 		try
@@ -385,7 +464,13 @@ public class Multistage extends Tournament
 		}
 		return 0 ;
 	}
-	public void createKnockoutStage() throws MoveToNextRoundException
+	
+	/**
+	 * Creates the knockout stage of this {@code Multistage} {@link Tournament}
+	 * @see DoubleElimination
+	 *@throws MoveToNextRoundException
+	 */
+	private void createKnockoutStage() throws MoveToNextRoundException
 	{
 		List<Competitor> allQualifiers = new ArrayList<Competitor> ();
 		
@@ -437,6 +522,11 @@ public class Multistage extends Tournament
 		}
 	}
 
+	/**
+	 * Gets all the {@code Competitor}s that won in their group
+	 * The number of winnners per group is dependent on the total number of competitors
+	 *@return a{@code Competitor[]} that contains all the group stage winners
+	 */ 
 	public Competitor[] getGroupWinners()
 	{
 		List<Competitor> list = new ArrayList<>( 
@@ -459,18 +549,32 @@ public class Multistage extends Tournament
 		return list.toArray( new Competitor[ list.size() ] );
 	}
 
-	public String getCurrentStage()
+	/**
+	 * Returns "Group Stage" or "Knockout Stage" depending on the current stage
+	 *@return a{@code String} representation of the current stage
+	 */
+	public String getCurrentStageName()
 	{
 		if ( getCurrentRoundNum() < numberOfGroupStageRounds()  )
 			return "Group Stage";
 		return "Knockout Stage";
 	}
 	
+	/**
+	 * Gets the number of groups in the group stage
+	 *@return an {@code int } 
+	 */
 	public int numberOfGroupStageRounds()
 	{
 		return groupStage[ 0 ].getRoundArray().length;
 	}
 
+	/**
+	 * Updates the third or forth place ranking table
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 * @see StandingTable
+	 */
 	private void updateTable()
 	{
 		if ( getNumberOfExtraQualifiers() > 0 )
@@ -490,7 +594,12 @@ public class Multistage extends Tournament
 		}
 	}
 
-	
+	/**
+	 * Gets a {@link Round} array containing all the {@code Round}s in a particular group.<br>
+	 * Note that the {@code int} argument is indexed 0.THerefore, 0 represents group 1 etc.
+	 *@param groupNum the group number
+	 *@return a {@code Round } array
+	 */
 	public Round[] getGroupRoundArray( int groupNum )
 	{
 		return groupStage[ groupNum ].getRoundArray() ; 
@@ -525,6 +634,7 @@ public class Multistage extends Tournament
 
 	}
 
+	
 	@Override
 	public boolean hasEnded()
 	{
@@ -535,6 +645,10 @@ public class Multistage extends Tournament
 		return false ;
 	}
 
+	/**
+	 * @return the current {@code Round} of this {@code Multistage} or {@code null} if this
+	 * {@code Tournament } is over
+	 */
 	@Override
 	public Round getCurrentRound() 
 	{
@@ -550,8 +664,13 @@ public class Multistage extends Tournament
 		return null ;
 	}
 	
+	/**
+	 * Gets the active competitors in this {@code Multistage}
+	 * {@code Tournament}
+	 */
 	public Competitor[] getActiveCompetitors()
 	{
+		
 		if ( isGroupStageOver() )
 			return knockoutStage.getActiveCompetitors();
 		return getCompetitors();
@@ -567,32 +686,97 @@ public class Multistage extends Tournament
 	
 	}
 
-	
+	/**
+	 * Checks if the group stage has away fixtures.
+	 * Can be true only if the group stage is a {@link RoundRobinTournament}
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	*@return {@code true} if the group stage has away fixtures
+	 */
 	public boolean hasGroupAwayMatches()
 	{
 		return groupAwayMatches;
 	}
 
+	/**
+	 * Checks if the knockout stage has away fixtures.
+	 * Can be   true only if the knockout stage is a {@link  SingleElimination}
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *boolean
+	 *@return
+	 */
 	public boolean hasKnockoutAwayMatches()
 	{
 		return knockoutAwayMatches;
 	}
 
+	/**
+	 * Gets the point for win the group stage of this {@code Multistage}
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@return a double
+	 */
 	public double getWinPoint()
 	{
-		return WIN_POINT;
+		try
+		{
+			return getGroup(0).getWinPoint();
+		}
+		catch (GroupIndexOutOfBoundsException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0 ;
 	}
 
+	/**
+	 * Gets the point for draw the group stage of this {@code Multistage}
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@return a double
+	 */
 	public double getDrawPoint()
 	{
-		return DRAW_POINT;
+		try
+		{
+			return getGroup(0).getDrawPoint();
+		}
+		catch (GroupIndexOutOfBoundsException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0 ; 
 	}
 
+	/**
+	 * Gets the point for loss the group stage of this {@code Multistage}
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@return a double
+	 */
 	public double getLossPoint()
 	{
-		return LOSS_POINT;
+		try
+		{
+			return getGroup(0).getLossPoint();
+		}
+		catch (GroupIndexOutOfBoundsException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0 ;
 	}
 
+	/**
+	 * Checks if this {@code Multistage}'s group srage is over
+	 *  @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@return a {@code true} when the group stage is over
+	 */
 	public boolean isGroupStageOver()
 	{
 		return knockoutStage == null ? false : true ;
@@ -603,17 +787,36 @@ public class Multistage extends Tournament
 		return NUMBER_OF_EXTRA_QUALIFIERS;
 	}
 	
+	/**
+	 * 
+	 *  Gets the a {@link GroupTournament} representing a group in the group stage
+	 *  @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@param groupNum - 0 represents group  one 
+	 *@return a GroupTournament
+	 *@throws GroupIndexOutOfBoundsException when the group num is invalid
+	 */
 	public GroupTournament getGroup( int groupNum ) throws GroupIndexOutOfBoundsException
 	{
 		if ( groupNum < groupStage.length )
 			return groupStage[ groupNum ];
 		throw new GroupIndexOutOfBoundsException( "The group num is invalid") ;
 	}
+	
+	/**
+	 * Gets the number of groups in the group stage
+	 *@return an {@code int}
+	 */
 	public int getNumberOfGroups()
 	{
 		return groupStage.length ;
 	}
 	
+	/**
+	 * Gets the third-place or fourth-place {@link StandingTable} 
+	 * Returns null if this {@code Multistage} does not contain extra table
+	 *@return 
+	 */
 	public StandingTable getPossibleQualifierTable()
 	{
 		return extraQualifierTable;

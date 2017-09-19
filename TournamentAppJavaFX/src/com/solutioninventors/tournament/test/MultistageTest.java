@@ -129,8 +129,6 @@ public class MultistageTest {
 			SingleEliminationTest.simulateRound( tournament); 
 		else
 			simulateGroupRound( tournament );
-			
-		
 		
 		Multistage multiStageSpecific = ( Multistage )  tournament;
 				

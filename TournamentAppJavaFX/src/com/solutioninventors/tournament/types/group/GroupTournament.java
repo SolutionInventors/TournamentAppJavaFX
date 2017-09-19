@@ -54,7 +54,7 @@ public abstract class GroupTournament extends Tournament
 							b.getType() ==  Breaker.ALL ))
 			throw new InvalidBreakerException("The breaker is invalid");
 		table = new StandingTable( getSportType(), comps, pWin, pDraw, pLoss, breaker);
-		setName("");
+
 	}
 
 
@@ -110,7 +110,20 @@ public abstract class GroupTournament extends Tournament
 	}
 
 	
-
+	public double getWinPoint()
+	{
+		return getTable().getWinPoint();
+	}
+	public double getDrawPoint()
+	{
+		return getTable().getDrawPoint();
+	}
+	
+	public double getLossPoint()
+	{
+		return getTable().getLossPoint();
+	}
+	
 	public String toString() {
 		return "Round " + getCurrentRoundNum();
 	}
