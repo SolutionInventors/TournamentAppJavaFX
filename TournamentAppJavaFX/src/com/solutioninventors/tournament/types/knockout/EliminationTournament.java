@@ -18,17 +18,26 @@ import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 
+/** 
+ * This class is the super class of all the classes used to create a
+ * knockout tournament. Information about knockout tournament can be found online<br>
+ * This class contains methods that are common to all types of knockout tournaments
+ * 
+ */
 public abstract class EliminationTournament extends Tournament implements Serializable
 {
 
-	/** 
-	 * This is the super class of all Elimination Types including Single and Double Elimination
-	 * Thus, this class contains methods that would be used to aid the creation of an elimination tournament
-	 * The methods here are relatively simple
+	
+	/**
+	 * Creates an {@code EliminationTournament}. This constructor ensures that the 
+	 * number of competitors is a power of 2. That is<br>
+	 * {@code number of competitors = 2}<sup>x</sup> <br>
+	 * where x is greater than 1<br>
+	 * 
+	 *@param type the {@code SportType } of this {@code Tournament}
+	 *@param comps the {@link Competitor}s 
+	 *@throws TournamentException when the total competitors is invalid
 	 */
-	private static final long serialVersionUID = 1L;
-	
-	
 	public EliminationTournament ( SportType type, Competitor[] comps ) throws TournamentException
 	{
 		super( type, comps );
@@ -40,8 +49,16 @@ public abstract class EliminationTournament extends Tournament implements Serial
 
 	}
 
+	public abstract Competitor[] getTopThree();
 	
-
+	
+	/** 
+	 * Gets the active {@link Competitor}s in this {@code EliminationTournament}.
+	 * It scans through a collection of {@code Competitor}s and returns only the ones
+	 * that have not been eliminated 
+	 * 
+	 *@return an array of {@code Competitor}s 
+	 */
 	public Competitor[] getActiveCompetitors()
 	{
 		List< Competitor > list = new ArrayList<>();
@@ -55,6 +72,13 @@ public abstract class EliminationTournament extends Tournament implements Serial
 		
 	}
 	
+	/**
+	 * Gets the competitors that have been eliminated in this {@code Tournaments}
+	 *@return a {@code Competitor[]) object
+	 *@see Competitor
+	 *@since v1.0
+	 *@author Oguejiofor Chidiebere 
+	 */
 	public Competitor[] getEliminatedCompetitors()
 	{
 		List< Competitor > list = new ArrayList<>();
@@ -70,8 +94,12 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	
 	}
 
-	
-
+	/**
+	 * Gets a round specified by a round number
+	 *Round
+	 *@param i
+	 *@return
+	 */
 	public Round getRound(int i)
 	{
 		return getRoundArray()[ i ];

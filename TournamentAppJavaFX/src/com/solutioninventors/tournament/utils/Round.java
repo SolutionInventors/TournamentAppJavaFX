@@ -352,6 +352,9 @@ public class Round implements Serializable
 			
 	}
 
-	
+	public int getNumberOfFixtures()
+	{
+		return getFixtures().length;
+	}
 	
 }	

@@ -110,7 +110,7 @@ public abstract class Tournament implements Serializable
 	
 	/**
 	 * Gets all the {@code Competitor}s that participated in this {@code Tournament}
-	 *@return
+	 *@return an array of {@code Competitor}s
 	 */
 	public Competitor[] getCompetitors()
 	{
@@ -120,7 +120,7 @@ public abstract class Tournament implements Serializable
 
 	/**
 	 * Gets this {@code Tournament}'s {@code SportType} 
-	 * @see com.solutioninventors.tournament.utils.Sportype
+	 * @see com.solutioninventors.tournament.utils.SportType
 	 * @author Oguejiofor Chidiebere
 	 *@return - a {@code SportType} object
 	 */
@@ -195,7 +195,7 @@ public abstract class Tournament implements Serializable
 	
 	
 	/**
-	 * Gets this a {@code File } in which this {@ Tournament } is saved
+	 * Gets this a {@code File } in which this {@code Tournament } is saved
 	 * @author Oguejiofor Chidiebere
 	 * @since v1.0
 	 *@return - a {@code File} object 
@@ -257,11 +257,12 @@ public abstract class Tournament implements Serializable
 	
 	/**
 	 * Saves a {@code Tournament} in a specified {@code File}
+	 * @param T a subclass of {@code Tournament}
 	 *@param tournament - a {@code Tournament} object
 	 *@param file - the {@code File} where the {@code Tournament} would be saved
 	 *@throws FileNotFoundException - Signals that an error occured
 	 *@throws IOException - signals that an I/O  exception occured
-	 *@throws TournamentException- when  the {@code Tournament} passed as argument is {@codem null}
+	 *@throws com.solutioninventors.tournament.exceptions.TournamentException - when  the {@code Tournament} passed as argument is {@codem null}
 	 */
 	public static <T extends Tournament> 
 		void saveAs( T tournament   , File file ) 
@@ -380,7 +381,7 @@ public abstract class Tournament implements Serializable
 
 	/**
 	 * Loads a {@code Tournament} from a {@code File}
-	 *@param file
+	 *@param file the {@code File} that contains the {@code Tournament}
 	 *@return - a {@code Tournament} object
 	 *@throws IOException
 	 */
@@ -441,11 +442,11 @@ public abstract class Tournament implements Serializable
 	/**
 	 * This method moves this {@code Tournament} to its next {@Code Round} by performing
 	 *  some type specific operations
-	 *  @see Round
-	 *  @see Fixture
-	 *@throws TournamentEndedException -Signals this  {@code Tournament} is complete and 
+	 *  @see com.solutioninventors.tournament.utils.Round
+	 *  @see com.solutioninventors.tournament.utils.Fixture
+	 *@throws com.solutioninventors.tournament.exceptions.TournamentEndedException -Signals this  {@code Tournament} is complete and 
 	 *			thus cannot move to next round
-	 *@throws MoveToNextRoundException - Signals that another type specific exception occured
+	 *@throws com.solutioninventors.tournament.exceptions.MoveToNextRoundException - Signals that another type specific exception occured
 	 */
 	public abstract void moveToNextRound()
 			throws TournamentEndedException, MoveToNextRoundException ;
@@ -460,7 +461,7 @@ public abstract class Tournament implements Serializable
 	 *@param score1 - the home {@code Competitor}'s score
 	 *@param score2 - the away {@code Competitor}'s score
 	 *@param com2 - the away {@code Competitor}	
-	 *@throws NoFixtureException -  Signals that the {@code Fixture}  is not in 
+	 *@throws com.solutioninventors.tournament.exceptions.NoFixtureException -  Signals that the {@code Fixture}  is not in 
 	 *this {@code Tournament}'s current {@code Round}
 	 *@throws TournamentEndedException -Signals that this {@code Tournament } is over
 	 *@throws ResultCannotBeSetException - Signals that {@code Fixture} is in the current {@code Round} but 

@@ -24,28 +24,28 @@ import com.solutioninventors.tournament.utils.SportType;
 /** 
  * 
  * This relatively simple class is used to simulate a Challenge which is an alternative to TOurnament
- * The Challenge can only have two competitors @
- * @author Chidiebere
+ * The Challenge can only have two competitors 
+ * @author Oguejiofor Chidiebere
  * @since 2017
- * @version 1.0
- * @
+ * @since 1.0
  */
 
 public class Challenge extends Tournament 
 {
 
-	
+	/**
+	 * Contains all the rounds in this {@code Tournament}
+	 */
 	private final Round[] ROUNDS;
 	
 	/**
-	 * The constructor creates all the rounds in the tournament via a calll to utikity method 
+	 * The constructor creates all the rounds in the tournament via a call to utility method 
 	 * {@linkplain createTournament }. 
 	 * The rounds are created in such a way that one competitor does not  play too many consecutive home or aeay games 
 	 * This is very important in games like chess
 	 * 
 	 * @author Chidiebere
 	 * @param Competitor[] , {@code}int numOfRounds
-	 * @
 	 */
 	public Challenge( SportType type, Competitor[] competitors , int numOfRounds 	)
 	{
@@ -58,7 +58,11 @@ public class Challenge extends Tournament
 	}
 
 	
-	
+	/**
+	 * This method creates all the rounds in this {@code Challenge} 
+	 * It ensures that a competitor does not play too many consecutive home fixtures
+	 * or too many away {@link Fixture}s 
+	 */
 	private void createTournament()
 	{
 		
@@ -87,6 +91,7 @@ public class Challenge extends Tournament
 			JOptionPane.showMessageDialog(null, "Tournamnet has ended");//replace with Javafx
 		
 	}
+	
 	
 	public void setResult(Competitor com1 , double score1 , double score2 , Competitor com2) 
 			throws TournamentEndedException, ResultCannotBeSetException, NoFixtureException

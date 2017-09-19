@@ -20,9 +20,11 @@ import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.DoubleElimination.BracketType;
+import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.SportType;
+import com.sun.javafx.image.impl.ByteIndexed.Getter;
 
 public class DoubleEliminationTest
 {
@@ -66,6 +68,18 @@ public class DoubleEliminationTest
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner() );
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("The top three players are:\n");
+		
+		EliminationTournament elimSpecific = 
+				(EliminationTournament) tournament;
+		
+		Competitor[] topThree = elimSpecific.getTopThree() ;
+		for ( int i =  0 ;i < topThree.length ; i++ )
+			builder.append( (i + 1) + ". " + topThree[i] );
+		
+		Test.displayMessage( builder.toString() );
 	}
 
 

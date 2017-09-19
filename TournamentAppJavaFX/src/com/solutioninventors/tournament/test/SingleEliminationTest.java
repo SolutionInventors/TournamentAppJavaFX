@@ -17,6 +17,7 @@ import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -65,7 +66,16 @@ public class SingleEliminationTest {
 			}
 		}
 		Test.displayMessage("The winner is " + tournament.getWinner());
-
+		StringBuilder builder = new StringBuilder(300);
+		
+		EliminationTournament elimSpecific = 
+				(EliminationTournament) tournament;
+		
+		Competitor[] topThree = elimSpecific.getTopThree() ;
+		for ( int i =  0 ;i < topThree.length ; i++ )
+			builder.append( (i + 1) + ". " + topThree[i] + "\n");
+		
+		Test.displayMessage( builder.toString() );
 	}
 
 	public static void simulateRound(Tournament tournament) throws MoveToNextRoundException, TournamentEndedException

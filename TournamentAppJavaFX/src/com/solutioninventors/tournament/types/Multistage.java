@@ -703,8 +703,7 @@ public class Multistage extends Tournament
 	 * Can be   true only if the knockout stage is a {@link  SingleElimination}
 	 * @author Oguejiofor Chidiebere
 	 * @since v1.0
-	 *boolean
-	 *@return
+	 *@return {@code boolean}
 	 */
 	public boolean hasKnockoutAwayMatches()
 	{
@@ -782,6 +781,12 @@ public class Multistage extends Tournament
 		return knockoutStage == null ? false : true ;
 	}
 
+	/**
+	 * Gets the number of players that would be chosen from fourth or third place
+	 * ranking table
+	 *int
+	 *@return
+	 */
 	public int getNumberOfExtraQualifiers()
 	{
 		return NUMBER_OF_EXTRA_QUALIFIERS;
@@ -806,6 +811,8 @@ public class Multistage extends Tournament
 	/**
 	 * Gets the number of groups in the group stage
 	 *@return an {@code int}
+	  *  author Oguejiofor Chidiebere
+	 * @since v1.0
 	 */
 	public int getNumberOfGroups()
 	{
@@ -815,7 +822,10 @@ public class Multistage extends Tournament
 	/**
 	 * Gets the third-place or fourth-place {@link StandingTable} 
 	 * Returns null if this {@code Multistage} does not contain extra table
-	 *@return 
+	 *@return
+
+ *  @author Oguejiofor Chidiebere
+	 * @since v1.0
 	 */
 	public StandingTable getPossibleQualifierTable()
 	{
@@ -830,15 +840,17 @@ public class Multistage extends Tournament
 		return groupStage[0 ].toString();
 		
 	}
+	
+	/** 
+	 * This enumeration encapsulates info about how the group winners would be chosen
+	 * If the extra qualifier is taken from position 4 then the winners are
+	 * FIRST_THREE 
+	 * If the extra qualifier is taken from position 3 the the group winners are
+	 * the FIRST_TWO
+	 */
 	private enum GroupWinners
 	{
-		/** 
-		 * This enumeration encapsulates info about how the group winners would be chosen
-		 * If the extra qualifier is taken from position 4 then the winners are
-		 * FIRST_THREE 
-		 * If the extra qualifier is taken from position 3 the the group winners are
-		 * the FIRST_TWO
-		 */
+		
 		FIRST_THREE( 3 ) ,
 		FIRST_TWO( 2 ) 	 ;
 		private final int numOfWinners ; 
@@ -855,14 +867,37 @@ public class Multistage extends Tournament
 
 	}
 	
+	/**
+	 * This enum encapsulates the type of group stage that this {@code Multistage} tournament has
+	 * @see GroupTournament
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 */
 	private enum GroupStageType
 	{
-		SWISS , ROUND_ROBIN;
+		/**
+		 * Indicates that the {@code Multistage} has a {@link SwissTournament} as its 
+		 * group stage
+		 */
+		SWISS , 
+
+		/**
+		 * Indicates that the {@code Multistage} has a {@link RoundRobinTournament} as its 
+		 * group stage
+		 */
+		ROUND_ROBIN;
 	}
 	
 	
+	 /** This enum encapsulates the type of knockoout stage that a {@code Multistage} tournament has
+	 * @see ElimiantionTournament
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 */
+	
 	private enum KnockoutType
 	{
-		SINGLE , DOUBLE;
+		SINGLE , 
+		DOUBLE;
 	}
 }
