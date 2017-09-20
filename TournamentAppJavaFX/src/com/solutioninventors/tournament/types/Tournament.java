@@ -442,6 +442,8 @@ public abstract class Tournament implements Serializable
 	/**
 	 * This method moves this {@code Tournament} to its next {@Code Round} by performing
 	 *  some type specific operations
+	 *  @author Oguejiofor Chidiebere
+	 *  @since v1.0
 	 *  @see com.solutioninventors.tournament.utils.Round
 	 *  @see com.solutioninventors.tournament.utils.Fixture
 	 *@throws com.solutioninventors.tournament.exceptions.TournamentEndedException -Signals this  {@code Tournament} is complete and 

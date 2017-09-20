@@ -25,21 +25,33 @@ import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
 /**
- * This is the su[er class of all the group tournament types
- * Its sub classes include RoundRobin and SwissTournamnet types 
- * The class stores the StandingTable object to be  used by all its sub class
- * It also stores a Round array and the sportType
- * The SportType object here is used to create the StandingTable object
- * This is a relatively simple class that contains some abstract methods and a 
- * bunch of getters and setters 
+ * A {@code GroupTournament} is used to simulate a {@code Tournament} in which
+ * {@code Competitor}s are arranged in a group and a ranking table is used
+ * to determine the winner after all the {@code Round}s have been played
+ * <p>
+ * This class is abstract and delays methods common to all it types.
+ * <p>
+ * Some concrete implementation include {@link SwissTournament}, 
+ * {@link RoundRobinTournament}
+ * 
+ * @author Oguejiofor Chidiebere
+ * @see Tournament
+ * 
  * 
  */
 
 public abstract class GroupTournament extends Tournament 
 {
 	
+	/**
+	 * Stores the ranking table of this {@code GroupTournament}. Would be used to
+	 * determine the winner at the end of the {@code Tournament}
+	 */
 	private StandingTable table;
 	
+	/**
+	 * Stores the {@link Round}s in this {@code Tournament}
+	 */
 	private Round[] rounds;
 	
 	public GroupTournament(Competitor[] comps, SportType type, double pWin, double pDraw, double pLoss,
@@ -58,31 +70,78 @@ public abstract class GroupTournament extends Tournament
 	}
 
 
+	/**
+	 * Gets the ranking table of this {@code GroupTournament} 
+	 * @author Oguejiofor Chidiebere 
+	 * @since v1.0
+	 *
+	 *@return a {@code StandingTable} that encapsulates the ranking of this {@code GroupTournament}
+	 *
+	 */
 	public StandingTable getTable() {
+		table.updateTables();
 		return table;
 	}
 
 	
 	
-
+	/**
+	 * Sets the rounds of this {@code GroupTournament} 
+	 * @author Oguejiofor Chidiebere 
+	 * @see v1.0
+	 *@param rnds the {@code Round[]} object
+	 */
 	protected void setRoundsArray(Round[] rnds) {
 		rounds = rnds;
 	}
 
+	/**
+	 * Gets an array of all the {@code Round}s in this {@code Tournament}
+	 * @see Round
+	 * @author Oguejiofor Chidiebere
+	 */
 	public Round[] getRoundArray() {
 		return rounds;
 	}
 
+	/**
+	 * Gets a specified {@code Round}. Note that if roundNum eqauls 0 then
+	 * the first {@code Round} is returned
+	 * @see Round 
+	 * @author Oguejiofor Chidiebere
+	 */
+	
 	public Round getRound(int roundNum) throws RoundIndexOutOfBoundsException {
 		if (roundNum < getRoundArray().length)
 			return getRoundArray()[roundNum];
 		throw new RoundIndexOutOfBoundsException();
 	}
 
+	/**
+	 * Sets the current {@code Round} array of fixtures
+	 *@param fixes
+	 */
 	protected void setCurrentRound(Fixture[] fixes) {
 		rounds[getCurrentRoundNum()] = new Round(fixes);
 	}
 
+	/**
+	 * Gets the top three {@code Competitor}s in this {@code GroupTournament} from
+	 * the {@code StandingTable}
+	 *@return a {@code Competitor} array
+	 *@author Chidiebere
+	 *@since v1.0
+	 *@see Competitor
+	 */
+	public Competitor[] getTopThree()
+	{
+		Competitor[] comps =
+			{ getTable().getCompetitor(0), 
+			  getTable().getCompetitor(1),
+			  getTable().getCompetitor(2)
+			};
+		return comps;
+	}
 
 	public Round getCurrentRound() 
 			throws TournamentEndedException, OnlyOutstandingAreLeftException 
@@ -96,29 +155,37 @@ public abstract class GroupTournament extends Tournament
 			return null ; 
 	}
 
-	public abstract void setResult(Competitor com1, double score1, double score2, Competitor com2)
-			throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException ;
-
-	public abstract void moveToNextRound() throws MoveToNextRoundException;
-
-	public abstract boolean hasEnded();
-
-	public abstract Competitor getWinner();
-
+	/**
+	 * Gets the total number of {@code Round}s that have beeen played in this 
+	 * {@code GroupTournament}
+	]*@return an {@code int }
+	 */
 	public int getTotalNumberOfRounds() {
 		return getRoundArray().length;
 	}
 
-	
+	/**
+	 * Gets the point for a win in the tournament
+	*@return
+	 */
 	public double getWinPoint()
 	{
 		return getTable().getWinPoint();
 	}
+	
+	/**
+	 * Gets the point for a draw in the {@code GroupTournament}
+	 *@return a {@code double}
+	 */
 	public double getDrawPoint()
 	{
 		return getTable().getDrawPoint();
 	}
 	
+	/**
+	 * Gets the point for a loss in the {@code GroupTournament}
+	 *@return a {@code double}
+	 */
 	public double getLossPoint()
 	{
 		return getTable().getLossPoint();
@@ -128,6 +195,12 @@ public abstract class GroupTournament extends Tournament
 		return "Round " + getCurrentRoundNum();
 	}
 
+	/**
+	 * Checks if the current {@code Round } is complete
+	 * 
+	 *@return a {@code true	} when the current round does not contain pending {@code Fixture}s
+	 *@author Oguejiofor Chidiebere
+	 */
 	public boolean isCurrentRoundComplete() throws TournamentEndedException
 	{
 		

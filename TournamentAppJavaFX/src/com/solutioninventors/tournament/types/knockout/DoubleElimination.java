@@ -71,7 +71,7 @@ public class DoubleElimination extends EliminationTournament
 	 *Encapsulates the current fixture type of the current round
 	 *@see  CurrentFixture
 	 */
-	private CurrentFixture currentFixture;
+	private BracketType currentFixture;
 	
 	
 	private String roundName ;
@@ -106,7 +106,7 @@ public class DoubleElimination extends EliminationTournament
 		rounds.put( BracketType.TOURNAMENT_FINAL, new ArrayList<>() );
 		
 		topThree = new Competitor[ 3 ];
-		setCurrentFixture( CurrentFixture.INITIAL);
+		setCurrentFixture( BracketType.INITIAL_BRACKET);
 		createTournament();
 	}
 	
@@ -221,13 +221,13 @@ public class DoubleElimination extends EliminationTournament
 				round.setResult( competitorOne , score1, score2, competitorTwo );
 				addRound(BracketType.TOURNAMENT_FINAL , round );
 			}
-			else if ( getCurrentFixture() == CurrentFixture.INITIAL )
+			else if ( getCurrentFixture() == BracketType.INITIAL_BRACKET )
 			{
 				Round round = getCurrentRound( BracketType.INITIAL_BRACKET );
 				round.setResult( competitorOne , score1, score2, competitorTwo);
 				addRound(BracketType.INITIAL_BRACKET , round );
 			}
-			else if ( getCurrentFixture() == CurrentFixture.WINNER_BRACKET )
+			else if ( getCurrentFixture() == BracketType.WINNERS_BRACKET )
 			{
 				Round minor  = getCurrentRound( BracketType.MINOR_BRACKET ) ;
 				Round winner  = getCurrentRound( BracketType.WINNERS_BRACKET ) ;
@@ -260,15 +260,35 @@ public class DoubleElimination extends EliminationTournament
 	}
 
 	
-
+	/**
+	 * Checks of the first {@code Round} of this {@code DoubleElimination} tournament
+	 * has been played
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 *@return {@code true} when the initial round has been played
+	 */
 	public boolean isInitialComplete()
 	{
-		if ( getCurrentFixture() !=  CurrentFixture.INITIAL )
+		if ( getCurrentFixture() !=  BracketType.INITIAL_BRACKET )
 			return true ;
 		return false;
 	}
 	
-	
+	/**
+	 * Moves to the next {@code Round} of this tornament and eliminates{@code Competitor}s.
+	 * that have lost twice <p>
+	 * It achieves this by eliminating the losers in the losers bracket
+	 * and placing the losers of the winners bracket in th losers bracket
+	 * for the next round<p>
+	 * If it is the final, this method determines if the loser of the has
+	 * lost before in the tournament before eliminating the loser. If the
+	 * loser has not lost, then the final would be played again
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 * @see Competitor
+	 * @see Round
+	 * @see BracketType
+	 */
 	@Override
 	public void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException
 	{
@@ -283,7 +303,14 @@ public class DoubleElimination extends EliminationTournament
 		
 	}
 
-	private void createNextRound(CurrentFixture current)
+	/**
+	 * Creates the next round in the tournament based on the current fixture
+	 * 
+	 * @see CurrentFixture
+	 * @author Oguejiofor Chidiebere
+	 *@param current
+	 */
+	private void createNextRound(BracketType current)
 	{
 		List<Competitor > winnerBracket = new ArrayList<>() ;
 		List<Competitor > loserBracket = new ArrayList<>() ;
@@ -292,7 +319,7 @@ public class DoubleElimination extends EliminationTournament
 			switch ( current )
 			{
 			
-			case INITIAL:
+			case INITIAL_BRACKET:
 				Arrays.stream(getCurrentRound( BracketType.INITIAL_BRACKET ).getFixtures()  )
 				  .map( f -> f.getLoser() )
 				  .forEach( c-> loserBracket.add( c ) );
@@ -308,10 +335,10 @@ public class DoubleElimination extends EliminationTournament
 						fixesCreator( winnerBracket )
 						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
 				
-				setCurrentFixture( CurrentFixture.WINNER_BRACKET);
+				setCurrentFixture( BracketType.WINNERS_BRACKET);
 				break;
 				
-			case LOSER_MAJOR_BRACKET:
+			case MAJOR_BRACKET:
 				Arrays.stream( getCurrentRound( BracketType.MAJOR_BRACKET).getFixtures() )
 				  .forEach( f -> f.getLoser().setEliminated( true ) );
 				
@@ -323,7 +350,7 @@ public class DoubleElimination extends EliminationTournament
 					addRound(BracketType.	MINOR_BRACKET , new Round( 
 							fixesCreator( loserBracket)
 							.toArray(new Fixture[ fixesCreator( loserBracket).size() ] ) ) );
-					setCurrentFixture( CurrentFixture.WINNER_BRACKET );
+					setCurrentFixture( BracketType.WINNERS_BRACKET );
 				}
 				else
 				{
@@ -334,14 +361,14 @@ public class DoubleElimination extends EliminationTournament
 					
 					Fixture finale = new Fixture( getSportType(), wFinalist, loserBracket.get( 0 ) );
 					addRound(BracketType.TOURNAMENT_FINAL , new Round( finale) );
-					setCurrentFixture( CurrentFixture.FINAL );
+					setCurrentFixture( BracketType.TOURNAMENT_FINAL );
 					
 					topThree[ 2 ] = getCurrentRound(BracketType.MAJOR_BRACKET )
 									.getLosers()[0];
 					
 				}
 				break;
-			case WINNER_BRACKET:
+			case WINNERS_BRACKET:
 				
 				Arrays.stream( getCurrentRound( BracketType.MINOR_BRACKET).getFixtures() )
 				  .forEach( f -> f.getLoser().setEliminated( true ) );
@@ -368,10 +395,10 @@ public class DoubleElimination extends EliminationTournament
 						fixesCreator( loserBracket )
 						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
 				
-				setCurrentFixture( CurrentFixture.LOSER_MAJOR_BRACKET);
+				setCurrentFixture( BracketType.MAJOR_BRACKET);
 				break;
 			
-			case FINAL:
+			case TOURNAMENT_FINAL:
 				
 				Round round = getCurrentRound( BracketType.TOURNAMENT_FINAL );
 				Fixture  f =  round.getFixtures()[0];
@@ -412,10 +439,19 @@ public class DoubleElimination extends EliminationTournament
 		
 	}
 	
+	/**
+	 * Gets the number of rounds that have been played in a specific BracketType
+	 *@param type the {@link BracketType }
+	 *@return an {@code int}
+	 */
 	private int getNumberOfRounds( BracketType type )
 	{
 		return rounds.get(type).size();
 	}
+	
+	/**
+	 * Creates the fixtures with a list of competitors
+	 */
 	private List<Fixture> fixesCreator( List<Competitor> bracket )
 	{
 		List<Fixture> list =  new ArrayList<>();
@@ -438,9 +474,9 @@ public class DoubleElimination extends EliminationTournament
 		{ 
 			if ( getActiveCompetitors().length == 2 )
 				return getCurrentRound( BracketType.TOURNAMENT_FINAL );
-			else if ( getCurrentFixture() == CurrentFixture.INITIAL )
+			else if ( getCurrentFixture() == BracketType.INITIAL_BRACKET )
 				return getCurrentRound( BracketType.INITIAL_BRACKET )  ;
-			else if ( getCurrentFixture() == CurrentFixture.LOSER_MAJOR_BRACKET )
+			else if ( getCurrentFixture() == BracketType.MAJOR_BRACKET )
 			{
 				return getCurrentRound( BracketType.MAJOR_BRACKET ) ; 
 			}
@@ -524,7 +560,7 @@ public class DoubleElimination extends EliminationTournament
 		int totalCompetitors = getActiveCompetitors().length;
 	
 		
-		if ( getCurrentFixture() != CurrentFixture.LOSER_MAJOR_BRACKET )
+		if ( getCurrentFixture() != BracketType.MAJOR_BRACKET )
 		{
 			switch( totalCompetitors )
 			{
@@ -551,7 +587,13 @@ public class DoubleElimination extends EliminationTournament
 	}
 	
 
-	
+	/**
+	 * This enum is used to determine the current fixture of the current
+	 * round It is also used to return some Bracket specific fixtures 
+	 * @see Round
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 */
 	public enum BracketType
 	{
 		MAJOR_BRACKET, 
@@ -562,38 +604,40 @@ public class DoubleElimination extends EliminationTournament
 	}
 
 	
-	
+	/**
+	 * Checks if the current {@code Round} is the final
+	 *@return {@code true} when only two {@code Competitor}s are left
+	 */
 	public boolean isFinal()
 	{
 		return getActiveCompetitors().length  <= 2 ? true : false ;
 	}
 
-	public CurrentFixture getCurrentFixture()
+	/**
+	 * Gets a {@link BracketType } that indicates the current fixtures
+	 * 
+	 *@return
+	 */
+	public BracketType getCurrentFixture()
 	{
 		return currentFixture;
 	}
 
 
-	public void setCurrentFixture(CurrentFixture currentFixture)
+	private void setCurrentFixture(BracketType currentFixture)
 	{
 		this.currentFixture = currentFixture;
 	}
 
 
 
-	private enum CurrentFixture
-	{
-		LOSER_MAJOR_BRACKET,
-		FINAL,
-		INITIAL,
-		WINNER_BRACKET;
-	}
+	
 
 
 
 	public boolean isMinorFixtureComplete()
 	{
-		if ( getCurrentFixture() !=  CurrentFixture.WINNER_BRACKET )
+		if ( getCurrentFixture() !=  BracketType.WINNERS_BRACKET )
 			return true ;
 		return false;
 	}

@@ -28,33 +28,34 @@ import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
+/**
+ * A {@code RoundRobinTournament} is a {@link GroupTournament} in which all the {@link Competitor}s
+ * must face each other at least once before this tournament ends
+ * 
+ * <p>
+ * The {@link Round}s of a {@code RoundRobinTournament} are created once its
+ * constructor is called. 
+ * These {@code Round}s are created in such a way that one {@code Competitor} would never play
+ * three consecutive home/away games.
+ * The winner of a {@code RoundRobin } is determined by a {@code StadingTable}
+ * which contains a {@link TieBreaker} that breaks the ties between {@code Competitor}s
+ * The number of {@code Competitor}s in a {@code RoundRoubin} can be any number greater than 2
+ * <p>
+ * A {@code RoundRobinTournament} can have outstanding in a fixture
+ * 
+ * 
+ */
 public class RoundRobinTournament extends GroupTournament
 {
-
 	/**
-	 * This class is used to create a Round Robin tournament and it extends GroupTournament
-	 * When created the constructor stores competitors, Sporttype and other info
-	 * It then calls utility method createRounds() which uses the Carousel-Berger system
-	 * to create the rounds in the tournament and enters the first round.
-	 * 
-	 * Note: The first roundNumber = 0. Also this class can have byes
-	 * 
-	 * After the object is created the program stores the first round results via calls to
-	 * method setResult
-	 * 
-	 * After the results are inputed, class increments rounds via a call to moveToRound() from
-	 * its object. 
-	 * When moveToROund() is called it checks that the results were inputed and if there are
-	 * pending fixtures it prompts the user to choose if he wants these fixtures to be outstnading
-	 * if so it adds those fixtures to List outstandingMatches
-	 * 
-	 * if all current round fixtures are inputed moveToNextRound() increments roundNuber
-	 * 
+	 * Stores {@code true } if there are home and away fixtures. That is if
+	 * a {@code Competitor} would meet all opponent twice
 	 */
-	
 	private final boolean HOME_AND_AWAY_FIXTURES;
-	private final boolean BYE; 
 	
+	/**
+	 * Stores all the outstanding games in this {@code Tournament}
+	 */
 	private List<Fixture> outstandingMatches ;
 	
 	public RoundRobinTournament(Competitor[] comps, SportType type , double winPoint ,
@@ -62,19 +63,19 @@ public class RoundRobinTournament extends GroupTournament
 	{
 		super(comps, type, winPoint , drawPoint, lossPoint , breaker  );
 		HOME_AND_AWAY_FIXTURES =  away ;
-		BYE =  getCompetitors().length % 2 == 0 ? false : true ;
 		setRoundsArray( createRounds( getCompetitors() ) ) ;
 		outstandingMatches =  new ArrayList<>();
 	}
 	
+	/**
+	 * Creates rounds by assigning numbers to each competitor. 
+	 * The method achieves this by implementing the the  Carousel-Berger system
+	 * You can read up Carousel-Berger system online for more info
+	 * This method also allows byes 
+	 */
 	private Round[] createRounds(Competitor[] competitor )
 	{
-		/**
-		 * This method creates rounds by assigning numbers to each competitor 
-		 * The method achieves this by implementing the the  Carousel-Berger system
-		 * You can read up Carousel-Berger system online for more info
-		 * This method also allows byes 
-		 */
+		
 		
 		int tempCurrentRound = 0 ;
 		int totalCompetitors = getCompetitors().length ;
@@ -116,14 +117,15 @@ public class RoundRobinTournament extends GroupTournament
 		return scheduleRounds( tempRound ); 
 	}
 
+	/**
+	 * This methos covverts an int[][] to a Round object
+	 * precondition: fixes = int[ numberOfCompetitors /2][ 2 ] if no bye or
+	 * 				 fixes = int[ numberOfCompetitors/2 + 1][ 2 ]  if bye
+	 * This method skips the first row if bye
+	 */
 	private Round convertToRound(int[][] fixes ) 
 	{
-		/**
-		 * This methos covverts an int[][] to a Round object
-		 * precondition: fixes = int[ numberOfCompetitors /2][ 2 ] if no bye or
-		 * 				 fixes = int[ numberOfCompetitors/2 + 1][ 2 ]  if bye
-		 * This method skips the first row if bye
-		 */
+		
 		Competitor[] competitors = getCompetitors();
 		Fixture[] fixtures = new Fixture[ competitors.length /2 ];
 		
@@ -139,15 +141,14 @@ public class RoundRobinTournament extends GroupTournament
 		
 	}
 
+	/**
+	 * Schedules the tournament such that a Competitor would not have too
+	 * many consective home games or too many consecutive away games
 	
+	 */
 	private Round[] scheduleRounds(Round[]  rounds )
 	{
-		/**
-		 * This method schedules the tournament such that a Competitor would not have too
-		 * many consective home games or too many consecutive away games
-		 * precondition: variable rounds contains numberofCompetitors -1 elements
-		 * 
-		 */
+		
 		Round[] inverseRounds = new Round[ rounds.length ];
 		
 		for ( int i = 0 ; i < rounds.length ; i++ )
@@ -210,51 +211,40 @@ public class RoundRobinTournament extends GroupTournament
 
 	public boolean hasBye()
 	{
-		return BYE;
+		return getCompetitors().length % 2 != 0;
 	}
 
 	
 	
 	
 	@Override
-	public void moveToNextRound() throws MoveToNextRoundException
+	public void moveToNextRound() throws  TournamentEndedException, MoveToNextRoundException
 	{
 		Round[] rnds = getRoundArray();
 		
 		if ( getCurrentRoundNum() < rnds.length  )
 		{
-			try
+			
+			getTable();
+			
+			if ( !getCurrentRound().isComplete() ) //contains outstanding
 			{
-				getTable().updateTables();
 				
-				if ( !getCurrentRound().isComplete() ) //contains outstanding
-				{
-					int ans = JOptionPane.showConfirmDialog( null , "Has pending fixtures.\nContinue?" );
-					
-					if ( ans == JOptionPane.YES_OPTION )
-					{
-						Arrays.stream( getCurrentRound().getPendingFixtures())
-							  .forEach( f -> outstandingMatches.add( f ) );
-						JOptionPane.showMessageDialog( null , "Incomplete fixtures added to outstanding" );
-						incrementRoundNum();
-						
-					}
-				}
-				else
-				{
-					incrementRoundNum();
-					if ( getCurrentRoundNum() >= getRoundArray().length && 
-							outstandingMatches.size() > 0 )
-					{
-						String message = "Only outsanding matches are left";
-						JOptionPane.showMessageDialog( null , message ) ;
-					}
-				}
+				Arrays.stream( getCurrentRound().getPendingFixtures())
+				  .forEach( f -> outstandingMatches.add( f ) );
+				incrementRoundNum();
+				
 			}
-			catch (TournamentEndedException e)
+			else
 			{
-				throw new MoveToNextRoundException( e.getMessage() );
+				incrementRoundNum();
+				if ( getCurrentRoundNum() >= getRoundArray().length && 
+						outstandingMatches.size() > 0 )//tournament is in last round
+				{
+					throw new MoveToNextRoundException( "Only outstanding is left");
+				}
 			}
+		
 			
 			
 		}
@@ -265,7 +255,7 @@ public class RoundRobinTournament extends GroupTournament
 		}
 		else
 		{
-			throw new MoveToNextRoundException("Tournament is over thus cannot move to next round" );
+			throw new TournamentEndedException("Tournament is over thus cannot move to next round" );
 		}
 		
 	}
@@ -303,9 +293,18 @@ public class RoundRobinTournament extends GroupTournament
 		
 	}
 	
+	/**
+	 * Sets the result of the outstaning {@code Fixture} in this {@code RoundRobin}
+	 
+	 @param com1 the home {@code Competitor}
+	 *@param score1 the home {@code Competitor}'s score
+	 *@param score2 the away {@code Competitor}'s score
+	 *@param com2 the away {@code Competitor}
+	 *@throws NoFixtureException when the {@code Fixture } is not found
 	
+	 */
 	public void setOutstandingResult( Competitor com1 , double score1 , double score2 , Competitor com2 ) 
-			throws NoFixtureException, ResultCannotBeSetException
+			throws NoFixtureException
 	{		
 		if ( outstandingMatches.stream()
 				.anyMatch( f -> f.hasFixture( com1 , com2  )) )
@@ -319,7 +318,15 @@ public class RoundRobinTournament extends GroupTournament
 					Round temp = new Round( f );
 					
 					
-					temp.setResult( f.getCompetitorOne(), score1, score2, f.getCompetitorOne());
+					try
+					{
+						temp.setResult( f.getCompetitorOne(), score1, score2, f.getCompetitorOne());
+					}
+					catch (ResultCannotBeSetException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					outstandingMatches.remove( i );
 					getTable().updateTables(); 
 					break ;
@@ -356,8 +363,7 @@ public class RoundRobinTournament extends GroupTournament
 			throw new OnlyOutstandingAreLeftException("Only otustanding fixtures are left" );
 	}
 	public Competitor getWinner()
-	{
-		getTable().updateTables(); 
+	{ 
 		if ( hasEnded())
 			return getTable().getCompetitors()[ 0 ];
 		return null;

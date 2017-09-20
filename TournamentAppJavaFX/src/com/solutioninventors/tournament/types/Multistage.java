@@ -33,10 +33,14 @@ import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
 
 /**
- * This class is used in creating a Multistage Tournament 
+ * This class is used in creating a Multistage Tournament <p>
+
+ * The total competitors in a multistage must be a multiple of 4 and must be
+ * greater than 4 <br>
  * This class contains a collection of {@link GroupTournament}s which simulates the group rounds
- * and a {@code EliminationTournament} that simulates the knock out stage.
- * 
+ * and a {@code EliminationTournament} that simulates the knock out stage. Each group in the groupstage
+ * would always have four competitors
+ * <p>
  * On initialization the constructor determines if there would be a fourth-place; third place; or no; ranking table
  * The constructor validates that the total competitors is a multiple of 4 
  * This class provides constructors for creating a {@code Multistage } woth any combination
@@ -229,8 +233,10 @@ public class Multistage extends Tournament
 		
 		knockoutType =  knockout;
 		
-		if( coms.length % 4 != 0 )
-			throw new TournamentException("The total competitors must be a multiple of 4 " );
+		if( coms.length % 4 != 0 || 
+				coms.length <= 4 )
+			throw new TournamentException("The total competitors must be a multiple of 4 "
+					+ "and must be greater than 4" );
 		
 		NUMBER_OF_EXTRA_QUALIFIERS = calculateExtraQualifiers(coms.length);;
 		
@@ -897,7 +903,13 @@ public class Multistage extends Tournament
 	
 	private enum KnockoutType
 	{
+		/**
+		 * Indicates that the knockout stage is a single elimination
+		 */
 		SINGLE , 
+		/**
+		 * Indicates that the knockout stage is a double elimination
+		 */
 		DOUBLE;
 	}
 }
