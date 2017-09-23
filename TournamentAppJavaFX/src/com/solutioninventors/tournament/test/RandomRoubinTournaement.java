@@ -163,11 +163,7 @@ public class RandomRoubinTournaement {
 			{
 				Test.displayMessage(e.getMessage() );
 			}
-			catch (ResultCannotBeSetException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			catch (IncompleteFixtureException e)
 			{
 				// TODO Auto-generated catch block

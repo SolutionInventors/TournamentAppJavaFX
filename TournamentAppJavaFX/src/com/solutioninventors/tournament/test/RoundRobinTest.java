@@ -161,7 +161,7 @@ public class RoundRobinTest {
 						com1 , outstandings[ i ].getCompetitorOneScore() ,
 						outstandings[  i ].getCompetitorTwoScore() , com2 ));
 			}
-			catch (NoFixtureException | ResultCannotBeSetException | IncompleteFixtureException e)
+			catch (NoFixtureException | IncompleteFixtureException e)
 			{
 				Test.displayMessage(e.getMessage() );
 			}
