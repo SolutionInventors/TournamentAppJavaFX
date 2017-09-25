@@ -52,12 +52,12 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="About" alignment="CENTER" prefHeight="26.0" prefWidth="220.0" text="ABOUT" GridPane.rowIndex="3">
+            <Label fx:id="About" onMouseClicked="#About" alignment="CENTER" prefHeight="26.0" prefWidth="220.0" text="ABOUT" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="Help" alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="26.0" prefWidth="220.0" text="HELP" GridPane.rowIndex="4">
+            <Label fx:id="Help" alignment="CENTER" onMouseClicked="#Help" layoutX="10.0" layoutY="111.0" prefHeight="26.0" prefWidth="220.0" text="HELP" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

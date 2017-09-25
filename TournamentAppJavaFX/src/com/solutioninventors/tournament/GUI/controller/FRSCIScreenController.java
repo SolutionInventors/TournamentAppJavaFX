@@ -1,5 +1,6 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 
@@ -59,7 +60,11 @@ public class FRSCIScreenController {
 					
 				} catch (TournamentEndedException e) {
 					// FIXME Auto-generated catch block
-					e.printStackTrace();}
+					e.printStackTrace();
+				} catch (IncompleteFixtureException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				});
 	}
 

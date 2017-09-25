@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="71.0" layoutY="464.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="651.0" />
+    
+      <Label layoutX="259.0" layoutY="22.0" text="CREDITS" textFill="RED">
+         <font>
+            <Font name="Trebuchet MS" size="31.0" />
+         </font></Label>
+      <Line endX="425.0" layoutX="218.0" layoutY="64.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
+      <Line endX="200.0" layoutX="260.0" layoutY="70.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
+      <Rectangle arcHeight="60.0" arcWidth="60.0" fill="RED" height="307.0" layoutX="76.0" layoutY="109.0" stroke="RED" strokeType="INSIDE" width="507.0" />
+      <GridPane layoutX="162.0" layoutY="130.0" prefHeight="238.0" prefWidth="336.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label maxWidth="-Infinity" minWidth="-Infinity" text="DESIGN " textFill="WHITE">
+               <font>
+                  <Font name="Verdana Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label maxWidth="-Infinity" minWidth="-Infinity" text="Promise Akibge" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+            </Label>
+            <Label maxWidth="-Infinity" minWidth="-Infinity" text="PROGRAMMING" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Verdana Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label maxWidth="-Infinity" minWidth="-Infinity" text="Oguejiofor Chidiebere" textFill="WHITE" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+            </Label>
+            <Label maxWidth="-Infinity" minWidth="-Infinity" text="Oguejiofor Chinedu" textFill="WHITE" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="90.0" layoutY="155.0" maxWidth="-Infinity" minWidth="-Infinity" text="UI/UX" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Verdana Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="92.0" layoutY="50.0" maxWidth="-Infinity" minWidth="-Infinity" text="Kelvin Enumah" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

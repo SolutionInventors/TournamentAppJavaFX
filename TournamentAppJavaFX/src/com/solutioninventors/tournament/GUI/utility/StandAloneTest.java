@@ -6,16 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class StandingTableTest extends Application{
+public class StandAloneTest extends Application{
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("StandingTable22.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"Help.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			primaryStage.setTitle("Standing");
+			primaryStage.setTitle("Stand Alone Test");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

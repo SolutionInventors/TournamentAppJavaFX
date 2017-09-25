@@ -26,7 +26,15 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="72.0" layoutX="-3.0" layoutY="462.0" opacity="0.44" stroke="BLACK" strokeType="INSIDE" width="651.0" />
       <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="89.0" prefHeight="367.0" prefWidth="612.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="70.0" arcWidth="70.0" fill="RED" height="232.0" layoutX="65.0" layoutY="60.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="495.0" />
+                  <Label layoutX="119.0" layoutY="140.0" text="&quot;NO STANDING&quot;" textFill="WHITE">
+                     <font>
+                        <Font name="Times New Roman Bold" size="48.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
         </content>
       </ScrollPane>
    </children>

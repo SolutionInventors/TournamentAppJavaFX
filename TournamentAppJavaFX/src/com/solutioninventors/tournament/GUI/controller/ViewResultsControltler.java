@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -62,7 +63,7 @@ public class ViewResultsControltler {
 
 	}// end method initialize
 
-	public void setTournament(Tournament value) throws TournamentEndedException {
+	public void setTournament(Tournament value) throws TournamentEndedException, IncompleteFixtureException {
 
 		tournament = value;
 		if (!tournament.hasEnded()) {
@@ -155,7 +156,7 @@ public class ViewResultsControltler {
 		//File tournamentFile = fileChooser.showSaveDialog(primaryStage);
 		try {
 			tournament.save();
-		} catch (IOException | TournamentException | TournamentHasNotBeenSavedException e) {
+		} catch (IOException | TournamentHasNotBeenSavedException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
 		}

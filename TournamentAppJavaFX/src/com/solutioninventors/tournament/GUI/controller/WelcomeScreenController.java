@@ -6,7 +6,6 @@ import java.io.IOException;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.GUI.utility.Transition;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
-import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 
 import javafx.application.Platform;
@@ -20,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class WelcomeScreenController {
@@ -51,7 +51,7 @@ public class WelcomeScreenController {
 		
 		try {
 			tournament = Tournament.loadTournament(seletedfile);
-		} catch (IOException | TournamentException e) {
+		} catch (IOException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -72,6 +72,23 @@ public class WelcomeScreenController {
 	public void closeApp(MouseEvent event)  {
 		Platform.exit();
 	
+	}
+	public void About(MouseEvent event) throws IOException {
+		Stage aboutStage = new Stage();
+		aboutStage.initModality(Modality.APPLICATION_MODAL);
+		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"About.fxml"));
+		Scene scene = new Scene(root);
+		aboutStage.setScene(scene);
+		aboutStage.show();
+		aboutStage.setTitle("Welcome hahaha");
+	
+		
+	}
+	
+	public void Help(MouseEvent event) throws IOException {
+		 trans.FadeOut(rootPane, "Help.fxml");
+	
+		
 	}
 	
 }
