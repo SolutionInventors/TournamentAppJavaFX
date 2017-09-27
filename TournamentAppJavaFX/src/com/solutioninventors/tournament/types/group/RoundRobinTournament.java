@@ -225,7 +225,7 @@ public class RoundRobinTournament extends GroupTournament
 		if ( getCurrentRoundNum() < rnds.length  )
 		{
 			
-			getTable();
+			updateTables();
 			
 			if ( !getCurrentRound().isComplete() ) //contains outstanding
 			{
@@ -328,7 +328,7 @@ public class RoundRobinTournament extends GroupTournament
 						e.printStackTrace();
 					}
 					outstandingMatches.remove( i );
-					getTable().updateTables(); 
+					updateTables();
 					break ;
 				}
 			}

@@ -54,7 +54,7 @@ public class SwissTournament extends GroupTournament {
 	@Override
 	public void moveToNextRound() throws MoveToNextRoundException 
 	{
-		getTable().updateTables();
+		updateTables();; // updates the table
 		
 		try
 		{
@@ -78,6 +78,7 @@ public class SwissTournament extends GroupTournament {
 	}
 
 	private void createCurrentRound() {
+		
 		Competitor[] temp = getTable().getCompetitors();
 		Fixture[] fixtures = new Fixture[temp.length / 2];
 
@@ -113,8 +114,8 @@ public class SwissTournament extends GroupTournament {
 
 	@Override
 	public Competitor getWinner() {
-		if (hasEnded()) {
-			getTable().updateTables();
+		if (hasEnded()) 
+		{
 			return getTable().getCompetitors()[0];
 		}
 

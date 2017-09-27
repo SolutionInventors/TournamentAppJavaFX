@@ -93,6 +93,20 @@ public class Round implements Serializable
 		return fixtures;
 	}
 	
+	public Fixture getFixture( Competitor homeCompetitor, Competitor awayCompetitor)
+			throws NoFixtureException
+	{
+		if ( hasFixture(homeCompetitor, awayCompetitor ))
+			return Arrays.stream( getFixtures() )
+						 .filter( f-> Competitor.isEqual( homeCompetitor, f.getCompetitorOne() ) &&
+								 	  Competitor.isEqual(awayCompetitor, f.getCompetitorTwo() ))
+						 .findFirst()
+						 .get();
+		
+		throw new NoFixtureException("The fixture you are looking for is not available in this Round" );
+		
+	}
+	
 	/**
 	 * This method scans through all the {@code Fixture}s in this {@code Round } and 
 	 * sets the score of the {@code Fixture } that matches the home and away {@code Competitor}s <br>

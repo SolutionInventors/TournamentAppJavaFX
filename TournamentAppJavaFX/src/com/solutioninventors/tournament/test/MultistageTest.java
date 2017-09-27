@@ -52,8 +52,8 @@ public class MultistageTest {
 		// Competitor c15 = new Competitor( "Lagos" , file );
 		// Competitor c16 = new Competitor( "NIgeria" , file ) ;
 
-		Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8, c9, c10, c11, c12 };
-		//Competitor[] comps = { c1, c2, c3, c4};
+//		Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8, c9, c10, c11, c12 };
+		Competitor[] comps = { c1, c2, c3, c4, c5, c6, c7, c8};
 
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.GOALS_CONCEDED,
 				Breaker.TOTAL_WINS, Breaker.AWAY_GOALS_SCORED};
@@ -76,7 +76,8 @@ public class MultistageTest {
 				tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, 3, 1, 0, tieBreakers, true, false);
 			} else {
 
-				tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, 3, 1, 0, tieBreakers, false, false);
+				tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, 3 , 1 , 0, 
+												tieBreakers, false, false );
 			}
 
 		} catch (InvalidBreakerException | TournamentException e) {
@@ -126,7 +127,7 @@ public class MultistageTest {
 			DoubleEliminationTest.simulateRound( tournament.getKnockoutStage() );
 		else if ( tournament.isGroupStageOver() && 
 				tournament.getKnockoutStage() instanceof SingleEliminationTournament )
-			SingleEliminationTest.simulateRound( tournament); 
+			SingleEliminationTest.simulateRound( tournament.getKnockoutStage() ); 
 		else
 			simulateGroupRound( tournament );
 		
@@ -212,7 +213,7 @@ public class MultistageTest {
 		for (int i = 0; i < tournament.getNumberOfGroups(); i++) {
 			try {
 				
-				builder.append( Test.getAllTables(tournament.getGroup(i).getTable()) );
+				builder.append( Test.getAllTables(tournament.getGroupTable(i)) );
 				builder.append( "\n" );
 				
 			} catch (GroupIndexOutOfBoundsException e) {

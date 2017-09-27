@@ -67,6 +67,10 @@ public class Multistage extends Tournament
 	 */
 	private final boolean groupAwayMatches;
 	
+	private  final double WIN_POINT;
+	private final double DRAW_POINT;
+	private final double LOSS_POINT;
+	
 	/**
 	 * {@code true } when the knockout stage has home and away fixtures 
 	 * Can only be true if knockout stage is a {@code SingleElimination}
@@ -239,6 +243,9 @@ public class Multistage extends Tournament
 					+ "and must be greater than 4" );
 		
 		NUMBER_OF_EXTRA_QUALIFIERS = calculateExtraQualifiers(coms.length);;
+		WIN_POINT = pWin;
+		DRAW_POINT = pDraw;
+		LOSS_POINT = pLoss;
 		
 		if ( NUMBER_OF_EXTRA_QUALIFIERS > coms.length / 2 )
 			numberOfGroupWinners = GroupWinners.FIRST_THREE;
@@ -528,6 +535,12 @@ public class Multistage extends Tournament
 		}
 	}
 
+	
+	public StandingTable getGroupTable( int groupNum ) throws GroupIndexOutOfBoundsException
+	{
+		final boolean updateTable = !isGroupStageOver();
+		return getGroup( groupNum ).getTable();
+	}
 	/**
 	 * Gets all the {@code Competitor}s that won in their group
 	 * The number of winnners per group is dependent on the total number of competitors
@@ -537,10 +550,9 @@ public class Multistage extends Tournament
 	{
 		List<Competitor> list = new ArrayList<>( 
 				numberOfGroupWinners.getNumberOfWinners() * groupStage.length );
-		
 		for( int i = 0 ; i< groupStage.length ; i++ )
 		{
-			StandingTable groupTable = groupStage[ i].getTable() ;
+			StandingTable groupTable = groupStage[ i ].getTable( ) ;
 			
 			groupTable.updateTables();
 			Competitor[] competitors = groupTable.getCompetitors();
@@ -587,6 +599,7 @@ public class Multistage extends Tournament
 		{
 			Competitor[] possibleQualifiers = new Competitor[ groupStage.length ];
 			TieBreaker tournamentBreaker = groupStage[ 0 ].getTable().getTieBreaker();
+			
 			
 			for ( int i = 0 ; i < groupStage.length ; i ++ )
 			{
@@ -724,16 +737,8 @@ public class Multistage extends Tournament
 	 */
 	public double getWinPoint()
 	{
-		try
-		{
-			return getGroup(0).getWinPoint();
-		}
-		catch (GroupIndexOutOfBoundsException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0 ;
+		
+		return WIN_POINT ;
 	}
 
 	/**
@@ -744,16 +749,7 @@ public class Multistage extends Tournament
 	 */
 	public double getDrawPoint()
 	{
-		try
-		{
-			return getGroup(0).getDrawPoint();
-		}
-		catch (GroupIndexOutOfBoundsException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0 ; 
+		return DRAW_POINT;
 	}
 
 	/**
@@ -764,16 +760,7 @@ public class Multistage extends Tournament
 	 */
 	public double getLossPoint()
 	{
-		try
-		{
-			return getGroup(0).getLossPoint();
-		}
-		catch (GroupIndexOutOfBoundsException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0 ;
+		return LOSS_POINT;
 	}
 
 	/**

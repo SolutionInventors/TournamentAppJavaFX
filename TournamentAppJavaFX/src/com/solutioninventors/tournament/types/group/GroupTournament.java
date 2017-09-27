@@ -70,6 +70,9 @@ public abstract class GroupTournament extends Tournament
 	}
 
 
+	
+
+	
 	/**
 	 * Gets the ranking table of this {@code GroupTournament} 
 	 * @author Oguejiofor Chidiebere 
@@ -78,8 +81,10 @@ public abstract class GroupTournament extends Tournament
 	 *@return a {@code StandingTable} that encapsulates the ranking of this {@code GroupTournament}
 	 *
 	 */
-	public StandingTable getTable() {
-		table.updateTables();
+	public StandingTable getTable()
+	{
+		if ( !hasEnded() )
+			table.updateTables();
 		return table;
 	}
 
@@ -191,6 +196,10 @@ public abstract class GroupTournament extends Tournament
 		return getTable().getLossPoint();
 	}
 	
+	public void updateTables()
+	{
+		table.updateTables();
+	}
 	public String toString() {
 		return "Round " + getCurrentRoundNum();
 	}

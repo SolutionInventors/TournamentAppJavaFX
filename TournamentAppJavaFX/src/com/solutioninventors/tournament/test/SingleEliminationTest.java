@@ -25,7 +25,7 @@ import com.solutioninventors.tournament.utils.SportType;
 
 public class SingleEliminationTest {
 
-	public static void main(String[] args) throws MoveToNextRoundException {
+	public static void main(String[] args)  {
 		File file = new File("Arsenal.jpg");
 		// File file = new File(InputStream = new
 		// InputStream(getClass().getResourceAsStream("/img/icon2.png")))
@@ -60,9 +60,9 @@ public class SingleEliminationTest {
 			{
 				simulateRound(tournament);
 			}
-			catch (TournamentEndedException e)
+			catch (TournamentEndedException | MoveToNextRoundException e)
 			{
-				break;
+				
 			}
 		}
 		Test.displayMessage("The winner is " + tournament.getWinner());
@@ -81,46 +81,16 @@ public class SingleEliminationTest {
 	public static void simulateRound(Tournament tournament) throws MoveToNextRoundException, TournamentEndedException
 	{
 		Test.displayMessage("Welcome to the " + tournament.toString());
-		inputRoundResults(tournament);
+		inputRoundResults((SingleEliminationTournament) tournament);
 
-		while ( ( 	(SingleEliminationTournament)tournament)
-					.hasTie())
-			breakTies(tournament);
 		Test.displayRoundResults(tournament.getCurrentRound());
 		tournament.moveToNextRound();
 		System.out.println(tournament.hasEnded());
 	}
 
-	private static void breakTies(Tournament tournament) throws TournamentEndedException {
-		StringBuilder builder = new StringBuilder(400);
-		Fixture[] currentFixtures = ( (SingleEliminationTournament)tournament)
-									.getActiveTies(); // singleElim specific
-		Test.displayMessage("Current Ties: \n");
-		Test.displayFixtures(currentFixtures);
+	
 
-		builder.delete(0, builder.length());
-		builder.append("Tie Result: \n");
-		for (int i = 0; i < currentFixtures.length; i++) {
-			Competitor com1 = currentFixtures[i].getCompetitorOne();
-			Competitor com2 = currentFixtures[i].getCompetitorTwo();
-
-			double score1 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com1));
-			double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
-
-			try {
-				tournament.setResult(com1, score1, score2, com2);
-			} catch (NoFixtureException | ResultCannotBeSetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			builder.append(String.format("%s %.0f VS %.0f %s\n", com1, score1, score2, com2));
-
-		}
-		Test.displayMessage(builder.toString());
-
-	}
-
-	public static void inputRoundResults(Tournament tournament) throws TournamentEndedException {
+	public static void inputRoundResults(SingleEliminationTournament tournament) throws TournamentEndedException {
 		StringBuilder builder = new StringBuilder(400);
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures();
 		Test.displayFixtures(currentFixtures);
@@ -135,7 +105,11 @@ public class SingleEliminationTest {
 			double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
 
 			try {
-				tournament.setResult(com1, score1, score2, com2);
+				if ( tournament.isTieRound() )
+					tournament.setTieResult(com1, score1, score2, com2);
+				else
+					tournament.setResult(com1, score1, score2, com2);
+				
 				builder.append(
 						String.format("%s %.0f VS %.0f %s\n", com1, currentFixtures[i].getCompetitorOneScore(),
 						currentFixtures[i].getCompetitorTwoScore(), com2));

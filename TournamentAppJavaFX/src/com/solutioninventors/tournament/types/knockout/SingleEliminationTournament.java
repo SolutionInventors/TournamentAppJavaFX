@@ -8,12 +8,14 @@ package com.solutioninventors.tournament.types.knockout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
-
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -37,20 +39,28 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 * Stores all the rounds in this tournament
 	 */
 	private List<Round> roundList;
-	/**
-	 * Stores all the ties that  occur in this tournament
-	 */
-	private final List<Fixture> tieList;
+	
+	private boolean tieRound;
+	
 	/**
 	 * Stores the active ties in this {@code Tournament}
 	 */
 	private List<Fixture> activeTies;
+	
 	/**
 	 * {@code true} when this {@code SingleEliminationTournament} has away fixtures
 	 */
 	private final boolean AWAY;
 
+	/**
+	 * Stores the {@code Round}s that simulate ties in this {@code Tournament}
+	 * @see setTieResult
+	 */
+	private final Map<Integer, Round> tieRounds ;
 	
+	/**
+	 * Stores the topThree {@code Competitor}s at the end of this {@code Tournament}
+	 */
 	private final Competitor[] topThree;
 	/**
 	 * Initializes this {@code SingleEliminationTournament} with the {@code Competitor[]}
@@ -66,9 +76,9 @@ public class SingleEliminationTournament extends EliminationTournament {
 		roundList = new ArrayList<>();
 		AWAY = away;
 		createTounament();
-		tieList = new ArrayList<>();
 		activeTies = new ArrayList<>();
 		topThree = new Competitor[3];
+		tieRounds =  new HashMap<>();
 	}
 	
 	/**
@@ -118,11 +128,12 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	@Override
 	public Round getCurrentRound() {
+		if ( isTieRound() )
+			return tieRounds.get( getCurrentRoundNum() );
 		return roundList.get(getCurrentRoundNum());
 	}
 	
-	
-	@Override
+		@Override
 	public Round[] getRoundArray() {
 		return roundList.toArray(new Round[roundList.size()]);
 	}
@@ -148,162 +159,141 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 * 
 	 */
 	@Override
-	public void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException {
-		if (!hasEnded() && getCurrentRound().isComplete()) {
-			try
-			{
-				if (hasAway()) 
-				{
-					
-				
-					if (getActiveCompetitors().length == 2)// it is the final
-					{
-						Fixture fix = getCurrentRound().getFixtures()[0];
-						topThree[0]= fix.getWinner();
-						topThree[1]= fix.getLoser();
-						fix.eliminateLoser();
-					} 
-					else if (getCurrentRoundNum() % 2 == 0) // is first leg
-						incrementRoundNum();
-					else // second leg fixture
-					{
-						createNextRound();
-					}
-				} 
-				else 
-				{
-					if ( getActiveCompetitors().length > 2 &&
-							getCurrentRound().getNumberOfFixtures() == 1)
-					{
-						if ( !getCurrentRound().hasDraw() )
-						{
-							Fixture f =  getCurrentRound().getFixtures()[0];
-							f.getWinner().setEliminated( true );
-							f.getLoser().setEliminated( true );
-							topThree[ 2 ] = f.getWinner();
-							createNextRound();
-						}
-						else
-							throw new MoveToNextRoundException("Some fixtures are incomplete");
-						
-					}
-					
-					else if (!getCurrentRound().hasDraw()) // no ties
-					{
-						createNextRound();
-					} 
-					else
-						throw new MoveToNextRoundException("Some fixtures are incomplete");
-				}
-			}
-			catch (IncompleteFixtureException e)
-			{
-				throw new MoveToNextRoundException( e.getMessage() );
-			}
-			
-		} else
+	public void moveToNextRound() throws TournamentEndedException, MoveToNextRoundException 
+	{
+		if ( hasEnded() )
 			throw new TournamentEndedException();
-
+		else if ( !getCurrentRound().isComplete() )
+			throw new MoveToNextRoundException("This Round is incomplete" );
+		else if ( hasTie() && isTieRound() )
+			throw new MoveToNextRoundException("The ties have not been broken");
+		
+		
+		if ( isFinal()  && !hasTie() )
+		{
+			eliminateLosers();
+			createNextRound();
+		}
+		else if ( isFinal() && hasTie() )
+		{
+			Round tieRound = new Round( activeTies );
+			tieRounds.put( getCurrentRoundNum(), tieRound ) ;
+			createTieRound( tieRound );
+			setTieRound( true );
+		}
+		else if ( hasAway() && !isSecondLeg() )//firstLeg fixture
+			incrementRoundNum();
+		else if ( isSecondLeg()   || !hasAway()   )
+		{
+			eliminateLosers();
+			createNextRound();
+		}
+		
 	}
 
-	/**
-	 * Eliminates losers and creates the next {@code Round}
-	 * @throws IncompleteFixtureException whem some {@code Fixture}s in the
-	 * current round do not have results
-	 */
-	public void createNextRound() throws IncompleteFixtureException {
-		eliminateLosers();
+	public void createNextRound()
+	{
+		if ( !isTieRound() && hasTie() )
+		{
+			Round tieRound = new Round( activeTies );
+			tieRounds.put( getCurrentRoundNum(), tieRound ) ;
+			createTieRound( tieRound );
+			setTieRound( true );
+		}
+		else
+		{
+			createNextRound( getActiveCompetitors());
+			setTieRound( false );
+		}
+	}
+
+	
+	private boolean isFinal()
+	{
+		return getActiveCompetitors().length == 2 ;
+	}
+
+	private void createNextRound(Competitor[] activeCompetitors)
+	{
 		
-		if (!hasEnded()) {
-			Competitor[] comps;
-			Fixture[] fixtures;
-			if ( isSemiFinal() && !hasAway() ) // create third place match
-			{
-				comps = getCurrentRound().getLosers();
-				fixtures = new Fixture[comps.length / 2];
-				
-			}
-			else // create next round
-			{
-				comps = getActiveCompetitors();
-
-				fixtures = new Fixture[comps.length / 2];
-
-				
-			}
-			for (int i = 0; i < comps.length; i += 2) {
-				fixtures[i / 2] = new Fixture( getSportType(), comps[i], comps[i + 1]);
-
-			}
+		if ( activeCompetitors.length > 1 )
+		{
+			Fixture[ ] nextRoundFixtures =  new Fixture[ activeCompetitors.length /2 ];
+			for ( int i = 0 ; i < activeCompetitors.length ; i+= 2 )
+				nextRoundFixtures[ i ] = new Fixture( getSportType(), activeCompetitors[ i ], activeCompetitors[ i + 1 ] );
+			
+			Round round = new Round( nextRoundFixtures );
+			roundList.add( round );
+			if ( hasAway() && getActiveCompetitors().length > 2 )
+				roundList.add( round.invertHomeAndAway( getSportType() ) );
 
 			incrementRoundNum();
-			
-			roundList.add(new Round(fixtures));
-			
-			if (hasAway() && getActiveCompetitors().length > 2)
-				roundList.add(new Round(fixtures).invertHomeAndAway( getSportType()));
 		}
+		
 	}
 
-	/**
-	 * Eliminates the losers in the current {@code Round}
-	 *@throws IncompleteFixtureException if there are incmoplete {@code Fixture}s
-	 *in the current {@code Round} 
-	 *@author Oguejiofor Chidiebere
-	 *@since v1.0
-	 *@see Fixture
-	 */
-	private void eliminateLosers() throws IncompleteFixtureException 
+	private void createTieRound(Round round)
 	{
+		tieRounds.put( getCurrentRoundNum() , round );
+		
+	}
 
-		if ( getActiveCompetitors().length == 2 )
+	private void eliminateLosers()
+	{
+		if (!hasAway() || getActiveCompetitors().length == 2 )
 		{
-			Fixture f = getCurrentRound().getFixtures()[0];
-			topThree[0] = f.getWinner();
-			topThree[1] = f.getLoser();
-		}
-		if (!hasAway()) 
-		{
-			if ( !isSemiFinal() )//semi-final
-			{
-				Arrays.stream(getCurrentRound().getFixtures())
-					.forEach(f -> f.eliminateLoser() ); 
-			}
 			
-		} 
-		else if ( getSportType() ==  SportType.GOALS_ARE_SCORED ) //implement away goal rule
-		{
-			List<Fixture> firstLeg = new ArrayList<>();
-			List<Fixture> secondLeg = new ArrayList<>();
-
-			firstLeg.addAll(Arrays.asList(getRound(getCurrentRoundNum()).getFixtures()));
-			secondLeg.addAll(Arrays.asList(getCurrentRound().getFixtures()));
-
-			for (int i = 0; i < firstLeg.size(); i++) 
+			if ( getActiveCompetitors().length ==  2 && 
+					!getCurrentRound().hasDraw() )
 			{
-				Competitor com1 = firstLeg.get(i).getCompetitorOne();
-				Competitor com2 = firstLeg.get(i).getCompetitorTwo();
-
-				
-				double totalComOneScore = firstLeg.get(i).getCompetitorOneScore()
-						+ secondLeg.get(i).getCompetitorTwoScore();
-				double totalComTwoScore = firstLeg.get(i).getCompetitorTwoScore()
-						+ secondLeg.get(i).getCompetitorOneScore();
-				
-				if (totalComOneScore > totalComTwoScore)
-					eliminateLoser(com2);
-				else if (totalComOneScore < totalComTwoScore)
-					eliminateLoser(com1);
-				else 
-				{
-					if (com1.getAwayGoal(com2) > com2.getAwayGoal(com1))
-						eliminateLoser(com1);
-					else
-						eliminateLoser(com2);
-				}
+				topThree[0] = getCurrentRound().getWinners()[0];
+				topThree[1] = getCurrentRound().getLosers()[0];
+			
 			}
+			Arrays.stream( getCurrentRound().getLosers()  )
+			  .forEach( loser -> loser.setEliminated( true ) );
+			
 		
 		}
+		else
+		{
+			Arrays.stream( getCurrentRound().getFixtures() )
+			.forEach( secondLeg ->
+			{
+				try
+				{
+					Fixture firstLeg  = getRound( getCurrentRoundNum() -1 )
+							.getFixture(secondLeg.getCompetitorTwo() ,
+									secondLeg.getCompetitorOne() );
+					double com1AwayScore  = firstLeg.getCompetitorTwoScore() ;
+					double com2AwayScore = secondLeg.getCompetitorTwoScore();
+					double totalCom1Score = com1AwayScore + secondLeg.getCompetitorOneScore();
+					double totalCOm2Score = com2AwayScore + firstLeg.getCompetitorOneScore();
+					
+					if ( totalCom1Score < totalCOm2Score )
+						secondLeg.getCompetitorOne().setEliminated( true );
+					else if ( totalCom1Score > totalCOm2Score )
+						secondLeg.getCompetitorTwo().setEliminated(true );
+					else if ( com1AwayScore  < com2AwayScore )
+						secondLeg.getCompetitorOne().setEliminated( true );
+					else
+						secondLeg.getCompetitorTwo().setEliminated(true );
+					
+				}
+				catch (NoFixtureException | IncompleteFixtureException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+				
+				
+			});
+	
+		}
+		
 	}
 
 	public boolean isSemiFinal()
@@ -312,19 +302,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 				getActiveCompetitors().length == 4;
 	}
 
-	/**
-	 * Eliminates a specified {@code Competitor} 
-	 *void
-	 *@param com1
-	 */
-	private void eliminateLoser(Competitor com1)
-	{
-		Arrays.stream( getActiveCompetitors() )
-			.filter( c -> Competitor.isEqual( c, com1 ) )
-			.findFirst()
-			.get().setEliminated( true );
-		
-	}
+	
 
 	@Override
 	public Competitor getWinner() {
@@ -333,54 +311,122 @@ public class SingleEliminationTournament extends EliminationTournament {
 		return null;
 	}
 
-	/**
-	 * Sets the result of a {@code Fixture} in this {@code SingleEliminationTournament}
-	 * current {@code Round}. It first checks for such a {@code Fixture} in its active ties
-	 * and checks other {@code Fixture}s only when it does not find a match <p>
-	 * If the {@code Fixture} is a draw then this method adds the {@code Fixture} to 
-	 * a tie list which can be retrieved by method getActiveTies.
-	 * 
-	 */
+
 	@Override
 	public void setResult(Competitor com1, double score1, double score2, Competitor com2)
 			throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException 
 	{
-		if (!hasEnded()) {
-			if (activeTies.stream().anyMatch(f -> f.hasFixture(com1, com2))) {
-				for (int i = 0; i < activeTies.size(); i++)
-					if (activeTies.get(i).hasFixture(com1, com2)) {
-						activeTies.remove(i);
-						break;
-					}
-			}
-			if (hasAway()) {
-				if (getActiveCompetitors().length == 2 && score1 != score2) {
-					getCurrentRound().setResult(com1, score1, score2, com2);
-				} else if (getCurrentRoundNum() % 2 == 0)
-					getCurrentRound().setResult(com1, score1, score2, com2);
-				else {
-					double totalComOneScore = score1 + com1.getHeadToHeadScore(com2);
-					double totalComTwoScore = score2 + com2.getHeadToHeadScore(com1);
+		if ( hasEnded() )
+			throw new TournamentEndedException();
+		if ( isTieRound() )
+			return ;
+		boolean fixtureExists = 
+				getCurrentRound().hasFixture( com1 , com2 );
+					
+		boolean fixtureHasResult  = 
+				Arrays.stream( getCurrentRound().getFixtures())
+					.filter( f -> Competitor.isEqual( com1,  f.getCompetitorOne() ) && 
+								  Competitor.isEqual( com2, f.getCompetitorTwo() ) 	)
+					.anyMatch( f -> f.isComplete() );
+		
+		if ( !fixtureExists ) 
+			throw new NoFixtureException("Fixture was not found" );
+		else if ( fixtureHasResult )
+			throw new ResultCannotBeSetException();
+		
 
-					if (totalComOneScore != totalComTwoScore) {
-						getCurrentRound().setResult(com1, score1, score2, com2);
-					} else if ((totalComOneScore == totalComTwoScore) && (com1.getAwayGoal(com2) != score2)) {
-						getCurrentRound().setResult(com1, score1, score2, com2);
-					} else {
-						addToTieList(com1, score1, score2, com2);
-					}
+		Fixture theFixture = getCurrentRound()
+							 .getFixture(com1, com2 );
+		if ( !hasAway() )
+		{
+			if( score1 == score2 )
+				addToTieList(com1, score1, score2, com2);
+			
+		}
+		else // there are away fixtures
+		{
+			if ( isSecondLeg() )
+			{
+				
+				Fixture firstLeg  = getRound( getCurrentRoundNum() -1 )
+										.getFixture(com2, com1);
+				
+				double com1AwayGoal = 0;
+				double totalCom2Goal = 0;
+				double com2AwayGoal = score2 ;
+				double totalCom1Goal = 0;
+				
+				try
+				{
+					com1AwayGoal = firstLeg.getCompetitorTwoScore();
+					totalCom1Goal = com1AwayGoal + score1;
+					totalCom2Goal = com2AwayGoal + firstLeg.getCompetitorOneScore();
 				}
-			} else {
-				if (score1 != score2)
-					getCurrentRound().setResult(com1, score1, score2, com2);
-				else
+				catch (IncompleteFixtureException e)
+				{
+					e.printStackTrace();
+				}
+			
+				
+				
+				if ( totalCom1Goal ==  totalCom2Goal && 
+						com1AwayGoal == com2AwayGoal ) //there is a draw after away fixture
+				{
 					addToTieList(com1, score1, score2, com2);
+				}	
 			}
-		} else
-			throw new TournamentEndedException("Tournament is over");
-
+		}
+		new Round( theFixture ).setResult(theFixture, score1, score2);	// stores the result
+		
+		
 	}
 
+	private boolean isSecondLeg()
+	{
+		if ( hasAway() && getCurrentRoundNum() % 2 ==  1 && 
+				 getActiveCompetitors().length > 2 )
+			return true;
+		return false;
+			
+	}
+
+	/**
+	 *Sets the result a tie in this current{@code Round}. Should be used only in tie breaking {@code Round}s
+	 *
+	 * @throws ResultCannotBeSetException when the two scores are equal
+	 * @throws NoFixtureException  when the {@code Fixture} doesn't exist
+	 */
+	public void setTieResult( Competitor com1, double score1, double score2, Competitor com2)
+			throws ResultCannotBeSetException, NoFixtureException
+	{
+		if ( hasTie() )
+		{
+			Predicate<Fixture> predicate = 
+					f-> Competitor.isEqual( f.getCompetitorOne() , com1 ) && 
+			   			Competitor.isEqual( f.getCompetitorTwo() , com2 );
+					
+			if ( score1 == score2 )
+				throw new ResultCannotBeSetException( "The score inputed is invalid " );
+			else if ( activeTies.stream().anyMatch( predicate  ))
+			{
+				for ( int i = 0 ; i < activeTies.size() ; i++ )
+				{
+					
+					Fixture tieFixture = activeTies.get( i );
+					if ( Competitor.isEqual( tieFixture.getCompetitorOne() , com1 ) && 
+						 Competitor.isEqual( tieFixture.getCompetitorTwo() ,  com2 ) )
+					{
+						tieFixture.eliminateLoser();
+						tieRounds.get( getCurrentRoundNum() ).setResult(tieFixture, score1, score2);;
+						activeTies.remove( i );
+					}
+				}
+			}
+			else
+				throw new NoFixtureException( "The fixture not in active ties" );
+		}
+			
+	}
 	
 	/**
 	 * Adds a {@code Fixture} to a tie list
@@ -396,14 +442,6 @@ public class SingleEliminationTournament extends EliminationTournament {
 		Fixture fixture = new Fixture( getSportType(), com1, com2);
 
 		
-		Round temp = new Round ( fixture);
-		try
-		{
-			temp.setResult(fixture, score1, score2, false);
-		}
-		catch (NoFixtureException e)
-		{}
-		tieList.add(fixture);
 		activeTies.add(fixture);
 	}
 
@@ -431,12 +469,9 @@ public class SingleEliminationTournament extends EliminationTournament {
 		return fixes;
 	}
 
-	public Fixture[] getTournamentTies() {
-		if (tieList.size() <= 0)
-			return null;
-
-		Fixture[] fixes = new Fixture[tieList.size()];
-		return tieList.toArray(fixes);
+	public boolean isTieRound( int roundNum ) 
+	{
+		return tieRounds.containsKey( roundNum );
 
 	}
 
@@ -478,6 +513,16 @@ public class SingleEliminationTournament extends EliminationTournament {
 		if ( hasEnded() )
 			return topThree;
 		return null;
+	}
+
+	public boolean isTieRound()
+	{
+		return tieRound;
+	}
+
+	public void setTieRound(boolean tieRound)
+	{
+		this.tieRound = tieRound;
 	}
 
 }
