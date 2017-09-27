@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
@@ -121,7 +122,7 @@ public class InputResultsController {
 	}// end set current
 
 	@FXML
-	public void getResults(ActionEvent e) throws TournamentEndedException {
+	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException {
 		int count = 0;
 		for (int i = 0; i < currentFixtures.length; i++) {
 			Competitor com1 = currentFixtures[i].getCompetitorOne();

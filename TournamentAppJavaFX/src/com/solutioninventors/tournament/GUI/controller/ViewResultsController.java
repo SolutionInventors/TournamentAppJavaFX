@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
+import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -40,7 +41,7 @@ public class ViewResultsController {
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
 
-	public void setTournament(Tournament value) throws TournamentEndedException {
+	public void setTournament(Tournament value) throws TournamentEndedException, IncompleteFixtureException {
 		tournament = value;
 		if (!tournament.hasEnded()) {
 			// GridPane settings
@@ -133,7 +134,7 @@ public class ViewResultsController {
 	public void savetour(ActionEvent event)  {
 		try {
 			tournament.save();
-		} catch (IOException | TournamentException | TournamentHasNotBeenSavedException e) {
+		} catch (IOException | TournamentHasNotBeenSavedException e) {
 			System.out.println("You haven't saved for the first time");
 			saveastour();
 		}

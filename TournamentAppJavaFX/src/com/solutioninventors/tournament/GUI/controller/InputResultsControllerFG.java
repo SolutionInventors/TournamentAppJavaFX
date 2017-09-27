@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
+import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
@@ -95,7 +96,7 @@ public class InputResultsControllerFG {
 	}// end set current
 
 	@FXML
-	public void getResults(ActionEvent e) throws IOException, NoFixtureException, TournamentEndedException {
+	public void getResults(ActionEvent e) throws IOException, NoFixtureException, TournamentEndedException, ResultCannotBeSetException {
 		int count = 0;
 		for (int i = 0; i < currentFixtures.length; i++) {
 			Competitor com1 = currentFixtures[i].getCompetitorOne();

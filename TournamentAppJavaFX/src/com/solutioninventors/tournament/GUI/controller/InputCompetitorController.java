@@ -49,15 +49,12 @@ public class InputCompetitorController {
 	@FXML private Button btnNext;
 	@FXML private Button btnPrevious;
 	@FXML private AnchorPane rootPane;
-	@FXML
-	private List<Label> SNArray;
-	@FXML
-	private List<TextField> txtArray;
-	@FXML
-	private List<ImageView> imgArray;
+	@FXML private List<Label> SNArray;
+	@FXML private List<TextField> txtArray;
+	@FXML private List<ImageView> imgArray;
 
 	private Btn btn = new Btn();
-	Image image = new Image("file:nologo.jpg");
+	private Image image = new Image("file:nologo.jpg");
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
@@ -171,6 +168,12 @@ public class InputCompetitorController {
 				SNArray.get(i).setVisible(false);
 			}
 			endValue = 2;
+		}//end if
+		
+		if (goalScored) {
+			goalsOrNoGoals = SportType.GOALS_ARE_SCORED;
+		} else {
+			goalsOrNoGoals = SportType.GOALS_ARE_NOT_SCORED;
 		}
 	}//end loadcomponents
 
@@ -286,14 +289,14 @@ public class InputCompetitorController {
 			switch (TournamentType) {
 			case KNOCKOUT:
 				if (sigleOrDouble) {
-					tournament = new SingleEliminationTournament(comps, homeandAway);
+					tournament = new SingleEliminationTournament(goalsOrNoGoals, comps, homeandAway);
 				} else {
-					tournament = new DoubleElimination(comps);
+					tournament = new DoubleElimination(goalsOrNoGoals, comps);
 				}
 
 				break;
 			case CHALLENGE:
-				tournament = new Challenge(comps, onOfRounds);
+				tournament = new Challenge(goalsOrNoGoals, comps, onOfRounds);
 				break;
 			case GROUP:
 
