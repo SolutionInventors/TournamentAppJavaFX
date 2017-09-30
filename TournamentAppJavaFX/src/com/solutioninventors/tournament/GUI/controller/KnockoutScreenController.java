@@ -31,6 +31,7 @@ public class KnockoutScreenController {
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();
 		  private Boolean goalScored;
+		  private Boolean standardbreaker;
 	
 	//Spinner(int min, int max, int initialValue, int amountToStepBy)
 	// Value factory.
@@ -42,12 +43,13 @@ public class KnockoutScreenController {
 		return TournamentName;
 		
 	}
-	int abc;
+
 	// public KnockoutScreenController() {
 	// spinner.setValueFactory(valueFactory);}
-	public void setTournamentName(String tournamentName, Boolean goalScored) {
+	public void setTournamentName(String tournamentName, Boolean goalScored, Boolean standardbreaker) {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
+		this.standardbreaker = standardbreaker;
 	}
 	
 	@FXML
@@ -91,11 +93,20 @@ public class KnockoutScreenController {
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 		
-		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
-		btn.next(rootPane, root, "Input.fxml");
+		if (standardbreaker) {
+			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+			InputCompetitorController ic = (InputCompetitorController) loader.getController();
+			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
+			btn.next(rootPane, root, "Input.fxml");
+			//btn.next(rootPane, root);
+		}else {
+			Pane root = loader.load(getClass().getResource(Paths.viewpath+"TieBreaker2.fxml").openStream());
+			TieBreakerController tb = (TieBreakerController) loader.getController();
+			tb.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
+			btn.next(rootPane, root, "TieBreaker2.fxml");
+		}
+	
 		
 		
 	}

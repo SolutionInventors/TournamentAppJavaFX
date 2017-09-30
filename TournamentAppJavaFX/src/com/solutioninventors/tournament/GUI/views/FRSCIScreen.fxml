@@ -1,25 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
 
+<!-- <?import javafx.scene.control.Tab?> -->
 
-<TabPane  fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="651.0"  tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.FRSCIScreenController">
-<tabs>
-   <Tab fx:id="tab1_fixtures" text="Fixtures">
-        <fx:include fx:id="tabfix" source="/com/solutioninventors/tournament/GUI/views/Fixtures.fxml" />
-    </Tab>
-     <Tab fx:id="tab2_results" text="Results">
-        <fx:include fx:id="tabresult" source="/com/solutioninventors/tournament/GUI/views/ViewResults.fxml" />
-    </Tab>
-     <Tab fx:id="tab3_standingtable" text="Standing">
-        <fx:include fx:id="tabstand" source="/com/solutioninventors/tournament/GUI/views/Standing.fxml" />
-    </Tab>
-     <Tab fx:id="tab4_Competitors" text="Competitors">
-        <fx:include fx:id="tabcomp" source="/com/solutioninventors/tournament/GUI/views/CompetitorStatus.fxml" />
-    </Tab>
-     <Tab fx:id="tab5_inputScores" text="Input Scores">
-        <fx:include fx:id="tabinputscore" source="/com/solutioninventors/tournament/GUI/views/InputResults.fxml" />
-    </Tab>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.FRSCIScreenController">
+   <center>
+      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="651.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+		   <Tab fx:id="tab1_fixtures" text="Fixtures">
+		        <fx:include fx:id="tabfix" source="/com/solutioninventors/tournament/GUI/views/Fixtures.fxml" /> 
+		    </Tab>
+		     <Tab fx:id="tab2_results" text="Results">
+		        <fx:include fx:id="tabresult" source="/com/solutioninventors/tournament/GUI/views/ViewResults.fxml" />
+		    </Tab>
+		     <Tab fx:id="tab3_standingtable" text="Standing">
+		        <fx:include fx:id="tabstand" source="/com/solutioninventors/tournament/GUI/views/Standing.fxml" />
+		    </Tab>
+		     <Tab fx:id="tab4_Competitors" text="Competitors">
+		        <fx:include fx:id="tabcomp" source="/com/solutioninventors/tournament/GUI/views/CompetitorStatus.fxml" />
+		    </Tab>
+		     <Tab fx:id="tab5_inputScores" text="Input Scores">
+		        <fx:include fx:id="tabinputscore" source="/com/solutioninventors/tournament/GUI/views/InputResults.fxml" />
+    		</Tab>
 </tabs>
-</TabPane>
+      </TabPane>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="true" text="File">
+            <items>
+                  <MenuItem fx:id="MenuNew" mnemonicParsing="true" onAction="#newTour" text="New" />
+                  <MenuItem fx:id="MenuOpen" mnemonicParsing="true" onAction="#openTour" text="Open" />
+                  <MenuItem fx:id="MenuSave" mnemonicParsing="true" onAction="#saveTour" text="Save" />
+                  <MenuItem fx:id="MenuSaveas" mnemonicParsing="true" onAction="#saveTouras" text="Save As" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem fx:id="MenuClose" mnemonicParsing="true" onAction="#close" text="Close          Alt + F4" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" onAction="#music" text="Music" />
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#help" text="Tournament Help" />
+              <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

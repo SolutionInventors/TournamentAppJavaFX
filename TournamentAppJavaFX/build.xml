@@ -7,7 +7,7 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="TournamentAppJavaFX" default="default" basedir=".">
+<project name="TournamentAppJavaFX" default="default" basedir="." xmlns:fx="javafx:com.sun.javafxtools.ant" >
     <description>Builds, tests, and runs the project TournamentAppJavaFX.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
@@ -70,4 +70,20 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jfx-deploy">
+            <fx:deploy verbose="true" nativeBundles="exe" outdir="${basedir}/${dist.dir}" outfile="${application.title}">
+                <fx:application name="${application.title}" mainClass="${javafx.main.class}"/>
+                <fx:resources>
+                    <fx:fileset dir="${basedir}/${dist.dir}" includes="*.jar"/> 
+         <fx:fileset dir="${basedir}/${dist.dir}" includes="lib/*.jar"/>
+                </fx:resources>
+                <fx:info title="${application.title}" vendor="${application.vendor}"/>
+                <fx:info>
+                    <fx:icon href="${basedir}/logo.ico"></fx:icon>
+                </fx:info>
+                <fx:preferences shortcut="true"/>
+            </fx:deploy>
+           </target>
+    
+    
 </project>

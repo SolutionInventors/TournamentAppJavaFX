@@ -81,13 +81,13 @@
             <Font name="Trebuchet MS Bold" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="tournamentName" layoutX="25.0" layoutY="386.0" prefHeight="25.0" prefWidth="240.0" text="IIT Football League" />
-      <Label layoutX="27.0" layoutY="348.0" prefHeight="17.0" prefWidth="240.0" text="Please input the Tournament name ">
+      <TextField fx:id="tournamentName" layoutX="25.0" layoutY="378.0" prefHeight="25.0" prefWidth="240.0" text="IIT Football League" />
+      <Label layoutX="27.0" layoutY="334.0" prefHeight="17.0" prefWidth="240.0" text="Please input the Tournament name ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="27.0" layoutY="367.0" prefHeight="17.0" prefWidth="220.0" text="e.g EPL 2016/2017">
+      <Label layoutX="27.0" layoutY="353.0" prefHeight="17.0" prefWidth="220.0" text="e.g EPL 2016/2017">
          <font>
             <Font size="14.0" />
          </font>
@@ -124,7 +124,12 @@
             <Font name="Arial Black" size="22.0" />
          </font>
       </Text>
-      <CheckBox fx:id="goalsScored" layoutX="27.0" layoutY="419.0" mnemonicParsing="false" onAction="#updateGoalScored" selected="true" text="Goal Game Only">
+      <CheckBox fx:id="goalsScored" layoutX="27.0" layoutY="416.0" mnemonicParsing="false" onAction="#updateGoalScored" selected="true" text="Goal Game Only">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="standardBreaker" layoutX="28.0" layoutY="442.0" mnemonicParsing="false" onAction="#updateStandardBreaker" selected="true" text="Use Standard Breakers">
          <font>
             <Font size="14.0" />
          </font>

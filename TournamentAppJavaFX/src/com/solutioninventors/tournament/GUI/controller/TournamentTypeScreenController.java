@@ -25,6 +25,7 @@ public class TournamentTypeScreenController implements Initializable {
 	private String message;
 	private String nextFxml = "Knockout.fxml";
 	private Boolean goalScored = true;
+	private Boolean standardbreaker = true;
 	Btn btn = new Btn();
 	@FXML private RadioButton rbKnockOut;
 	@FXML private ToggleGroup TorType;
@@ -36,6 +37,7 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML private Text txtTourHighlight;
 	@FXML private AnchorPane  rootPane;
 	@FXML private CheckBox goalsScored;
+	@FXML private CheckBox standardBreaker;
 	
 	// Event Listener on RadioButton[#rbKnockOut].onAction
 	@FXML public void radioSelected(ActionEvent event) {
@@ -69,8 +71,15 @@ public class TournamentTypeScreenController implements Initializable {
 			goalScored = false;
 		}
 	}// end updateGoalScored
-	
-	
+	@FXML
+	public void updateStandardBreaker(ActionEvent event){
+		if (standardBreaker.isSelected()) {
+			standardbreaker = true;
+		} else {
+			standardbreaker = false;
+		}
+	}// end updateStandardBreaker
+
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
@@ -89,19 +98,19 @@ public class TournamentTypeScreenController implements Initializable {
 		switch (nextFxml) {
 		case "Challenge.fxml":
 			ChallengeScreenController ch = (ChallengeScreenController) loader.getController();
-			ch.setTournamentName(tournamentName.getText(),goalScored);
+			ch.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
 			break;
 		case "MultiStage.fxml":
 			MultiStageScreenController ms = (MultiStageScreenController) loader.getController();
-			ms.setTournamentName(tournamentName.getText(),goalScored);
+			ms.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
 			break;
 		case "GroupStage.fxml":
 			GroupStageScreenController gr = (GroupStageScreenController) loader.getController();
-			gr.setTournamentName(tournamentName.getText(),goalScored);
+			gr.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
 			break;
 		default:
 			KnockoutScreenController ko = (KnockoutScreenController) loader.getController();
-			ko.setTournamentName(tournamentName.getText(),goalScored);
+			ko.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
 			break;
 		}//end switch
 

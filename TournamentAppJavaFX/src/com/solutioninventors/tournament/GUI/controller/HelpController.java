@@ -72,9 +72,9 @@ public class HelpController {
 		TreeItem<String> nodeC1 = new TreeItem<>("Code School",new ImageView(icon));
 		
 		//to be added to nodeC
-		TreeItem<String> longText = new TreeItem<>("sdJavaFX provides capabilities to interoperate with HTML5 content. The underlying web page–\r\n" + 
-				"rendering engine in JavaFX is the popular open-source API called WebKit. This API is used in Apple’s\r\n" + 
-				"Safari browsers, Amazon’s Kindle devices, and was used in Google’s Chrome browser prior to\r\n" + 
+		TreeItem<String> longText = new TreeItem<>("sdJavaFX provides capabilities to interoperate with HTML5 content. The underlying web pageï¿½\r\n" + 
+				"rendering engine in JavaFX is the popular open-source API called WebKit. This API is used in Appleï¿½s\r\n" + 
+				"Safari browsers, Amazonï¿½s Kindle devices, and was used in Googleï¿½s Chrome browser prior to\r\n" + 
 				"version 27 (the WebKit fork called Blink). HTML5 is the newly accepted standard markup language\r\n" + 
 				"for rendering content in web browsers. HTML5 content consists of JavaScript, CSS, Scalable Vector\r\n" + 
 				"Graphics (SVG), Canvas API, Media, XML, and new HTML element tags.");
