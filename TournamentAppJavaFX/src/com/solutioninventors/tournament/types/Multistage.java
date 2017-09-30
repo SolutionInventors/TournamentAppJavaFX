@@ -538,7 +538,6 @@ public class Multistage extends Tournament
 	
 	public StandingTable getGroupTable( int groupNum ) throws GroupIndexOutOfBoundsException
 	{
-		final boolean updateTable = !isGroupStageOver();
 		return getGroup( groupNum ).getTable();
 	}
 	/**

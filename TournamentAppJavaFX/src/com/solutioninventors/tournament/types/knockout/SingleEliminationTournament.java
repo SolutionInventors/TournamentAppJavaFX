@@ -319,7 +319,11 @@ public class SingleEliminationTournament extends EliminationTournament {
 		if ( hasEnded() )
 			throw new TournamentEndedException();
 		if ( isTieRound() )
+		{
+			setTieResult(com1, score1, score2, com2);
 			return ;
+		}
+			
 		boolean fixtureExists = 
 				getCurrentRound().hasFixture( com1 , com2 );
 					
@@ -329,6 +333,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 								  Competitor.isEqual( com2, f.getCompetitorTwo() ) 	)
 					.anyMatch( f -> f.isComplete() );
 		
+		
 		if ( !fixtureExists ) 
 			throw new NoFixtureException("Fixture was not found" );
 		else if ( fixtureHasResult )
@@ -337,6 +342,8 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 		Fixture theFixture = getCurrentRound()
 							 .getFixture(com1, com2 );
+		
+			
 		if ( !hasAway() )
 		{
 			if( score1 == score2 )

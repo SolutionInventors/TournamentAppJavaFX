@@ -605,9 +605,26 @@ public enum Breaker implements Serializable
 	 */
 	public String getName()
 	{
-		return toString().replace( '_', ' ' ).trim();
+		String name =  toString().replace( '_', ' ' ).trim();
+		
+//		String[] tokens = name.split(" ");
+//		   
+//		for ( int i = 0 ; i< tokens.length ; i ++ 	)
+//		{
+//			name = name.replaceFirst( tokens[i], capitaliseFirstLetter(tokens[i]));
+//		}
+		return name ;
 	}
 
+	
+	private String capitaliseFirstLetter( String word )
+	{
+		char[] charac =  { word.charAt(0)}; 
+		String first  = new String(charac ) ;
+		word = word.replaceFirst(first, first.toUpperCase() );
+		word = word.replaceFirst(first, first.toUpperCase() );
+		return word;
+	}
 	/**
 	 * Gets an array of {@code Breaker}'s based on the type and goal dependence specifiedby the
 	 * arguments
@@ -661,5 +678,60 @@ public enum Breaker implements Serializable
 	public Breaker getGoalDependence()
 	{
 		return goalsType;
+	}
+	
+	/**
+	 * Converts an array of Breakers to an array of String by calling each  {@code Breaker}'s
+	 * toString() method
+	 *String[]
+	 *@author Oguejiofor Chidiebere
+	 *@sincev1.0
+	 *@param breakers the Breaker array to be converted
+	 *@return an array of String
+	 */
+	public static String[] convertToString( Breaker ... breakers)
+	{
+		List<String> breakerName = 
+				Arrays.stream( breakers )
+				  .map( b-> b.getName())
+				  .collect(Collectors.toList() );
+		return breakerName.toArray( new String[ breakerName.size() ] );
+			  
+	}
+	
+	
+	/**
+	 * Converts an array of Breakers to an array of String by calling each  {@code Breaker}'s
+	 * toString() method
+	 *String[]
+	 *@param breakers
+	 *@return a BreakerArray
+	 */
+	public static Breaker[] convertToBreaker( String ... breakerNames)
+	{
+		List<Breaker> breakerList = 
+				Arrays.stream( breakerNames)
+				  .map( name-> convertToBreaker(name) )
+				  .filter( b-> b!=null )
+				  .collect(Collectors.toList() );
+		
+		if ( breakerList.size() > 0 )
+			return breakerList.toArray(new  Breaker[ breakerList.size() ]) ;
+		return null;
+			  
+	}
+	
+	public static Breaker convertToBreaker( String breakerName)
+	{
+		boolean hasName = 	Arrays.stream(values() )
+						   	.anyMatch( b-> b.getName().equals( breakerName));
+				
+		if ( hasName )	
+			return Arrays.stream( values() )
+				   .filter( b-> b.getName().equals( breakerName ) )
+				   .findFirst()
+				   .get();
+		
+		return null;
 	}
 }
