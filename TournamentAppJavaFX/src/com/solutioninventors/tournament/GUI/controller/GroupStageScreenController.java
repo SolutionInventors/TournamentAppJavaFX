@@ -34,10 +34,12 @@ public class GroupStageScreenController {
 		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 		  private String message;
 		  private Boolean goalScored;
+		private Boolean standardbreaker;
 
-	public void setTournamentName(String tournamentName, Boolean goalScored) {
+	public void setTournamentName(String tournamentName, Boolean goalScored, Boolean standardbreaker) {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
+		this.standardbreaker = standardbreaker;
 	}
 	public void initialize() {
 		noofround.setVisible(false);
@@ -99,12 +101,26 @@ public class GroupStageScreenController {
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
-		InputCompetitorController ic = (InputCompetitorController) loader.getController();
-		ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
-				Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
-				Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
-		btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+		
+		if (standardbreaker) {
+			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+			InputCompetitorController ic = (InputCompetitorController) loader.getController();
+			ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
+					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
+					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
+			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+		}else {
+			Pane root = loader.load(getClass().getResource(Paths.viewpath+"TieBreaker.fxml").openStream());
+			TieBreakerController tb = (TieBreakerController) loader.getController();
+			tb.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
+					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
+					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
+			
+			btn.next(rootPane, root, "TieBreaker.fxml");
+		}
+			
+		
+		
 
 	}
 }

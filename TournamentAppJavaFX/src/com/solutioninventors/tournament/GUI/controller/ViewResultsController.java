@@ -134,7 +134,7 @@ public class ViewResultsController {
 	public void savetour(ActionEvent event)  {
 		try {
 			tournament.save();
-		} catch (IOException | TournamentHasNotBeenSavedException e) {
+		} catch ( Exception e) {
 			System.out.println("You haven't saved for the first time");
 			saveastour();
 		}

@@ -277,10 +277,6 @@ public class InputCompetitorController {
 	public void finish(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException {
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };
 		TieBreaker tieBreakers = new TieBreaker(breakers);
-		//comps = new Competitor[noOfCompetitors];
-		//for (int i = 0; i < comps.length; i++) {
-			//comps[i] = new Competitor(txtArray.get(i).getText(), file[i]);
-			// System.out.println(txtArray.get(i).getText());}
 		
 	for (int i = startValue; i < endValue; i++)
 		comps[i] = new Competitor(txtArray.get(i%4).getText(), file[i]);

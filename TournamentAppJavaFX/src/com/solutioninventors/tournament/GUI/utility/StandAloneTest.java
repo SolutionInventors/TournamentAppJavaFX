@@ -11,7 +11,7 @@ public class StandAloneTest extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"Help.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TieBreaker.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
