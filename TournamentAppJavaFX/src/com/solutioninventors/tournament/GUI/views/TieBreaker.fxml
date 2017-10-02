@@ -19,7 +19,7 @@
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-         <Image url="/com/solutioninventors/tournament/GUI/views/TourBackdrop.jpg" />
+         <Image url="@../resource/images/TournamentAppBackground.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />

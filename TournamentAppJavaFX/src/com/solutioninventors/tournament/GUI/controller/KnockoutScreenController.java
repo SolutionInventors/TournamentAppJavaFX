@@ -86,7 +86,7 @@ public class KnockoutScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 	
-		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane,event,"TournamentTypeScreen.fxml", "tourtypecss.css", "Tournament App");
 	}
 
 	

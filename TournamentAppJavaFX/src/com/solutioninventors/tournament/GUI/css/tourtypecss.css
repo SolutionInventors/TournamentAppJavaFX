@@ -1,0 +1,11 @@
+#txtdisplay{
+	-fx-font-size: 25px;
+	-fx-font-weight:bold;
+}
+#lbltourtype{
+	-fx-font-size: 30px;
+	-fx-font-weight:bold;
+}
+#lbltourapp{
+	-fx-font-size: 15px;
+}

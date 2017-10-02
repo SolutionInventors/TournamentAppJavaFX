@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />
+            <Image url="@../resource/images/TournamentAppBackground.jpg" />
          </image>
       </ImageView>
     

@@ -1,45 +1,50 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.net.URISyntaxException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.GUI.utility.Transition;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class TournamentTypeScreenController implements Initializable {
-	private String message;
-	private String nextFxml = "Knockout.fxml";
-	private Boolean goalScored = true;
-	private Boolean standardbreaker = true;
-	Btn btn = new Btn();
+public class TournamentTypeScreenController {
+	
+	@FXML private Text txtdisplay;
+	@FXML private Text txtTourHighlight;
+	@FXML private Label lbltourtype;
+	@FXML private Label lbltourapp;
 	@FXML private RadioButton rbKnockOut;
 	@FXML private ToggleGroup TorType;
 	@FXML private TextField tournamentName;
 	@FXML private RadioButton rbChallenge;
 	@FXML private RadioButton rbMultiStage;
 	@FXML private RadioButton rbGroup;
-	@FXML private Text txtAdisplay;
-	@FXML private Text txtTourHighlight;
 	@FXML private AnchorPane  rootPane;
 	@FXML private CheckBox goalsScored;
 	@FXML private CheckBox standardBreaker;
 	
-	// Event Listener on RadioButton[#rbKnockOut].onAction
+	private String message;
+	private String nextFxml = "Knockout.fxml";
+	private Boolean goalScored = true;
+	private Boolean standardbreaker = true;
+	private Btn btn = new Btn();
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
+	
+	
 	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
 			message = "In a                                          champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
@@ -59,7 +64,7 @@ public class TournamentTypeScreenController implements Initializable {
 			txtTourHighlight.setText("KNOCKOUT TOURNAMENT");
 		} // end if
 
-		txtAdisplay.setText(message);
+		txtdisplay.setText(message);
 
 	}// end radio select
 
@@ -83,7 +88,7 @@ public class TournamentTypeScreenController implements Initializable {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
-		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.home(rootPane,event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
 
 	}// end previous
 
@@ -123,15 +128,15 @@ public class TournamentTypeScreenController implements Initializable {
 		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
 		
 	}
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize() throws FileNotFoundException, URISyntaxException {
 		rootPane.setOpacity(0);
 		Transition.FadeIn(rootPane);
+		font = cm.loadfonts();
+		txtdisplay.setFont(font[1]);
+		lbltourtype.setFont(font[1]);
+		lbltourapp.setFont(font[0]);
+		
 	}
 
-	@FXML
-	public void close(MouseEvent event)  {
-		Platform.exit();
-	
-	}
+
 }// end class

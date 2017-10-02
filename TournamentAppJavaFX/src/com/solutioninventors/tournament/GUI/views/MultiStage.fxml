@@ -21,8 +21,8 @@
       <ImageView fitHeight="553.0" fitWidth="651.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
 <!--          when you want to use scene bulider toggle comment -->
-  <Image url="/com/solutioninventors/tournament/GUI/views/TourBackdrop.jpg" />
-<!-- <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />  -->
+<!--  <Image url="@../resource/images/TournamentAppBackground.jpg" /> -->
+<Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="27.0" layoutX="233.0" layoutY="441.0" stroke="RED" strokeType="INSIDE" width="392.0" />
@@ -119,7 +119,7 @@
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtnoOfcomps"  onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <TextField fx:id="txtnoOfcomps" onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <TextField fx:id="txtnoOfrounds" text="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="22.0" text="W" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                <font>
@@ -187,15 +187,10 @@
          </font>
       </Label>
       <Line endX="25.0" layoutX="333.0" layoutY="454.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
-      <Label layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
+      <Label fx:id="lbltourapp" layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
-            <Font name="Trebuchet MS Bold" size="25.0" />
+            <Font name="Trebuchet MS" size="22.0" />
          </font>
       </Label>
-      <Text fx:id="close" fill="RED" fontSmoothingType="LCD" layoutX="604.0" layoutY="37.0" onMouseClicked="#closeApp" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
-         <font>
-            <Font name="Arial Black" size="20.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

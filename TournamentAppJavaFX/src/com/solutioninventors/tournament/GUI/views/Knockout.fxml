@@ -17,11 +17,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.KnockoutScreenController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.KnockoutScreenController">
    <children>
       <ImageView fitHeight="557.0" fitWidth="651.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/com/solutioninventors/tournament/GUI/views/TourBackdrop.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
+<!--          <Image url="@../resource/images/TournamentAppBackground.jpg" /> -->
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />

@@ -20,28 +20,29 @@ public class Transition {
 	private static Stage PRIMARY_STAGE;
 	
 	
-	public void FadeOut(Pane firstPane, String fxmlfile ) {
+	public void FadeOut(Pane firstPane, String fxmlfile, String css ) {
 		FadeTransition ft = new FadeTransition();
 		ft.setDuration(Duration.millis(1000));
 		ft.setNode(firstPane);
 		ft.setFromValue(1);
 		ft.setToValue(0);
 		ft.setOnFinished(e->{
-			loadNextScene(firstPane,fxmlfile);
+			loadNextScene(firstPane,fxmlfile,css);
 		});
 		ft.play();
 	}
 	
-	private void loadNextScene(Pane firstPane, String fxmlfile) {
+	private void loadNextScene(Pane firstPane, String fxmlfile, String css) {
 		Parent sv;
 		try {
 			sv = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath+fxmlfile));
-			Scene ns = new Scene(sv);
+			Scene newScene = new Scene(sv);
+			newScene.getStylesheets().add(getClass().getResource(Paths.css + css).toExternalForm());
 			
 			Stage cS = (Stage) firstPane.getScene().getWindow();
 			PRIMARY_STAGE = cS;
 			initMovablePlayer();
-			cS.setScene(ns);
+			cS.setScene(newScene);
 		
 		
 		} catch (IOException e) {
