@@ -20,16 +20,14 @@ public class ChallengeScreenController {
 	private String TournamentName;
 	private Btn btn = new Btn();
 	private Boolean goalScored;
-	private Boolean standardbreaker;
 	
 	public String getTournamentName() {
 		return TournamentName;
 	}
 
-	public void setTournamentName(String tournamentName, Boolean goalScored, Boolean standardbreaker) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
-		this.standardbreaker = standardbreaker;
 	}
 
 	@FXML
@@ -41,15 +39,9 @@ public class ChallengeScreenController {
 	public void next(ActionEvent event) throws IOException  {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
-		if (standardbreaker) {
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setChallengeTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()));
 			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
-		} else {
-			TieBreakerController tb = (TieBreakerController) loader.getController();
-			tb.setChallengeTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()));
-			btn.next(rootPane, root, "TieBreaker.fxml");
-		}
 	
 		
 	}

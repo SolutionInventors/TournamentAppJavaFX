@@ -7,10 +7,10 @@ import com.solutioninventors.tournament.GUI.utility.Paths;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -29,6 +29,7 @@ public class GroupStageScreenController {
 	@FXML private RadioButton doubleround;
 	@FXML private AnchorPane  rootPane;
 	@FXML private Text txtTourHighlight;
+	@FXML private CheckBox standardBreaker;
 		  private String TournamentName;
 		  private Btn btn = new Btn();
 		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
@@ -36,14 +37,21 @@ public class GroupStageScreenController {
 		  private Boolean goalScored;
 		private Boolean standardbreaker;
 
-	public void setTournamentName(String tournamentName, Boolean goalScored, Boolean standardbreaker) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
-		this.standardbreaker = standardbreaker;
 	}
 	public void initialize() {
 		noofround.setVisible(false);
 	}
+	@FXML
+	public void updateStandardBreaker(ActionEvent event){
+		if (standardBreaker.isSelected()) {
+			standardbreaker = true;
+		} else {
+			standardbreaker = false;
+		}
+	}// end updateStandardBreaker
 	@FXML
 	public void radioSelected(ActionEvent event) {
 		String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));

@@ -9,7 +9,6 @@ import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -23,14 +22,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewResultsController {
 	@FXML
 	private ScrollPane scrollPane;
-	@FXML
-	private Label tourStage;
+	@FXML private Label tourStage;
+	@FXML private Label msgboxlbl;
+	@FXML private Rectangle msgboxrect;
 	private Label compName[];
 	private Label VS[];
 	private Label scores[];
@@ -41,7 +42,9 @@ public class ViewResultsController {
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
 
-	public void setTournament(Tournament value) throws TournamentEndedException, IncompleteFixtureException {
+	public void setTournament(Tournament value) throws TournamentEndedException {
+		msgboxrect.setVisible(false);
+		msgboxlbl.setVisible(false);
 		tournament = value;
 		if (!tournament.hasEnded()) {
 			// GridPane settings
@@ -94,8 +97,14 @@ public class ViewResultsController {
 				}
 
 				// display results
-				scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
-				scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
+				
+				try {
+					scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
+					scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
+				} catch (IncompleteFixtureException e) {
+					msgboxrect.setVisible(true);
+					msgboxlbl.setVisible(true);
+				}
 				i += 2;// increment i by 2
 
 			} // end for loop

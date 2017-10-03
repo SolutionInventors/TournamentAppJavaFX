@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.solutioninventors.tournament.GUI.utility.StandingTable;
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
-import com.solutioninventors.tournament.test.Test;
 import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;

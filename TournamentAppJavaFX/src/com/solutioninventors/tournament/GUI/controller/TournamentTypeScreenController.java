@@ -34,7 +34,7 @@ public class TournamentTypeScreenController {
 	@FXML private RadioButton rbGroup;
 	@FXML private AnchorPane  rootPane;
 	@FXML private CheckBox goalsScored;
-	@FXML private CheckBox standardBreaker;
+	
 	
 	private String message;
 	private String nextFxml = "Knockout.fxml";
@@ -76,14 +76,7 @@ public class TournamentTypeScreenController {
 			goalScored = false;
 		}
 	}// end updateGoalScored
-	@FXML
-	public void updateStandardBreaker(ActionEvent event){
-		if (standardBreaker.isSelected()) {
-			standardbreaker = true;
-		} else {
-			standardbreaker = false;
-		}
-	}// end updateStandardBreaker
+	
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
@@ -103,19 +96,19 @@ public class TournamentTypeScreenController {
 		switch (nextFxml) {
 		case "Challenge.fxml":
 			ChallengeScreenController ch = (ChallengeScreenController) loader.getController();
-			ch.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			ch.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		case "MultiStage.fxml":
 			MultiStageScreenController ms = (MultiStageScreenController) loader.getController();
-			ms.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			ms.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		case "GroupStage.fxml":
 			GroupStageScreenController gr = (GroupStageScreenController) loader.getController();
-			gr.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			gr.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		default:
 			KnockoutScreenController ko = (KnockoutScreenController) loader.getController();
-			ko.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			ko.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		}//end switch
 
@@ -125,7 +118,7 @@ public class TournamentTypeScreenController {
 	
 	
 	public void cancel(ActionEvent event) throws IOException {
-		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane, event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
 		
 	}
 	public void initialize() throws FileNotFoundException, URISyntaxException {

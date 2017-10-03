@@ -124,10 +124,5 @@
             <Font size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="standardBreaker" layoutX="28.0" layoutY="442.0" mnemonicParsing="false" onAction="#updateStandardBreaker" selected="true" text="Use Standard Breakers">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </CheckBox>
    </children>
 </AnchorPane>

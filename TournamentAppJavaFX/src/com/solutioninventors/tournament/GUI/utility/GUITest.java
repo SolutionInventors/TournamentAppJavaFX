@@ -3,6 +3,10 @@
  */
 package com.solutioninventors.tournament.GUI.utility;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +27,8 @@ public class GUITest extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "WelcomeScreen.fxml"));
 			Scene scene = new Scene(root);
 			PRIMARY_STAGE = primaryStage;
-			PRIMARY_STAGE.getIcons().add(new Image("file:logo.jpg"));
+			URL url1 = getClass().getResource(Paths.images + "logo.jpg"); 
+			PRIMARY_STAGE.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 			PRIMARY_STAGE.centerOnScreen();
 			PRIMARY_STAGE.setScene(scene);
 			PRIMARY_STAGE.sizeToScene();

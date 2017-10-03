@@ -8,6 +8,8 @@ package com.solutioninventors.tournament.exceptions;
 
 public class InvalidBreakerException extends Exception
 {
+	private static final long serialVersionUID = 1L;
+
 	public InvalidBreakerException()
 	{
 		super("Tie Breaker is invalid" );

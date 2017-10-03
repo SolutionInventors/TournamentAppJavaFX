@@ -1,16 +1,11 @@
 package com.solutioninventors.tournament.GUI.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
-import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
-import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -25,8 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class InputResultsController {
 	@FXML private ScrollPane scrollPane;
@@ -35,7 +28,6 @@ public class InputResultsController {
 	private Label VS[];
 	private TextField scores[];
 	private ImageView logo[];
-	// private Image img = new Image("file:nologo");
 	private Tournament tournament;
 	private Competitor comp1;
 	private Competitor comp2;

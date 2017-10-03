@@ -47,7 +47,7 @@ public class HelpController {
 
 	public void mainmenu(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
-		btn.previous(rootPane , event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane , event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
  
 	}
 }

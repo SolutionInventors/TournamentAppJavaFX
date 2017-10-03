@@ -79,8 +79,6 @@ public class FRSCIScreenController {
 				} catch (TournamentEndedException e) {
 					// FIXME Auto-generated catch block
 					e.printStackTrace();
-				} catch (IncompleteFixtureException e) {
-					e.printStackTrace();
 				}
 				});
 	

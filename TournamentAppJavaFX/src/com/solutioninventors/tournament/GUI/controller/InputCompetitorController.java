@@ -6,8 +6,12 @@
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
@@ -53,8 +57,8 @@ public class InputCompetitorController {
 	@FXML private List<TextField> txtArray;
 	@FXML private List<ImageView> imgArray;
 
-	private Btn btn = new Btn();
-	private Image image = new Image("file:nologo.jpg");
+	private URL url1 = getClass().getResource(Paths.images + "nologo.jpg"); 
+	private Image image;
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
@@ -147,12 +151,21 @@ public class InputCompetitorController {
 	}
 
 	public void loadcomponents() {
+		try {
+			image = new Image(new FileInputStream(new File(url1.toURI())));
+		} catch (FileNotFoundException | URISyntaxException e) {
+			e.printStackTrace();
+		}
 		comps = new Competitor[noOfCompetitors];
 		file = new File[noOfCompetitors];
 
 		for (int i = 0; i < noOfCompetitors; i++) {
 
-			file[i] = new File("nologo.jpg");
+			try {
+				file[i] = new File(url1.toURI());
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
 		}
 		for (int j = 0; j < 4; j++) {
 			imgArray.get(j).setImage(image);

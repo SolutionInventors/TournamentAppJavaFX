@@ -37,12 +37,10 @@ public class MultiStageScreenController {
 			private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 			private boolean singleDoubleElim = false;
 			private Boolean goalScored;
-			private Boolean standardbreaker;
 			
-	public void setTournamentName(String tournamentName, Boolean goalScored, Boolean standardbreaker) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
-		this.standardbreaker = standardbreaker;
 	}
 	
 	public void initialize() {
@@ -105,7 +103,6 @@ public class MultiStageScreenController {
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
-		if (standardbreaker) {
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setMultiStageTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()),
 					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
@@ -113,17 +110,6 @@ public class MultiStageScreenController {
 					singleDoubleElim);
 			
 			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
-		}else {
-			TieBreakerController tb = (TieBreakerController) loader.getController();
-			tb.setMultiStageTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()),
-					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
-					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, 
-					singleDoubleElim);
-			btn.next(rootPane, root, "TieBreaker.fxml");
-		}
-		
-	
-
 	}
 	
 	//just to remove cancel error
