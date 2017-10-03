@@ -143,7 +143,6 @@ public class CommonMethods {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (TournamentEndedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

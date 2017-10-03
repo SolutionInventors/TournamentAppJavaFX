@@ -7,6 +7,7 @@ import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 
@@ -90,6 +91,8 @@ public class InputResultsController {
 				scores[i].setMaxHeight(30);
 				scores[i].setMaxWidth(30);
 				scores[i + 1] = new TextField();
+				scores[i+ 1].setMaxHeight(30);
+				scores[i+ 1].setMaxWidth(30);
 				i += 2;// increment i by 2
 
 			} // end for loop
@@ -124,6 +127,9 @@ public class InputResultsController {
 			double score2 = Double.valueOf(scores[count+1].getText());
 
 			try {
+				if (((SingleEliminationTournament)tournament).isTieRound()) {
+					
+				}
 				tournament.setResult(com1, score1, score2, com2);
 			} catch (NoFixtureException ee) {
 				ee.printStackTrace();
