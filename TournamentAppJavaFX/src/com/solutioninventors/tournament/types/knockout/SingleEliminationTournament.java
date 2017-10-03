@@ -483,8 +483,12 @@ public class SingleEliminationTournament extends EliminationTournament {
 	}
 
 	public String toString() {
+		
+		if ( isTieRound() )
+			return "Round Ties";
 		String message = null;
-
+		
+		
 		switch (getActiveCompetitors().length) {
 
 		case 1:
