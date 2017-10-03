@@ -18,8 +18,10 @@ public class PlayListTest
 	public static void main(String[] args)
 	{
 		JFileChooser chooser = new  JFileChooser();
+		chooser.setMultiSelectionEnabled( true );
 		chooser.showOpenDialog( null );
-		File songFile = chooser.getSelectedFile() ;
+		
+		File[] songFile = chooser.getSelectedFiles() ;
 		
 		System.out.println( "Adding File..." );
 		Playlist.add( songFile );

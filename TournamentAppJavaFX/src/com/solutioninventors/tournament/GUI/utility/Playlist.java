@@ -13,11 +13,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.temporal.IsoFields;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.solutioninventors.tournament.exceptions.InvalidFileFormatException;
 
@@ -28,9 +29,10 @@ public class Playlist
 			new File( "playlist.dll" );
 
 	
-	private static boolean isFileValid( File file )
+	private static boolean isFileValid( File[] files )
 	{
-		if ( file.getName().endsWith(".mp3" ) )
+		if ( Arrays.stream( files )
+				.allMatch(file -> file.getName().endsWith(".mp3" ) ) )
 			return true;
 		return false;
 	}
@@ -57,12 +59,15 @@ public class Playlist
 		
 	}
 	
-	public static void add( File file)
+	public static void add( File... files)
 	{
 		List<File> playList = null ;
 		
-		if ( !isFileValid( file ) )
-			throw new InvalidFileFormatException("The file is not an mp3");
+		
+		
+		
+		if ( !isFileValid( files ) || files == null )
+			throw new InvalidFileFormatException("A file is not an mp3 format or null was passed as argument ");
 		
 		if ( playListFile.exists() )
 			try
@@ -77,7 +82,8 @@ public class Playlist
 		else
 			playList = new ArrayList<File>() ; 
 		
-		playList.add( file );
+		Set<File> fileSet  =  new    HashSet<File>(  Arrays.asList( files ));
+		playList.addAll(  fileSet );
 		
 		try
 		{

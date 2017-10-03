@@ -8,6 +8,7 @@ package com.solutioninventors.tournament.test;
 
 import java.util.Arrays;
 
+import com.solutioninventors.tournament.GUI.utility.Playlist;
 import com.solutioninventors.tournament.utils.Breaker;
 
 public class ConvertBreakerTest
@@ -16,6 +17,7 @@ public class ConvertBreakerTest
 	public static void main(String[] args)
 	{
 		Test.displayMessage("This tests the conversion of Breaker object to String and\n vice versa" );
+		Playlist.add( );
 		
 		Breaker[] breakers  =  Breaker.values();
 		
