@@ -699,6 +699,19 @@ public enum Breaker implements Serializable
 			  
 	}
 	
+	public static Breaker[] getStandardBreaker(SportType type	)
+	{
+		if( type == SportType.GOALS_ARE_SCORED )
+		{ 
+			Breaker[] breakers = 		 {Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, 
+			Breaker.HEAD_TO_HEAD, Breaker.GOALS_SCORED, Breaker.COIN_TOSS};
+			return breakers;
+		}
+		
+		Breaker[] breakers = 		 
+			{Breaker.HEAD_TO_HEAD, Breaker.TOTAL_WINS, Breaker.COIN_TOSS };
+		return breakers;
+	}
 	
 	/**
 	 * Converts an array of Breakers to an array of String by calling each  {@code Breaker}'s
