@@ -176,6 +176,10 @@ public class SingleEliminationTournament extends EliminationTournament {
 		}
 		else if (hasTie() )
 		{
+			if ( getCurrentRound().getLosers() != null )
+			{
+				eliminateLosers();
+			}
 			Round tieRound = new Round( activeTies );
 			tieRounds.put( getCurrentRoundNum(), tieRound ) ;
 			createTieRound( tieRound );
