@@ -174,7 +174,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			eliminateLosers();
 			createNextRound();
 		}
-		else if ( isFinal() && hasTie() )
+		else if (hasTie() )
 		{
 			Round tieRound = new Round( activeTies );
 			tieRounds.put( getCurrentRoundNum(), tieRound ) ;

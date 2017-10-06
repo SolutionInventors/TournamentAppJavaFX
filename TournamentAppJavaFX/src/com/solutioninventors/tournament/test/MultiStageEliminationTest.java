@@ -31,7 +31,7 @@ public class MultiStageEliminationTest
 	
 	public static void main(String[] args)
 	{
-		File file = new File("Arsenal.jpg");
+		File file = new File("Third .jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);

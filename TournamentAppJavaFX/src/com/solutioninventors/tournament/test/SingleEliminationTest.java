@@ -26,10 +26,8 @@ import com.solutioninventors.tournament.utils.SportType;
 public class SingleEliminationTest {
 
 	public static void main(String[] args)  {
-		File file = new File("Arsenal.jpg");
-		// File file = new File(InputStream = new
-		// InputStream(getClass().getResourceAsStream("/img/icon2.png")))
-		// getClass().getResourceAsStream("/img/icon2.png");
+		File file = new File("First .jpg");
+		
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
