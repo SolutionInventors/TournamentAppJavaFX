@@ -27,7 +27,7 @@ public class TestTabController {
 	@FXML
 	private FixturesController tabfixController;// TabPaneRootView.fxml_include_fx:id="xxx_tab1foo_xxx" + "Controller"
 	@FXML
-	private StandingTable22Controller tabstandController;// TabPaneRootView.fxml_include_fx:id="xxx_tab2bar_xxx" +
+	private StandingTableController tabstandController;// TabPaneRootView.fxml_include_fx:id="xxx_tab2bar_xxx" +
 													// "Controller"
 	// ###########################################################################################
 

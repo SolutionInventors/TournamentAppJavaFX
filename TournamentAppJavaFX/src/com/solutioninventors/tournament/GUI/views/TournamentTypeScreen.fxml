@@ -53,12 +53,12 @@
                   <ToggleGroup fx:id="TorType" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbGroup" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioSelected" text="Group tournament" textFill="WHITE" toggleGroup="$TorType" GridPane.rowIndex="1">
+            <RadioButton fx:id="rbGroup" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioSelected" text="Group Tournament" textFill="WHITE" toggleGroup="$TorType" GridPane.rowIndex="1">
                <font>
                   <Font name="Calibri Bold" size="12.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="rbMultiStage" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioSelected" text="Multi-stage tournament" textFill="WHITE" toggleGroup="$TorType" GridPane.rowIndex="2">
+            <RadioButton fx:id="rbMultiStage" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioSelected" text="Multi-Stage Tournament" textFill="WHITE" toggleGroup="$TorType" GridPane.rowIndex="2">
                <font>
                   <Font name="Calibri Bold" size="12.0" />
                </font>
@@ -71,7 +71,7 @@
          </children>
       </GridPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="249.0" layoutX="341.0" layoutY="150.0" stroke="#686262" strokeType="INSIDE" width="296.0" />
-      <Text fx:id="txtdisplay" layoutX="354.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                         is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination" wrappingWidth="271.0000029951334">
+      <Text fx:id="txtdisplay" layoutX="354.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                       is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination" wrappingWidth="271.0000029951334">
          <font>
             <Font name="Trebuchet MS" size="19.0" />
          </font>
@@ -114,15 +114,15 @@
             <Font name="Trebuchet MS Bold" size="19.0" />
          </font>
       </Text>
-      <Label fx:id="lbltourapp" layoutX="93.0" layoutY="20.0" text="TOURNAMENT APP" textFill="WHITE">
-         <font>
-            <Font name="Times New Roman Bold" size="22.0" />
-         </font>
-      </Label>
       <CheckBox fx:id="goalsScored" layoutX="27.0" layoutY="416.0" mnemonicParsing="false" onAction="#updateGoalScored" selected="true" text="Goal Game Only">
          <font>
             <Font size="14.0" />
          </font>
       </CheckBox>
+      <Label fx:id="lbltapp" layoutX="62.0" layoutY="19.0" text="TOURNAMENT APP" textFill="WHITE">
+         <font>
+            <Font name="Trebuchet MS" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

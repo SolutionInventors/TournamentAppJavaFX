@@ -101,8 +101,8 @@ public class KnockoutScreenController {
 		
 	}
 	@FXML
-	public void cancel(ActionEvent event) {
-		((Node)event.getSource()).getScene().getWindow().hide();
+	public void cancel(ActionEvent event) throws IOException {
+		btn.previous(rootPane, event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
 		
 	}
 }// end class

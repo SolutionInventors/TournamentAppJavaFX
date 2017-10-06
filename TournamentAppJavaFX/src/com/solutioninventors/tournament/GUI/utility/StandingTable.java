@@ -60,6 +60,20 @@ public class StandingTable {
 		this.goalsDiff = new SimpleStringProperty(goalsDiff);
 		this.points =new SimpleStringProperty( points);
 	}
+	public StandingTable(String competitorName, String gamesPlayed,
+			String wins, String draw, String loss,String points) {
+		super();
+		this.competitorName =new SimpleStringProperty (competitorName);
+		this.gamesPlayed =new SimpleStringProperty( gamesPlayed);
+		this.wins = new SimpleStringProperty(wins);
+		this.draw = new SimpleStringProperty(draw);
+		this.loss = new SimpleStringProperty(loss);
+		this.goalsFor =new SimpleStringProperty( "");//just had to initialize them
+		this.goalsAgainst = new SimpleStringProperty("");//just had to initialize them
+		this.goalsDiff = new SimpleStringProperty("");//just had to initialize them
+		this.points =new SimpleStringProperty( points);
+	}
+
 
 	public String getCompetitorName() {
 		return competitorName.get();

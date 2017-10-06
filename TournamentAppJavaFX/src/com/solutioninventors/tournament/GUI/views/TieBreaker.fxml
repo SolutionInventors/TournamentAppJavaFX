@@ -15,11 +15,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.TieBreakerController">
+<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.TieBreakerController">
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-         <Image url="@../resource/images/TournamentAppBackground.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
@@ -49,12 +49,12 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
+      <Button fx:id="btnNext" alignment="CENTER" onAction="#next" contentDisplay="CENTER" layoutX="241.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
          <font>
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
+      <Button fx:id="btnCancel" alignment="CENTER" onAction="#cancel" contentDisplay="CENTER" layoutX="482.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>

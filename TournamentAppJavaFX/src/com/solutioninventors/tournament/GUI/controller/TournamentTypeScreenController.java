@@ -25,7 +25,8 @@ public class TournamentTypeScreenController {
 	@FXML private Text txtdisplay;
 	@FXML private Text txtTourHighlight;
 	@FXML private Label lbltourtype;
-	@FXML private Label lbltourapp;
+	//@FXML private Label lbltourapp;
+	@FXML private Label lbltapp;
 	@FXML private RadioButton rbKnockOut;
 	@FXML private ToggleGroup TorType;
 	@FXML private TextField tournamentName;
@@ -39,7 +40,6 @@ public class TournamentTypeScreenController {
 	private String message;
 	private String nextFxml = "Knockout.fxml";
 	private Boolean goalScored = true;
-	private Boolean standardbreaker = true;
 	private Btn btn = new Btn();
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
@@ -47,7 +47,7 @@ public class TournamentTypeScreenController {
 	
 	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
-			message = "In a                                          champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
+			message = "In a                                     champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
 			nextFxml = "Challenge.fxml";
 			txtTourHighlight.setText("CHALLENGE TOURNAMENT");
 		} else if (rbMultiStage.isSelected()) {
@@ -55,11 +55,11 @@ public class TournamentTypeScreenController {
 			nextFxml = "MultiStage.fxml";
 			txtTourHighlight.setText("MULTISTAGE TOURNAMENT");
 		} else if (rbGroup.isSelected()) {
-			message = "In a                                   , league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture.";
+			message = "In a                                , league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture.";
 			nextFxml = "GroupStage.fxml";
 			txtTourHighlight.setText("GROUP TOURNAMENT");
 		} else {
-			message = "In a                                          is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
+			message = "In a                                      is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
 			nextFxml = "Knockout.fxml";
 			txtTourHighlight.setText("KNOCKOUT TOURNAMENT");
 		} // end if
@@ -125,9 +125,10 @@ public class TournamentTypeScreenController {
 		rootPane.setOpacity(0);
 		Transition.FadeIn(rootPane);
 		font = cm.loadfonts();
-		txtdisplay.setFont(font[1]);
+		txtdisplay.setFont(font[0]);
 		lbltourtype.setFont(font[1]);
-		lbltourapp.setFont(font[0]);
+		lbltapp.setFont(font[0]);
+		System.out.println("cakke inital");
 		
 	}
 

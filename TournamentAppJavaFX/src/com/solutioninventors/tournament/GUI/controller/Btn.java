@@ -9,7 +9,6 @@ import com.solutioninventors.tournament.GUI.utility.Paths;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -52,33 +51,6 @@ public class Btn {
 		}
 	}
 
-	public static void go(Pane root, ActionEvent event, String title) throws IOException {
-		((Node) event.getSource()).getScene().getWindow().hide();
-
-		Stage primaryStage = new Stage();
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle(title);
-	}
-
-	public void nextagain(Pane root, String fxmlfile) throws IOException {
-		// Parent newView;
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			Pane root2 = loader
-					.load(getClass().getResource(Paths.viewpath + "InputCompetitorScreen.fxml").openStream());
-
-			Scene newScene = new Scene(root2);
-		
-			PRIMARY_STAGE = (Stage) root.getScene().getWindow();
-			PRIMARY_STAGE.setScene(newScene);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public void next(Pane root, Pane nextView, String fxmlfile) throws IOException {
 		Parent newView = nextView;
 		Scene newScene = new Scene(newView);
@@ -88,14 +60,6 @@ public class Btn {
 	}//end next button
 	
 
-	public void nextforGroup(Pane root, ActionEvent event, String fxmlfile,Pane root3) throws IOException {
-		Parent newView;
-		newView=root3;
-		Scene newScene = new Scene(newView);
-		PRIMARY_STAGE = (Stage) root.getScene().getWindow();
-		PRIMARY_STAGE.setScene(newScene);
-
-	}//end next button
 
 
 

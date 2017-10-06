@@ -27,18 +27,18 @@
       <Line endX="425.0" layoutX="218.0" layoutY="64.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="70.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
       <Rectangle arcHeight="60.0" arcWidth="60.0" fill="RED" height="307.0" layoutX="76.0" layoutY="109.0" stroke="RED" strokeType="INSIDE" width="507.0" />
-      <GridPane layoutX="162.0" layoutY="130.0" prefHeight="238.0" prefWidth="336.0">
+      <GridPane layoutX="162.0" layoutY="112.0" prefHeight="259.0" prefWidth="318.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="33.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="28.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="40.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="32.0" valignment="BOTTOM" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label maxWidth="-Infinity" minWidth="-Infinity" text="DESIGN " textFill="WHITE">
@@ -61,7 +61,7 @@
                   <Font name="Verdana" size="20.0" />
                </font>
             </Label>
-            <Label maxWidth="-Infinity" minWidth="-Infinity" text="Oguejiofor Chinedu" textFill="WHITE" GridPane.rowIndex="6">
+            <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="2.0" prefWidth="194.0" text="Oguejiofor Chinedu" textFill="WHITE" GridPane.rowIndex="6">
                <font>
                   <Font name="Verdana" size="20.0" />
                </font>
@@ -71,7 +71,7 @@
                   <Font name="Verdana Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="92.0" layoutY="50.0" maxWidth="-Infinity" minWidth="-Infinity" text="Kelvin Enumah" textFill="WHITE" GridPane.rowIndex="3">
+            <Label layoutX="92.0" layoutY="50.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="151.0" text="Kelvin Enumah" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font name="Verdana" size="20.0" />
                </font>

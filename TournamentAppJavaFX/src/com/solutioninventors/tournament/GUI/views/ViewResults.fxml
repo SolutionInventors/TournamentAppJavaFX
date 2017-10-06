@@ -43,10 +43,5 @@
                </children></AnchorPane>
         </content>
       </ScrollPane>
-      <Button layoutX="338.0" layoutY="481.0" mnemonicParsing="false" onAction="#savetour" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: WHITE;" text="SAVE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
