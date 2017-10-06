@@ -1,0 +1,8 @@
+#txtdisplay{
+	-fx-font-size: 22px;
+	
+}
+#lbltourtype{
+	-fx-font-size: 30px;
+	-fx-font-weight:bold;
+}
