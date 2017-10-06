@@ -8,7 +8,6 @@ package com.solutioninventors.tournament.test;
 
 import java.io.File;
 
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
@@ -32,7 +31,7 @@ public class SwissTes {
 
 	
 	public static void main(String[] args) throws TournamentEndedException {
-		File file = new File("arsenal.jpg");
+		File file = new File("First .jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);

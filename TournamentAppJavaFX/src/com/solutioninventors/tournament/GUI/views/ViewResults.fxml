@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />
+            <Image url="@../resource/images/TournamentAppBackground.jpg" />
          </image>
       </ImageView>
     
@@ -32,13 +32,16 @@
       </Button>
       <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="89.0" prefHeight="367.0" prefWidth="612.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Rectangle fx:id="msgboxrect" arcHeight="50.0" arcWidth="50.0" fill="RED" height="257.0" layoutX="45.0" layoutY="32.0" stroke="RED" strokeType="INSIDE" width="504.0" />
+                  <Label fx:id="msgboxlbl" layoutX="119.0" layoutY="84.0" prefHeight="130.0" prefWidth="368.0" text="Please Input Scores in the input score tabs" textAlignment="CENTER" textFill="#fffafa" wrapText="true">
+                     <font>
+                        <Font name="Trebuchet MS Italic" size="30.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
         </content>
       </ScrollPane>
-      <Button layoutX="338.0" layoutY="481.0" mnemonicParsing="false" onAction="#savetour" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: WHITE;" text="SAVE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

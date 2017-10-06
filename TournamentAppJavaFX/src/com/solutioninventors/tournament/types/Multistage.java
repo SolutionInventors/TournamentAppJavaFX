@@ -43,7 +43,7 @@ import com.solutioninventors.tournament.utils.TieBreaker;
  * <p>
  * On initialization the constructor determines if there would be a fourth-place; third place; or no; ranking table
  * The constructor validates that the total competitors is a multiple of 4 
- * This class provides constructors for creating a {@code Multistage } woth any combination
+ * This class provides constructors for creating a {@code Multistage } with any combination
  * @see Tournament
  * @author Oguejiofor Chidiebere
  * @since v1.0
@@ -53,6 +53,7 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public class Multistage extends Tournament
 {
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Contains the different groups in the group stage of the tournament.
 	 */

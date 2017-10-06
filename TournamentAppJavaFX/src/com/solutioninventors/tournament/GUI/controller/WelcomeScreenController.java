@@ -1,42 +1,43 @@
 package com.solutioninventors.tournament.GUI.controller;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
 
-import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.GUI.utility.Transition;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
-import com.solutioninventors.tournament.types.Tournament;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class WelcomeScreenController {
-	@FXML private Label NewT;
-	@FXML private Label ContinueT;
-	@FXML private Label Settings;
-	@FXML private Label About;
-	@FXML private Label Help;
-	@FXML private Text 	mainmenu;
-	@FXML private Text  close;
 	@FXML private AnchorPane  rootPane;
-	CommonMethods ctr = new CommonMethods();
-	Transition trans = new Transition();
+	@FXML private Text lbltourapp;
+	@FXML private Text lblsolution;
+	@FXML private Label lblmainmenu;
+	@FXML private List<Label> lblTour;
+	private CommonMethods ctr = new CommonMethods();
+	private Transition trans = new Transition();
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
+	
+	public void initialize() throws FileNotFoundException, URISyntaxException {
+		font = cm.loadfonts();
+		for (int i = 0; i < lblTour.size(); i++) {
+			lblTour.get(i).setFont(font[1]);
+		}
+		lbltourapp.setFont(font[0]);
+		lblsolution.setFont(font[2]);
+	}
 	@FXML
 	public void newTournament(MouseEvent event) throws IOException {
-		 trans.FadeOut(rootPane, "TourScreen.fxml");
+		 trans.FadeOut(rootPane, "TournamentTypeScreen.fxml", "tourtypecss.css");
 		
 	}
 	@FXML

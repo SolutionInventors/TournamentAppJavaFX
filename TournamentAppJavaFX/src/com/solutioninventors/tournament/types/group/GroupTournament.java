@@ -6,6 +6,7 @@
  */
 package com.solutioninventors.tournament.types.group;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
@@ -56,7 +57,8 @@ public abstract class GroupTournament extends Tournament
 	
 	public GroupTournament(Competitor[] comps, SportType type, double pWin, double pDraw, double pLoss,
 			TieBreaker breaker) throws InvalidBreakerException, TournamentException {
-		super(type, comps);
+		
+		super(type,   comps);
 		
 		if ( comps.length < 3 )
 			throw new TournamentException("A group tournament must have total comopettitors > 2" );

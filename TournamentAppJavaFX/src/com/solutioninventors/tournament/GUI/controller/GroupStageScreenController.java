@@ -3,14 +3,15 @@ package com.solutioninventors.tournament.GUI.controller;
 import java.io.IOException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
+import com.solutioninventors.tournament.utils.Breaker;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -29,21 +30,29 @@ public class GroupStageScreenController {
 	@FXML private RadioButton doubleround;
 	@FXML private AnchorPane  rootPane;
 	@FXML private Text txtTourHighlight;
+	@FXML private CheckBox standardBreaker;
 		  private String TournamentName;
 		  private Btn btn = new Btn();
 		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 		  private String message;
 		  private Boolean goalScored;
-		private Boolean standardbreaker;
+		private Boolean standardbreaker =true;
 
-	public void setTournamentName(String tournamentName, Boolean goalScored, Boolean standardbreaker) {
+	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
-		this.standardbreaker = standardbreaker;
 	}
 	public void initialize() {
 		noofround.setVisible(false);
 	}
+	@FXML
+	public void updateStandardBreaker(ActionEvent event){
+		if (standardBreaker.isSelected()) {
+			standardbreaker = true;
+		} else {
+			standardbreaker = false;
+		}
+	}// end updateStandardBreaker
 	@FXML
 	public void radioSelected(ActionEvent event) {
 		String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
@@ -95,19 +104,19 @@ public class GroupStageScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		
-		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane,event, "TournamentTypeScreen.fxml", "tourtypecss.css", "Tournament App");
 	}
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		
+		Breaker[] standardBreakers = Breaker.getBreakers(Breaker.ALL, Breaker.GOAL_DEPENDENT);
 		if (standardbreaker) {
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
 					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
-					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
+					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, standardBreakers );
 			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
 		}else {
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"TieBreaker.fxml").openStream());

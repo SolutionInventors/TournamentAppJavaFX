@@ -7,19 +7,23 @@
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
@@ -29,6 +33,20 @@ public class CommonMethods {
 
 	private Tournament tournament;
 
+	public Font[] loadfonts() throws FileNotFoundException, URISyntaxException {
+		URL url1 = getClass().getResource(Paths.fonts + "twcenmt.ttf"); 
+		URL url2 = getClass().getResource(Paths.fonts + "TwCenMTCondensed.ttf");
+		URL url3 = getClass().getResource(Paths.fonts + "Pristina.ttf");
+		final Font font[]  = new Font[3];
+		
+		font[0] = Font.loadFont(new FileInputStream(new File(url1.toURI())), 19);
+		font[1] = Font.loadFont(new FileInputStream(new File(url2.toURI())), 19);
+		font[2] = Font.loadFont(new FileInputStream(new File(url3.toURI())), 19);
+		
+		return font;
+	}
+	
+	
 	public void about() throws IOException {
 		Stage aboutStage = new Stage();
 		aboutStage.initModality(Modality.APPLICATION_MODAL);
@@ -125,7 +143,6 @@ public class CommonMethods {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (TournamentEndedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

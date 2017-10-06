@@ -1,6 +1,5 @@
 package com.solutioninventors.tournament.GUI.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -8,8 +7,6 @@ import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
-import com.solutioninventors.tournament.exceptions.TournamentException;
-import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -23,14 +20,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.scene.shape.Rectangle;
 
 public class ViewResultsController {
 	@FXML
 	private ScrollPane scrollPane;
-	@FXML
-	private Label tourStage;
+	@FXML private Label tourStage;
+	@FXML private Label msgboxlbl;
+	@FXML private Rectangle msgboxrect;
 	private Label compName[];
 	private Label VS[];
 	private Label scores[];
@@ -41,7 +38,9 @@ public class ViewResultsController {
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
 
-	public void setTournament(Tournament value) throws TournamentEndedException, IncompleteFixtureException {
+	public void setTournament(Tournament value) throws TournamentEndedException {
+		msgboxrect.setVisible(false);
+		msgboxlbl.setVisible(false);
 		tournament = value;
 		if (!tournament.hasEnded()) {
 			// GridPane settings
@@ -49,7 +48,7 @@ public class ViewResultsController {
 			grid.setPadding(new Insets(25));
 			grid.setHgap(5);
 			grid.setVgap(5);
-			// ColumnSettings for all five columns
+			// ColumnSettings for all - columns
 			ColumnConstraints column1 = new ColumnConstraints(110); //
 			ColumnConstraints column2 = new ColumnConstraints(100); //
 			ColumnConstraints column3 = new ColumnConstraints(50);
@@ -90,12 +89,20 @@ public class ViewResultsController {
 					logo[i + 1].setPreserveRatio(true);
 
 				} catch (MalformedURLException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
+					System.out.println("Malformed URL");
 				}
 
 				// display results
-				scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
-				scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
+				
+				try {
+					scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
+					scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
+				} catch (IncompleteFixtureException e) {
+					msgboxrect.setVisible(true);
+					msgboxlbl.setVisible(true);
+					System.out.println("incomplete fixture error");
+				}
 				i += 2;// increment i by 2
 
 			} // end for loop
@@ -131,24 +138,5 @@ public class ViewResultsController {
 
 	}// end nextRound
 	
-	public void savetour(ActionEvent event)  {
-		try {
-			tournament.save();
-		} catch ( Exception e) {
-			System.out.println("You haven't saved for the first time");
-			saveastour();
-		}
-	}
-	
-	public void saveastour()  {
-		FileChooser fileChooser = new FileChooser();
-		Stage primaryStage = new Stage();
-		File tournamentFile = fileChooser.showSaveDialog(primaryStage);
-		try {
-			Tournament.saveAs(tournament, tournamentFile);
-		} catch (IOException | TournamentException e) {
-			e.printStackTrace();
-		}
-	}
 
 }// end class

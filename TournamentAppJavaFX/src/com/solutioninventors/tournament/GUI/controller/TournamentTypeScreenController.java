@@ -1,48 +1,53 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.net.URISyntaxException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.GUI.utility.Transition;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class TournamentTypeScreenController implements Initializable {
-	private String message;
-	private String nextFxml = "Knockout.fxml";
-	private Boolean goalScored = true;
-	private Boolean standardbreaker = true;
-	Btn btn = new Btn();
+public class TournamentTypeScreenController {
+	
+	@FXML private Text txtdisplay;
+	@FXML private Text txtTourHighlight;
+	@FXML private Label lbltourtype;
+	//@FXML private Label lbltourapp;
+	@FXML private Label lbltapp;
 	@FXML private RadioButton rbKnockOut;
 	@FXML private ToggleGroup TorType;
 	@FXML private TextField tournamentName;
 	@FXML private RadioButton rbChallenge;
 	@FXML private RadioButton rbMultiStage;
 	@FXML private RadioButton rbGroup;
-	@FXML private Text txtAdisplay;
-	@FXML private Text txtTourHighlight;
 	@FXML private AnchorPane  rootPane;
 	@FXML private CheckBox goalsScored;
-	@FXML private CheckBox standardBreaker;
 	
-	// Event Listener on RadioButton[#rbKnockOut].onAction
+	
+	private String message;
+	private String nextFxml = "Knockout.fxml";
+	private Boolean goalScored = true;
+	private Btn btn = new Btn();
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
+	
+	
 	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
-			message = "In a                                          champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
+			message = "In a                                     champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
 			nextFxml = "Challenge.fxml";
 			txtTourHighlight.setText("CHALLENGE TOURNAMENT");
 		} else if (rbMultiStage.isSelected()) {
@@ -50,16 +55,16 @@ public class TournamentTypeScreenController implements Initializable {
 			nextFxml = "MultiStage.fxml";
 			txtTourHighlight.setText("MULTISTAGE TOURNAMENT");
 		} else if (rbGroup.isSelected()) {
-			message = "In a                                   , league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture.";
+			message = "In a                                , league, division or conference involves all competitors playing a number of fixtures Points are awarded for each fixture, with competitors ranked based either on total number of points or average points per fixture.";
 			nextFxml = "GroupStage.fxml";
 			txtTourHighlight.setText("GROUP TOURNAMENT");
 		} else {
-			message = "In a                                          is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
+			message = "In a                                      is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
 			nextFxml = "Knockout.fxml";
 			txtTourHighlight.setText("KNOCKOUT TOURNAMENT");
 		} // end if
 
-		txtAdisplay.setText(message);
+		txtdisplay.setText(message);
 
 	}// end radio select
 
@@ -71,19 +76,12 @@ public class TournamentTypeScreenController implements Initializable {
 			goalScored = false;
 		}
 	}// end updateGoalScored
-	@FXML
-	public void updateStandardBreaker(ActionEvent event){
-		if (standardBreaker.isSelected()) {
-			standardbreaker = true;
-		} else {
-			standardbreaker = false;
-		}
-	}// end updateStandardBreaker
+	
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
-		btn.previous(rootPane,event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.home(rootPane,event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
 
 	}// end previous
 
@@ -98,19 +96,19 @@ public class TournamentTypeScreenController implements Initializable {
 		switch (nextFxml) {
 		case "Challenge.fxml":
 			ChallengeScreenController ch = (ChallengeScreenController) loader.getController();
-			ch.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			ch.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		case "MultiStage.fxml":
 			MultiStageScreenController ms = (MultiStageScreenController) loader.getController();
-			ms.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			ms.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		case "GroupStage.fxml":
 			GroupStageScreenController gr = (GroupStageScreenController) loader.getController();
-			gr.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			gr.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		default:
 			KnockoutScreenController ko = (KnockoutScreenController) loader.getController();
-			ko.setTournamentName(tournamentName.getText(),goalScored,standardbreaker);
+			ko.setTournamentName(tournamentName.getText(),goalScored);
 			break;
 		}//end switch
 
@@ -120,18 +118,19 @@ public class TournamentTypeScreenController implements Initializable {
 	
 	
 	public void cancel(ActionEvent event) throws IOException {
-		btn.previous(rootPane, event, "WelcomeScreen.fxml", "lookfeel.css", "Tournament App");
+		btn.previous(rootPane, event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
 		
 	}
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize() throws FileNotFoundException, URISyntaxException {
 		rootPane.setOpacity(0);
 		Transition.FadeIn(rootPane);
+		font = cm.loadfonts();
+		txtdisplay.setFont(font[0]);
+		lbltourtype.setFont(font[1]);
+		lbltapp.setFont(font[0]);
+		System.out.println("cakke inital");
+		
 	}
 
-	@FXML
-	public void close(MouseEvent event)  {
-		Platform.exit();
-	
-	}
+
 }// end class

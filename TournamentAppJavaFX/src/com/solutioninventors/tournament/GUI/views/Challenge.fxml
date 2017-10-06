@@ -19,7 +19,7 @@
       <ImageView fitHeight="553.0" fitWidth="651.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
            <!--          when you want to use scene bulider toggle comment -->
-  <Image url="/com/solutioninventors/tournament/GUI/views/TourBackdrop.jpg" />
+  <Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
 <!-- <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />  -->
          </image>
       </ImageView>

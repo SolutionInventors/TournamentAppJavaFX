@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,6 +54,8 @@ import com.solutioninventors.tournament.utils.SportType;
 public abstract class Tournament implements Serializable
 {
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * A {@code File} that stores the absolute path of the all saved {@code Tournament}s 
 	 */
@@ -101,6 +105,11 @@ public abstract class Tournament implements Serializable
 	 */
 	public Tournament ( SportType type , Competitor ... coms )
 	{
+		
+		if (  coms.length > 2 )
+		{
+			Collections.shuffle( Arrays.asList(coms) );
+		}
 		competitors = coms ;
 		currentRoundNum = 0 ; 
 		SPORT_TYPE = type;
@@ -325,6 +334,7 @@ public abstract class Tournament implements Serializable
 	 *@return a {@code File}
 	 *@throws IOException - an IO exception occurs
 	 */
+	@SuppressWarnings("unchecked")
 	public static List<File> retrieveSavedFiles() throws IOException
 	{
 		ObjectInputStream input = new 
@@ -385,6 +395,7 @@ public abstract class Tournament implements Serializable
 	 *@return - a {@code Tournament} object
 	 *@throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public static <E extends Tournament> E loadTournament( File file  ) 
 			throws  IOException	
 	{

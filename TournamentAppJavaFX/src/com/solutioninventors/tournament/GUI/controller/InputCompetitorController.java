@@ -6,8 +6,12 @@
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
@@ -53,14 +57,15 @@ public class InputCompetitorController {
 	@FXML private List<TextField> txtArray;
 	@FXML private List<ImageView> imgArray;
 
-	private Btn btn = new Btn();
-	private Image image = new Image("file:nologo.jpg");
+	private URL url1 = getClass().getResource(Paths.images + "nologo.jpg"); 
+	private Image image;
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
 	private int onOfRounds;
 	private Boolean goalScored;
 	private SportType goalsOrNoGoals;
+	Breaker[] breakers;
 	
 	// for group
 	private double winpoint;
@@ -87,6 +92,7 @@ public class InputCompetitorController {
 	private int endValue = 4;
 	private int counter = 4;
 	private int counter2;
+	private TieBreaker tieBreakers;
 
 	@FXML
 	public void chinedu() {
@@ -118,7 +124,7 @@ public class InputCompetitorController {
 	}
 
 	public void setGroupTournament(String tn,Boolean goalScored, int rud, int noofcomp, double winp, double drawp, double lossp,
-			int tourType) {
+			int tourType, Breaker[] tieBreaker) {
 		TournamentName = tn;
 		this.goalScored = goalScored;
 		onOfRounds = rud;
@@ -128,11 +134,17 @@ public class InputCompetitorController {
 		drawpoint = drawp;
 		losspoint = lossp;
 		tournamenttype = tourType;
+		breakers = tieBreaker;
+		try {
+			tieBreakers = new TieBreaker(breakers);
+		} catch (InvalidBreakerException e) {
+			e.printStackTrace();
+		}
 		loadcomponents();
 	}
 
 	public void setMultiStageTournament(String tn, Boolean goalScored, int rud, int noofcomp, double winp, double drawp, double lossp,
-			int tourType, boolean KOSinDob) {
+			int tourType, boolean KOSinDob, Breaker[] tieBreaker) {
 		TournamentName = tn;
 		this.goalScored = goalScored;
 		onOfRounds = rud;
@@ -143,20 +155,35 @@ public class InputCompetitorController {
 		losspoint = lossp;
 		tournamenttype = tourType;
 		sigleOrDouble = KOSinDob;
+		breakers = tieBreaker;
+		try {
+			tieBreakers = new TieBreaker(breakers);
+		} catch (InvalidBreakerException e) {
+			e.printStackTrace();
+		}
 		loadcomponents();
 	}
 
 	public void loadcomponents() {
+		try {
+			image = new Image(new FileInputStream(new File(url1.toURI())));
+		} catch (FileNotFoundException | URISyntaxException e) {
+			e.printStackTrace();
+		}
 		comps = new Competitor[noOfCompetitors];
 		file = new File[noOfCompetitors];
 
 		for (int i = 0; i < noOfCompetitors; i++) {
 
-			file[i] = new File("nologo.jpg");
+			try {
+				file[i] = new File(url1.toURI());
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
 		}
-		for (int j = 0; j < 4; j++) {
+		/*for (int j = 0; j < 4; j++) {
 			imgArray.get(j).setImage(image);
-		}
+		}*/
 		
 		btnPrevious.setVisible(false);
 		btnNext.setVisible(noOfCompetitors<=4 ? false:true);
@@ -205,8 +232,6 @@ public class InputCompetitorController {
 		counter2 = startValue-4;
 		for (int i = startValue-4; i < startValue; i++) {
 			txtArray.get(i%4).setText(comps[i].getName());
-			/*Image image = new Image(new File (comps[i].getImage()));
-			imgArray.get(i).setImage(new Image(comps[i].getImage()));*/
 			String localUrl = comps[i].getImage().toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(i%4).setImage(localImage);
@@ -229,9 +254,6 @@ public class InputCompetitorController {
 	public void next(ActionEvent event) throws MalformedURLException {
 		btnPrevious.setVisible(true);
 		counter=endValue;
-		/*System.out.println(noOfCompetitors);
-		System.out.println(startValue);
-		System.out.println(endValue);*/
 		for (int i = startValue; i < endValue; i++)
 			comps[i] = new Competitor(txtArray.get(i%4).getText(), file[i]);
 
@@ -265,18 +287,13 @@ public class InputCompetitorController {
 		}
 		//for the image files
 		img1+=4;img2+=4;img3+=4;img4+=4;
-		/*System.out.println();
-		System.out.println(noOfCompetitors);
-		System.out.println(startValue);
-		System.out.println(endValue);*/
 	}// end next button
 
 	// work on the previous button it
 
 	@FXML
 	public void finish(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException {
-		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD };
-		TieBreaker tieBreakers = new TieBreaker(breakers);
+		
 		
 	for (int i = startValue; i < endValue; i++)
 		comps[i] = new Competitor(txtArray.get(i%4).getText(), file[i]);
@@ -297,16 +314,17 @@ public class InputCompetitorController {
 			case GROUP:
 
 				switch (tournamenttype) {
+				
 				case 1:
-					tournament = new SwissTournament(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
+					tournament = new SwissTournament(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint,
 							tieBreakers, onOfRounds);
 					break;
 				case 2:
-					tournament = new RoundRobinTournament(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint,
+					tournament = new RoundRobinTournament(comps, goalsOrNoGoals, winpoint, drawpoint,
 							losspoint, tieBreakers, false);
 					break;
 				case 3:
-					tournament = new RoundRobinTournament(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint,
+					tournament = new RoundRobinTournament(comps, goalsOrNoGoals, winpoint, drawpoint,
 							losspoint, tieBreakers, true);
 					break;
 				}// end inner switch
@@ -315,15 +333,15 @@ public class InputCompetitorController {
 			case MULTISTAGE:
 				switch (tournamenttype) {
 				case 1:
-					tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
+					tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint,
 							tieBreakers, onOfRounds, sigleOrDouble);
 					break;
 				case 2:
-					tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
+					tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint,
 							tieBreakers, false, sigleOrDouble);
 					break;
 				case 3:
-					tournament = new Multistage(comps, SportType.GOALS_ARE_SCORED, winpoint, drawpoint, losspoint,
+					tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint,
 							tieBreakers, true, sigleOrDouble);
 					break;
 				}// end inner switch

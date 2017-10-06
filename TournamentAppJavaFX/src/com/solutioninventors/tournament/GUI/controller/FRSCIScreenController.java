@@ -49,7 +49,7 @@ public class FRSCIScreenController {
 	// Inject tab controller
 	@FXML private FixturesController tabfixController;// TabPaneRootView.fxml_include_fx:id="xxx_tab1foo_xxx" + "Controller"
 	@FXML private ViewResultsController tabresultController;// TabPaneRootView.fxml_include_fx:id="xxx_tab2bar_xxx" +
-	@FXML private StandingTable22Controller tabstandController;
+	@FXML private StandingTableController tabstandController;
 	@FXML private CompetitorStatusController tabcompController;
 	@FXML private InputResultsController tabinputscoreController;
 
@@ -79,8 +79,6 @@ public class FRSCIScreenController {
 				} catch (TournamentEndedException e) {
 					// FIXME Auto-generated catch block
 					e.printStackTrace();
-				} catch (IncompleteFixtureException e) {
-					e.printStackTrace();
 				}
 				});
 	
@@ -100,7 +98,7 @@ public class FRSCIScreenController {
 	}
 	public void newTour(ActionEvent e) throws IOException {
 		Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TourScreen.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TournamentTypeScreen.fxml"));
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
