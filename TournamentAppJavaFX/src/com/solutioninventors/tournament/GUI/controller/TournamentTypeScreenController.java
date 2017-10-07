@@ -128,7 +128,6 @@ public class TournamentTypeScreenController {
 		txtdisplay.setFont(font[0]);
 		lbltourtype.setFont(font[1]);
 		lbltapp.setFont(font[0]);
-		System.out.println("cakke inital");
 		
 	}
 
