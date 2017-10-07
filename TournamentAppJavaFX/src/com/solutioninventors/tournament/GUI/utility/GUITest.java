@@ -19,24 +19,24 @@ import javafx.stage.Stage;
  */
 
 public class GUITest extends Application {
-	private static Stage PRIMARY_STAGE;
+	private static Stage window;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "WelcomeScreen.fxml"));
 			Scene scene = new Scene(root);
-			PRIMARY_STAGE = primaryStage;
+			window = primaryStage;
 			URL url1 = getClass().getResource(Paths.images + "logo.jpg"); 
-			PRIMARY_STAGE.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
-			PRIMARY_STAGE.centerOnScreen();
-			PRIMARY_STAGE.setScene(scene);
-			PRIMARY_STAGE.sizeToScene();
-			PRIMARY_STAGE.setResizable(false);
-			PRIMARY_STAGE.setOnCloseRequest(e -> {
+			window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+			window.centerOnScreen();
+			window.setScene(scene);
+			window.sizeToScene();
+			window.setResizable(false);
+			/*window.setOnCloseRequest(e -> {
 				e.consume();
 				closeprogram();
-			});
+			});*/
 			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
 			primaryStage.show();
@@ -48,7 +48,7 @@ public class GUITest extends Application {
 	private void closeprogram() {
 		Boolean answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
 		if (answer) {
-			PRIMARY_STAGE.close();
+			window.close();
 
 		}
 	}

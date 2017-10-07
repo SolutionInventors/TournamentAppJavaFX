@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class ViewResultsController {
 	@FXML
@@ -37,7 +38,17 @@ public class ViewResultsController {
 	private Competitor comp1;
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
 
+	
+	public void initialize() {
+		font = cm.loadfonts();
+		
+		msgboxlbl.setFont(font[1]);//tournament Specs
+		tourStage.setFont(font[1]);
+	}
+	
 	public void setTournament(Tournament value) throws TournamentEndedException {
 		msgboxrect.setVisible(false);
 		msgboxlbl.setVisible(false);
@@ -59,7 +70,7 @@ public class ViewResultsController {
 
 			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7);
 
-			tourStage.setText(tournament.toString());
+			tourStage.setText(tournament.toString().toUpperCase());
 			currentFixtures = tournament.getCurrentRound().getFixtures();
 			compName = new Label[currentFixtures.length * 2];
 			VS = new Label[currentFixtures.length];
@@ -106,7 +117,9 @@ public class ViewResultsController {
 				i += 2;// increment i by 2
 
 			} // end for loop
-
+			if (scores[0] != null) {
+				
+			
 			int c = 0;
 			for (int temp = 0; temp < currentFixtures.length; temp++) {
 				grid.add(logo[c], 0, temp);
@@ -119,6 +132,8 @@ public class ViewResultsController {
 				c += 2;
 			}
 			scrollPane.setContent(grid);
+			}//end not null
+			
 		} // end if tournament has not ended
 
 		else {

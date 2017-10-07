@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.utils.Breaker;
+import com.solutioninventors.tournament.utils.SportType;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,16 +16,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class GroupStageScreenController {
-	@FXML private Text		THeader;
+	@FXML private Text		txtdisplay;
 	@FXML private TextField txtnoOfrounds;
 	@FXML private TextField txtnoOfcomps;
 	@FXML private TextField txtwinpoint;
 	@FXML private TextField txtdrawpoint;
 	@FXML private TextField txtlosspoint;
 	@FXML private Label noofround;
+	@FXML private Label  lbltourtype; 
+	@FXML private Label  lbltourapp;
 	@FXML private RadioButton swiss;
 	@FXML private RadioButton round;
 	@FXML private RadioButton doubleround;
@@ -36,7 +40,9 @@ public class GroupStageScreenController {
 		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
 		  private String message;
 		  private Boolean goalScored;
-		private Boolean standardbreaker =true;
+		  private Boolean standardbreaker =true;
+		  private CommonMethods cm = new CommonMethods();
+		  private Font font[] = new Font[3];
 
 	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
@@ -44,6 +50,12 @@ public class GroupStageScreenController {
 	}
 	public void initialize() {
 		noofround.setVisible(false);
+		font = cm.loadfonts();
+		
+		lbltourtype.setFont(font[1]);//tournament Specs
+		txtdisplay.setFont(font[0]);//the display
+		lbltourapp.setFont(font[0]);//TOURNAMNET APP
+		txtTourHighlight.setFont(font[0]);
 	}
 	@FXML
 	public void updateStandardBreaker(ActionEvent event){
@@ -80,11 +92,10 @@ public class GroupStageScreenController {
 			noofround.setText(noofrnd);
 			noofround.setVisible(true);
 			txtTourHighlight.setText("DOUBLE ROUND");
-			message = "In a                          robin tournament, each competitor plays every other competitor twice.The no of rounds is determined by the no of competitors.  Most association football leagues in the world are organized on a double round-robin basis, in which every team plays all others in its league once at home and once away.";
+			message = "In a                          robin tournament, each competitor plays every other competitor twice.The no of rounds is determined by the no of competitors. Most association football leagues in the world are organized on a double round-robin basis, in which every team plays all others in its league once at home and once away.";
 		
 		}
-		THeader.setText(message);
-		
+		txtdisplay.setText(message);
 	}
 	
 	
@@ -104,20 +115,29 @@ public class GroupStageScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		
-		btn.previous(rootPane,event, "TournamentTypeScreen.fxml", "tourtypecss.css", "Tournament App");
+		btn.previous(rootPane,event, "TournamentTypeScreen.fxml", "tourtypecss.css", TournamentName);
 	}
-
+	@FXML
+	public void cancel(ActionEvent event) throws IOException {
+		btn.cancel(rootPane);
+	}
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		Breaker[] standardBreakers = Breaker.getBreakers(Breaker.ALL, Breaker.GOAL_DEPENDENT);
+		Breaker[] standardBreakers;
+		if (goalScored) {
+			standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_SCORED);
+		}else {
+			standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_NOT_SCORED);
+		}
+	
 		if (standardbreaker) {
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
 					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, standardBreakers );
-			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+			btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
 		}else {
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"TieBreaker.fxml").openStream());
 			TieBreakerController tb = (TieBreakerController) loader.getController();
@@ -125,7 +145,7 @@ public class GroupStageScreenController {
 					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
 			
-			btn.next(rootPane, root, "TieBreaker.fxml");
+			btn.next(rootPane, root, "TieBreaker.fxml","commonStyle.css");
 		}
 			
 		

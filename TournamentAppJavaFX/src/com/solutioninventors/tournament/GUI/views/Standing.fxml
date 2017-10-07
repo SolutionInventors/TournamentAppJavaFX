@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.StandingTableController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111"  stylesheets="@../css/commonStyle.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.StandingTableController">
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -29,7 +29,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Rectangle arcHeight="70.0" arcWidth="70.0" fill="RED" height="232.0" layoutX="65.0" layoutY="60.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="495.0" />
-                  <Label layoutX="119.0" layoutY="140.0" text="&quot;NO STANDING&quot;" textFill="WHITE">
+                  <Label fx:id="lblnostanding" layoutX="119.0" layoutY="140.0" text="&quot;NO STANDING&quot;" textFill="WHITE">
                      <font>
                         <Font name="Times New Roman Bold" size="48.0" />
                      </font>

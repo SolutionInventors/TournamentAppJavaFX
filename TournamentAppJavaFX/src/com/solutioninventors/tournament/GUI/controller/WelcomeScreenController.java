@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 
 public class WelcomeScreenController {
 	@FXML private AnchorPane  rootPane;
-	@FXML private Text lbltourapp;
+	@FXML private Text txttourapp;
 	@FXML private Text lblsolution;
 	@FXML private Label lblmainmenu;
 	@FXML private List<Label> lblTour;
@@ -32,7 +32,7 @@ public class WelcomeScreenController {
 		for (int i = 0; i < lblTour.size(); i++) {
 			lblTour.get(i).setFont(font[1]);
 		}
-		lbltourapp.setFont(font[0]);
+		txttourapp.setFont(font[0]);
 		lblsolution.setFont(font[2]);
 	}
 	@FXML

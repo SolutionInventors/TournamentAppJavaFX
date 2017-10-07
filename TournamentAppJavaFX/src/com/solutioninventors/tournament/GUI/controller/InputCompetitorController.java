@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
+import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -44,6 +45,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -56,6 +58,15 @@ public class InputCompetitorController {
 	@FXML private List<Label> SNArray;
 	@FXML private List<TextField> txtArray;
 	@FXML private List<ImageView> imgArray;
+	@FXML private List<Label> lblArray;
+	@FXML private Label  lbltourtype; 
+	@FXML private Label lbltourapp;
+		private CommonMethods cm = new CommonMethods();
+		private Font font[] = new Font[3];
+		private Stage window;
+		
+		
+
 
 	private URL url1 = getClass().getResource(Paths.images + "nologo.jpg"); 
 	private Image image;
@@ -98,7 +109,18 @@ public class InputCompetitorController {
 	public void chinedu() {
 
 	}
-
+	public void initialize() {
+		font = cm.loadfonts();
+		
+		lbltourtype.setFont(font[1]);//tournament Specs
+		lbltourapp.setFont(font[0]);//TOURNAMNET APP
+		
+		
+		for (Label currentlabel : lblArray) {
+			currentlabel.setFont(font[0]);
+		}
+	}
+	
 	public void setTournamentName(String tournamentName) {
 		TournamentName = tournamentName;
 	}
@@ -292,7 +314,7 @@ public class InputCompetitorController {
 	// work on the previous button it
 
 	@FXML
-	public void finish(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException {
+	public void finish(ActionEvent event) throws IOException, InvalidBreakerException, TournamentEndedException, URISyntaxException {
 		
 		
 	for (int i = startValue; i < endValue; i++)
@@ -354,17 +376,32 @@ public class InputCompetitorController {
 			e.printStackTrace();
 		}
 		((Node) event.getSource()).getScene().getWindow().hide();
-		Stage primaryStage = new Stage();
+		window = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = loader.load(getClass().getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
 		FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 		ic.setTournament(tournament);
 		ic.init();
 		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setTitle(TournamentName);
-	}// finish
+		/*window.setOnCloseRequest(e -> {
+			e.consume();
+			closeprogram();
+		});*/
+		URL url1 = getClass().getResource(Paths.images + "logo.jpg"); 
+		window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		window.setScene(scene);
+		window.setResizable(false);
+		window.show();
+		window.setTitle(TournamentName);
+	}// end finish method
+	
+	private void closeprogram() {
+		Boolean answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
+		if (answer) {
+			window.close();
+
+		}
+	}
 		// should reverse the work done in the next button by retrieveing values from
 		// the comp
 		// also you need to change the static file in the image to be dynamic

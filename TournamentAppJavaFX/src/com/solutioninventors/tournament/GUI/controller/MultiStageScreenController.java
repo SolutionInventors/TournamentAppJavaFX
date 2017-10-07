@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.utils.Breaker;
+import com.solutioninventors.tournament.utils.SportType;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -27,26 +28,19 @@ public class MultiStageScreenController {
 	private RadioButton round;
 	@FXML
 	private RadioButton doubleRound;
-	@FXML
-	private RadioButton singleelim;
-	@FXML
-	private RadioButton doubleelim;
-	@FXML
-	private Label noofround;
-	@FXML
-	private TextField txtnoOfrounds;
-	@FXML
-	private TextField txtnoOfcomps;
+	@FXML private RadioButton singleelim;
+	@FXML private RadioButton doubleelim;
+	@FXML private Label noofround;
+	@FXML private TextField txtnoOfrounds;
+	@FXML private TextField txtnoOfcomps;
 	@FXML
 	private TextField txtwinpoint;
 	@FXML
 	private TextField txtdrawpoint;
 	@FXML
 	private TextField txtlosspoint;
-	@FXML
-	private Text THeader;
-	@FXML
-	private Text close;
+	//@FXML private Text THeader;
+	
 	@FXML
 	private AnchorPane rootPane;
 	@FXML
@@ -146,7 +140,14 @@ public class MultiStageScreenController {
 
 		
 			FXMLLoader loader = new FXMLLoader();
-			Breaker[] standardBreakers = Breaker.getBreakers(Breaker.ALL, Breaker.GOAL_DEPENDENT);
+			
+			Breaker[] standardBreakers;
+			if (goalScored) {
+				standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_SCORED);
+			}else {
+				standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_NOT_SCORED);
+			}
+			
 			if (standardbreaker) {
 				Pane root = loader
 						.load(getClass().getResource(Paths.viewpath + "InputCompetitorScreen.fxml").openStream());
@@ -156,7 +157,7 @@ public class MultiStageScreenController {
 						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()), tourType,
 						singleDoubleElim, standardBreakers);
 
-				btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+				btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
 			} else {
 				Pane root = loader.load(getClass().getResource(Paths.viewpath + "TieBreaker.fxml").openStream());
 				TieBreakerController tb = (TieBreakerController) loader.getController();
@@ -165,7 +166,7 @@ public class MultiStageScreenController {
 						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()), tourType,
 						singleDoubleElim);
 
-				btn.next(rootPane, root, "TieBreaker.fxml");
+				btn.next(rootPane, root, "TieBreaker.fxml","commonStyle.css");
 			}
 		}
 	}// end next
@@ -173,14 +174,14 @@ public class MultiStageScreenController {
 	// just to remove cancel error
 	@FXML
 	public void cancel(ActionEvent event) {
+		try {
+			btn.cancel(rootPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	@FXML
-	public void closeApp(MouseEvent event) {
-		Platform.exit();
-
-	}
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {

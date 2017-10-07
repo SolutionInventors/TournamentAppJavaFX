@@ -42,7 +42,7 @@
                   <MenuItem fx:id="MenuSave" mnemonicParsing="true" onAction="#saveTour" text="Save" />
                   <MenuItem fx:id="MenuSaveas" mnemonicParsing="true" onAction="#saveTouras" text="Save As" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="MenuClose" mnemonicParsing="true" onAction="#close" text="Close          Alt + F4" />
+              <MenuItem fx:id="MenuClose" mnemonicParsing="true" onAction="#close" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" onAction="#music" text="Music" />

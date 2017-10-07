@@ -10,9 +10,11 @@ import com.solutioninventors.tournament.utils.Competitor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Font;
 
 /**
  * @author ChineduKnight
@@ -24,9 +26,19 @@ public class CompetitorStatusController {
 	@FXML private TableColumn<CompetitorStatus, String>competitorName;
 	@FXML private TableColumn<CompetitorStatus, String>eliminated;
 	
+	@FXML private Label tourStage;
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
+	
 	private Tournament tournament;
 	private ObservableList<CompetitorStatus> list;
 	
+	public void initialize() {
+		font = cm.loadfonts();
+
+		tourStage.setFont(font[1]);// tournament Specs
+		//tourStage.size
+	}
 	
 	public void setTournament(Tournament tour) {
 		tournament = tour;

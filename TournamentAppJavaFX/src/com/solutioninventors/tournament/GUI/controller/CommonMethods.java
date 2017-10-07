@@ -33,16 +33,21 @@ public class CommonMethods {
 
 	private Tournament tournament;
 
-	public Font[] loadfonts() throws FileNotFoundException, URISyntaxException {
+	public Font[] loadfonts() {
 		URL url1 = getClass().getResource(Paths.fonts + "twcenmt.ttf"); 
 		URL url2 = getClass().getResource(Paths.fonts + "TwCenMTCondensed.ttf");
 		URL url3 = getClass().getResource(Paths.fonts + "Pristina.ttf");
 		final Font font[]  = new Font[3];
+		try {
 		
-		font[0] = Font.loadFont(new FileInputStream(new File(url1.toURI())), 19);
+			font[0] = Font.loadFont(new FileInputStream(new File(url1.toURI())), 19);
+	
 		font[1] = Font.loadFont(new FileInputStream(new File(url2.toURI())), 19);
 		font[2] = Font.loadFont(new FileInputStream(new File(url3.toURI())), 19);
-		
+		} catch (FileNotFoundException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return font;
 	}
 	

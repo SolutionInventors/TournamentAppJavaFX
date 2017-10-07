@@ -20,11 +20,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class StandingTableController {
 
 	@FXML private ScrollPane scrollPane;
 	@FXML private Label tourStage;
+	@FXML private Label lblnostanding;
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
 	//private String[][] stringTable;
 	private Map<Integer, String[][]> stringtableMap = new HashMap<Integer, String[][]>();
 	private Tournament tournament;
@@ -38,6 +42,15 @@ public class StandingTableController {
 	private String standingTableValuenoGoals[] = { "gamesPlayed", "wins", "draw", "loss", "points" };
 	int noOfGroups;
 	private VBox vBox;
+	
+	public void initialize() {
+		font = cm.loadfonts();
+		
+		lblnostanding.setFont(font[1]);//tournament Specs
+		tourStage.setFont(font[1]);
+	}
+	
+	
 
 	public void setTournament(Tournament tour) {
 		tournament = tour;

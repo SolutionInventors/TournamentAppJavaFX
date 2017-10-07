@@ -1,21 +1,22 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class KnockoutScreenController {
@@ -24,13 +25,18 @@ public class KnockoutScreenController {
 	@FXML private CheckBox homeandAway;
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
-	@FXML private Text txtTourHighlight;
+	@FXML private Text txtTourHighlight; 
+	@FXML private Text txtdisplay;
 	@FXML private Label  lblhomeAway;
+	@FXML private Label  lbltourtype; 
+	@FXML private Label lbltourapp;
 	@FXML private AnchorPane  rootPane;
 		  private boolean singleDoubleElim = true;
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();
 		  private Boolean goalScored;
+		  private CommonMethods cm = new CommonMethods();
+		  private Font font[] = new Font[3];
 	
 	//Spinner(int min, int max, int initialValue, int amountToStepBy)
 	// Value factory.
@@ -41,6 +47,14 @@ public class KnockoutScreenController {
 	public String getTournamentName() {
 		return TournamentName;
 		
+	}
+	public void initialize() {
+		font = cm.loadfonts();
+		
+		lbltourtype.setFont(font[1]);//Knockout Specs
+		txtdisplay.setFont(font[0]);//the display
+		lbltourapp.setFont(font[0]);//TOURNAMNET APP
+		txtTourHighlight.setFont(font[0]);
 	}
 
 	// public KnockoutScreenController() {
@@ -73,18 +87,11 @@ public class KnockoutScreenController {
 			HomeandAwayFixture = false;
 	}
 	
-	@FXML
-	public void setvalue(MouseEvent e) {
-		//final int initialValue = 2;
-	/*	SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 4,
-				initialValue);
-		 spinner.setValueFactory(valueFactory);*/
-	}
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 	
-		btn.previous(rootPane,event,"TournamentTypeScreen.fxml", "tourtypecss.css", "Tournament App");
+		btn.previous(rootPane,event,"TournamentTypeScreen.fxml", "tourtypecss.css", TournamentName);
 	}
 
 	
@@ -95,14 +102,13 @@ public class KnockoutScreenController {
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
-			btn.next(rootPane, root, "Input.fxml");
+			btn.next(rootPane, root, "Input.fxml","commonStyle.css");
 			//btn.next(rootPane, root);
 		
 		
 	}
 	@FXML
 	public void cancel(ActionEvent event) throws IOException {
-		btn.previous(rootPane, event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
-		
+		btn.cancel(rootPane);		
 	}
 }// end class

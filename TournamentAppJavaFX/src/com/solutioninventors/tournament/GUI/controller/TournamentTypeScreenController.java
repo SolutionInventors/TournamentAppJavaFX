@@ -81,8 +81,7 @@ public class TournamentTypeScreenController {
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
 		Btn btn = new Btn();
-		btn.home(rootPane,event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
-
+		btn.cancel(rootPane);
 	}// end previous
 
 	@FXML
@@ -112,12 +111,13 @@ public class TournamentTypeScreenController {
 			break;
 		}//end switch
 
-		btn.next(rootPane, root, nextFxml);
+		btn.next(rootPane, root, nextFxml,"commonStyle.css");
 	}// end previous
 
 	
 	
 	public void cancel(ActionEvent event) throws IOException {
+		
 		btn.previous(rootPane, event, "WelcomeScreen.fxml", "welcomeScreen.css", "Tournament App");
 		
 	}

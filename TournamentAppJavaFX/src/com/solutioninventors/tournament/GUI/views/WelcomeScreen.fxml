@@ -66,16 +66,17 @@
 				<Image url="@../resource/images/logo.jpg" />
 			</image>
 		</ImageView>
-		<Text fx:id="lbltourapp" fill="WHITE" layoutX="70.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOURNAMENT APP" wrappingWidth="149.13671875">
-			<font>
-				<Font name="Trebuchet MS" size="16.0" />
-			</font>
-		</Text>
+		
 		<Text fx:id="lblsolution" fill="#f2eeee" layoutX="21.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Solution Inventors">
 			<font>
 				<Font name="Trebuchet MS" size="15.0" />
 			</font>
 		</Text>
+      <Text fx:id="txttourapp" fill="WHITE" layoutX="82.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOURNAMENT APP">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
 	</children>
 
 

@@ -26,15 +26,15 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="66.0" layoutY="480.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="651.0" />
     
-            <Label layoutX="221.0" layoutY="67.0" text="CHALLENGE" textFill="RED">
+            <Label fx:id="lbltourtype" layoutX="221.0" layoutY="67.0" text="CHALLENGE" textFill="RED">
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font>
       </Label>
       <Line endX="425.0" layoutX="218.0" layoutY="108.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="113.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="96.0" layoutX="29.0" layoutY="125.0" stroke="#686262" strokeType="INSIDE" width="607.0" />
-      <Text layoutX="42.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                    , two competitors, champion and challenger(or number one contender) battle for a title. This is used in boxing, world class championships etc. A challenge is an alternative to tournament" wrappingWidth="580.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="108.0" layoutX="29.0" layoutY="125.0" stroke="#686262" strokeType="INSIDE" width="607.0" />
+      <Text fx:id="txtdisplay" layoutX="42.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                    , two competitors, champion and challenger(or number one contender) battle for a title. This is used in boxing, world class championships etc. A challenge is an alternative to tournament" wrappingWidth="580.0">
          <font>
             <Font name="Trebuchet MS" size="19.0" />
          </font>
@@ -51,12 +51,12 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="493.0" mnemonicParsing="false"  prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="493.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Text fill="RED" layoutX="81.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHALLANGE">
+      <Text fx:id="txtTourHighlight" fill="RED" layoutX="81.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHALLENGE">
          <font>
             <Font name="Trebuchet MS Bold" size="19.0" />
          </font>
@@ -77,12 +77,12 @@
          <children>
             <Label text="Pointing System">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Trebuchet MS" size="17.0" />
                </font>
             </Label>
             <Label text="Number of Rounds:" GridPane.rowIndex="3">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Trebuchet MS" size="17.0" />
                </font>
             </Label>
             <TextField fx:id="txtnoOfrounds" text="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
@@ -118,15 +118,11 @@
             </TextField>
          </children>
       </GridPane>
-      <Label layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
+      <Label fx:id="lbltourapp" layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
-            <Font name="Trebuchet MS Bold" size="25.0" />
+            <Font name="Trebuchet MS Bold" size="16.0" />
          </font>
       </Label>
-      <Text fx:id="close1" fill="RED" fontSmoothingType="LCD" layoutX="604.0" layoutY="37.0" onMouseClicked="#closeApp" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
-         <font>
-            <Font name="Arial Black" size="20.0" />
-         </font>
-      </Text>
+    
    </children>
 </AnchorPane>

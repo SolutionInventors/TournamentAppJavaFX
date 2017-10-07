@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -22,28 +21,28 @@
       <ImageView fitHeight="553.0" fitWidth="651.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
 <!--          when you want to use scene bulider toggle comment -->
-<!--  <Image url="@../resource/images/TournamentAppBackground.jpg" /> -->
-<Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
+  <Image url="/com/solutioninventors/tournament/GUI/views/TourBackdrop.jpg" />
+<!-- <Image url="@Tournament%20App%20BACKGROUND%20-%20Crop.jpg" />  -->
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="27.0" layoutX="233.0" layoutY="441.0" stroke="RED" strokeType="INSIDE" width="392.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" layoutY="493.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="651.0" />
     
-      <Label layoutX="186.0" layoutY="57.0" text="MULTI STAGE SPECS" textFill="RED">
+      <Label layoutX="186.0" layoutY="67.0" text="MULTI STAGE SPECS" >
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font></Label>
-      <Line endX="425.0" layoutX="218.0" layoutY="98.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
-      <Line endX="200.0" layoutX="260.0" layoutY="103.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="96.0" layoutX="29.0" layoutY="117.0" stroke="#686262" strokeType="INSIDE" width="607.0" />
-      <Text layoutX="42.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                , there are two stages with the top competitors(or winners) of the first stage(thes group stage) advancing to the next stage (Knockout Stage)" wrappingWidth="580.0">
+      <Line endX="425.0" layoutX="218.0" layoutY="108.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
+      <Line endX="200.0" layoutX="260.0" layoutY="113.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="96.0" layoutX="29.0" layoutY="125.0" stroke="#686262" strokeType="INSIDE" width="607.0" />
+      <Text layoutX="42.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                , there are two stages with the top competitors(or winners) of the first stage(thes group stage) advancing to the next stage (Knockout Stage)" wrappingWidth="580.0">
          <font>
             <Font name="Trebuchet MS" size="19.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="4.0" layoutX="311.0" layoutY="114.0" stroke="RED" strokeType="INSIDE" width="326.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="3.0" layoutX="380.0" layoutY="113.0" stroke="RED" strokeType="INSIDE" width="249.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="4.0" layoutX="311.0" layoutY="122.0" stroke="RED" strokeType="INSIDE" width="326.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="3.0" layoutX="380.0" layoutY="121.0" stroke="RED" strokeType="INSIDE" width="249.0" />
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="505.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="PREVIOUS" textAlignment="CENTER">
          <font>
             <Font name="Trebuchet MS Bold" size="15.0" />
@@ -64,14 +63,14 @@
             <Font name="Trebuchet MS Bold" size="19.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="29.0" layoutX="241.0" layoutY="242.0" stroke="RED" strokeType="INSIDE" width="392.0" />
-      <Label layoutX="47.0" layoutY="247.0" text="Group Stage Style:">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="29.0" layoutX="241.0" layoutY="262.0" stroke="RED" strokeType="INSIDE" width="392.0" />
+      <Label layoutX="47.0" layoutY="264.0" text="Group Stage Style:">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
       </Label>
-      <Line endX="25.0" layoutX="333.0" layoutY="256.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
-      <RadioButton fx:id="swiss" layoutX="251.0" layoutY="247.0" mnemonicParsing="false" onAction="#radioSelected" selected="true" text="Swiss Style" textFill="WHITE">
+      <Line endX="25.0" layoutX="333.0" layoutY="277.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
+      <RadioButton fx:id="swiss" layoutX="251.0" layoutY="267.0" mnemonicParsing="false" onAction="#radioSelected" selected="true" text="Swiss Style" >
          <toggleGroup>
             <ToggleGroup fx:id="type" />
          </toggleGroup>
@@ -79,18 +78,18 @@
             <Font name="Times New Roman" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="round" layoutX="355.0" layoutY="247.0" mnemonicParsing="false" onAction="#radioSelected" text="Round Robin" textFill="WHITE" toggleGroup="$type">
+      <RadioButton fx:id="round" layoutX="355.0" layoutY="267.0" mnemonicParsing="false" onAction="#radioSelected" text="Round Robin"  toggleGroup="$type">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="doubleRound" layoutX="481.0" layoutY="247.0" mnemonicParsing="false" onAction="#radioSelected" text="Double Round Robin" textFill="WHITE" toggleGroup="$type">
+      <RadioButton fx:id="doubleRound" layoutX="481.0" layoutY="267.0" mnemonicParsing="false" onAction="#radioSelected" text="Double Round Robin"  toggleGroup="$type">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </RadioButton>
-      <Line endX="25.0" layoutX="454.0" layoutY="255.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
-      <GridPane layoutX="50.0" layoutY="264.0" prefHeight="153.0" prefWidth="547.0">
+      <Line endX="25.0" layoutX="454.0" layoutY="277.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
+      <GridPane layoutX="50.0" layoutY="287.0" prefHeight="123.0" prefWidth="547.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="209.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="38.0" />
@@ -102,7 +101,6 @@
           <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -121,7 +119,7 @@
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtnoOfcomps" onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <TextField fx:id="txtnoOfcomps"  onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <TextField fx:id="txtnoOfrounds" text="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="22.0" text="W" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                <font>
@@ -158,14 +156,9 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <CheckBox fx:id="standardBreaker" mnemonicParsing="false" onAction="#updateStandardBreaker" selected="true" text="Use Standard Breakers" GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </CheckBox>
          </children>
       </GridPane>
-      <Label layoutX="233.0" layoutY="413.0" prefHeight="23.0" prefWidth="240.0" text="KNOCKOUT SPECS" textFill="RED">
+      <Label layoutX="233.0" layoutY="413.0" prefHeight="23.0" prefWidth="240.0" text="KNOCKOUT SPECS" >
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
@@ -175,7 +168,7 @@
             <Font name="Times New Roman" size="18.0" />
          </font>
       </Label>
-      <RadioButton fx:id="singleelim" layoutX="245.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" selected="true" text="Single" textFill="WHITE">
+      <RadioButton fx:id="singleelim" layoutX="245.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" selected="true" text="Single" >
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
@@ -183,21 +176,22 @@
             <ToggleGroup fx:id="type3" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="doubleelim" layoutX="350.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" text="Double" textFill="WHITE" toggleGroup="$type3">
+      <RadioButton fx:id="doubleelim" layoutX="350.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" text="Double"  toggleGroup="$type3">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </RadioButton>
-      <Label layoutX="228.0" layoutY="215.0" prefHeight="23.0" prefWidth="240.0" text="GROUP STAGE SPECS" textFill="RED">
+      <Label layoutX="228.0" layoutY="235.0" prefHeight="23.0" prefWidth="240.0" text="GROUP STAGE SPECS" >
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
       <Line endX="25.0" layoutX="333.0" layoutY="454.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
-      <Label fx:id="lbltourapp" layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
+      <Label layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
-            <Font name="Trebuchet MS" size="22.0" />
+            <Font name="Trebuchet MS Bold" size="25.0" />
          </font>
       </Label>
+     
    </children>
 </AnchorPane>

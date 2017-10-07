@@ -176,23 +176,21 @@ public class TieBreakerController {
 			InputCompetitorController ic1 = (InputCompetitorController) loader.getController();
 			ic1.setGroupTournament(TournamentName, goalScored, onOfRounds, noOfCompetitors, winpoint, drawpoint,
 					losspoint, tournamenttype,tieBreaker);
-			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+			btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
 		}else {
 			
 			InputCompetitorController ic11 = (InputCompetitorController) loader.getController();
 			ic11.setMultiStageTournament(TournamentName, goalScored, onOfRounds, noOfCompetitors, winpoint, drawpoint,
 					losspoint, tournamenttype, sigleOrDouble,tieBreaker);
 
-			btn.next(rootPane, root, "InputCompetitorScreen.fxml");
+			btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
 		
 		}
 	}//end if selected is empty
 		}
 	@FXML
 	public void cancel(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource(Paths.viewpath + "TournamentTypeSreen.fxml").openStream());
-		btn.next(rootPane, root, "TournamentTypeSreen.fxml");
+		btn.cancel(rootPane);
 	}
 
 }// end class

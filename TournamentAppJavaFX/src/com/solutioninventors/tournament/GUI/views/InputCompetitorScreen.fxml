@@ -22,7 +22,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" layoutY="493.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="651.0" />
     
-      <Label layoutX="183.0" layoutY="67.0" text="INPUT COMPETITOR" textFill="RED">
+      <Label fx:id="lbltourtype" layoutX="183.0" layoutY="67.0" text="INPUT COMPETITOR" textFill="RED">
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font></Label>
@@ -43,7 +43,7 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
+      <Label fx:id="lbltourapp" layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
             <Font name="Trebuchet MS" size="20.0" />
          </font>
@@ -58,17 +58,17 @@
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="67.0" layoutY="142.0" text="S/N" textFill="WHITE">
+      <Label fx:id="sn" layoutX="67.0" layoutY="142.0" text="S/N" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="144.0" layoutY="142.0" text="COMPETITOR NAME" textFill="WHITE">
+      <Label fx:id="compname" layoutX="144.0" layoutY="142.0" text="COMPETITOR NAME" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="395.0" layoutY="142.0" text="COMPETITOR LOGO" textFill="WHITE">
+      <Label fx:id="complogo" layoutX="409.0" layoutY="142.0" text="COMPETITOR LOGO" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
@@ -126,7 +126,7 @@
             <Image url="/com/solutioninventors/tournament/GUI/resource/images/nologo.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btnNext1" alignment="CENTER" contentDisplay="CENTER" layoutX="424.0" layoutY="385.0" mnemonicParsing="false" onAction="#next" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="424.0" layoutY="385.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Trebuchet MS Bold" size="17.0" />
          </font>
@@ -159,6 +159,18 @@
             <fx:reference source="img3" />
              <fx:reference source="img4" />
             
+        </ArrayList>
+    </fx:define>
+   
+    <fx:define>
+        <ArrayList fx:id="lblArray">
+            <fx:reference source="sn" />
+            <fx:reference source="compname" />
+            <fx:reference source="complogo" />
+            <fx:reference source="sn1" />
+            <fx:reference source="sn2" />
+            <fx:reference source="sn3" />
+            <fx:reference source="sn4" />
         </ArrayList>
     </fx:define>
 </AnchorPane>
