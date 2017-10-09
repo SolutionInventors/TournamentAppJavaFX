@@ -31,7 +31,7 @@ import com.solutioninventors.tournament.utils.SportType;
  * left. This is he winner of the tournament.<p>
  * A {@code SingleEliminationTournament} may also have a home and away {@code Fixture}s.
  * In that case {@code Competitor}s would be eliiminated after every two games<p>
- *
+ *H
  */
 public class SingleEliminationTournament extends EliminationTournament {
 
