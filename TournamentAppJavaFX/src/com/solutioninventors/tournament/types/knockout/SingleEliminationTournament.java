@@ -417,7 +417,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			   			Competitor.isEqual( f.getCompetitorTwo() , com2 );
 					
 			if ( score1 == score2 )
-				throw new ResultCannotBeSetException( "The score inputed is invalid " );
+				throw new ResultCannotBeSetException( "The score inputed is invalid " +"Score 1 = "+score1+"Score 2 = "+score2);
 			else if ( activeTies.stream().anyMatch( predicate  ))
 			{
 				for ( int i = 0 ; i < activeTies.size() ; i++ )

@@ -32,8 +32,12 @@ public class SingleEliminationTest {
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
+		Competitor c5 = new Competitor("Chidiebere", file);
+		Competitor c6 = new Competitor("Fred", file);
+		Competitor c7 = new Competitor("Joshua", file);
+		Competitor c8 = new Competitor("Chinedu", file);
 
-		Competitor[] comps = { c1, c2, c3, c4 };
+		Competitor[] comps = { c1, c2, c3, c4, c5,c6,c7,c8 };
 
 		int ans = Integer.parseInt( JOptionPane.showInputDialog(
 				"Type 1 for home and away else only home fixtures" ));
@@ -42,7 +46,7 @@ public class SingleEliminationTest {
 		Tournament tournament = null;
 		try 
 		{
-			tournament = new SingleEliminationTournament(SportType.GOALS_ARE_SCORED , comps , homeAndAway );
+			tournament = new SingleEliminationTournament(SportType.GOALS_ARE_NOT_SCORED , comps , homeAndAway );
 		} catch (TournamentException e) {
 			Test.displayMessage(e.getMessage());
 			System.exit(1);

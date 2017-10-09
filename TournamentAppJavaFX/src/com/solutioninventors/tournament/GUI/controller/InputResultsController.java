@@ -50,14 +50,13 @@ public class InputResultsController {
 	private ObservableList<String> WDL = FXCollections.observableArrayList("W", "D", "L");
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
-	
+
 	public void initialize() {
 		font = cm.loadfonts();
 
 		tourStage.setFont(font[1]);// tournament Specs
 	}
-	
-	
+
 	public void setTournament(Tournament value) throws TournamentEndedException {
 		tournament = value;
 		if (!tournament.hasEnded()) {
@@ -88,7 +87,15 @@ public class InputResultsController {
 				for (int j = 0; j < currentFixtures.length; j++) {
 					compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
 					compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
+					compName[i].setFont(font[1]);
+					compName[i + 1].setFont(font[1]);
+					compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+					compName[i + 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+
 					VS[j] = new Label("VS");
+					VS[j].setFont(font[1]);
+					VS[j].setStyle("-fx-font-size: 19px; -fx-font-weight:bold; -fx-text-fill: red;");
+
 					try {
 						comp1 = currentFixtures[j].getCompetitorOne();
 						comp2 = currentFixtures[j].getCompetitorTwo();
@@ -175,13 +182,26 @@ public class InputResultsController {
 		boolean isDraw = false;
 		if (tournament instanceof SingleEliminationTournament) {
 			if (((SingleEliminationTournament) tournament).isTieRound()) {
-				for (int i = 0; i < scores.length; i += 2) {
-					double score1 = Double.valueOf(scores[count].getText());
-					double score2 = Double.valueOf(scores[count + 1].getText());
+				if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
 
-					if (score1 == score2) {
-						isDraw = true;
-						break;
+					for (int i = 0; i < scores.length; i += 2) {
+						double score1 = Double.valueOf(scores[i].getText());
+						double score2 = Double.valueOf(scores[i + 1].getText());
+
+						if (score1 == score2) {
+							isDraw = true;
+							break;
+						}
+					}
+				} else {
+					for (int i = 0; i < scoresnoGoal.size(); i += 2) {
+						double score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
+						double score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
+						
+						if (score1==score2) {
+							isDraw = true;
+							break;
+						}
 					}
 				}
 			}
@@ -190,22 +210,40 @@ public class InputResultsController {
 		if (isDraw) {
 			AlertBox.display("Draw", "Cannot input a draw in tie Round please check one or more of your scores");
 		} else {
+			if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
 
-			for (int i = 0; i < currentFixtures.length; i++) {
-				Competitor com1 = currentFixtures[i].getCompetitorOne();
-				Competitor com2 = currentFixtures[i].getCompetitorTwo();
+				for (int i = 0; i < currentFixtures.length; i++) {
+					Competitor com1 = currentFixtures[i].getCompetitorOne();
+					Competitor com2 = currentFixtures[i].getCompetitorTwo();
 
-				double score1 = Double.valueOf(scores[count].getText());
-				double score2 = Double.valueOf(scores[count + 1].getText());
+					double score1 = Double.valueOf(scores[count].getText());
+					double score2 = Double.valueOf(scores[count + 1].getText());
 
-				try {
-					tournament.setResult(com1, score1, score2, com2);
-				} catch (NoFixtureException ee) {
-					ee.printStackTrace();
-				}
+					try {
+						tournament.setResult(com1, score1, score2, com2);
+					} catch (NoFixtureException ee) {
+						ee.printStackTrace();
+					}
 
-				count += 2;
-			} // end for loop
+					count += 2;
+				} // end for loop
+
+			} else {
+				for (int i = 0; i < currentFixtures.length; i++) {
+					Competitor com1 = currentFixtures[i].getCompetitorOne();
+					Competitor com2 = currentFixtures[i].getCompetitorTwo();
+					double score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
+					double score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
+
+					try {
+						tournament.setResult(com1, score1, score2, com2);
+					} catch (NoFixtureException ee) {
+						ee.printStackTrace();
+					}
+
+					count += 2;
+				} // end for loop
+			} // end if goals are scored
 		}
 	}
 

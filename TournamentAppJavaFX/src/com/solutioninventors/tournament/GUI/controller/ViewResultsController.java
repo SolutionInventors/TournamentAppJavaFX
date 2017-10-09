@@ -10,6 +10,7 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.SportType;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,7 +81,16 @@ public class ViewResultsController {
 			for (int j = 0; j < currentFixtures.length; j++) {
 				compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
 				compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
+				compName[i].setFont(font[1]);
+				compName[i + 1].setFont(font[1]);
+				compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+				compName[i+ 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+				
 				VS[j] = new Label("VS");
+				VS[j].setFont(font[1]);
+				VS[j].setStyle("-fx-font-size: 19px; -fx-font-weight:bold; -fx-text-fill: red;");
+				
+				
 				try {
 					comp1 = currentFixtures[j].getCompetitorOne();
 					comp2 = currentFixtures[j].getCompetitorTwo();
@@ -107,8 +117,16 @@ public class ViewResultsController {
 				// display results
 				
 				try {
+					if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
 					scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
 					scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
+					}else {
+						scores[i] = new Label(getScoreWDL(String.valueOf(currentFixtures[j].getCompetitorOneScore())));
+						scores[i + 1] = new Label(getScoreWDL(String.valueOf(currentFixtures[j].getCompetitorTwoScore())));
+					}
+				
+				
+				
 				} catch (IncompleteFixtureException e) {
 					msgboxrect.setVisible(true);
 					msgboxlbl.setVisible(true);
@@ -140,6 +158,25 @@ public class ViewResultsController {
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
+
+	private String getScoreWDL(String num) {
+		double scr = Double.valueOf(num);
+		int score = (int) scr;
+		String WDL;
+		switch (score) {
+		case 1:
+			WDL = "W";
+			break;
+		case -1:
+			WDL = "L";
+			break;
+		default:
+			WDL = "D";
+			break;
+		}
+		
+		return WDL;
+	}
 
 	@FXML
 	public void nextRound(ActionEvent event) throws IOException {

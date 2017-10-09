@@ -101,7 +101,7 @@
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="435.0" layoutY="238.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img2" fitHeight="65.0" fitWidth="108.0" layoutX="441.0" layoutY="240.0" onMouseClicked="#changeImage2" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/com/solutioninventors/tournament/GUI/resource/images/clickme.PNG" />
          </image>
@@ -126,7 +126,22 @@
             <Image url="/com/solutioninventors/tournament/GUI/resource/images/nologo.jpg" />
          </image>
       </ImageView>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="424.0" layoutY="385.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="btnimg4" alignment="CENTER" onAction="#changeimage4" contentDisplay="CENTER" layoutX="424.0" layoutY="383.0" mnemonicParsing="false"  prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Trebuchet MS Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnimg3" alignment="CENTER" contentDisplay="CENTER" onAction="#changeimage3" layoutX="423.0" layoutY="313.0" mnemonicParsing="false"  prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Trebuchet MS Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnimg2" alignment="CENTER" contentDisplay="CENTER" layoutX="422.0" layoutY="242.0" mnemonicParsing="false" onAction="#changeimage2" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Trebuchet MS Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnimg1" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="173.0" mnemonicParsing="false" onAction="#changeimage1" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Trebuchet MS Bold" size="17.0" />
          </font>
@@ -158,6 +173,16 @@
             <fx:reference source="img2" />
             <fx:reference source="img3" />
              <fx:reference source="img4" />
+            
+        </ArrayList>
+    </fx:define>
+   
+      <fx:define>
+        <ArrayList fx:id="btnimgArray">
+            <fx:reference source="btnimg1" />
+            <fx:reference source="btnimg2" />
+            <fx:reference source="btnimg3" />
+             <fx:reference source="btnimg4" />
             
         </ArrayList>
     </fx:define>

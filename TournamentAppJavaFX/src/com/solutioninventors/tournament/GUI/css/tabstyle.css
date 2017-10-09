@@ -1,0 +1,23 @@
+
+#lbltourtype{
+	-fx-font-size: 30px;
+	-fx-font-weight:bold;
+}
+
+#txtTourHighlight{
+	-fx-font-size: 22px;
+	-fx-font-weight: bold; 
+}
+#lblnostanding{
+	-fx-font-size: 30px;
+	-fx-font-weight:bold;
+}
+
+#msgboxlbl{
+	-fx-font-size: 30px;
+	-fx-font-weight:bold;
+}
+#tourStage{
+	-fx-font-size: 30px;
+	-fx-font-weight:bold;
+}

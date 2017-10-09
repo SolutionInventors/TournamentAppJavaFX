@@ -16,6 +16,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 public class FixturesController {
@@ -66,7 +68,14 @@ public class FixturesController {
 			for (int j = 0; j < currentFixtures.length; j++) {
 				compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
 				compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
+				compName[i].setFont(font[1]);
+				compName[i + 1].setFont(font[1]);
+				compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+				compName[i+ 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+				
 				VS[j] = new Label("VS");
+				VS[j].setFont(font[1]);
+				VS[j].setStyle("-fx-font-size: 19px; -fx-font-weight:bold; -fx-text-fill: red;");
 				try {
 					comp1 = currentFixtures[j].getCompetitorOne();
 					comp2 = currentFixtures[j].getCompetitorTwo();

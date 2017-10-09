@@ -57,6 +57,7 @@ public class InputCompetitorController {
 	@FXML private AnchorPane rootPane;
 	@FXML private List<Label> SNArray;
 	@FXML private List<TextField> txtArray;
+	@FXML private List<Button> btnimgArray;
 	@FXML private List<ImageView> imgArray;
 	@FXML private List<Label> lblArray;
 	@FXML private Label  lbltourtype; 
@@ -69,7 +70,7 @@ public class InputCompetitorController {
 
 
 	private URL url1 = getClass().getResource(Paths.images + "nologo.jpg"); 
-	private Image image;
+	//private Image image;
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
@@ -105,10 +106,7 @@ public class InputCompetitorController {
 	private int counter2;
 	private TieBreaker tieBreakers;
 
-	@FXML
-	public void chinedu() {
-
-	}
+	
 	public void initialize() {
 		font = cm.loadfonts();
 		
@@ -118,6 +116,9 @@ public class InputCompetitorController {
 		
 		for (Label currentlabel : lblArray) {
 			currentlabel.setFont(font[0]);
+		}
+		for (int i = 0; i < imgArray.size(); i++) {
+			imgArray.get(i).setVisible(false);
 		}
 	}
 	
@@ -187,11 +188,12 @@ public class InputCompetitorController {
 	}
 
 	public void loadcomponents() {
-		try {
+		//this was used to set the default no logo image
+	/*	try {
 			image = new Image(new FileInputStream(new File(url1.toURI())));
 		} catch (FileNotFoundException | URISyntaxException e) {
 			e.printStackTrace();
-		}
+		}*/
 		comps = new Competitor[noOfCompetitors];
 		file = new File[noOfCompetitors];
 
@@ -199,6 +201,7 @@ public class InputCompetitorController {
 
 			try {
 				file[i] = new File(url1.toURI());
+				comps[i] = new Competitor("Player "+ (i+1), file[i]);
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			}
@@ -224,11 +227,16 @@ public class InputCompetitorController {
 		} else {
 			goalsOrNoGoals = SportType.GOALS_ARE_NOT_SCORED;
 		}
-	}//end loadcomponents
+	}//end load components
 
 	@FXML
 	public void cancel(ActionEvent event) {
-
+		Btn btn = new Btn();
+		try {
+			btn.cancel(rootPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -285,15 +293,33 @@ public class InputCompetitorController {
 			btnNext.setVisible((endValue==noOfCompetitors ? false:true));
 		}
 		counter2 = 0;
+		//this decides what to display
 		for (int i = startValue; i < endValue; i++) {
-			if (comps[i] != null) {
+			System.out.println(startValue);
+			System.out.println(i + "value of i for counter");
+			System.out.println(comps[i].getName() + "comp name");
+			
+			System.out.println("cur val Player +1 = Player "+(i+1) );
+			//System.out.println(comps[i].getName() + "comp name");
+			String playername = comps[i].getName().toString();
+			System.out.println(playername.equals("Player " + (i+1) ) +" check player name and play +1");
+			System.out.println(playername==("Player " + (i+1) ) +" check player name and play +1 using ==");
+			String check = "Player ".concat(String.valueOf(i+1));
+			System.out.println(playername.equals(check) +" check player name and play +1 using new check obj");
+			System.out.println(playername.equalsIgnoreCase("Player " + (i+1) ) +" check player name and play +1 using ignore case");
+			System.out.println(!playername.equals("Player " + (i+1) ) +" NOT value check player name and play +1");
+			if (playername.equals("Player " + (i+1) ) ) { 
+			//this if is for the final deployment
+			//if (comps[i] != null) {
 				txtArray.get(counter2).setText(comps[i].getName());
 				String localUrl = comps[i].getImage().toURI().toURL().toString();
 				Image localImage = new Image(localUrl, false);
 				imgArray.get(counter2).setImage(localImage);
 			} else {
 				txtArray.get(counter2).setText(null);
-				imgArray.get(counter2).setImage(image);
+				//imgArray.get(counter2).setImage(image);
+				imgArray.get(counter2).setVisible(false);
+				btnimgArray.get(counter2).setVisible(true);
 			}
 			counter++;
 			SNArray.get(counter2).setText(String.valueOf(counter));
@@ -426,13 +452,18 @@ public class InputCompetitorController {
 		 fc.setInitialDirectory(new File(System.getProperty("user.home")+ System.getProperty("file.separator")+ "Pictures"));
 		 fc.getExtensionFilters().add(imageFilter);
 		 File file1 = fc.showOpenDialog(null);
-		file[img1] = new File(file1.toURI());
+		try {
+			file[img1] = new File(file1.toURI());
+		} catch (Exception e1) {
+		}
 		// for the image
 		if (file1 != null) {
 			String localUrl = file1.toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			//System.out.println(localUrl);
 			imgArray.get(0).setImage(localImage);
+			btnimgArray.get(0).setVisible(false);
+			imgArray.get(0).setVisible(true);
 		}
 	}// end change image
 
@@ -447,6 +478,8 @@ public class InputCompetitorController {
 			String localUrl = file2.toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(1).setImage(localImage);
+			btnimgArray.get(1).setVisible(false);
+			imgArray.get(1).setVisible(true);
 		}
 	}// end change image
 
@@ -460,6 +493,8 @@ public class InputCompetitorController {
 			String localUrl = file3.toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(2).setImage(localImage);
+			btnimgArray.get(2).setVisible(false);
+			imgArray.get(2).setVisible(true);
 		}
 	}// end change image
 
@@ -474,7 +509,20 @@ public class InputCompetitorController {
 			Image localImage = new Image(localUrl, false);
 
 			imgArray.get(3).setImage(localImage);
+			btnimgArray.get(3).setVisible(false);
+			imgArray.get(3).setVisible(true);
 		}
 	}// end change image
-
+	public void changeimage1(ActionEvent e) throws MalformedURLException {
+		changeImage1(null);
+	}
+	public void changeimage2(ActionEvent e) throws MalformedURLException {
+		changeImage2(null);
+	}
+	public void changeimage3(ActionEvent e) throws MalformedURLException {
+		changeImage3(null);
+	}
+	public void changeimage4(ActionEvent e) throws MalformedURLException {
+		changeImage4(null);
+	}
 }// end class
