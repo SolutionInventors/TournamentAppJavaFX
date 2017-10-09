@@ -116,7 +116,7 @@ public class SwissTournament extends GroupTournament {
 	public Competitor getWinner() {
 		if (hasEnded()) 
 		{
-			return getTable().getCompetitors()[0];
+			return getTable().getCompetitor(0);
 		}
 
 		return null;

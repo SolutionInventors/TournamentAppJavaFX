@@ -224,7 +224,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		{
 			Fixture[ ] nextRoundFixtures =  new Fixture[ activeCompetitors.length /2 ];
 			for ( int i = 0 ; i < activeCompetitors.length ; i+= 2 )
-				nextRoundFixtures[ i ] = new Fixture( getSportType(), activeCompetitors[ i ], activeCompetitors[ i + 1 ] );
+				nextRoundFixtures[ i/2 ] = new Fixture( getSportType(), activeCompetitors[ i ], activeCompetitors[ i + 1 ] );
 			
 			Round round = new Round( nextRoundFixtures );
 			roundList.add( round );

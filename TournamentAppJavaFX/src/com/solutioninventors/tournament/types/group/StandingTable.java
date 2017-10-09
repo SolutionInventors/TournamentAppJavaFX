@@ -80,17 +80,14 @@ public class StandingTable implements Serializable {
 
 	public Competitor[] getTable()
 	{
-		return getTieBreaker().breakTies( 
-				TieBreaker.HOME_FIXTURES + TieBreaker.AWAY_FIXTURES,
-				competitors, getWinPoint(), 
-				getDrawPoint(), getLossPoint());
+		return competitors;
 	}
 
 	public Competitor getCompetitor(int position) {
 		updateTables();
 		
 		if ( position < getCompetitors().length )
-			return getCompetitors()[ position ];
+			return getTable()[ position ];
 		
 		return null ;
 	}
@@ -267,7 +264,7 @@ public class StandingTable implements Serializable {
 		
 
 	public Competitor[] getCompetitors() {
-		return competitors;
+		return getTable();
 	}
 
 	
