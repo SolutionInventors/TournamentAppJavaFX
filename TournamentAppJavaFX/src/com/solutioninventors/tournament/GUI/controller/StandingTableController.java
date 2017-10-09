@@ -9,6 +9,7 @@ import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsExceptio
 import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.group.GroupTournament;
+import com.solutioninventors.tournament.utils.SportType;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -87,7 +88,7 @@ public class StandingTableController {
 			compName[i].setCellValueFactory(new PropertyValueFactory<>("competitorName"));
 		} // end for loop for compName setup
 		
-		if (stringtableMap.get(0).length == 9) {
+		if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
 		WDLFADP = new TableColumn[noOfGroups][8];
 		for (int row = 0; row < WDLFADP.length; row++) {
 			for (int col = 0; col < WDLFADP[row].length; col++) {
@@ -158,7 +159,7 @@ public class StandingTableController {
 			map.put(i, FXCollections.observableArrayList());
 			items3.add(i, FXCollections.observableArrayList());
 			int j = 0;
-			if (stringtableMap.get(0).length == 9) {//you should get a better way of checking this
+			if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {//you should get a better way of checking this
 				for (j = 0; j < stringtableMap.get(i).length; j++) { //inner for loop
 					if (j == 0) {
 						map.put(i, items3.get(i))

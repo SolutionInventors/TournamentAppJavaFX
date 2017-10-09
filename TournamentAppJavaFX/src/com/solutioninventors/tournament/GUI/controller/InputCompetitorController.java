@@ -301,7 +301,7 @@ public class InputCompetitorController {
 			
 			System.out.println("cur val Player +1 = Player "+(i+1) );
 			//System.out.println(comps[i].getName() + "comp name");
-			String playername = comps[i].getName().toString();
+			String playername = comps[i].getName();
 			System.out.println(playername.equals("Player " + (i+1) ) +" check player name and play +1");
 			System.out.println(playername==("Player " + (i+1) ) +" check player name and play +1 using ==");
 			String check = "Player ".concat(String.valueOf(i+1));
