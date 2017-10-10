@@ -25,14 +25,14 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="71.0" layoutY="464.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="651.0" />
     
-      <Label layoutX="218.0" layoutY="71.0" text="TIE BREAKER" textFill="RED">
+      <Label fx:id="lbltourtype" layoutX="218.0" layoutY="71.0" text="TIE BREAKER" textFill="RED">
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font></Label>
       <Line endX="425.0" layoutX="218.0" layoutY="108.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="113.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="100.0" layoutX="5.0" layoutY="134.0" stroke="#686262" strokeType="INSIDE" width="631.0" />
-      <Text layoutX="22.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tie breakers are used to seperate teams when a tie occurs. This is seen in group tournaments. In this page the List to the left holds all the possible breakers that on the right holds all that is selected in the order of precedence" wrappingWidth="607.0000029951334">
+      <Text fx:id="txtdisplay" layoutX="22.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tie breakers are used to seperate teams when a tie occurs. This is seen in group tournaments. In this page the List to the left holds all the possible breakers that on the right holds all that is selected in the order of precedence" wrappingWidth="607.0000029951334">
          <font>
             <Font name="Trebuchet MS" size="19.0" />
          </font>
@@ -49,12 +49,12 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnNext" alignment="CENTER" onAction="#next" contentDisplay="CENTER" layoutX="241.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
+      <Button fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="478.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
          <font>
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" alignment="CENTER" onAction="#cancel" contentDisplay="CENTER" layoutX="482.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
+      <Button fx:id="btnCancel" alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="478.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
@@ -101,5 +101,10 @@
             </AnchorPane>
          </children>
       </GridPane>
+      <Label fx:id="lbltourapp" layoutX="61.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
