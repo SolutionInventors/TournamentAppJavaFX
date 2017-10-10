@@ -16,6 +16,7 @@ import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.Multistage;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.types.knockout.EliminationTournament;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
@@ -31,13 +32,14 @@ public class SingleEliminationTest {
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
+
+		
 		Competitor c4 = new Competitor("Chinedu", file);
 		Competitor c5 = new Competitor("Chidiebere", file);
 		Competitor c6 = new Competitor("Fred", file);
 		Competitor c7 = new Competitor("Joshua", file);
 		Competitor c8 = new Competitor("Chinedu", file);
-
-		Competitor[] comps = { c1, c2, c3, c4, c5,c6,c7,c8 };
+		Competitor[] comps = { c1, c2, c3, c4,c5,c6,c7,c8};
 
 		int ans = Integer.parseInt( JOptionPane.showInputDialog(
 				"Type 1 for home and away else only home fixtures" ));
@@ -83,7 +85,7 @@ public class SingleEliminationTest {
 	public static void simulateRound(Tournament tournament) throws MoveToNextRoundException, TournamentEndedException
 	{
 		Test.displayMessage("Welcome to the " + tournament.toString());
-		inputRoundResults((SingleEliminationTournament) tournament);
+		inputRoundResults( (SingleEliminationTournament) tournament);
 
 		Test.displayRoundResults(tournament.getCurrentRound());
 		tournament.moveToNextRound();
@@ -99,13 +101,15 @@ public class SingleEliminationTest {
 
 		builder.delete(0, builder.length());
 		builder.append("Roound results are: \n");
+		
+		
 		for (int i = 0; i < currentFixtures.length; i++) {
 			Competitor com1 = currentFixtures[i].getCompetitorOne();
 			Competitor com2 = currentFixtures[i].getCompetitorTwo();
 
 			double score1 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com1));
 			double score2 = Double.parseDouble(JOptionPane.showInputDialog("Input score for " + com2));
-
+			
 			try {
 				if ( tournament.isTieRound() )
 					tournament.setTieResult(com1, score1, score2, com2);

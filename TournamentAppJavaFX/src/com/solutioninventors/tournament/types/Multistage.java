@@ -297,18 +297,19 @@ public class Multistage extends Tournament
 			groupStage = new SwissTournament[getCompetitors().length / 4 ];
 		
 		Competitor[] theCompetitors = getCompetitors();
-		Competitor[] compPerGroup = new Competitor[ 4 ];
 		
 		for ( int i = 0 ; i < theCompetitors.length ; i+= 4 )
 		{
+			Competitor[] compPerGroup = new Competitor[ 4 ];
 			compPerGroup [ 0 ] = theCompetitors[ i ];
 			compPerGroup [ 1 ] = theCompetitors[ i + 1 ];
 			compPerGroup [ 2 ] = theCompetitors[ i + 2 ];
 			compPerGroup [ 3 ] = theCompetitors[ i + 3 ];
 			
 			if ( groupType == GroupStageType.ROUND_ROBIN)
+			
 				groupStage[ i/4 ] = new RoundRobinTournament(compPerGroup, type ,getWinPoint(), 
-						getDrawPoint(), getLossPoint(), breaker, hasGroupAwayMatches() );
+						getDrawPoint(), getLossPoint(), breaker, hasGroupAwayMatches() );	
 			else
 				groupStage[ i/4 ] = new SwissTournament( compPerGroup, type ,getWinPoint(), 
 						getDrawPoint(), getLossPoint(), breaker, numOfGroupRound );
@@ -373,9 +374,19 @@ public class Multistage extends Tournament
 		{
 			round = knockoutStage.getRound( roundNum - numberOfGroupStageRounds() );
 		}
+		else if ( knockoutStage != null  && !knockoutStage.hasEnded() )
+			try
+			{
+				round = knockoutStage.getCurrentRound();
+			}
+			catch (TournamentEndedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		else
 		{
-			throw new RoundIndexOutOfBoundsException( "The index number :" + roundNum + " is invalid" );
+			throw new RoundIndexOutOfBoundsException( "The index number : " + roundNum + " is invalid" );
 		}
 		
 		return round ; 
@@ -552,7 +563,16 @@ public class Multistage extends Tournament
 				numberOfGroupWinners.getNumberOfWinners() * groupStage.length );
 		for( int i = 0 ; i< groupStage.length ; i++ )
 		{
-			StandingTable groupTable = groupStage[ i ].getTable( ) ;
+			StandingTable groupTable = null ;
+			try
+			{
+				groupTable = getGroupTable( i );
+			}
+			catch (GroupIndexOutOfBoundsException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			groupTable.updateTables();
 			Competitor[] competitors = groupTable.getCompetitors();

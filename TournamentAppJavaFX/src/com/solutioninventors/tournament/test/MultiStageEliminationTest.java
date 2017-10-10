@@ -52,7 +52,7 @@ public class MultiStageEliminationTest
 		// Competitor c15 = new Competitor( "Lagos" , file );
 		// Competitor c16 = new Competitor( "NIgeria" , file ) ;
 
-		Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8, c9, c10, c11, c12 };
+		Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8 };
 		//Competitor[] comps = { c1, c2, c3, c4};
 
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.GOALS_CONCEDED,
@@ -64,7 +64,7 @@ public class MultiStageEliminationTest
 			
 			tieBreakers = new TieBreaker( breakers );
 			tournament = new Multistage( comps , SportType.GOALS_ARE_SCORED , 
-					3, 1 ,0 , tieBreakers,true   );
+					3, 1 ,0 , tieBreakers,false   );
 
 		} catch (InvalidBreakerException | TournamentException e) {
 			e.printStackTrace();
