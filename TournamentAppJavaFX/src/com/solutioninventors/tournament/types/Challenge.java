@@ -130,8 +130,8 @@ public class Challenge extends Tournament
 			
 			
 			Comparator<Competitor> comparator = 
-					Comparator.comparing( function ).reversed()
-							.thenComparing( c-> c.getGoalDifference() ).reversed() ;
+					Comparator.comparing( function ).reversed();
+			
 			
 			Competitor[] coms = new Competitor[ 2 ]; 
 			
