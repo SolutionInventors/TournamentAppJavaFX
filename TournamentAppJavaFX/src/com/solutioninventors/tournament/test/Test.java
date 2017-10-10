@@ -57,7 +57,6 @@ public class Test {
 	public static String getAllTables(StandingTable table)
 	{
 		StringBuilder builder = new StringBuilder(400);
-		
 		builder.append( "The Tournament Tables are:\n\n" );
 		builder.append( "Home Fixtures:\n" );
 		builder.append( Test.getTableToDisplay( table.getHomeStringTable()  ) );

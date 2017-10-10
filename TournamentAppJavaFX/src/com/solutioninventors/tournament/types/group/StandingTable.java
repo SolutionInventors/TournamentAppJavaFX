@@ -71,8 +71,8 @@ public class StandingTable implements Serializable {
 		return POINT_FOR_LOSS;
 	}
 
-	public void updateTables() {
-		//
+	protected void updateTables() {
+		
 		competitors = getTable();
 		updateStringTable( getTable(), table, TieBreaker.AWAY_FIXTURES + TieBreaker.HOME_FIXTURES  ); // updates StringTable
 
@@ -80,7 +80,10 @@ public class StandingTable implements Serializable {
 
 	public Competitor[] getTable()
 	{
-		return competitors;
+		return getTieBreaker().breakTies( 
+				TieBreaker.HOME_FIXTURES + TieBreaker.AWAY_FIXTURES,
+				competitors, getWinPoint(), 
+				getDrawPoint(), getLossPoint());
 	}
 
 	public Competitor getCompetitor(int position) {

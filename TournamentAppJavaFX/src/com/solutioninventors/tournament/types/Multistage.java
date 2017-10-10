@@ -574,7 +574,6 @@ public class Multistage extends Tournament
 				e.printStackTrace();
 			}
 			
-			groupTable.updateTables();
 			Competitor[] competitors = groupTable.getCompetitors();
 			
 			for( int position = 0 ; position < numberOfGroupWinners.getNumberOfWinners() ;
