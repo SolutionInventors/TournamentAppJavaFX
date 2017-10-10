@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.InvalidFileFormatException;
 
@@ -117,8 +119,16 @@ public class Playlist
 		ObjectInputStream input  = null;
 		try
 		{
+			if (! playListFile.exists() )
+				return new LinkedList<File>();
+			
 			input = new ObjectInputStream( new FileInputStream( playListFile ) );
-			return ( List<File>)  input.readObject() ; 
+			List<File> storedFiles = ( List<File>)  input.readObject() ; 
+			
+			return storedFiles.stream()
+					.filter( f-> f.exists() )
+					.collect(Collectors.toList() );
+			
 		}
 		finally 
 		{
