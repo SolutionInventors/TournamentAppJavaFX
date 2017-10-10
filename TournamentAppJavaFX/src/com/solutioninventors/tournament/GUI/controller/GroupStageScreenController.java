@@ -56,6 +56,11 @@ public class GroupStageScreenController {
 		txtdisplay.setFont(font[0]);//the display
 		lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		txtTourHighlight.setFont(font[0]);
+		cm.isNumber(txtnoOfrounds);
+		cm.isNumber(txtnoOfcomps);
+		cm.isNumber (txtwinpoint);
+		cm.isNumber (txtdrawpoint);
+		cm.isNumber(txtlosspoint);
 	}
 	@FXML
 	public void updateStandardBreaker(ActionEvent event){

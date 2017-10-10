@@ -113,7 +113,7 @@
       </ImageView>
       <ImageView fx:id="img4" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="379.0" onMouseClicked="#changeImage4" pickOnBounds="true" preserveRatio="true">
          <image>
-           <Image url="/com/solutioninventors/tournament/GUI/resource/images/nologo.jpg" />
+           <Image url="/com/solutioninventors/tournament/GUI/resource/images/clickme.PNG" />
          </image>
       </ImageView>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="505.0" mnemonicParsing="false" onAction="#finish" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="FINISH" textAlignment="CENTER">
@@ -123,29 +123,15 @@
       </Button>
       <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="172.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/com/solutioninventors/tournament/GUI/resource/images/nologo.jpg" />
+            <Image url="/com/solutioninventors/tournament/GUI/resource/images/clickme.PNG" />
          </image>
       </ImageView>
-      <Button fx:id="btnimg4" alignment="CENTER" onAction="#changeimage4" contentDisplay="CENTER" layoutX="424.0" layoutY="383.0" mnemonicParsing="false"  prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Trebuchet MS Bold" size="17.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnimg3" alignment="CENTER" contentDisplay="CENTER" onAction="#changeimage3" layoutX="423.0" layoutY="313.0" mnemonicParsing="false"  prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Trebuchet MS Bold" size="17.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnimg2" alignment="CENTER" contentDisplay="CENTER" layoutX="422.0" layoutY="242.0" mnemonicParsing="false" onAction="#changeimage2" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Trebuchet MS Bold" size="17.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnimg1" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="173.0" mnemonicParsing="false" onAction="#changeimage1" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Trebuchet MS Bold" size="17.0" />
-         </font>
-      </Button>
+      
+<!--       <Button fx:id="btnimg1" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="173.0" mnemonicParsing="false" onAction="#changeimage1" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: WHITE;" text="Click to add image" textAlignment="CENTER" wrapText="true"> -->
+<!--          <font> -->
+<!--             <Font name="Trebuchet MS Bold" size="17.0" /> -->
+<!--          </font> -->
+<!--       </Button> -->
    </children>
    
    
@@ -177,15 +163,15 @@
         </ArrayList>
     </fx:define>
    
-      <fx:define>
-        <ArrayList fx:id="btnimgArray">
-            <fx:reference source="btnimg1" />
-            <fx:reference source="btnimg2" />
-            <fx:reference source="btnimg3" />
-             <fx:reference source="btnimg4" />
+<!--       <fx:define> -->
+<!--         <ArrayList fx:id="btnimgArray"> -->
+<!--             <fx:reference source="btnimg1" /> -->
+<!--             <fx:reference source="btnimg2" /> -->
+<!--             <fx:reference source="btnimg3" /> -->
+<!--              <fx:reference source="btnimg4" /> -->
             
-        </ArrayList>
-    </fx:define>
+<!--         </ArrayList> -->
+<!--     </fx:define> -->
    
     <fx:define>
         <ArrayList fx:id="lblArray">

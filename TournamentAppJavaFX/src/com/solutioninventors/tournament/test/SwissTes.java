@@ -31,22 +31,26 @@ public class SwissTes {
 
 	
 	public static void main(String[] args) throws TournamentEndedException {
-		File file = new File("First .jpg");
+		File file = new File("Ada .jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
+		Competitor c5 = new Competitor("first", file);
+		Competitor c6 = new Competitor("second", file);
+		Competitor c7 = new Competitor("third", file);
+		Competitor c8 = new Competitor("fourth", file);
 		
 
-		Competitor[] comps = {c1, c2 ,c3,c4 };	
+		Competitor[] comps = {c1, c2 ,c3,c4,c5,c6,c7,c8 };	
 		
 		Tournament tournament = null ;
 		
 		int numOfRounds = Integer.parseInt(JOptionPane.showInputDialog("input the number of Round"));
 		try
 		{
-			TieBreaker tieBreakers = new TieBreaker( Breaker.GOALS_DIFFERENCE );
-			tournament = new SwissTournament( comps, SportType.GOALS_ARE_NOT_SCORED , 
+			TieBreaker tieBreakers = new TieBreaker( Breaker.GOALS_SCORED );
+			tournament = new SwissTournament( comps, SportType.GOALS_ARE_SCORED , 
 				3 , 1 , 0 , tieBreakers , numOfRounds );
 		}
 		catch (TournamentException e )

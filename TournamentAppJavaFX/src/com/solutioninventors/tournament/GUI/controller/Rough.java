@@ -9,7 +9,7 @@ public class Rough {
 		
 	public static void main( String... arg )
 	{
-		String name = "Hello 1";
+		String name = " Hello 1 ".trim();
 		String val = "Hello";
 		int a =0;
 		System.out.println( name.equals( val+" " + String.valueOf(a+1) )); 

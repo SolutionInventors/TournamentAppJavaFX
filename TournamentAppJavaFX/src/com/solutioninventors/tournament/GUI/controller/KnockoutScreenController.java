@@ -1,11 +1,12 @@
 package com.solutioninventors.tournament.GUI.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
+import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,8 +39,6 @@ public class KnockoutScreenController {
 		  private CommonMethods cm = new CommonMethods();
 		  private Font font[] = new Font[3];
 	
-	//Spinner(int min, int max, int initialValue, int amountToStepBy)
-	// Value factory.
 	
 
 	private String TournamentName;
@@ -55,7 +54,14 @@ public class KnockoutScreenController {
 		txtdisplay.setFont(font[0]);//the display
 		lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		txtTourHighlight.setFont(font[0]);
+		
+		//only numbers
+		// force the field to be numeric only
+		cm.isNumber(txtNoofcompetitors);
+
+	
 	}
+
 
 	// public KnockoutScreenController() {
 	// spinner.setValueFactory(valueFactory);}
@@ -97,6 +103,12 @@ public class KnockoutScreenController {
 	
 	@FXML
 	public void next(ActionEvent event) throws IOException {
+		double validator = ( Math.log( Integer.valueOf(txtNoofcompetitors.getText()) ) )/
+				( Math.log( 2 ) );
+		if ( ! ( validator % 1 == 0.0f)  ) {
+			AlertBox.display("Invalid number", "The number of Competitors must be a power of 2");
+		}else {
+		
 		FXMLLoader loader = new FXMLLoader();
 		
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
@@ -104,6 +116,7 @@ public class KnockoutScreenController {
 			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
 			btn.next(rootPane, root, "Input.fxml","commonStyle.css");
 			//btn.next(rootPane, root);
+			}
 		
 		
 	}

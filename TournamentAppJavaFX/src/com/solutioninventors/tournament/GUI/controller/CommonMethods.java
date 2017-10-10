@@ -18,10 +18,13 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -152,5 +155,17 @@ public class CommonMethods {
 			}
 		}
 		
+	}
+	
+	//validates that the input is a number
+	public void isNumber(TextField txt) {
+		txt.textProperty().addListener(new ChangeListener<String>() {
+		        @Override
+		        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		            if (!newValue.matches("\\d*")) {
+		            	txt.setText(newValue.replaceAll("[^\\d]", ""));
+		            }
+		        }
+		    });
 	}
 }// end class
