@@ -579,7 +579,8 @@ public class DoubleElimination extends EliminationTournament
 					
 			}
 			
-			roundName = builder.toString() ;
+			roundName =  isInitialComplete() ? builder.toString() : 
+							"Initial Round";
 			return roundName ;
 		}
 		

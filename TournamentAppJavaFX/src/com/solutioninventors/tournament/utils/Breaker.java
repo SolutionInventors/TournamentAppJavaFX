@@ -683,7 +683,7 @@ public enum Breaker implements Serializable
 	/**
 	 * Converts an array of Breakers to an array of String by calling each  {@code Breaker}'s
 	 * toString() method
-	 *String[]
+	 *This method does not return Breaker.COIN_TOSS
 	 *@author Oguejiofor Chidiebere
 	 *@sincev1.0
 	 *@param breakers the Breaker array to be converted
@@ -693,6 +693,7 @@ public enum Breaker implements Serializable
 	{
 		List<String> breakerName = 
 				Arrays.stream( breakers )
+				  .filter( breaker -> breaker != Breaker.COIN_TOSS )
 				  .map( b-> b.getName())
 				  .collect(Collectors.toList() );
 		return breakerName.toArray( new String[ breakerName.size() ] );

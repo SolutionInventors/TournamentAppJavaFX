@@ -6,14 +6,11 @@
  */
 package com.solutioninventors.tournament.types.group;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
-import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
-import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
-import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.RoundIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
@@ -67,6 +64,8 @@ public abstract class GroupTournament extends Tournament
 				.allMatch( b -> b.getType() == Breaker.GROUP_BREAKER ||
 							b.getType() ==  Breaker.ALL ))
 			throw new InvalidBreakerException("The breaker is invalid");
+		
+		
 		table = new StandingTable( getSportType(), comps, pWin, pDraw, pLoss, breaker);
 
 	}

@@ -41,12 +41,12 @@ public class MultistageTest {
 		Competitor c6 = new Competitor("Oguejiofor", file);
 		Competitor c7 = new Competitor("Pio", file);
 		Competitor c8 = new Competitor("Oloche", file);
-		//
-		Competitor c9 = new Competitor("Manchester", "United", file);
-		Competitor c10 = new Competitor("Chealsea", file);
-		Competitor c11 = new Competitor("Arsenal", file);
-		Competitor c12 = new Competitor("Real", file);
-		//
+		
+//		Competitor c9 = new Competitor("Manchester", "United", file);
+//		Competitor c10 = new Competitor("Chealsea", file);
+//		Competitor c11 = new Competitor("Arsenal", file);
+//		Competitor c12 = new Competitor("Real", file);
+
 		// Competitor c13 = new Competitor( "Barca" , file );
 		// Competitor c14 = new Competitor( "Atletico", file );
 		// Competitor c15 = new Competitor( "Lagos" , file );
@@ -124,10 +124,10 @@ public class MultistageTest {
 	{
 		if ( tournament.isGroupStageOver() && 
 				tournament.getKnockoutStage() instanceof DoubleElimination )
-			DoubleEliminationTest.simulateRound( tournament.getKnockoutStage() );
+			simulateGroupRound( tournament );
 		else if ( tournament.isGroupStageOver() && 
 				tournament.getKnockoutStage() instanceof SingleEliminationTournament )
-			SingleEliminationTest.simulateRound( tournament.getKnockoutStage() ); 
+			simulateGroupRound( tournament );
 		else
 			simulateGroupRound( tournament );
 		
@@ -149,6 +149,18 @@ public class MultistageTest {
 										.getStringTable());
 			}
 		}
+	}
+
+	private static void simulateSingleEliminationRound(Multistage tournament)
+	{
+		
+		
+	}
+
+	private static void simulateDoubleEliminationRound(Multistage tournament)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	public static void simulateGroupRound(Tournament tournament)

@@ -3,6 +3,7 @@ package com.solutioninventors.tournament.utils;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
@@ -51,10 +52,16 @@ public class TieBreaker implements Serializable
 	 *any of the {@code Breaker}s is set to
 	 *{@code Breaker.KNOCKOUT_BREAKER , Breaker.GROUP_BREAKER , Breaker.ALL, Breaker.GOALS_SCORED or
 	 *Breker.NOT_GOALS_SCORED}
+	 *It appends Breaker.COIN_TOSS to the Breaker list
 	 *@see Breaker
 	 */
 	public TieBreaker( Breaker ... breakers ) throws InvalidBreakerException
 	{
+		List<Breaker> list = Arrays.asList( breakers );
+		
+		list.add( Breaker.COIN_TOSS );
+		breakers = list.toArray( new Breaker[ list.size() ] );
+		
 		boolean invalid = 
 			Arrays.stream( breakers)
 				.anyMatch( b-> b.getType() == null );
