@@ -135,8 +135,15 @@ public class Competitor implements Serializable
 	 */
 	public Competitor(String first, String last, File imageFile)
 	{
-
-		if (first != null) {
+		
+		String[] tokens = first.split( " ");
+		
+		if ( last == null && tokens.length == 2 )
+		{
+			FIRST_NAME = tokens[ 0 ];
+			LAST_NAME = tokens[ 1 ];
+		}
+		else if (first != null) {
 			FIRST_NAME = first;
 			LAST_NAME = last;
 		} else
@@ -176,7 +183,10 @@ public class Competitor implements Serializable
 	 */
 	public String getName() 
 	{
-		return getFirstName() + " " + getLastName();
+		String output = getFirstName() + " " + getLastName();
+		
+		return output.trim();
+		
 	}
 
 	/**
