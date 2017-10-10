@@ -1,6 +1,7 @@
 package com.solutioninventors.tournament.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -57,7 +58,11 @@ public class TieBreaker implements Serializable
 	 */
 	public TieBreaker( Breaker ... breakers ) throws InvalidBreakerException
 	{
-		List<Breaker> list = Arrays.asList( breakers );
+		
+		List<Breaker> list =  new ArrayList<>() ; 
+		list.addAll( Arrays.asList( breakers ) );
+		list.add(Breaker.COIN_TOSS  );
+		
 		
 		list.add( Breaker.COIN_TOSS );
 		breakers = list.toArray( new Breaker[ list.size() ] );
