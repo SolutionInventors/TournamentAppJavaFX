@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MultiStageScreenController {
@@ -57,6 +58,8 @@ public class MultiStageScreenController {
 	private boolean singleDoubleElim = false;
 	private Boolean goalScored;
 	private Boolean standardbreaker = true;
+	private CommonMethods cm = new CommonMethods();
+	private Font font[] = new Font[3];
 
 	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
@@ -65,6 +68,17 @@ public class MultiStageScreenController {
 
 	public void initialize() {
 		noofround.setVisible(false);
+		font = cm.loadfonts();
+		
+		//lbltourtype.setFont(font[1]);//tournament Specs
+		//txtdisplay.setFont(font[0]);//the display
+		//lbltourapp.setFont(font[0]);//TOURNAMNET APP
+		//txtTourHighlight.setFont(font[0]);
+		cm.isNumber(txtnoOfrounds);
+		cm.isNumber(txtnoOfcomps);
+		cm.isNumber (txtwinpoint);
+		cm.isNumber (txtdrawpoint);
+		cm.isNumber(txtlosspoint);
 	}
 
 	@FXML
@@ -138,11 +152,15 @@ public class MultiStageScreenController {
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
-		if (txtnoOfrounds.getText().isEmpty() || txtwinpoint.getText().isEmpty() || txtdrawpoint.getText().isEmpty()
-				|| txtlosspoint.getText().isEmpty() || Integer.valueOf(txtnoOfcomps.getText()) <= 4 || Integer.valueOf(txtnoOfcomps.getText()) %4 !=0) {
+		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty() || txtdrawpoint.getText().isEmpty()
+				|| txtlosspoint.getText().isEmpty()) {
 		
 			AlertBox.display("Please check input", "Please check that all the textboxes are filled and that the no of competitors is a mutilple of 4 and greater than 4");
-		} else {
+		}else if ((tourType ==1) && (Integer.valueOf(txtnoOfcomps.getText())<2) || Integer.valueOf(txtnoOfcomps.getText()) % 2 !=0 ) {
+			AlertBox.display("Invalid no of Competitors", "In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
+		}else if( (tourType ==2 || tourType ==3) &&  Integer.valueOf(txtnoOfcomps.getText())<2){
+			AlertBox.display("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 2 e.g 3,4,5");
+		}else {
 
 		
 			FXMLLoader loader = new FXMLLoader();

@@ -105,12 +105,12 @@ public class KnockoutScreenController {
 	public void next(ActionEvent event) throws IOException {
 		double validator = ( Math.log( Integer.valueOf(txtNoofcompetitors.getText()) ) )/
 				( Math.log( 2 ) );
-		if ( ! ( validator % 1 == 0.0f)  ) {
+		if ( txtNoofcompetitors.getText().isEmpty()) {
+			AlertBox.display("Invalid No of Rounds", "The no of rounds cannot be empty");
+		}else if ( ! ( validator % 1 == 0.0f)  ) {
 			AlertBox.display("Invalid number", "The number of Competitors must be a power of 2");
 		}else {
-		
 		FXMLLoader loader = new FXMLLoader();
-		
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);

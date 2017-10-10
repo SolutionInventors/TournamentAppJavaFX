@@ -2,6 +2,7 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
+import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.SportType;
@@ -85,7 +86,7 @@ public class GroupStageScreenController {
 			tourType = 2;
 			txtnoOfrounds.setText("2");
 			txtnoOfrounds.editableProperty().set(false);
-			noofround.setText(noofrnd);
+			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
 			noofround.setVisible(true);
 			txtnoOfrounds.setVisible(false);
 			message = "In a                         robin tournament, each competitor plays every other competitor once. The no of rounds is determined by the no of competitors. The winner is determined by the ranking table which is based on the no of Wins, Draws , Goals Scored etc";
@@ -94,7 +95,7 @@ public class GroupStageScreenController {
 			tourType = 3;
 			txtnoOfrounds.setText("2");
 			txtnoOfrounds.setVisible(false);
-			noofround.setText(noofrnd);
+			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)*2));
 			noofround.setVisible(true);
 			txtTourHighlight.setText("DOUBLE ROUND");
 			message = "In a                          robin tournament, each competitor plays every other competitor twice.The no of rounds is determined by the no of competitors. Most association football leagues in the world are organized on a double round-robin basis, in which every team plays all others in its league once at home and once away.";
@@ -108,8 +109,14 @@ public class GroupStageScreenController {
 	public void updaterud(KeyEvent event)  {
 		if (!txtnoOfcomps.getText().isEmpty()) {
 			try {
-				String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
-				noofround.setText(noofrnd);
+				if (tourType == 2) {
+					String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
+					noofround.setText(noofrnd);
+				} else if((tourType == 3)) {
+					String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)*2);
+					noofround.setText(noofrnd);
+				}
+				
 			} catch (NumberFormatException e) {
 				noofround.setText("Please input the correct no of competitors");
 			}
@@ -128,6 +135,16 @@ public class GroupStageScreenController {
 	}
 	@FXML
 	public void next(ActionEvent event) throws IOException {
+		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty() || txtdrawpoint.getText().isEmpty()
+				|| txtlosspoint.getText().isEmpty() ) {
+		
+			AlertBox.display("Please check input", "Please check that all the textboxes are filled ");
+		}else if ((tourType ==1) && (Integer.valueOf(txtnoOfcomps.getText())<2) || Integer.valueOf(txtnoOfcomps.getText()) % 2 !=0 ) {
+			AlertBox.display("Invalid no of Competitors", "In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
+		}else if( (tourType ==2 || tourType ==3) &&  Integer.valueOf(txtnoOfcomps.getText())<2){
+			AlertBox.display("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 2 e.g 3,4,5");
+		}else {
+		
 		FXMLLoader loader = new FXMLLoader();
 		Breaker[] standardBreakers;
 		if (goalScored) {
@@ -153,7 +170,7 @@ public class GroupStageScreenController {
 			btn.next(rootPane, root, "TieBreaker.fxml","commonStyle.css");
 		}
 			
-		
+		}
 		
 
 	}

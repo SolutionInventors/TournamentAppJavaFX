@@ -15,6 +15,7 @@ import com.solutioninventors.tournament.utils.SportType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -30,6 +31,7 @@ public class ViewResultsController {
 	@FXML private Label tourStage;
 	@FXML private Label msgboxlbl;
 	@FXML private Rectangle msgboxrect;
+	@FXML private Button btnMoveNext;
 	private Label compName[];
 	private Label VS[];
 	private Label scores[];
@@ -48,12 +50,15 @@ public class ViewResultsController {
 		
 		msgboxlbl.setFont(font[1]);//tournament Specs
 		tourStage.setFont(font[1]);
+		
 	}
 	
 	public void setTournament(Tournament value) throws TournamentEndedException {
 		msgboxrect.setVisible(false);
 		msgboxlbl.setVisible(false);
+		btnMoveNext.setVisible(true);
 		tournament = value;
+		
 		if (!tournament.hasEnded()) {
 			// GridPane settings
 			GridPane grid = new GridPane();
@@ -130,6 +135,7 @@ public class ViewResultsController {
 				} catch (IncompleteFixtureException e) {
 					msgboxrect.setVisible(true);
 					msgboxlbl.setVisible(true);
+					btnMoveNext.setVisible(false);
 					System.out.println("incomplete fixture error");
 				}
 				i += 2;// increment i by 2
@@ -151,10 +157,20 @@ public class ViewResultsController {
 			}
 			scrollPane.setContent(grid);
 			}//end not null
-			
+		/*	try {
+				if (tournament.getCurrentRound().isComplete()) {
+					btnMoveNext.setVisible(false);
+				}else {
+					btnMoveNext.setVisible(true);
+				}
+			} catch (TournamentEndedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		} // end if tournament has not ended
 
 		else {
+			btnMoveNext.setVisible(false);
 			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
@@ -182,6 +198,7 @@ public class ViewResultsController {
 	public void nextRound(ActionEvent event) throws IOException {
 		try {
 			tournament.moveToNextRound();
+			btnMoveNext.setVisible(false);
 		} catch (TournamentEndedException | MoveToNextRoundException e) {
 			e.printStackTrace();
 		}

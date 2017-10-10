@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
+import com.solutioninventors.tournament.GUI.utility.CustomTextField;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -39,7 +40,7 @@ public class InputResultsController {
 	private Button btnsubmit;
 	private Label compName[];
 	private Label VS[];
-	private TextField scores[];
+	private CustomTextField scores[];
 	private ImageView logo[];
 	private ArrayList<ComboBox<String>> scoresnoGoal = new ArrayList<>();
 	// private Image img = new Image("file:nologo");
@@ -82,7 +83,7 @@ public class InputResultsController {
 				compName = new Label[currentFixtures.length * 2];
 				VS = new Label[currentFixtures.length];
 				logo = new ImageView[currentFixtures.length * 2];
-				scores = new TextField[currentFixtures.length * 2];
+				scores = new CustomTextField[currentFixtures.length * 2];
 				int i = 0;
 				for (int j = 0; j < currentFixtures.length; j++) {
 					compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
@@ -119,12 +120,14 @@ public class InputResultsController {
 
 					// display fixtures for the results to be inputed
 					if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
-						scores[i] = new TextField();
+						scores[i] = new CustomTextField();
 						scores[i].setMaxHeight(30);
+						scores[i].setNumericOnly(true);
 						scores[i].setMaxWidth(30);
-						scores[i + 1] = new TextField();
+						scores[i + 1] = new CustomTextField();
 						scores[i + 1].setMaxHeight(30);
 						scores[i + 1].setMaxWidth(30);
+						scores[i + 1].setNumericOnly(true);
 					} else {
 						scoresnoGoal.add(i, new ComboBox<String>());
 						scoresnoGoal.get(i).getItems().addAll(WDL);
@@ -180,6 +183,21 @@ public class InputResultsController {
 	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException {
 		int count = 0;
 		boolean isDraw = false;
+		if ((tournament.getSportType() == SportType.GOALS_ARE_SCORED)) {
+		for (int i = 0; i < scores.length; i++) {
+			if (scores[i].getText().isEmpty()) {
+				isDraw = true;
+				break;
+			}
+		}
+		}else {
+			for (int i = 0; i < scoresnoGoal.size(); i++) {
+				if (scoresnoGoal.get(i).getValue().isEmpty()) {
+					isDraw = true;
+					break;
+				}
+			}
+		}
 		if (tournament instanceof SingleEliminationTournament) {
 			if (((SingleEliminationTournament) tournament).isTieRound()) {
 				if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
@@ -221,6 +239,7 @@ public class InputResultsController {
 
 					try {
 						tournament.setResult(com1, score1, score2, com2);
+						btnsubmit.setVisible(false);
 					} catch (NoFixtureException ee) {
 						ee.printStackTrace();
 					}
@@ -237,6 +256,7 @@ public class InputResultsController {
 
 					try {
 						tournament.setResult(com1, score1, score2, com2);
+						btnsubmit.setVisible(false);
 					} catch (NoFixtureException ee) {
 						ee.printStackTrace();
 					}

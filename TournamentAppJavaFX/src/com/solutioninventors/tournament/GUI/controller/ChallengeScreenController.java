@@ -2,6 +2,7 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
+import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
 import javafx.event.ActionEvent;
@@ -41,6 +42,7 @@ public class ChallengeScreenController {
 		txtdisplay.setFont(font[0]);//the display
 		lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		txtTourHighlight.setFont(font[0]);
+		cm.isNumber(txtnoOfrounds);
 	}
 	
 	
@@ -56,12 +58,15 @@ public class ChallengeScreenController {
 	
 	@FXML
 	public void next(ActionEvent event) throws IOException  {
+		if (txtnoOfrounds.getText().isEmpty()) {
+			AlertBox.display("Please check input", "No of round cannot be empty");
+		} else {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setChallengeTournament(TournamentName, goalScored,Integer.valueOf(txtnoOfrounds.getText()));
 			btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
-		
+		}
 	}
 	@FXML
 	public void cancel(ActionEvent event) throws IOException {
