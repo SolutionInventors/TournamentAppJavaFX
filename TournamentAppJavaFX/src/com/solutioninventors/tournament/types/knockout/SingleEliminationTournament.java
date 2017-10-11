@@ -503,7 +503,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			break;
 		case 4:
 			if ( isSemiFinal() )
-				message = "Semifinal";
+				message = "Semi final";
 			else
 				message = "Third-place fixture";
 			break;
