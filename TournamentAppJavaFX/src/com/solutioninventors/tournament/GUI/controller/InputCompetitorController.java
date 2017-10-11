@@ -411,6 +411,7 @@ public class InputCompetitorController {
 			default:
 				break;
 			}
+			tournament.setName(TournamentName);
 		} catch (TournamentException | InvalidBreakerException e) {
 			e.printStackTrace();
 		}
@@ -446,19 +447,6 @@ public class InputCompetitorController {
 
 	public void changeImage1(MouseEvent e) throws MalformedURLException {
 		FileChooser fc = new FileChooser();
-
-		// fc.setInitialDirectory(new File("C:\\Users\\Chinedu\\Pictures"));
-		/*
-		 * yourFileChooser.setCurrentDirectory(new File (System.getProperty("user.home")
-		 * + System.getProperty("file.separator")+ "Music"));
-		 * FileChooser.ExtensionFilter imageFilter = new
-		 * FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
-		 * 
-		 * FileChooser fc = new FileChooser();
-		 * fc.getExtensionFilters().add(imageFilter);
-		 * 
-		 * 
-		 */
 		FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
 
 		fc.setInitialDirectory(

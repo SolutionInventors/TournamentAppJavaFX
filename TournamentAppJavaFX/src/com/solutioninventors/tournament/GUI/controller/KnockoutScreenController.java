@@ -107,6 +107,8 @@ public class KnockoutScreenController {
 				( Math.log( 2 ) );
 		if ( txtNoofcompetitors.getText().isEmpty()) {
 			AlertBox.display("Invalid No of Rounds", "The no of rounds cannot be empty");
+		}else if ( Integer.valueOf(txtNoofcompetitors.getText())<2  ) {
+			AlertBox.display("Invalid of competitors", "The number of Competitors must greater than 2");
 		}else if ( ! ( validator % 1 == 0.0f)  ) {
 			AlertBox.display("Invalid number", "The number of Competitors must be a power of 2");
 		}else {

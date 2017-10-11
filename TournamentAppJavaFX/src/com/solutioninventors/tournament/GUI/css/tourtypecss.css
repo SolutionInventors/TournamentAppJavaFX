@@ -6,3 +6,22 @@
 	-fx-font-size: 30px;
 	-fx-font-weight:bold;
 }
+
+.button{
+	-fx-background-color: white;
+	-fx-font-weight: bold;
+	-fx-font-size: 13px;
+	
+}
+
+.button:hover{
+	-fx-background-color: black;
+	-fx-font-weight: bold;
+	-fx-font-size: 13px;
+	-fx-text-fill: white;
+	-fx-border-color: red;
+	-fx-border-width: 1;
+	-fx-border-radius: 2;
+	-fx-font-family: "Trebuchet MS";
+	
+}

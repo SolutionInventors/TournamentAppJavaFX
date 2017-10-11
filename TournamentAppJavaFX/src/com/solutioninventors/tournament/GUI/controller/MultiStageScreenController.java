@@ -158,14 +158,10 @@ public class MultiStageScreenController {
 				|| txtdrawpoint.getText().isEmpty() || txtlosspoint.getText().isEmpty()) {
 
 			AlertBox.display("Please check input",
-					"Please check that all the textboxes are filled and that the no of competitors is a mutilple of 4 and greater than 4");
-		} else if ((tourType == 1) && (Integer.valueOf(txtnoOfcomps.getText()) < 2)
-				|| Integer.valueOf(txtnoOfcomps.getText()) % 2 != 0) {
+					"Please check that all the textboxes are filled");
+		} else if ( Integer.valueOf(txtnoOfcomps.getText()) <= 4 || Integer.valueOf(txtnoOfcomps.getText()) %4 !=0 ) {
 			AlertBox.display("Invalid no of Competitors",
-					"In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
-		} else if ((tourType == 2 || tourType == 3) && Integer.valueOf(txtnoOfcomps.getText()) < 2) {
-			AlertBox.display("Invalid no of Competitors",
-					"In a Robin tournament the No of comps must be a greater than 2 e.g 3,4,5");
+					"In a Muliti-Stage tournament the No of competitors must be a greater than 4 and multiple of 4 e.g 4,8,12");
 		} else {
 
 			FXMLLoader loader = new FXMLLoader();

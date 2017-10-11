@@ -31,7 +31,7 @@ public class MultiStageEliminationTest
 	
 	public static void main(String[] args)
 	{
-		File file = new File("Third .jpg");
+		File file = new File("Ada .jpg");
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
@@ -52,7 +52,7 @@ public class MultiStageEliminationTest
 		// Competitor c15 = new Competitor( "Lagos" , file );
 		// Competitor c16 = new Competitor( "NIgeria" , file ) ;
 
-		Competitor[] comps = { c1, c2, c3, c4 , c5, c6, c7, c8 };
+		Competitor[] comps = { c1, c2, c3, c4 , c5 };
 		//Competitor[] comps = { c1, c2, c3, c4};
 
 		Breaker[] breakers = { Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.GOALS_CONCEDED,
