@@ -25,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -55,29 +56,36 @@ public class CommonMethods {
 	}
 	
 	
-	public void about() throws IOException {
+	public void about() throws IOException, URISyntaxException {
 		Stage aboutStage = new Stage();
 		aboutStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "About.fxml"));
 		Scene scene = new Scene(root);
+		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+		aboutStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		aboutStage.setResizable(false);
+		aboutStage.sizeToScene();
 		aboutStage.setScene(scene);
 		aboutStage.show();
 		aboutStage.setTitle("Credits");
 
 	}
 
-	public void help() throws IOException {
+	public void help() throws IOException, URISyntaxException {
 		Stage helpStage = new Stage();
 		helpStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Help.fxml"));
 		Scene scene = new Scene(root);
+		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+		helpStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		helpStage.setResizable(false);
 		helpStage.setScene(scene);
-		helpStage.show();
+		helpStage.sizeToScene();
 		helpStage.setTitle("How to use application");
-
+		helpStage.show();
 	}
 
-	public void opentournament(MouseEvent event) {
+	public void opentournament(MouseEvent event) throws URISyntaxException {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(new ExtensionFilter("solutionInventorTournament ", " *sit"));
 		fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*"));
@@ -86,18 +94,29 @@ public class CommonMethods {
 		if (seletedfile != null) {
 			try {
 				tournament = Tournament.loadTournament(seletedfile);
-
-				 ((Node) event.getSource()).getScene().getWindow().hide();
-				Stage primaryStage = new Stage();
+				if (event !=null) {
+					 ((Node) event.getSource()).getScene().getWindow().hide();
+				}
+				
+				Stage window = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				Parent root = loader.load(getClass().getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
 				FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 				ic.setTournament(tournament);
 				ic.init();
 				Scene scene = new Scene(root);
-				primaryStage.setScene(scene);
-				primaryStage.show();
-				primaryStage.setTitle(tournament.getName());
+				/*
+				 * window.setOnCloseRequest(e -> { e.consume(); closeprogram(); });
+				 */
+				URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+				window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+				window.setScene(scene);
+				window.setResizable(false);
+				System.out.println(tournament.getName());
+				window.setTitle(tournament.getName());
+				
+				window.show();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (TournamentEndedException e) {
@@ -129,7 +148,7 @@ public class CommonMethods {
 		
 	}
 
-	public void opentournament() {
+	/*public void opentournament() {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(new ExtensionFilter("solutionInventorTournament ", " *sit"));
 		fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*"));
@@ -155,7 +174,7 @@ public class CommonMethods {
 			}
 		}
 		
-	}
+	}*/
 	
 	//validates that the input is a number
 	public void isNumber(TextField txt) {

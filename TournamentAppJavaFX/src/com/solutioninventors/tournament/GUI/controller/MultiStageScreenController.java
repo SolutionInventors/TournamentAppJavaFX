@@ -46,8 +46,10 @@ public class MultiStageScreenController {
 	private TextField txtlosspoint;
 	@FXML
 	private Text THeader;
-	@FXML
-	private Text close;
+	@FXML private Text txtdisplay;
+	@FXML private Text  txtTourHighlight;
+	@FXML private Label  lbltourtype; 
+	@FXML private Label lbltourapp;
 	@FXML
 	private AnchorPane rootPane;
 	@FXML
@@ -69,15 +71,15 @@ public class MultiStageScreenController {
 	public void initialize() {
 		noofround.setVisible(false);
 		font = cm.loadfonts();
-		
-		//lbltourtype.setFont(font[1]);//tournament Specs
-		//txtdisplay.setFont(font[0]);//the display
-		//lbltourapp.setFont(font[0]);//TOURNAMNET APP
-		//txtTourHighlight.setFont(font[0]);
+
+		 lbltourtype.setFont(font[1]);//tournament Specs
+		 txtdisplay.setFont(font[0]);//the display
+		 lbltourapp.setFont(font[0]);//TOURNAMNET APP
+		 txtTourHighlight.setFont(font[0]);
 		cm.isNumber(txtnoOfrounds);
 		cm.isNumber(txtnoOfcomps);
-		cm.isNumber (txtwinpoint);
-		cm.isNumber (txtdrawpoint);
+		cm.isNumber(txtwinpoint);
+		cm.isNumber(txtdrawpoint);
 		cm.isNumber(txtlosspoint);
 	}
 
@@ -97,7 +99,7 @@ public class MultiStageScreenController {
 		} else if (round.isSelected()) {
 			tourType = 2;
 			txtnoOfrounds.setVisible(false);
-			noofround.setText(noofrnd);
+			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
 			noofround.setVisible(true);
 			// message = "In a single round-robin tournament, each competitor plays every
 			// other competitor once. The no of rounds is determined by the no of
@@ -107,7 +109,7 @@ public class MultiStageScreenController {
 		} else if (doubleRound.isSelected()) {
 			tourType = 3;
 			txtnoOfrounds.setVisible(false);
-			noofround.setText(noofrnd);
+			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)*2));
 			noofround.setVisible(true);
 			// message = "In a double-round-robin tournament, each competitor plays every
 			// other competitor twice.The no of rounds is determined by the no of
@@ -152,17 +154,20 @@ public class MultiStageScreenController {
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
-		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty() || txtdrawpoint.getText().isEmpty()
-				|| txtlosspoint.getText().isEmpty()) {
-		
-			AlertBox.display("Please check input", "Please check that all the textboxes are filled and that the no of competitors is a mutilple of 4 and greater than 4");
-		}else if ((tourType ==1) && (Integer.valueOf(txtnoOfcomps.getText())<2) || Integer.valueOf(txtnoOfcomps.getText()) % 2 !=0 ) {
-			AlertBox.display("Invalid no of Competitors", "In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
-		}else if( (tourType ==2 || tourType ==3) &&  Integer.valueOf(txtnoOfcomps.getText())<2){
-			AlertBox.display("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 2 e.g 3,4,5");
-		}else {
+		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty()
+				|| txtdrawpoint.getText().isEmpty() || txtlosspoint.getText().isEmpty()) {
 
-		
+			AlertBox.display("Please check input",
+					"Please check that all the textboxes are filled and that the no of competitors is a mutilple of 4 and greater than 4");
+		} else if ((tourType == 1) && (Integer.valueOf(txtnoOfcomps.getText()) < 2)
+				|| Integer.valueOf(txtnoOfcomps.getText()) % 2 != 0) {
+			AlertBox.display("Invalid no of Competitors",
+					"In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
+		} else if ((tourType == 2 || tourType == 3) && Integer.valueOf(txtnoOfcomps.getText()) < 2) {
+			AlertBox.display("Invalid no of Competitors",
+					"In a Robin tournament the No of comps must be a greater than 2 e.g 3,4,5");
+		} else {
+
 			FXMLLoader loader = new FXMLLoader();
 			Breaker[] standardBreakers = Breaker.getBreakers(Breaker.ALL, Breaker.GOAL_DEPENDENT);
 			if (standardbreaker) {
@@ -183,7 +188,7 @@ public class MultiStageScreenController {
 						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()), tourType,
 						singleDoubleElim);
 
-				btn.next(rootPane, root, "TieBreaker.fxml","commonStyle.css");
+				btn.next(rootPane, root, "TieBreaker.fxml", "commonStyle.css");
 			}
 		}
 	}// end next

@@ -23,7 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -68,13 +67,13 @@ public class InputResultsController {
 				grid.setHgap(5);
 				grid.setVgap(5);
 				// ColumnSettings for all five columns
-				ColumnConstraints column1 = new ColumnConstraints(90); //
+				ColumnConstraints column1 = new ColumnConstraints(110); //
 				ColumnConstraints column2 = new ColumnConstraints(100); //
-				ColumnConstraints column3 = new ColumnConstraints(70);
-				ColumnConstraints column4 = new ColumnConstraints(70);
-				ColumnConstraints column5 = new ColumnConstraints(70);
+				ColumnConstraints column3 = new ColumnConstraints(50);
+				ColumnConstraints column4 = new ColumnConstraints(50);
+				ColumnConstraints column5 = new ColumnConstraints(50);
 				ColumnConstraints column6 = new ColumnConstraints(70);
-				ColumnConstraints column7 = new ColumnConstraints(100);
+				ColumnConstraints column7 = new ColumnConstraints(70);
 
 				grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7);
 

@@ -73,7 +73,7 @@ public class GroupStageScreenController {
 	}// end updateStandardBreaker
 	@FXML
 	public void radioSelected(ActionEvent event) {
-		String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
+		//String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
 		if (swiss.isSelected()) {
 			tourType = 1;
 			txtnoOfrounds.setText("2");

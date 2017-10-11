@@ -19,19 +19,25 @@
 
 <AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.MultiStageScreenController">
    <children>
-       
+         <ImageView fitHeight="553.0" fitWidth="651.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<!--          when you want to use scene bulider toggle comment -->
+<!--  <Image url="@../resource/images/TournamentAppBackground.jpg" /> -->
+<Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
+         </image>
+      </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="27.0" layoutX="233.0" layoutY="441.0" stroke="RED" strokeType="INSIDE" width="392.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" stroke="BLACK" strokeType="INSIDE" width="651.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" layoutY="493.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="651.0" />
     
-      <Label layoutX="186.0" layoutY="57.0" text="MULTI STAGE SPECS" textFill="RED">
+      <Label fx:id="lbltourtype" layoutX="186.0" layoutY="57.0" text="MULTI STAGE SPECS" textFill="RED">
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font></Label>
       <Line endX="425.0" layoutX="218.0" layoutY="98.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="103.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="96.0" layoutX="29.0" layoutY="117.0" stroke="#686262" strokeType="INSIDE" width="607.0" />
-      <Text layoutX="42.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                , there are two stages with the top competitors(or winners) of the first stage(thes group stage) advancing to the next stage (Knockout Stage)" wrappingWidth="580.0">
+      <Text fx:id="txtdisplay" layoutX="42.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                , there are two stages with the top competitors(or winners) of the first stage(thes group stage) advancing to the next stage (Knockout Stage)" wrappingWidth="580.0">
          <font>
             <Font name="Trebuchet MS" size="19.0" />
          </font>
@@ -53,15 +59,15 @@
             <Font name="Trebuchet MS Bold" size="15.0" />
          </font>
       </Button>
-      <Text fill="RED" layoutX="81.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MULTI STAGE SPECS">
+      <Text fx:id="txtTourHighlight" fill="RED" layoutX="83.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MULTI STAGE SPECS">
          <font>
             <Font name="Trebuchet MS Bold" size="19.0" />
          </font>
       </Text>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="29.0" layoutX="241.0" layoutY="242.0" stroke="RED" strokeType="INSIDE" width="392.0" />
-      <Label layoutX="47.0" layoutY="247.0" text="Group Stage Style:">
+      <Label layoutX="50.0" layoutY="247.0" text="Group Stage Style:">
          <font>
-            <Font name="Times New Roman" size="18.0" />
+            <Font name="Trebuchet MS" size="16.0" />
          </font>
       </Label>
       <Line endX="25.0" layoutX="333.0" layoutY="256.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
@@ -83,7 +89,7 @@
             <Font name="Times New Roman" size="14.0" />
          </font>
       </RadioButton>
-      <Line endX="25.0" layoutX="454.0" layoutY="255.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="25.0" layoutX="454.0" layoutY="256.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
       <GridPane layoutX="50.0" layoutY="264.0" prefHeight="153.0" prefWidth="547.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="209.0" />
@@ -102,17 +108,17 @@
          <children>
             <Label text="Pointing System">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Trebuchet MS" size="16.0" />
                </font>
             </Label>
             <Label text="Number of Competitors:" GridPane.rowIndex="2">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Trebuchet MS" size="16.0" />
                </font>
             </Label>
             <Label text="Number of Rounds:" GridPane.rowIndex="3">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Trebuchet MS" size="16.0" />
                </font>
             </Label>
             <TextField fx:id="txtnoOfcomps" onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
@@ -166,7 +172,7 @@
       </Label>
       <Label layoutX="51.0" layoutY="446.0" text="Elimination Style">
          <font>
-            <Font name="Times New Roman" size="18.0" />
+            <Font name="Trebuchet MS" size="16.0" />
          </font>
       </Label>
       <RadioButton fx:id="singleelim" layoutX="245.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" selected="true" text="Single" textFill="WHITE">
@@ -193,5 +199,10 @@
             <Font name="Trebuchet MS" size="22.0" />
          </font>
       </Label>
+<!--       <ImageView fitHeight="46.0" fitWidth="48.0" layoutX="13.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true"> -->
+<!--          <image> -->
+<!--             <Image url="/com/solutioninventors/tournament/GUI/resource/images/logo.jpg" /> -->
+<!--          </image> -->
+<!--       </ImageView> -->
    </children>
 </AnchorPane>

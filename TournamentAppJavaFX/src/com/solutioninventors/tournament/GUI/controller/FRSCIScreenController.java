@@ -1,6 +1,7 @@
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
@@ -104,8 +105,8 @@ public class FRSCIScreenController {
 		primaryStage.show();
 		primaryStage.setTitle("Tournament App");
 	}
-	public void openTour(ActionEvent event) {
-		control.opentournament();
+	public void openTour(ActionEvent event) throws URISyntaxException {
+		control.opentournament(null);
 	}
 	public void saveTour(ActionEvent e) {
 		control.save(tournament);
@@ -121,10 +122,10 @@ public class FRSCIScreenController {
 		Platform.exit();
 		System.exit(0);
 	}
-	public void help(ActionEvent e) throws IOException {
+	public void help(ActionEvent e) throws IOException, URISyntaxException {
 		control.help();
 	}
-	public void about(ActionEvent e) throws IOException {
+	public void about(ActionEvent e) throws IOException, URISyntaxException {
 		control.about();
 	}
 	
