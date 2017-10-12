@@ -1,10 +1,12 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.CustomTextField;
+import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -18,7 +20,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -179,17 +183,19 @@ public class InputResultsController {
 	}// end set current
 
 	@FXML
-	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException {
+	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException, IOException {
 		int count = 0;
 		boolean isDraw = false;
-		if ((tournament.getSportType() == SportType.GOALS_ARE_SCORED)) {
-		for (int i = 0; i < scores.length; i++) {
-			if (scores[i].getText().isEmpty()) {
-				isDraw = true;
-				break;
+		boolean goalsAreScore = (tournament.getSportType() == SportType.GOALS_ARE_SCORED ? true : false);
+
+		if ((goalsAreScore)) {
+			for (int i = 0; i < scores.length; i++) {
+				if (scores[i].getText().isEmpty()) {
+					isDraw = true;
+					break;
+				}
 			}
-		}
-		}else {
+		} else {
 			for (int i = 0; i < scoresnoGoal.size(); i++) {
 				if (scoresnoGoal.get(i).getValue().isEmpty()) {
 					isDraw = true;
@@ -199,27 +205,11 @@ public class InputResultsController {
 		}
 		if (tournament instanceof SingleEliminationTournament) {
 			if (((SingleEliminationTournament) tournament).isTieRound()) {
-				if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
+				if (goalsAreScore) {
 
-					for (int i = 0; i < scores.length; i += 2) {
-						double score1 = Double.valueOf(scores[i].getText());
-						double score2 = Double.valueOf(scores[i + 1].getText());
-
-						if (score1 == score2) {
-							isDraw = true;
-							break;
-						}
-					}
+					isDraw = checkforDrawgoals(isDraw);
 				} else {
-					for (int i = 0; i < scoresnoGoal.size(); i += 2) {
-						double score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
-						double score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
-						
-						if (score1==score2) {
-							isDraw = true;
-							break;
-						}
-					}
+					isDraw = checkforDrawNoGoal(count, isDraw);
 				}
 			}
 
@@ -227,7 +217,7 @@ public class InputResultsController {
 		if (isDraw) {
 			AlertBox.display("Draw", "Cannot input a draw in tie Round please check one or more of your scores");
 		} else {
-			if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
+			if (goalsAreScore) {
 
 				for (int i = 0; i < currentFixtures.length; i++) {
 					Competitor com1 = currentFixtures[i].getCompetitorOne();
@@ -264,6 +254,49 @@ public class InputResultsController {
 				} // end for loop
 			} // end if goals are scored
 		}
+		FXMLLoader loader = new FXMLLoader();
+		Parent root = loader.load(getClass().getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
+		FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
+		ic.changetab(1);
+	}// end method get result
+
+	/**
+	 * boolean
+	 * 
+	 * @param count
+	 * @param isDraw
+	 * @return
+	 */
+	public boolean checkforDrawNoGoal(int count, boolean isDraw) {
+		for (int i = 0; i < scoresnoGoal.size(); i += 2) {
+			double score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
+			double score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
+
+			if (score1 == score2) {
+				isDraw = true;
+				break;
+			}
+		}
+		return isDraw;
+	}
+
+	/**
+	 * boolean
+	 * 
+	 * @param isDraw
+	 * @return
+	 */
+	public boolean checkforDrawgoals(boolean isDraw) {
+		for (int i = 0; i < scores.length; i += 2) {
+			double score1 = Double.valueOf(scores[i].getText());
+			double score2 = Double.valueOf(scores[i + 1].getText());
+
+			if (score1 == score2) {
+				isDraw = true;
+				break;
+			}
+		}
+		return isDraw;
 	}
 
 }// end class

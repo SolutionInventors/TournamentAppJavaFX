@@ -28,20 +28,14 @@
          </font></Label>
       <Line endX="425.0" layoutX="218.0" layoutY="108.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="113.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
-      <Button fx:id="btnPrevious" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="505.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="PREVIOUS" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button fx:id="btnPrevious" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="505.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0"  text="PREVIOUS" textAlignment="CENTER">
+        
       </Button>
-      <Button fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="505.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="505.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" text="NEXT" textAlignment="CENTER">
+      
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="505.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="505.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0"  text="CANCEL" textAlignment="CENTER" textFill="RED">
+         
       </Button>
       <Label fx:id="lbltourapp" layoutX="80.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
@@ -116,10 +110,8 @@
            <Image url="/com/solutioninventors/tournament/GUI/resource/images/clickme.PNG" />
          </image>
       </ImageView>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="505.0" mnemonicParsing="false" onAction="#finish" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="FINISH" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="505.0" mnemonicParsing="false" onAction="#finish" prefHeight="20.0" prefWidth="90.0"  text="FINISH" textAlignment="CENTER">
+         
       </Button>
       <ImageView fx:id="img1" fitHeight="65.0" fitWidth="108.0" layoutX="440.0" layoutY="172.0" onMouseClicked="#changeImage1" pickOnBounds="true" preserveRatio="true">
          <image>

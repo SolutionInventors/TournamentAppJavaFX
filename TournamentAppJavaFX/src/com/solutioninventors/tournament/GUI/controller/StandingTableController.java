@@ -20,6 +20,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -35,12 +36,13 @@ public class StandingTableController {
 	private Tournament tournament;
 	private TableView<StandingTable> table[];
 	private TableColumn<StandingTable, String> compName[];
+	private TableColumn<StandingTable, String> serialNo[];
 	private TableColumn<StandingTable, Double> WDLFADP[][];
 	private String tableLabelgoalScored[] = { "P", "W", "D", "L", "GF", "GA", "GD", "PTS" };
 	private String tableLabelNOgoalScored[] = { "P", "W", "D", "L", "PTS" };
 	private String standingTableValue[] = { "gamesPlayed", "wins", "draw", "loss", "goalsFor", "goalsAgainst",
 			"goalsDiff", "points" };
-	private String standingTableValuenoGoals[] = { "gamesPlayed", "wins", "draw", "loss", "points" };
+	private String standingTableValuenoGoals[] = {  "gamesPlayed", "wins", "draw", "loss", "points" };
 	int noOfGroups;
 	private VBox vBox;
 	
@@ -81,6 +83,15 @@ public class StandingTableController {
 
 	@SuppressWarnings("unchecked")
 	public void setupTable() {
+		
+		serialNo = new TableColumn[noOfGroups];
+		for (int i = 0; i < serialNo.length; i++) {
+			serialNo[i] = new TableColumn<>("S/N");
+			serialNo[i].setMinWidth(5);
+			serialNo[i].setCellValueFactory(new PropertyValueFactory<>("sn"));
+		} // end for loop for compName setup
+		
+		
 		compName = new TableColumn[noOfGroups];
 		for (int i = 0; i < compName.length; i++) {
 			compName[i] = new TableColumn<>("Competitor Name");
@@ -115,6 +126,7 @@ public class StandingTableController {
 		for (int i = 0; i < table.length; i++) {
 			table[i] = new TableView<>();
 			table[i].setItems(abc.get(i));
+			table[i].getColumns().add(serialNo[i]);
 			table[i].getColumns().add(compName[i]);
 			for (int col = 0; col < WDLFADP[i].length; col++) {
 				table[i].getColumns().add(WDLFADP[i][col]);
@@ -128,9 +140,13 @@ public class StandingTableController {
 		}
 		vBox = new VBox(10);
 		vBox.setPadding(new Insets(10, 10, 10, 10));
+		vBox.setPrefSize(530,Region.USE_COMPUTED_SIZE);//width , height
 		for (int i = 0; i < noOfGroups; i++) {
-			if (tournament instanceof Multistage)
+			if (tournament instanceof Multistage) {
 				vBox.getChildren().add(lbl[i]);
+				vBox.setPrefSize(530,700);//width , height
+			}
+				
 			vBox.getChildren().add(table[i]);
 		}
 
@@ -163,13 +179,13 @@ public class StandingTableController {
 				for (j = 0; j < stringtableMap.get(i).length; j++) { //inner for loop
 					if (j == 0) {
 						map.put(i, items3.get(i))
-								.add(new StandingTable(stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
+								.add(new StandingTable(String.valueOf((j+1)), stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5], stringtableMap.get(i)[j][6],
 										stringtableMap.get(i)[j][7], stringtableMap.get(i)[j][8]));
 					}
 					try {
 						map.put(i, items3.get(i))
-								.add(new StandingTable(stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
+								.add(new StandingTable(String.valueOf((j+1)), stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5], stringtableMap.get(i)[j][6],
 										stringtableMap.get(i)[j][7], stringtableMap.get(i)[j][8]));
 					} catch (Exception e) {
@@ -180,12 +196,12 @@ public class StandingTableController {
 				for (j = 0; j < stringtableMap.get(i).length; j++) { //inner for loop
 					if (j == 0) {
 						map.put(i, items3.get(i))
-								.add(new StandingTable(stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
+								.add(new StandingTable(String.valueOf((j+1)),stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5]));
 					}
 					try {
 						map.put(i, items3.get(i))
-								.add(new StandingTable(stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
+								.add(new StandingTable(String.valueOf((j+1)), stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5]));
 					} catch (Exception e) {
 						e.printStackTrace();

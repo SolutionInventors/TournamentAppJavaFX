@@ -61,12 +61,7 @@ public class WelcomeScreenController {
 	}
 	public void Help(MouseEvent event) throws IOException, URISyntaxException {
 		cm.help();
-	
-		
 	}
-	
-	
-	
 	
 	public void load() {
 		System.out.println("i am called");

@@ -43,20 +43,14 @@
       </Text>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="4.0" layoutX="311.0" layoutY="131.0" stroke="RED" strokeType="INSIDE" width="326.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="3.0" layoutX="380.0" layoutY="130.0" stroke="RED" strokeType="INSIDE" width="249.0" />
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="494.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="PREVIOUS" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="494.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0" text="PREVIOUS" textAlignment="CENTER">
+         
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="494.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="494.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0"  text="NEXT" textAlignment="CENTER">
+        
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="494.0" onAction="#cancel" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="494.0" onAction="#cancel" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0"  text="CANCEL" textAlignment="CENTER" textFill="RED">
+        
       </Button>
       <Text fx:id="txtTourHighlight" fill="RED" layoutX="77.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWISS STYLE" wrappingWidth="151.99999248236418">
          <font>
