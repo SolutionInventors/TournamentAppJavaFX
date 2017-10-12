@@ -45,7 +45,7 @@ public class DoubleEliminationTest
 		
 		
 		Competitor[] comps = { 
-				c1 , c2  , c3 , c4 
+				c1 , c2  , c3 , c4 , c5, c6, c7, c8
 				}; 
 
 		Tournament tournament = null ;

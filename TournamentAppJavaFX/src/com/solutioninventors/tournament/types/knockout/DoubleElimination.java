@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -64,6 +65,7 @@ public class DoubleElimination extends EliminationTournament
 {
 	
 	private Competitor[] topThree;
+	
 	
 	private static final long serialVersionUID = -7071860792899692927L;
 	
@@ -119,6 +121,7 @@ public class DoubleElimination extends EliminationTournament
 		rounds.put( BracketType.MINOR_BRACKET ,   minor);
 		rounds.put( BracketType.INITIAL_BRACKET , new ArrayList<>() );
 		rounds.put( BracketType.TOURNAMENT_FINAL, new ArrayList<>() );
+		
 		
 		topThree = new Competitor[ 3 ];
 		setCurrentFixture( BracketType.INITIAL_BRACKET);
@@ -209,6 +212,8 @@ public class DoubleElimination extends EliminationTournament
 	
 
 	
+	
+	
 	/**
 	 * This method is inherited from {@link Tournament}. It is used to set the reesult of the 
 	 * current {@link Round }. It sets the results by first verifying if the fixture is in the 
@@ -224,10 +229,7 @@ public class DoubleElimination extends EliminationTournament
 	public void setResult(Competitor competitorOne, double score1, 
 			double score2, Competitor competitorTwo) throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException 
 	{
-		
-		if ( score1 == score2 )//there's a tie
-			return ;
-		
+
 		try 
 		{
 			if ( getActiveCompetitors().length ==  2 )//tournament final 
@@ -275,6 +277,8 @@ public class DoubleElimination extends EliminationTournament
 	}
 
 	
+	
+	
 	/**
 	 * Checks of the first {@code Round} of this {@code DoubleElimination} tournament
 	 * has been played
@@ -309,14 +313,20 @@ public class DoubleElimination extends EliminationTournament
 	{
 		
 		if ( !hasEnded() )
+		{
 			if ( !getCurrentRound().isComplete() )//contains pending fixtures or ties 
 				return ;
 			else 
 				createNextRound( getCurrentFixture() );
+		}
 		else
 			throw new TournamentEndedException( "This tournament has ended." );
 		
 	}
+
+	
+	
+
 
 	/**
 	 * Creates the next round in the tournament based on the current fixture
@@ -344,11 +354,9 @@ public class DoubleElimination extends EliminationTournament
 				
 				
 				addRound(BracketType.	MINOR_BRACKET , new Round( 
-						fixesCreator( loserBracket )
-						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
+						fixesCreator( loserBracket ) ));
 				addRound(BracketType.WINNERS_BRACKET , new Round( 
-						fixesCreator( winnerBracket )
-						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
+						fixesCreator( winnerBracket ) ) );
 				
 				setCurrentFixture( BracketType.WINNERS_BRACKET);
 				break;
@@ -362,10 +370,10 @@ public class DoubleElimination extends EliminationTournament
 				
 				if ( loserBracket.size()  > 1 )
 				{
-					addRound(BracketType.	MINOR_BRACKET , new Round( 
-							fixesCreator( loserBracket)
-							.toArray(new Fixture[ fixesCreator( loserBracket).size() ] ) ) );
+					addRound(BracketType.MINOR_BRACKET , new Round( 
+							fixesCreator( loserBracket) ));
 					setCurrentFixture( BracketType.WINNERS_BRACKET );
+					
 				}
 				else
 				{
@@ -382,6 +390,7 @@ public class DoubleElimination extends EliminationTournament
 									.getLosers()[0];
 					
 				}
+				incrementRoundNum();
 				break;
 			case WINNERS_BRACKET:
 				
@@ -400,15 +409,12 @@ public class DoubleElimination extends EliminationTournament
 				
 				if( winnerBracket.size() > 1 )
 					addRound( BracketType.WINNERS_BRACKET , 
-								new Round( fixesCreator( winnerBracket )
-								.toArray(new Fixture[ fixesCreator( winnerBracket ).size() ] ) ) 
-						);
+								new Round( fixesCreator( winnerBracket )  ) );
 				
 				
 				
 				addRound(BracketType.MAJOR_BRACKET , new Round( 
-						fixesCreator( loserBracket )
-						.toArray(new Fixture[ fixesCreator( loserBracket ).size() ] ) ) );
+						fixesCreator( loserBracket ) )  );
 				
 				setCurrentFixture( BracketType.MAJOR_BRACKET);
 				break;
@@ -467,21 +473,20 @@ public class DoubleElimination extends EliminationTournament
 	/**
 	 * Creates the fixtures with a list of competitors
 	 */
-	private List<Fixture> fixesCreator( List<Competitor> bracket )
+	private Fixture[] fixesCreator( List<Competitor> bracket )
 	{
 		List<Fixture> list =  new ArrayList<>();
 		for ( int i = 0 ; i < bracket.size() ; i+= 2 )
 			list.add(  new Fixture( getSportType(), 
 					bracket.get( i ), bracket.get( i + 1 )));
 
-		return list;
+		return list.toArray( new Fixture[ list.size() ] );
 	}
 
 	
 	@Override
 	public Round getCurrentRound() throws TournamentEndedException
 	{
-
 		List<Fixture> fixtures = 
 				new ArrayList<>( getActiveCompetitors().length / 2 );
 		

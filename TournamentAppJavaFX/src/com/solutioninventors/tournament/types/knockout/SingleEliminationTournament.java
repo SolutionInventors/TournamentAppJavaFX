@@ -195,7 +195,6 @@ public class SingleEliminationTournament extends EliminationTournament {
 				eliminateLosers();
 			}
 			Round tieRound = new Round( activeTies );
-			tieRounds.put( getCurrentRoundNum(), tieRound ) ;
 			createTieRound( tieRound );
 			setTieRound( true );
 		}
