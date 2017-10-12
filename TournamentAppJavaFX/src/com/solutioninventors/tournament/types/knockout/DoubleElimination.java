@@ -84,9 +84,11 @@ public class DoubleElimination extends EliminationTournament
 	 */
 	private Map< BracketType , List<Round> > rounds;
 	
+	
+	
 	/**
 	 * Creates a {@code DoubleElimination} with the specified competitors
-	 * 
+	 * Always shuffles the competitors
 	 *@param comps the {@code Competitor} array
 	 *@throws TournamentException if an invalid number of competitors
 	 *is inputed
@@ -94,7 +96,20 @@ public class DoubleElimination extends EliminationTournament
 	 */
 	public DoubleElimination( SportType type, Competitor[] comps) throws TournamentException
 	{
-		super(type, comps);
+		this( type, comps, true );
+	}
+	
+	/**
+	 * Creates a {@code DoubleElimination} with the specified competitors
+	 * Shuffles the array based on the value of shuffle
+	 *@param comps the {@code Competitor} array
+	 *@throws TournamentException if an invalid number of competitors
+	 *is inputed
+	 *
+	 */
+	public DoubleElimination( SportType type, Competitor[] comps, boolean shuffle) throws TournamentException
+	{
+		super( type , comps , shuffle );
 		rounds = new HashMap<>();
 		List<Round> minor = new ArrayList<>(); //used to increase index to 1
 		List<Round> major = new ArrayList<>(); //used to increase index to 1
@@ -555,6 +570,9 @@ public class DoubleElimination extends EliminationTournament
 	@Override
 	public String toString()
 	{
+		if ( hasEnded() )
+			return "Tournament Has Ended";
+		
 		StringBuilder builder = new StringBuilder();
 		
 		int totalCompetitors = getActiveCompetitors().length;

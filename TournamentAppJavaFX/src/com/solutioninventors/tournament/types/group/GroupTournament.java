@@ -202,6 +202,9 @@ public abstract class GroupTournament extends Tournament
 		table.updateTables();
 	}
 	public String toString() {
+		if ( hasEnded() )
+			return "Tournament Has Ended";
+		
 		return "Round " + ( getCurrentRoundNum()+1) ;
 	}
 

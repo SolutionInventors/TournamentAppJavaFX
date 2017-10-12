@@ -100,11 +100,11 @@ public enum Breaker implements Serializable
 	
 
 	AWAY_GOALS_SCORED( GROUP_BREAKER , getAwayGoalsScored() , GOAL_DEPENDENT  ), 
-	AWAY_GOALS_CONCEEDED( GROUP_BREAKER , getAwayGoalsConceded()  , GOAL_DEPENDENT), 
+	AWAY_GOALS_CONCEDED( GROUP_BREAKER , getAwayGoalsConceded()  , GOAL_DEPENDENT), 
 	AWAY_GOALS_DIFFERENCE( GROUP_BREAKER , getAwayGoalDifference() , GOAL_DEPENDENT ), 
 	
 	HOME_GOALS_SCORED( GROUP_BREAKER , getHomeGoalsScored()  , GOAL_DEPENDENT ), 
-	HOME_GOALS_CONCEEDED( GROUP_BREAKER , getHomeGoalConceeded() , GOAL_DEPENDENT  ), 
+	HOME_GOALS_CONCEDED( GROUP_BREAKER , getHomeGoalConceeded() , GOAL_DEPENDENT  ), 
 	HOME_GOALS_DIFFERENCE( GROUP_BREAKER , getHomeGoalDifference()  , GOAL_DEPENDENT ), 
 	
 	
@@ -122,7 +122,9 @@ public enum Breaker implements Serializable
 	TOTAL_DRAWS( GROUP_BREAKER, getNumberOfDraw(), NOT_GOAL_DEPENDENT) ,
 	TOTAL_LOSS( GROUP_BREAKER , getNumberOfLoss(), NOT_GOAL_DEPENDENT ) ,
 	
-	HEAD_TO_HEAD( GROUP_BREAKER , getHeadToHead() , NOT_GOAL_DEPENDENT)  ;
+	HEAD_TO_HEAD_WINS( GROUP_BREAKER , new HeadToHead( HeadToHead.WINS ) , NOT_GOAL_DEPENDENT)  ,
+	
+	HEAD_TO_HEAD_TOTAL_GOALS( GROUP_BREAKER , new HeadToHead( HeadToHead.TOTAL_GOALS ) , GOAL_DEPENDENT)  ;
 	
 	private final  Comparator< Competitor> breaker;
 	private final Breaker type ;
@@ -144,6 +146,9 @@ public enum Breaker implements Serializable
 	}
 	
 	
+	
+
+
 	/**
 	 * Initializes  this {@code Breaker } object by storing the arguments
 	 * 
@@ -317,22 +322,7 @@ public enum Breaker implements Serializable
 		return new CoinTossBreaker();
 	}
 
-	/**
-	 * 
-	 *Gets a Comparator<Competitor> object that encapsulates the logic used for creating breaking ties
-	 *between two {@code Competitor}'s via their head to head record. 
-	 *This method is used to create Breaker.HEAD_TO_HEAD object
-	 *@return a Comparator<Competitor> object used to break tie
-	 *@author Oguejifor Chidiebere 
-	 *@since v1.0
-	 *@see Competitor
-	 *
-	 */
 	
-	private static Comparator< Competitor> getHeadToHead()
-	{
-		return new Head_To_Head();
-	}
 
 	/**
 	 * 
@@ -510,25 +500,51 @@ public enum Breaker implements Serializable
 
 	/**
 	 *This class is used to create a Comparator&ltCompetitor&gt object that 
-	 *breaks ties between two Competitors via their head to head record
+	 *breaks ties between two Competitors via their head to head record.<br/>
+	 *Its constructor takes a type argument and uses it to when creating the compare
+	 *method. 
 	 *@author Oguejiofor Chidiebere 
 	 *@since v1.0
 	 *@see Competitor
 	 *
 	 */
 	
-	private static class Head_To_Head implements Comparator< Competitor >
+	private static class HeadToHead implements Comparator< Competitor >
 	{
+		
+		public final static int TOTAL_GOALS = 0 ;
+		public final static int WINS = 1 ;
+		
+		private final int TYPE; 
+		
+		public HeadToHead( int type )
+		{
+			TYPE = type;
+		}
+		
+		
 		@Override
 		public int compare(Competitor com1, Competitor com2)
 		{
+			Number score1 =  0 ;
+			Number score2 =  0 ;
 			
-			double score1 = com1.getHeadToHeadScore( com2 );
-			double score2 = com2.getHeadToHeadScore( com1 ); ;
+			if ( TYPE == TOTAL_GOALS )
+			{
+				score1 = com1.getHeadToHeadGoals( com2 );
+				score2 = com2.getHeadToHeadGoals( com1 ); ;
+			}
+			else  
+			{
+				score1 = com1.getHeadToHeadWins( com2 );
+				score2 = com2.getHeadToHeadWins( com1 ); ;
+			}
 			
-			if ( score1 < score2 )
+			
+			
+			if ( score1.doubleValue() < score2.doubleValue() )
 				return 1;
-			else if ( score1 == score2 )
+			else if ( score1.doubleValue() == score2.doubleValue() )
 				return 0 ;
 			else
 				return -1 ;
@@ -695,6 +711,7 @@ public enum Breaker implements Serializable
 				Arrays.stream( breakers )
 				  .filter( breaker -> breaker != Breaker.COIN_TOSS )
 				  .map( b-> b.getName())
+				  .sorted()
 				  .collect(Collectors.toList() );
 		return breakerName.toArray( new String[ breakerName.size() ] );
 			  
@@ -704,13 +721,16 @@ public enum Breaker implements Serializable
 	{
 		if( type == SportType.GOALS_ARE_SCORED )
 		{ 
-			Breaker[] breakers = 		 {Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, 
-			Breaker.HEAD_TO_HEAD, Breaker.GOALS_SCORED, Breaker.COIN_TOSS};
+			Breaker[] breakers = 		 
+				{
+					Breaker.GOALS_DIFFERENCE, Breaker.GOALS_SCORED, Breaker.HEAD_TO_HEAD_WINS, 
+					 Breaker.GOALS_SCORED, Breaker.COIN_TOSS
+				};
 			return breakers;
 		}
 		
 		Breaker[] breakers = 		 
-			{Breaker.HEAD_TO_HEAD, Breaker.TOTAL_WINS, Breaker.COIN_TOSS };
+			{ Breaker.TOTAL_WINS, Breaker.COIN_TOSS };
 		return breakers;
 	}
 	

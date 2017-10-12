@@ -61,7 +61,7 @@ public class RoundRobinTest {
 		
 		
 		Breaker[] breakers = {
-				 Breaker.HEAD_TO_HEAD, Breaker.GOALS_DIFFERENCE 			 
+				 Breaker.HEAD_TO_HEAD_WINS, Breaker.GOALS_DIFFERENCE 			 
 		};
 		
 		

@@ -63,7 +63,7 @@ public class RandomRoubinTournaement {
 		
 		
 		Breaker[] breakers = {
-				 Breaker.HEAD_TO_HEAD			 
+				 Breaker.HEAD_TO_HEAD_WINS			 
 		};
 		
 		

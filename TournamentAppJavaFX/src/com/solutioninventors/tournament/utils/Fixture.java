@@ -113,6 +113,9 @@ public class Fixture implements Serializable{
 			if (homeComScore > awayComScore) {
 				getCompetitorOne().incrementHomeWin();
 				getCompetitorTwo().incrementAwayLoss();
+				
+				getCompetitorOne().addToHeadToHeadWins(getCompetitorTwo() , 1);
+				getCompetitorTwo().addToHeadToHeadLoss(getCompetitorOne() , 1);
 				competitorOneScore = 1;
 				competitorTwoScore = -1;
 			} 
@@ -120,6 +123,9 @@ public class Fixture implements Serializable{
 			{
 				getCompetitorOne().incrementHomeDraw();
 				getCompetitorTwo().incrementAwayDraw();
+				
+				getCompetitorOne().addToHeadToHeadDraw(getCompetitorTwo() , 1);
+				getCompetitorTwo().addToHeadToHeadDraw(getCompetitorOne() , 1);
 				competitorOneScore = 0;
 				competitorTwoScore = 0;
 			}
@@ -127,6 +133,10 @@ public class Fixture implements Serializable{
 			{
 				getCompetitorOne().incrementAwayLoss();
 				getCompetitorTwo().incrementAwayWin();
+				
+				getCompetitorOne().addToHeadToHeadLoss(getCompetitorTwo() , 1);
+				getCompetitorTwo().addToHeadToHeadWins(getCompetitorOne() , 1);
+				
 				competitorOneScore = -1;
 				competitorTwoScore = 1;
 				
@@ -136,8 +146,8 @@ public class Fixture implements Serializable{
 			if ( TYPE == SportType.GOALS_ARE_SCORED )
 			{
 				
-				getCompetitorOne().addToHeadToHead( getCompetitorTwo() , homeComScore ); 
-				getCompetitorTwo().addToHeadToHead(getCompetitorOne(), awayComScore );
+				getCompetitorOne().addToHeadToHeadGoals( getCompetitorTwo() , homeComScore ); 
+				getCompetitorTwo().addToHeadToHeadGoals(getCompetitorOne(), awayComScore );
 				
 				getCompetitorTwo().addAwayGoal( getCompetitorOne(), awayComScore);//adds away goal
 				getCompetitorOne().addHomeGoal( getCompetitorTwo(), homeComScore);//adds home goal

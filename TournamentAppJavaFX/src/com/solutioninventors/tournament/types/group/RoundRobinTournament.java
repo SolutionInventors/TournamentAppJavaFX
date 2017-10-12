@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -217,9 +216,11 @@ public class RoundRobinTournament extends GroupTournament
 
 	
 	
-	
+	/**
+	 * @throws OnlyOutstandingAreLeftException when there tournament contains only outstanding fixtures
+	 */
 	@Override
-	public void moveToNextRound() throws  TournamentEndedException, MoveToNextRoundException
+	public void moveToNextRound() throws OnlyOutstandingAreLeftException,  TournamentEndedException, MoveToNextRoundException
 	{
 		Round[] rnds = getRoundArray();
 		
@@ -246,13 +247,11 @@ public class RoundRobinTournament extends GroupTournament
 				}
 			}
 		
-			
-			
 		}
 		else if ( outstandingMatches.size() > 0 )
 		{
 			String message = "Only outsanding matches are left";
-			JOptionPane.showMessageDialog( null , message ) ;
+			throw new OnlyOutstandingAreLeftException( message );
 		}
 		else
 		{

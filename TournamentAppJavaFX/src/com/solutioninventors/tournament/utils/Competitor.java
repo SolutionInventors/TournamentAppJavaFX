@@ -87,9 +87,12 @@ public class Competitor implements Serializable
 	*/
 	private int awayLoss;
 	
+	/**
+	 * Stores the head to head record of competitors
+	 */
+	private Map< Competitor, Integer[] > headToHead ;
 	
-	
-	private Map< Competitor , Double > headToHead ;
+	private Map< Competitor , Double > headToHeadGoals ;
 	
 	/**
 	 * Stores the away goals scored by this Competitor against an home opponent<br>
@@ -151,7 +154,8 @@ public class Competitor implements Serializable
 		setImage(imageFile);
 		setEliminated(false);
 
-		headToHead = new HashMap<Competitor , Double >();
+		headToHead = new HashMap<Competitor, Integer[] >();
+		headToHeadGoals = new HashMap<Competitor , Double >();
 		awayGoals = new HashMap<Competitor , Double >();
 		homeGoals = new HashMap<Competitor , Double >();
 		
@@ -479,18 +483,75 @@ public class Competitor implements Serializable
 	}
 	
 	/**
-	 * Adds this {@code Competitor}the head to head score against of this 
+	 * Adds this {@code Competitor}the head to head goals against of this 
 	 * {@code Competitor} against an opponent
 	 *@param com the opponent
 	 *@param score this {@code Competitor }score
 	 */
-	protected void addToHeadToHead( Competitor com , double score )
+	protected void addToHeadToHeadGoals( Competitor com , double score )
 	{
-		if ( headToHead.containsKey( com ) )
-			score += headToHead.get( com );
+		if ( headToHeadGoals.containsKey( com ) )
+			score += headToHeadGoals.get( com );
 		
-		headToHead.put( com , score );
+		headToHeadGoals.put( com , score );
 	}
+	
+	
+	/**
+	 * Adds this {@code Competitor}the head to head wins against of this 
+	 * {@code Competitor} against an opponent
+	 *@param com the opponent
+	 *@param score this {@code Competitor }score
+	 */
+	protected void addToHeadToHeadWins( Competitor com , int  score )
+	{
+		Integer[] points = new Integer[ 3 ]  ;
+		if ( headToHead.containsKey( com ) )
+		{
+			points = headToHead.get( com );
+		}
+			
+		points[0] += score ;
+		headToHead.put( com , points );
+	}
+	
+	/**
+	 * Adds this {@code Competitor}the head to head draws against of this 
+	 * {@code Competitor} against an opponent
+	 *@param com the opponent
+	 *@param score this {@code Competitor }score
+	 */
+	protected void addToHeadToHeadDraw( Competitor com , int  score )
+	{
+		Integer[] points = new Integer[ 3 ]  ;
+		if ( headToHead.containsKey( com ) )
+		{
+			points = headToHead.get( com );
+		}
+			
+		points[1] += score ;
+		headToHead.put( com , points );
+	}
+	
+	/**
+	 * Adds this {@code Competitor}the head to head loss against of this 
+	 * 
+	 * {@code Competitor} against an opponent
+	 *@param com the opponent
+	 *@param score this {@code Competitor }score
+	 */
+	protected void addToHeadToHeadLoss( Competitor com , int  score )
+	{
+		Integer[] points = new Integer[ 3 ]  ;
+		if ( headToHead.containsKey( com ) )
+		{
+			points = headToHead.get( com );
+		}
+			
+		points[2] += score ;
+		headToHead.put( com , points );
+	}
+	
 	
 	/**
 	 *Gets this {@code Competitor}'s score against a specified opponent
@@ -499,10 +560,52 @@ public class Competitor implements Serializable
 	 *@param com the opponent
 	 *@return a double
 	 */
-	public double getHeadToHeadScore( Competitor com  )
+	public double getHeadToHeadGoals( Competitor com  )
+	{
+		if( headToHeadGoals.containsKey( com ) )
+			return headToHeadGoals.get( com ) ;
+		return 0 ;
+	}
+	
+	/**
+	 *Gets this {@code Competitor}'s wins against a specified opponent
+	 *Returns 0 if this {@code Competitor } has not met the specified
+	 *opponent
+	 *@param com the opponent
+	 *@return a double
+	 */
+	public int  getHeadToHeadWins( Competitor com  )
 	{
 		if( headToHead.containsKey( com ) )
-			return headToHead.get( com ) ;
+			return headToHead.get( com )[0] ;
+		return 0 ;
+	}
+	
+	/**
+	 *Gets this {@code Competitor}'s draw against a specified opponent
+	 *Returns 0 if this {@code Competitor } has not met the specified
+	 *opponent
+	 *@param com the opponent
+	 *@return a double
+	 */
+	public int  getHeadToHeadDraw( Competitor com  )
+	{
+		if( headToHead.containsKey( com ) )
+			return headToHead.get( com )[1] ;
+		return 0 ;
+	}
+	
+	/**
+	 *Gets this {@code Competitor}'s loss against a specified opponent
+	 *Returns 0 if this {@code Competitor } has not met the specified
+	 *opponent
+	 *@param com the opponent
+	 *@return a double
+	 */
+	public int  getHeadToHeadLoss( Competitor com  )
+	{
+		if( headToHead.containsKey( com ) )
+			return headToHead.get( com )[2] ;
 		return 0 ;
 	}
 	

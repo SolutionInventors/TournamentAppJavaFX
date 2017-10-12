@@ -56,6 +56,7 @@ public class LoadTournament
 			e.printStackTrace();
 		}
 		
+		System.out.println( "Tournament Name After loading \n" + tournament.getName());
 		
 		StringBuilder builder = new StringBuilder( 300 );
 		Test.displayStandingTable(  ((GroupTournament)tournament)

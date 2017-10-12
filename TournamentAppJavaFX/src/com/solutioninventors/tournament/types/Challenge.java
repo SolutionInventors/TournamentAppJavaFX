@@ -146,6 +146,9 @@ public class Challenge extends Tournament
 	@Override
 	public String toString()
 	{
+		if ( hasEnded() )
+			return "Challenge is Over";
+		
 		return "Round " + ( getCurrentRoundNum() + 1 ); 
 	}
 

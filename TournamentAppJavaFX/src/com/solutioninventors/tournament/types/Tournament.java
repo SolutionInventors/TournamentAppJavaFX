@@ -98,6 +98,7 @@ public abstract class Tournament implements Serializable
 	/**
 	 * Creates a {@code Tournament} object with the specified {@code Sporttype} and 
 	 * {@code Competitor} array
+	 * This constructor always shuffles the array only if shuffle is true
 	 * @author Ogujiofor Chidiebere
 	 * @since v1.0
 	 *@param type - the {@code SportType} with which the {@code Tournament} would be created
@@ -106,7 +107,23 @@ public abstract class Tournament implements Serializable
 	public Tournament ( SportType type , Competitor ... coms )
 	{
 		
-		if (  coms.length > 2 )
+		this( coms,  type, true  );
+	}
+
+	
+	/**
+	 * Creates a {@code Tournament} object with the specified {@code SportType} and 
+	 * {@code Competitor} array. This constructor shuffles the array only 
+	 * if shuffle is true
+	 * @author Ogujiofor Chidiebere
+	 * @since v1.0
+	 *@param type - the {@code SportType} with which the {@code Tournament} would be created
+	 *@param coms - the {@code Competitor } array
+	 */
+	public Tournament ( Competitor [] coms  , SportType type , boolean shuffle)
+	{
+		
+		if (  shuffle )
 		{
 			Collections.shuffle( Arrays.asList(coms) );
 		}
@@ -409,7 +426,9 @@ public abstract class Tournament implements Serializable
 						new ObjectInputStream( new FileInputStream(file ));
 				tournament = (E) input.readObject( );
 				input.close();
-				
+//				
+//				tournament.setName( file.getName().replaceAll( ".sit", "" ) );
+//				
 			}
 			catch (IOException | ClassNotFoundException e)
 			{
@@ -420,6 +439,7 @@ public abstract class Tournament implements Serializable
 		else  
 			throw new FileNotFoundException("The file was not found" ) ;
 		 
+		
 		 return tournament;
 	}
 

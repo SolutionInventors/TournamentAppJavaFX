@@ -9,6 +9,7 @@ package com.solutioninventors.tournament.types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.GUI.controller.KnockoutScreenController;
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
@@ -518,7 +519,7 @@ public class Multistage extends Tournament
 		List< Competitor > finalOutput 
 			= new ArrayList<>( groupWinners.size() ); 
 		
-//				This loop ensures that two competitors from the same group don't meet in the knock-out stage
+//		This loop ensures that two competitors from the same group don't meet in the knock-out stage
 		for( int i = 0 ; i < groupWinners.size() /2 ; i++ )
 		{
 			finalOutput.add( groupWinners.get( i ) ) ;
@@ -527,6 +528,7 @@ public class Multistage extends Tournament
 
 		allQualifiers.addAll( finalOutput );
 		
+		
 		try
 		{
 			
@@ -534,10 +536,10 @@ public class Multistage extends Tournament
 				knockoutStage = new SingleEliminationTournament( getSportType(), 
 						allQualifiers.toArray( 
 								new Competitor[ allQualifiers.size() ]) , 
-								hasKnockoutAwayMatches() );
+								hasKnockoutAwayMatches() , false );
 			else
 				knockoutStage = new DoubleElimination(getSportType(), allQualifiers.toArray( 
-								new Competitor[ allQualifiers.size() ] ) ) ;
+								new Competitor[ allQualifiers.size() ] ), false  ) ;
 			
 		}
 		catch (TournamentException e)
@@ -545,8 +547,34 @@ public class Multistage extends Tournament
 			throw new 
 				MoveToNextRoundException("Error in entering knockout stage" );
 		}
+		
+//		This section of the code eliminates the Competitors that did not make it past
+//		the group stage
+		Competitor[] allComps = getCompetitors();
+
+		for( int i = 0 ; i < allComps.length ; i++ )
+		{
+			if 
+			( !isAvailable( 
+					allComps[i ] , 
+					allQualifiers.toArray( new Competitor[ allQualifiers.size() ]) ) )
+				
+				allComps[ i].setEliminated( true );
+		}
+		
 	}
 
+	/** Checks if com is in an array of comps
+	 * Used only once in
+	 *@param com
+	 *@param comps
+	 *@return
+	 */
+	private boolean isAvailable( Competitor com , Competitor[] comps)
+	{
+		return Arrays.stream( comps ).anyMatch( c-> Competitor.isEqual( c , com) );
+		
+	}
 	
 	public StandingTable getGroupTable( int groupNum ) throws GroupIndexOutOfBoundsException
 	{
@@ -585,6 +613,7 @@ public class Multistage extends Tournament
 		}
 		return list.toArray( new Competitor[ list.size() ] );
 	}
+	
 
 	/**
 	 * Returns "Group Stage" or "Knockout Stage" depending on the current stage
@@ -847,7 +876,10 @@ public class Multistage extends Tournament
 	@Override
 	public String toString()
 	{
-		if ( isGroupStageOver() )
+		if ( hasEnded() )
+			return "Tournament Has Ended";
+		
+		else if ( isGroupStageOver() )
 			return knockoutStage.toString();
 		return groupStage[0 ].toString();
 		

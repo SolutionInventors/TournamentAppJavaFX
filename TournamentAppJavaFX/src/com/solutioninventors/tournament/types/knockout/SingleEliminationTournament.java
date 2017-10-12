@@ -62,16 +62,29 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 * Stores the topThree {@code Competitor}s at the end of this {@code Tournament}
 	 */
 	private final Competitor[] topThree;
+	
 	/**
 	 * Initializes this {@code SingleEliminationTournament} with the {@code Competitor[]}
-	 * 
+	 * Always shuffles the array
 	 *@param type
 	 *@param comps
 	 *@param away
 	 *@throws TournamentException
 	 */
 	public SingleEliminationTournament(SportType type, Competitor[] comps, boolean away) throws TournamentException {
-		super( type, comps);
+		this( type, comps, true , true );
+	}
+	
+	/**
+	 * Initializes this {@code SingleEliminationTournament} with the {@code Competitor[]}
+	 * Shuffles the array only if shuffle is true 
+	 *@param type
+	 *@param comps
+	 *@param away
+	 *@throws TournamentException
+	 */
+	public SingleEliminationTournament(SportType type, Competitor[] comps, boolean away, boolean shuffle) throws TournamentException {
+		super( type, comps, shuffle );
 
 		roundList = new ArrayList<>();
 		AWAY = away;
@@ -80,6 +93,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		topThree = new Competitor[3];
 		tieRounds =  new HashMap<>();
 	}
+	
 	
 	/**
 	 *Initializes this {@code SingleEliminationTournament} with the {@code Competitor[]}.
@@ -348,7 +362,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 							 .getFixture(com1, com2 );
 		
 			
-		if ( !hasAway() )
+		if ( !hasAway() || isFinal() )
 		{
 			if( score1 == score2 )
 				addToTieList(com1, score1, score2, com2);
@@ -488,9 +502,18 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	public String toString() {
 		
+		if ( hasEnded() )
+			return "Tournament Has Ended";
 		if ( isTieRound() )
 			return "Round Ties";
 		String message = null;
+		String leg = null;
+		if ( hasAway() && isSecondLeg() )
+			leg = "Second-Leg";
+		else if( hasAway() && !isFinal() )
+			leg = "First-Leg";
+		else
+			leg = "";
 		
 		
 		switch (getActiveCompetitors().length) {
@@ -514,7 +537,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		default:
 			message = "Round of " + (getCurrentRoundNum() + 1);
 		}
-		return message;
+		return  message + " " + leg ;
 	}
 
 	@Override

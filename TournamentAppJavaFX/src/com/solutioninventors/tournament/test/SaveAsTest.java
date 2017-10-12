@@ -139,7 +139,10 @@ public class SaveAsTest
 		fileChooser.showSaveDialog( null );
 		File tournamentFile = fileChooser.getSelectedFile();
 		
+		tournament.setName("Chidiebere League" );
 		saveTournament( tournament , tournamentFile );
+		
+		System.out.println("Tournament Name after save... \n" + tournament.getName()  );
 	}
 
 	

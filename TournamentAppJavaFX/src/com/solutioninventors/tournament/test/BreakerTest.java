@@ -49,7 +49,7 @@ public class BreakerTest
 		try
 		{
 			tieBreaker = new TieBreaker( Breaker.HOME_WINS, Breaker.AWAY_GOALS_DIFFERENCE,
-									Breaker.AWAY_GOALS_CONCEEDED 	);
+									Breaker.AWAY_GOALS_CONCEDED	);
 		}
 		catch (InvalidBreakerException e)
 		{

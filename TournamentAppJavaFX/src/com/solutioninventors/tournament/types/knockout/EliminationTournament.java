@@ -38,9 +38,9 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	 *@param comps the {@link Competitor}s 
 	 *@throws TournamentException when the total competitors is invalid
 	 */
-	public EliminationTournament ( SportType type, Competitor[] comps ) throws TournamentException
+	public EliminationTournament ( SportType type, Competitor[] comps, boolean shuffle ) throws TournamentException
 	{
-		super( type, comps );
+		super( comps, type,  shuffle );
 		double validator = ( Math.log( comps.length ) )/
 				( Math.log( 2 ) );
 		if ( ! ( validator % 1 == 0.0f)  ) //the number is invalid 
