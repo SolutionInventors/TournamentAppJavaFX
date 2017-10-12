@@ -90,7 +90,7 @@ public class Competitor implements Serializable
 	/**
 	 * Stores the head to head record of competitors
 	 */
-	private Map< Competitor, Integer[] > headToHead ;
+	private Map< Competitor, int[] > headToHead ;
 	
 	private Map< Competitor , Double > headToHeadGoals ;
 	
@@ -154,7 +154,7 @@ public class Competitor implements Serializable
 		setImage(imageFile);
 		setEliminated(false);
 
-		headToHead = new HashMap<Competitor, Integer[] >();
+		headToHead = new HashMap<Competitor, int[] >();
 		headToHeadGoals = new HashMap<Competitor , Double >();
 		awayGoals = new HashMap<Competitor , Double >();
 		homeGoals = new HashMap<Competitor , Double >();
@@ -503,9 +503,9 @@ public class Competitor implements Serializable
 	 *@param com the opponent
 	 *@param score this {@code Competitor }score
 	 */
-	protected void addToHeadToHeadWins( Competitor com , int  score )
+	protected void incrementHeadToHeadWins( Competitor com , int  score )
 	{
-		Integer[] points = new Integer[ 3 ]  ;
+		int[] points = new int[ 3 ]  ;
 		if ( headToHead.containsKey( com ) )
 		{
 			points = headToHead.get( com );
@@ -521,9 +521,9 @@ public class Competitor implements Serializable
 	 *@param com the opponent
 	 *@param score this {@code Competitor }score
 	 */
-	protected void addToHeadToHeadDraw( Competitor com , int  score )
+	protected void incrementHeadToHeadDraw( Competitor com , int  score )
 	{
-		Integer[] points = new Integer[ 3 ]  ;
+		int[] points = new int[ 3 ]  ;
 		if ( headToHead.containsKey( com ) )
 		{
 			points = headToHead.get( com );
@@ -540,9 +540,9 @@ public class Competitor implements Serializable
 	 *@param com the opponent
 	 *@param score this {@code Competitor }score
 	 */
-	protected void addToHeadToHeadLoss( Competitor com , int  score )
+	protected void incrementHeadToHeadLoss( Competitor com , int  score )
 	{
-		Integer[] points = new Integer[ 3 ]  ;
+		int[] points = new int [ 3 ]  ;
 		if ( headToHead.containsKey( com ) )
 		{
 			points = headToHead.get( com );
