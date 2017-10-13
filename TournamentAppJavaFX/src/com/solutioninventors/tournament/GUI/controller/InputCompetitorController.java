@@ -194,36 +194,27 @@ public class InputCompetitorController {
 		// this was used to set the default no logo image
 		try {
 			image = new Image(new FileInputStream(new File(url1.toURI())));
-			Image abc =  new Image(new FileInputStream(new File(url1.toURI())));
-			System.out.println(image.equals(abc)+" Compare image");
 		} catch (FileNotFoundException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 		comps = new Competitor[noOfCompetitors];
 		file = new File[noOfCompetitors];
 
-		/*
-		 * for (int i = 0; i < noOfCompetitors; i++) {
-		 * 
-		 * try { file[i] = new File(url1.toURI()); comps[i] = new Competitor("Player "+
-		 * (i+1), file[i]); } catch (URISyntaxException e) { e.printStackTrace(); } }
-		 */
-		/*
-		 * for (int j = 0; j < 4; j++) { imgArray.get(j).setImage(image); }
-		 */
-
 		btnPrevious.setVisible(false);
 		btnNext.setVisible(noOfCompetitors <= 4 ? false : true);
 
 		if (TournamentType == TournamentTypes.CHALLENGE) {
-			for (int i = 2; i < 4; i++) {
+			txtArray.get(0).setPromptText("Champion");
+			txtArray.get(1).setPromptText("Challenger");
+			for (int i = 2; i <4; i++) {
 				txtArray.get(i).setVisible(false);
 				imgArray.get(i).setVisible(false);
 				SNArray.get(i).setVisible(false);
 			}
 			endValue = 2;
 		} // end if
-
+		
+	
 		if (goalScored) {
 			goalsOrNoGoals = SportType.GOALS_ARE_SCORED;
 		} else {
