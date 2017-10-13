@@ -350,6 +350,8 @@ public class InputCompetitorController {
 				comps[i] = new Competitor("Player " + String.valueOf(i + 1), file[i]);
 			}
 		}
+		
+		
 		try {
 			switch (TournamentType) {
 			case KNOCKOUT:

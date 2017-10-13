@@ -139,7 +139,7 @@ public class StandingTableController {
 			lbl[i] = new Label("Group " + (i + 1));
 		}
 		vBox = new VBox(10);
-		vBox.setPadding(new Insets(10, 10, 10, 10));
+		//vBox.setPadding(new Insets(10, 10, 10, 10));
 		vBox.setPrefSize(530,Region.USE_COMPUTED_SIZE);//width , height
 		for (int i = 0; i < noOfGroups; i++) {
 			if (tournament instanceof Multistage) {
@@ -179,13 +179,13 @@ public class StandingTableController {
 				for (j = 0; j < stringtableMap.get(i).length; j++) { //inner for loop
 					if (j == 0) {
 						map.put(i, items3.get(i))
-								.add(new StandingTable(String.valueOf((j+1)), stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
+								.add(new StandingTable(String.valueOf(j+1), stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5], stringtableMap.get(i)[j][6],
 										stringtableMap.get(i)[j][7], stringtableMap.get(i)[j][8]));
 					}
 					try {
 						map.put(i, items3.get(i))
-								.add(new StandingTable(String.valueOf((j+1)), stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
+								.add(new StandingTable( String.valueOf(j+1),stringtableMap.get(i)[j][0], stringtableMap.get(i)[j][1], stringtableMap.get(i)[j][2],
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5], stringtableMap.get(i)[j][6],
 										stringtableMap.get(i)[j][7], stringtableMap.get(i)[j][8]));
 					} catch (Exception e) {
