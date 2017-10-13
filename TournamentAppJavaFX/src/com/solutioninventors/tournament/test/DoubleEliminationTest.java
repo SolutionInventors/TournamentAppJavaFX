@@ -65,6 +65,7 @@ public class DoubleEliminationTest
 		while( ! tournament.hasEnded() 	)
 		{
 			simulateRound(tournament);
+			Test.printRounds( tournament.getRoundArray() );
 		}
 
 		Test.displayMessage("The winner is " + tournament.getWinner() );
@@ -165,7 +166,7 @@ public class DoubleEliminationTest
 			{
 				
 				tournament.setResult( com1, score1, score2, com2);
-				if ( score1== score2 )
+				if ( score1 == score2 )
 					continue;
 				builder.append(String.format("%s %.0f VS %.0f %s\n",
 						com1 , currentFixtures[ i ].getCompetitorOneScore() ,

@@ -1,5 +1,7 @@
 package com.solutioninventors.tournament.exceptions;
 
+import com.solutioninventors.tournament.utils.Competitor;
+
 /**
  * This {@code Exception} is thrown when an attempt is made to set the result of a 
  * {@code Fixture } that is complete
@@ -13,14 +15,19 @@ public class ResultCannotBeSetException extends Exception
 	/**
 	 * Creates a this object with default error message
 	 * @author Oguejiofor Chidiebere
+	 * @param competitor2 
+	 * @param score2 
+	 * @param score1 
+	 * @param competitor 
 	 * @see Fixture
 	 * @since v1.0
 	 * 
 	 */
 	
-	public ResultCannotBeSetException()
+	public ResultCannotBeSetException(Competitor com1, double score1, double score2, Competitor com2)
 	{
-		this( "Cannot change the result of a complete Fixture" );
+		this( "Cannot change the result of a complete Fixture " +
+				com1 + " VS " + com2 );
 	}
 
 	/**

@@ -354,7 +354,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		if ( !fixtureExists ) 
 			throw new NoFixtureException("Fixture was not found" );
 		else if ( fixtureHasResult )
-			throw new ResultCannotBeSetException();
+			throw new ResultCannotBeSetException( com1 , score1, score2 , com2 );
 		
 
 		Fixture theFixture = getCurrentRound()
@@ -504,7 +504,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		if ( hasEnded() )
 			return "Tournament Has Ended";
 		if ( isTieRound() )
-			return "Round Ties";
+			return "Break Ties";
 		String message = null;
 		String leg = null;
 		if ( hasAway() && isSecondLeg() )

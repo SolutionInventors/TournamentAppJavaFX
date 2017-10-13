@@ -63,6 +63,7 @@ import com.solutioninventors.tournament.utils.SportType;
  * @author Oguejiofor Chidiebere
  * @since v1.0
  */
+
 public class DoubleElimination extends EliminationTournament
 {
 	
@@ -252,7 +253,10 @@ public class DoubleElimination extends EliminationTournament
 		{
 			if( !isTieRound() ) //increment tieRound
 			{
-				activeTies.add( new Fixture( getSportType(), competitorOne, competitorTwo) );
+				Fixture tie =  new Fixture( getSportType(), competitorOne, competitorTwo);
+				new Round( tie ).setResult(competitorOne, score1, score2, competitorTwo);
+				activeTies.add( tie );
+				
 				return;
 			}
 			else 
@@ -548,28 +552,30 @@ public class DoubleElimination extends EliminationTournament
 		
 		try
 		{ 
+			
 			if ( !isTieRound() && hasTie() )
 			{
 				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
 						 .filter( f-> f.isComplete() )
 						 .collect(Collectors.toList() );
+				
+				activeTies.stream().forEach( f-> fixtures.add( f) );
+				
 				return new Round( 
 						fixtures.toArray( new Fixture[ fixtures.size() ] ), toString() );
 
 			}
-				
-			else if ( hasTie() )
-			{
-				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
-										 .filter( f-> !f.isComplete() )
-										 .collect(Collectors.toList() );
-				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) , toString());
-				
-			}
-			else if ( isTieRound() )
+			else if ( isTieRound() && hasTie() )
 				return new Round( activeTies.toArray( new Fixture[ activeTies.size() ] ) , toString());
-			
-			
+//			else if ( hasTie() )
+//			{
+//				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
+//										 .filter( f-> !f.isComplete() )
+//										 .collect(Collectors.toList() );
+////				activeTies.stream().forEach( f-> fixtures.add( f) );
+//				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) , toString());
+//				
+//			}			
 			
 			return getCurrentRoundHelper();
 		}
@@ -665,7 +671,7 @@ public class DoubleElimination extends EliminationTournament
 		if ( hasEnded() )
 			return "Tournament Has Ended";
 		else if ( isTieRound() )
-			return "Round Ties";
+			return "Break Ties";
 		StringBuilder builder = new StringBuilder();
 		
 		int totalCompetitors = getActiveCompetitors().length;

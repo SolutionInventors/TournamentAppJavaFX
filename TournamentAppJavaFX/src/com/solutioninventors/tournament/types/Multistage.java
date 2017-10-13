@@ -370,7 +370,7 @@ public class Multistage extends Tournament
 						.getRound( roundNum ).getFixtures()));
 			}
 			
-			round = new Round( list.toArray( new Fixture[ list.size() ] ) );
+			round = new Round( list.toArray( new Fixture[ list.size() ] ) , "Round " + (roundNum +1 ));
 		}
 		else if ( roundNum >= 0 && roundNum - numberOfGroupStageRounds() < 
 				knockoutStage.getRoundArray().length )

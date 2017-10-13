@@ -158,7 +158,8 @@ public class Fixture implements Serializable{
 		}
 		else
 		{
-			throw new ResultCannotBeSetException();
+			throw new ResultCannotBeSetException(getCompetitorOne() ,competitorOneScore, 
+						competitorTwoScore , getCompetitorTwo() );
 		} 
 	}
 
@@ -372,7 +373,7 @@ public class Fixture implements Serializable{
 	protected void setResult(double score1, double score2, boolean store) throws ResultCannotBeSetException
 	{
 		if ( isComplete() )
-			throw new ResultCannotBeSetException( score1, score2);
+			throw new ResultCannotBeSetException( getCompetitorOne() , score1, score2, getCompetitorTwo());
 		else if ( store  )
 			setResult(score1, score2);
 		else {
