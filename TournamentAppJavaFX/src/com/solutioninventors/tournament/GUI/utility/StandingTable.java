@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class StandingTable {
 	//converted to string
+	private final SimpleStringProperty sn;
 	private final SimpleStringProperty competitorName;
 	private final SimpleStringProperty gamesPlayed;
 	private final SimpleStringProperty wins;
@@ -45,11 +46,12 @@ public class StandingTable {
 	
 	
 	//to be used with the integers etc
-	public StandingTable(String competitorName, String gamesPlayed,
+	public StandingTable(String serial, String competitorName, String gamesPlayed,
 			String wins, String draw, String loss,
 			String goalsFor, String goalsAgainst, String goalsDiff,
 			String points) {
 		super();
+		this.sn = new SimpleStringProperty(serial);
 		this.competitorName =new SimpleStringProperty (competitorName);
 		this.gamesPlayed =new SimpleStringProperty( gamesPlayed);
 		this.wins = new SimpleStringProperty(wins);
@@ -60,9 +62,10 @@ public class StandingTable {
 		this.goalsDiff = new SimpleStringProperty(goalsDiff);
 		this.points =new SimpleStringProperty( points);
 	}
-	public StandingTable(String competitorName, String gamesPlayed,
+	public StandingTable(String serial,String competitorName, String gamesPlayed,
 			String wins, String draw, String loss,String points) {
 		super();
+		this.sn = new SimpleStringProperty(serial);
 		this.competitorName =new SimpleStringProperty (competitorName);
 		this.gamesPlayed =new SimpleStringProperty( gamesPlayed);
 		this.wins = new SimpleStringProperty(wins);
@@ -78,7 +81,9 @@ public class StandingTable {
 	public String getCompetitorName() {
 		return competitorName.get();
 	}
-
+	public String getsn() {
+		return sn.get();
+	}
 	public String getGamesPlayed() {
 		return gamesPlayed.get();
 	}

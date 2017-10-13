@@ -44,20 +44,12 @@
       </Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="4.0" layoutX="471.0" layoutY="131.0" stroke="RED" strokeType="INSIDE" width="165.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="4.0" layoutX="517.0" layoutY="129.0" stroke="RED" strokeType="INSIDE" width="119.0" />
-      <Button fx:id="btnPrevious" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="PREVIOUS" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button fx:id="btnPrevious" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="478.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0"  text="PREVIOUS" textAlignment="CENTER">
+        
       </Button>
-      <Button fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="478.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="NEXT" textAlignment="CENTER">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="478.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0"  text="NEXT" textAlignment="CENTER">
       </Button>
-      <Button fx:id="btnCancel" alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="478.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="CANCEL" textAlignment="CENTER" textFill="RED">
-         <font>
-            <Font name="Trebuchet MS Bold" size="15.0" />
-         </font>
+      <Button fx:id="btnCancel" alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="478.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0"  text="CANCEL" textAlignment="CENTER" textFill="RED">
       </Button>
       <GridPane layoutX="75.0" layoutY="241.0" prefHeight="195.0" prefWidth="549.0">
         <columnConstraints>

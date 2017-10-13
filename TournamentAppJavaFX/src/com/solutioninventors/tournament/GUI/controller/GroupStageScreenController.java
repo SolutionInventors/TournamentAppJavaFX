@@ -139,10 +139,10 @@ public class GroupStageScreenController {
 				|| txtlosspoint.getText().isEmpty() ) {
 		
 			AlertBox.display("Please check input", "Please check that all the textboxes are filled ");
-		}else if ((tourType ==1) && (Integer.valueOf(txtnoOfcomps.getText())<2) || Integer.valueOf(txtnoOfcomps.getText()) % 2 !=0 ) {
+		}else if ((tourType ==1) && (Integer.valueOf(txtnoOfcomps.getText())<=2 || Integer.valueOf(txtnoOfcomps.getText()) % 2 !=0 )) {
 			AlertBox.display("Invalid no of Competitors", "In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
-		}else if( (tourType ==2 || tourType ==3) &&  Integer.valueOf(txtnoOfcomps.getText())<2){
-			AlertBox.display("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 2 e.g 3,4,5");
+		}else if( (tourType ==2 || tourType ==3) &&  Integer.valueOf(txtnoOfcomps.getText())<=3){
+			AlertBox.display("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 3 e.g 4,5,6,7");
 		}else {
 		
 		FXMLLoader loader = new FXMLLoader();

@@ -97,22 +97,22 @@ public class CommonMethods {
 				if (event !=null) {
 					 ((Node) event.getSource()).getScene().getWindow().hide();
 				}
-				
+				URL url1 = getClass().getResource(Paths.images + "logo.jpg");
 				Stage window = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				Parent root = loader.load(getClass().getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
 				FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 				ic.setTournament(tournament);
 				ic.init();
+				window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 				Scene scene = new Scene(root);
 				/*
 				 * window.setOnCloseRequest(e -> { e.consume(); closeprogram(); });
 				 */
-				URL url1 = getClass().getResource(Paths.images + "logo.jpg");
-				window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+				
 				window.setScene(scene);
 				window.setResizable(false);
-				System.out.println(tournament.getName());
+				
 				window.setTitle(tournament.getName());
 				
 				window.show();

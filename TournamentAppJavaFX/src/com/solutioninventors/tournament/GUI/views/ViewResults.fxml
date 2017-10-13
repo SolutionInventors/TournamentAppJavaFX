@@ -25,10 +25,8 @@
       <Line endX="425.0" layoutX="218.0" layoutY="65.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="70.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="72.0" layoutX="-3.0" layoutY="462.0" opacity="0.44" stroke="BLACK" strokeType="INSIDE" width="651.0" />
-      <Button fx:id="btnMoveNext" layoutX="435.0" layoutY="480.0" mnemonicParsing="false" onAction="#nextRound" style="-fx-background-color: WHITE;" text="MOVE TO NEXT ROUND" textFill="RED">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
+      <Button fx:id="btnMoveNext" layoutX="435.0" layoutY="480.0" mnemonicParsing="false" onAction="#nextRound"  text="MOVE TO NEXT ROUND" textFill="RED">
+        
       </Button>
       <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="89.0" prefHeight="367.0" prefWidth="612.0">
         <content>

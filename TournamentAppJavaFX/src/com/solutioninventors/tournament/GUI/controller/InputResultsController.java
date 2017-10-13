@@ -1,14 +1,17 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.CustomTextField;
+import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -18,7 +21,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -50,6 +55,7 @@ public class InputResultsController {
 	private ObservableList<String> WDL = FXCollections.observableArrayList("W", "D", "L");
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
+	private boolean goalsAreScore;
 
 	public void initialize() {
 		font = cm.loadfonts();
@@ -61,6 +67,7 @@ public class InputResultsController {
 		tournament = value;
 		if (!tournament.hasEnded()) {
 			if (!tournament.getCurrentRound().isComplete()) {
+				goalsAreScore = (tournament.getSportType() == SportType.GOALS_ARE_SCORED ? true : false);
 				// GridPane settings
 				GridPane grid = new GridPane();
 				grid.setPadding(new Insets(25));
@@ -179,91 +186,130 @@ public class InputResultsController {
 	}// end set current
 
 	@FXML
-	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException {
+	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException, IOException {
+		boolean emptyBox = false, singleTieDraw = false, DoubleElimDraw = false, invalidnogoalScore = false;
+		double score1, score2;
 		int count = 0;
+		if (goalsAreScore) {
+			for (int i = 0; i < scores.length; i++) {
+				if (scores[i].getText().isEmpty()) {
+					emptyBox = true;
+					break;
+				}
+			}
+
+			if (emptyBox == false && tournament instanceof DoubleElimination)
+				DoubleElimDraw = checkforDrawgoals();
+			if (emptyBox == false && tournament instanceof SingleEliminationTournament)
+				if (((SingleEliminationTournament) tournament).isTieRound())
+					singleTieDraw = checkforDrawgoals();
+
+		} else {
+			for (int i = 0; i < scoresnoGoal.size(); i++) {
+				try {
+					if (scoresnoGoal.get(i).getValue().isEmpty()) {
+						emptyBox = true;
+						break;
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					emptyBox = true;
+					//e1.printStackTrace();
+					System.out.println("from exception");
+					break;
+					
+					
+				}
+			}
+
+			if (emptyBox == false && tournament instanceof DoubleElimination)
+				DoubleElimDraw = checkforDrawNoGoal();
+			if (emptyBox == false && tournament instanceof SingleEliminationTournament)
+				if (((SingleEliminationTournament) tournament).isTieRound())
+					singleTieDraw = checkforDrawNoGoal();
+			if (!emptyBox) {
+			for (int i = 0; i < scoresnoGoal.size(); i+=2) {
+				String s1 = (scoresnoGoal.get(i).getValue());
+				String s2 = (scoresnoGoal.get(i + 1).getValue());
+
+				if (s1.equals("W") && s2.equals("W") || s1.equals("L") && s2.equals("L")
+						|| s1.equals("W") && s2.equals("D") || s1.equals("L") && s2.equals("D")) {
+					invalidnogoalScore = true;
+				}
+			}
+			}
+		} // end if / else goals Scored
+
+		if (emptyBox) {
+			AlertBox.display("Empty Box", "Please check that all the boxes have been filled");
+		} else if (singleTieDraw) {
+			AlertBox.display("Tie Round", "You Cannot input draw in a tie Round");
+		} else if (DoubleElimDraw) {
+			AlertBox.display("No Draw", "Draw is not allowed in a Double Elimination");
+		} else if (invalidnogoalScore) {
+			AlertBox.display("Invalid Result", "You cannot input a W D or L D etc");
+		} else {
+			for (int i = 0; i < currentFixtures.length; i++) {
+				Competitor com1 = currentFixtures[i].getCompetitorOne();
+				Competitor com2 = currentFixtures[i].getCompetitorTwo();
+
+				if (goalsAreScore) {
+					score1 = Double.valueOf(scores[count].getText());
+					score2 = Double.valueOf(scores[count + 1].getText());
+				} else {
+					score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
+					score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
+				}
+				try {
+					tournament.setResult(com1, score1, score2, com2);
+					btnsubmit.setVisible(false);
+				} catch (NoFixtureException ee) {
+					ee.printStackTrace();
+				}
+				count += 2;
+			}
+		}
+	}// end method get result
+
+	/**
+	 * boolean
+	 * 
+	 * @param count
+	 * @param isDraw
+	 * @return
+	 */
+	public boolean checkforDrawNoGoal() {
 		boolean isDraw = false;
-		if ((tournament.getSportType() == SportType.GOALS_ARE_SCORED)) {
-		for (int i = 0; i < scores.length; i++) {
-			if (scores[i].getText().isEmpty()) {
+		for (int i = 0; i < scoresnoGoal.size(); i += 2) {
+			double score1 = (scoresnoGoal.get(i).getValue().equals("D") ? 1 : 0);
+			double score2 = (scoresnoGoal.get(i + 1).getValue().equals("D") ? 1 : 0);
+
+			if (score1 == score2) {
 				isDraw = true;
 				break;
 			}
 		}
-		}else {
-			for (int i = 0; i < scoresnoGoal.size(); i++) {
-				if (scoresnoGoal.get(i).getValue().isEmpty()) {
-					isDraw = true;
-					break;
-				}
+		return isDraw;
+	}
+
+	/**
+	 * boolean
+	 * 
+	 * @param isDraw
+	 * @return
+	 */
+	public boolean checkforDrawgoals() {
+		boolean isDraw = false;
+		for (int i = 0; i < scores.length; i += 2) {
+			double score1 = Double.valueOf(scores[i].getText());
+			double score2 = Double.valueOf(scores[i + 1].getText());
+
+			if (score1 == score2) {
+				isDraw = true;
+				break;
 			}
 		}
-		if (tournament instanceof SingleEliminationTournament) {
-			if (((SingleEliminationTournament) tournament).isTieRound()) {
-				if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
-
-					for (int i = 0; i < scores.length; i += 2) {
-						double score1 = Double.valueOf(scores[i].getText());
-						double score2 = Double.valueOf(scores[i + 1].getText());
-
-						if (score1 == score2) {
-							isDraw = true;
-							break;
-						}
-					}
-				} else {
-					for (int i = 0; i < scoresnoGoal.size(); i += 2) {
-						double score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
-						double score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
-						
-						if (score1==score2) {
-							isDraw = true;
-							break;
-						}
-					}
-				}
-			}
-
-		}
-		if (isDraw) {
-			AlertBox.display("Draw", "Cannot input a draw in tie Round please check one or more of your scores");
-		} else {
-			if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
-
-				for (int i = 0; i < currentFixtures.length; i++) {
-					Competitor com1 = currentFixtures[i].getCompetitorOne();
-					Competitor com2 = currentFixtures[i].getCompetitorTwo();
-
-					double score1 = Double.valueOf(scores[count].getText());
-					double score2 = Double.valueOf(scores[count + 1].getText());
-
-					try {
-						tournament.setResult(com1, score1, score2, com2);
-						btnsubmit.setVisible(false);
-					} catch (NoFixtureException ee) {
-						ee.printStackTrace();
-					}
-
-					count += 2;
-				} // end for loop
-
-			} else {
-				for (int i = 0; i < currentFixtures.length; i++) {
-					Competitor com1 = currentFixtures[i].getCompetitorOne();
-					Competitor com2 = currentFixtures[i].getCompetitorTwo();
-					double score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
-					double score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
-
-					try {
-						tournament.setResult(com1, score1, score2, com2);
-						btnsubmit.setVisible(false);
-					} catch (NoFixtureException ee) {
-						ee.printStackTrace();
-					}
-
-					count += 2;
-				} // end for loop
-			} // end if goals are scored
-		}
+		return isDraw;
 	}
 
 }// end class

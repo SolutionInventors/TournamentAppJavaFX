@@ -27,7 +27,7 @@ public class GUITest extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			Parent root = loader.load(getClass().getResource(Paths.viewpath + "WelcomeScree.fxml").openStream());
+			Parent root = loader.load(getClass().getResource(Paths.viewpath + "WelcomeScreen.fxml").openStream());
 			Scene scene = new Scene(root);
 			window = primaryStage;
 			URL url1 = getClass().getResource(Paths.images + "logo.jpg"); 
@@ -36,10 +36,10 @@ public class GUITest extends Application {
 			window.setScene(scene);
 			window.sizeToScene();
 			window.setResizable(false);
-			window.setOnCloseRequest(e -> {
+		/*	window.setOnCloseRequest(e -> {
 				e.consume();
 				closeprogram();
-			});
+			});*/
 			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
 			//WelcomeScreenController ic = (WelcomeScreenController) loader.getController();

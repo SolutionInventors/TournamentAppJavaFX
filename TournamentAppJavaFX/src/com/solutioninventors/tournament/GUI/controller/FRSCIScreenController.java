@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
-import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 
@@ -16,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
@@ -93,6 +93,10 @@ public class FRSCIScreenController {
                 KeyCombination.));*/
 		}
 
+	public void changetab(int tabtoswitch) {
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tabtoswitch); //select by index starting with 0
+	}
 	public void setTournament(Tournament tour) throws TournamentEndedException {
 		tournament = tour;
 		tabfixController.setTournament(tournament);

@@ -24,3 +24,24 @@
 	-fx-font-size: 30px;
 	-fx-font-weight:bold;
 }
+
+.button{
+	-fx-background-color: white;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-text-fill: red;
+	-fx-font-family: "Trebuchet MS";
+	-fx-border-width: 1;
+	-fx-border-radius: 2;
+}
+
+.button:hover{
+		-fx-background-color: red;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+	-fx-font-family: "Trebuchet MS";
+	-fx-border-width: 1;
+	-fx-border-radius: 2;
+	
+}
