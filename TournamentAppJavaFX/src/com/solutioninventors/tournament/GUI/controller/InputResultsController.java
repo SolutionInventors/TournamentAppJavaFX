@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.CustomTextField;
-import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -21,9 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -187,7 +184,7 @@ public class InputResultsController {
 
 	@FXML
 	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException, IOException {
-		boolean emptyBox = false, singleTieDraw = false, DoubleElimDraw = false, invalidnogoalScore = false;
+		boolean emptyBox = false, singleTieDraw = false, invalidnogoalScore = false;// DoubleElimDraw = false,
 		double score1, score2;
 		int count = 0;
 		if (goalsAreScore) {
@@ -198,8 +195,8 @@ public class InputResultsController {
 				}
 			}
 
-			if (emptyBox == false && tournament instanceof DoubleElimination)
-				DoubleElimDraw = checkforDrawgoals();
+		/*	if (emptyBox == false && tournament instanceof DoubleElimination)
+				DoubleElimDraw = checkforDrawgoals();*/
 			if (emptyBox == false && tournament instanceof SingleEliminationTournament)
 				if (((SingleEliminationTournament) tournament).isTieRound())
 					singleTieDraw = checkforDrawgoals();
@@ -222,8 +219,8 @@ public class InputResultsController {
 				}
 			}
 
-			if (emptyBox == false && tournament instanceof DoubleElimination)
-				DoubleElimDraw = checkforDrawNoGoal();
+			/*if (emptyBox == false && tournament instanceof DoubleElimination)
+				DoubleElimDraw = checkforDrawNoGoal();*/
 			if (emptyBox == false && tournament instanceof SingleEliminationTournament)
 				if (((SingleEliminationTournament) tournament).isTieRound())
 					singleTieDraw = checkforDrawNoGoal();
@@ -244,9 +241,9 @@ public class InputResultsController {
 			AlertBox.display("Empty Box", "Please check that all the boxes have been filled");
 		} else if (singleTieDraw) {
 			AlertBox.display("Tie Round", "You Cannot input draw in a tie Round");
-		} else if (DoubleElimDraw) {
+		} /*else if (DoubleElimDraw) {
 			AlertBox.display("No Draw", "Draw is not allowed in a Double Elimination");
-		} else if (invalidnogoalScore) {
+		}*/ else if (invalidnogoalScore) {
 			AlertBox.display("Invalid Result", "You cannot input a W D or L D etc");
 		} else {
 			for (int i = 0; i < currentFixtures.length; i++) {
