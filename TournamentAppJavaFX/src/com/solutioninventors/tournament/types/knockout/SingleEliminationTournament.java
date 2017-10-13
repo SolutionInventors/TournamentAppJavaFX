@@ -72,7 +72,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 *@throws TournamentException
 	 */
 	public SingleEliminationTournament(SportType type, Competitor[] comps, boolean away) throws TournamentException {
-		this( type, comps, true , true );
+		this( type, comps, away , true );
 	}
 	
 	/**

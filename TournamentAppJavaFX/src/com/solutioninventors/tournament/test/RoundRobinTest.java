@@ -103,6 +103,7 @@ public class RoundRobinTest {
 			try
 			{
 				simulateRound(tournament );
+				Test.printRounds( tournament.getRoundArray() );
 			}
 			catch (OnlyOutstandingAreLeftException e)
 			{

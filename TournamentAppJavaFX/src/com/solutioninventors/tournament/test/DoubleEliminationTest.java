@@ -86,12 +86,18 @@ public class DoubleEliminationTest
 
 	public static void simulateRound(Tournament tournament) throws TournamentEndedException
 	{
-		Test.displayMessage("Welcome to  \nThe " + tournament.toString() );
+		Test.displayMessage("Welcome to the " + tournament.toString() );
 		
 		DoubleElimination doubleSpecific = (DoubleElimination) tournament ; 
 		try
 		{
-			if ( !doubleSpecific.isInitialComplete() )
+			if ( doubleSpecific.isTieRound() )
+			{
+				Test.displayMessage("Round Ties Fixtures" 	);
+				Test.displayFixtures( doubleSpecific.getCurrentRound().getFixtures()  );
+				
+			}
+			else if ( !doubleSpecific.isInitialComplete() )
 			{
 				Test.displayMessage("Initial Round Fixtures" 	);
 				Test.displayFixtures( doubleSpecific.getCurrentRound( BracketType.INITIAL_BRACKET ).getFixtures() );
@@ -144,7 +150,7 @@ public class DoubleEliminationTest
 		Fixture[] currentFixtures = tournament.getCurrentRound().getFixtures() ;
 		
 		builder.delete(0 , builder.length() );
-		builder.append("Roound results are: \n" );
+		builder.append("Round results are: \n" );
 		for( int i = 0 ; i< currentFixtures.length ;i++ )
 		{
 			Competitor com1 = currentFixtures[i].getCompetitorOne() ;
@@ -157,7 +163,10 @@ public class DoubleEliminationTest
 			
 			try
 			{
+				
 				tournament.setResult( com1, score1, score2, com2);
+				if ( score1== score2 )
+					continue;
 				builder.append(String.format("%s %.0f VS %.0f %s\n",
 						com1 , currentFixtures[ i ].getCompetitorOneScore() ,
 						currentFixtures[  i ].getCompetitorTwoScore() , com2 ));

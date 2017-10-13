@@ -13,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -66,6 +68,12 @@ public class DoubleElimination extends EliminationTournament
 	
 	private Competitor[] topThree;
 	
+	/**
+	 * True when current fixtures need to be broken
+	 */
+	private boolean tieRound;
+	
+	private List<Fixture> activeTies;
 	
 	private static final long serialVersionUID = -7071860792899692927L;
 	
@@ -122,7 +130,7 @@ public class DoubleElimination extends EliminationTournament
 		rounds.put( BracketType.INITIAL_BRACKET , new ArrayList<>() );
 		rounds.put( BracketType.TOURNAMENT_FINAL, new ArrayList<>() );
 		
-		
+		activeTies = new ArrayList<Fixture>();
 		topThree = new Competitor[ 3 ];
 		setCurrentFixture( BracketType.INITIAL_BRACKET);
 		createTournament();
@@ -187,6 +195,16 @@ public class DoubleElimination extends EliminationTournament
 	public Round getCurrentRound( BracketType type ) 
 			throws RoundIndexOutOfBoundsException
 	{
+//		if ( isTieRound() )
+//			try
+//			{
+//				return getCurrentRound() ;
+//			}
+//			catch (TournamentEndedException e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		if( type == BracketType.INITIAL_BRACKET && getCurrentRoundNum() > 0 )
 			throw new RoundIndexOutOfBoundsException( "The round index is out of bound . " + getCurrentRoundNum());
 		return getBracketRound( getCurrentRoundNum() , type );
@@ -229,7 +247,25 @@ public class DoubleElimination extends EliminationTournament
 	public void setResult(Competitor competitorOne, double score1, 
 			double score2, Competitor competitorTwo) throws NoFixtureException, TournamentEndedException, ResultCannotBeSetException 
 	{
-
+		
+		if ( score1== score2 )//draw was inputed
+		{
+			if( !isTieRound() ) //increment tieRound
+			{
+				activeTies.add( new Fixture( getSportType(), competitorOne, competitorTwo) );
+				return;
+			}
+			else 
+				throw new ResultCannotBeSetException("Draw not allowed in tie round" );
+		}
+		else if ( isTieRound() )
+		{
+			boolean hasFixture = activeTies.stream()
+								 .anyMatch( f-> f.hasFixture(competitorOne, competitorTwo) );
+			
+			if ( hasFixture )// no such fixture
+				removeTie( competitorOne, competitorTwo );
+		}
 		try 
 		{
 			if ( getActiveCompetitors().length ==  2 )//tournament final 
@@ -266,7 +302,6 @@ public class DoubleElimination extends EliminationTournament
 				major.setResult( competitorOne , score1, score2, competitorTwo);
 				
 			}
-			
 		}
 		catch(  RoundIndexOutOfBoundsException e )
 		{
@@ -277,8 +312,22 @@ public class DoubleElimination extends EliminationTournament
 	}
 
 	
-	
-	
+	private void removeTie(Competitor competitorOne, Competitor competitorTwo) throws NoFixtureException
+	{
+		for ( int i = 0 ; i < activeTies.size() ; i ++ )
+		{
+			if ( activeTies.get( i ).hasFixture(competitorOne, competitorTwo));
+			{
+				activeTies.remove( i );
+//				if ( activeTies.isEmpty()) 
+//					setTieRound( false );
+				
+				return;
+			}
+		}
+		throw new NoFixtureException( "That fixture is not in the tie list" );
+	}
+
 	/**
 	 * Checks of the first {@code Round} of this {@code DoubleElimination} tournament
 	 * has been played
@@ -314,7 +363,14 @@ public class DoubleElimination extends EliminationTournament
 		
 		if ( !hasEnded() )
 		{
-			if ( !getCurrentRound().isComplete() )//contains pending fixtures or ties 
+			if( hasTie() && !isTieRound() ) 
+			{
+				setTieRound( true );
+				return ; 
+			}
+			else if( hasTie() )
+				throw new MoveToNextRoundException( "Some fixtures are incomplete" );
+			else if ( !getCurrentRound().isComplete() )//contains pending fixtures or ties 
 				return ;
 			else 
 				createNextRound( getCurrentFixture() );
@@ -458,6 +514,7 @@ public class DoubleElimination extends EliminationTournament
 			System.exit(0);
 		}
 		
+		setTieRound( false );
 	}
 	
 	/**
@@ -487,26 +544,32 @@ public class DoubleElimination extends EliminationTournament
 	@Override
 	public Round getCurrentRound() throws TournamentEndedException
 	{
-		List<Fixture> fixtures = 
-				new ArrayList<>( getActiveCompetitors().length / 2 );
 		
 		try
 		{ 
-			if ( getActiveCompetitors().length == 2 )
-				return getCurrentRound( BracketType.TOURNAMENT_FINAL );
-			else if ( getCurrentFixture() == BracketType.INITIAL_BRACKET )
-				return getCurrentRound( BracketType.INITIAL_BRACKET )  ;
-			else if ( getCurrentFixture() == BracketType.MAJOR_BRACKET )
+			if ( !isTieRound() && hasTie() )
 			{
-				return getCurrentRound( BracketType.MAJOR_BRACKET ) ; 
+				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
+						 .filter( f-> f.isComplete() )
+						 .collect(Collectors.toList() );
+				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) );
+
 			}
+				
+			else if ( hasTie() )
+			{
+				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
+										 .filter( f-> !f.isComplete() )
+										 .collect(Collectors.toList() );
+				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) );
+				
+			}
+			else if ( isTieRound() )
+				return new Round( activeTies.toArray( new Fixture[ activeTies.size() ] ) );
 			
-			fixtures.addAll( 
-					Arrays.asList( getCurrentRound( BracketType.MINOR_BRACKET ).getFixtures() ));
-			fixtures.addAll( 
-					Arrays.asList( getCurrentRound( BracketType.WINNERS_BRACKET ).getFixtures() ));
 			
-			return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] 	))  ;
+			
+			return getCurrentRoundHelper();
 		}
 		catch ( RoundIndexOutOfBoundsException  e ) 
 		{
@@ -515,6 +578,28 @@ public class DoubleElimination extends EliminationTournament
 		}
 		
 		
+	}
+
+	public Round getCurrentRoundHelper() throws RoundIndexOutOfBoundsException
+	{
+		List<Fixture> fixtures = 
+				new ArrayList<>( getActiveCompetitors().length / 2 );
+		
+		if ( getActiveCompetitors().length == 2 )
+			return getCurrentRound( BracketType.TOURNAMENT_FINAL );
+		else if ( getCurrentFixture() == BracketType.INITIAL_BRACKET )
+			return getCurrentRound( BracketType.INITIAL_BRACKET )  ;
+		else if ( getCurrentFixture() == BracketType.MAJOR_BRACKET )
+		{
+			return getCurrentRound( BracketType.MAJOR_BRACKET ) ; 
+		}
+		
+		fixtures.addAll( 
+				Arrays.asList( getCurrentRound( BracketType.MINOR_BRACKET ).getFixtures() ));
+		fixtures.addAll( 
+				Arrays.asList( getCurrentRound( BracketType.WINNERS_BRACKET ).getFixtures() ));
+		
+		return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] 	))  ;
 	}
 
 	
@@ -577,7 +662,8 @@ public class DoubleElimination extends EliminationTournament
 	{
 		if ( hasEnded() )
 			return "Tournament Has Ended";
-		
+		else if ( isTieRound() )
+			return "Round Ties";
 		StringBuilder builder = new StringBuilder();
 		
 		int totalCompetitors = getActiveCompetitors().length;
@@ -673,6 +759,21 @@ public class DoubleElimination extends EliminationTournament
 			return topThree;
 		return null;
 		
+	}
+
+	private boolean hasTie()
+	{
+		return activeTies.size() == 0 ? false : true ;
+		
+	}
+	public boolean isTieRound()
+	{
+		return tieRound;
+	}
+
+	private void setTieRound(boolean tieRound)
+	{
+		this.tieRound = tieRound;
 	}
 	
 }

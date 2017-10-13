@@ -27,18 +27,17 @@ import com.solutioninventors.tournament.utils.SportType;
 public class SingleEliminationTest {
 
 	public static void main(String[] args)  {
-		File file = new File("First .jpg");
+		File file = new File("Arsenal.jpg");
 		
 		Competitor c1 = new Competitor("Chidiebere", file);
 		Competitor c2 = new Competitor("Fred", file);
 		Competitor c3 = new Competitor("Joshua", file);
-
-		
 		Competitor c4 = new Competitor("Chinedu", file);
-		Competitor c5 = new Competitor("Chidiebere", file);
-		Competitor c6 = new Competitor("Fred", file);
-		Competitor c7 = new Competitor("Joshua", file);
-		Competitor c8 = new Competitor("Chinedu", file);
+		
+		Competitor c5 = new Competitor("Somto", file);
+		Competitor c6 = new Competitor("Ogene", file);
+		Competitor c7 = new Competitor("Dalu", file);
+		Competitor c8 = new Competitor("Tobi", file);
 		Competitor[] comps = { c1, c2, c3, c4,c5,c6,c7,c8};
 
 		int ans = Integer.parseInt( JOptionPane.showInputDialog(
@@ -63,10 +62,11 @@ public class SingleEliminationTest {
 			try
 			{
 				simulateRound(tournament);
+				Test.printRounds( tournament.getRoundArray() );
 			}
 			catch (TournamentEndedException | MoveToNextRoundException e)
 			{
-				
+				e.printStackTrace();
 			}
 		}
 		Test.displayMessage("The winner is " + tournament.getWinner());

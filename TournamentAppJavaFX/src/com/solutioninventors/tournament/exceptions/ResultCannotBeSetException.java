@@ -36,4 +36,9 @@ public class ResultCannotBeSetException extends Exception
 	{
 		super( message );
 	}
+
+	public ResultCannotBeSetException(double score1, double score2)
+	{
+		this( "Cannot change the result of a complete Fixture: " + score1 + " VS " + score2 );
+	}
 }

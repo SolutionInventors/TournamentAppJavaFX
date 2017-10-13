@@ -293,7 +293,8 @@ public class Fixture implements Serializable{
 		if ( isComplete() )
 			return competitorOneScore;
 		
-		throw new IncompleteFixtureException("This fixture does not contain a restult" );
+		throw new IncompleteFixtureException("This fixture does not contain a result " + 
+				getCompetitorOne() + " VS " + getCompetitorTwo()  );
 		
 	}
 
@@ -371,7 +372,7 @@ public class Fixture implements Serializable{
 	protected void setResult(double score1, double score2, boolean store) throws ResultCannotBeSetException
 	{
 		if ( isComplete() )
-			throw new ResultCannotBeSetException();
+			throw new ResultCannotBeSetException( score1, score2);
 		else if ( store  )
 			setResult(score1, score2);
 		else {

@@ -22,6 +22,17 @@ public class Test {
 
 	}
 
+	
+	
+	public static void printRounds( Round[] rounds 	)
+	{
+		for ( int i = 0 ; i < rounds.length ; i++ )
+		{
+			System.out.println( "Round " + ( i+ 1) );
+			System.out.println( getFixutures( rounds[i].getFixtures()  ) );
+			
+		}
+	}
 	public static String getTableToDisplay(String[][] stringTable )
 	{
 		StringBuilder builder  = new StringBuilder(1000);
