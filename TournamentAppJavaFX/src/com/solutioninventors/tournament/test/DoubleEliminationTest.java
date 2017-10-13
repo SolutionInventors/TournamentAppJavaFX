@@ -121,7 +121,6 @@ public class DoubleEliminationTest
 		}
 		catch (RoundIndexOutOfBoundsException e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 	
 		
@@ -164,7 +163,6 @@ public class DoubleEliminationTest
 			
 			try
 			{
-				
 				tournament.setResult( com1, score1, score2, com2);
 				if ( score1 == score2 )
 					continue;
@@ -178,12 +176,10 @@ public class DoubleEliminationTest
 			}
 			catch (ResultCannotBeSetException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			catch (IncompleteFixtureException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -203,7 +203,6 @@ public class DoubleElimination extends EliminationTournament
 //			}
 //			catch (TournamentEndedException e)
 //			{
-//				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
 		if( type == BracketType.INITIAL_BRACKET && getCurrentRoundNum() > 0 )
@@ -511,12 +510,14 @@ public class DoubleElimination extends EliminationTournament
 
 				
 				break;
+			default:
+				break;
+			
 			}
 		}
 		catch(  RoundIndexOutOfBoundsException e )
 		{
 			e.printStackTrace();
-			System.exit(0);
 		}
 		
 		setTieRound( false );
@@ -566,8 +567,16 @@ public class DoubleElimination extends EliminationTournament
 
 			}
 			else if ( isTieRound() && hasTie() )
-				return new Round( activeTies.toArray( new Fixture[ activeTies.size() ] ) , toString());
-//			else if ( hasTie() )
+			{
+				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
+						 .filter( f-> !f.isComplete() )
+						 .collect(Collectors.toList() );
+				
+				
+				return new Round( 
+						fixtures.toArray( new Fixture[ fixtures.size() ] ), toString() );
+			}
+//				else if ( hasTie() )
 //			{
 //				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
 //										 .filter( f-> !f.isComplete() )

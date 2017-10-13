@@ -135,10 +135,13 @@ public class Competitor implements Serializable
 	 *@param first a {@code String } containing the first name of this {@code Competitor}
 	 *@param last a String containing the last name of the {@code Competitor}
 	 *@param imageFile The {@code File } object that contains a file in either .jpg, .png or .jpeg
+	 *@throws NoCompetitorNameException when competitor name contains only white space
 	 */
-	public Competitor(String first, String last, File imageFile)
+	public Competitor(String first, String last, File imageFile) throws NoCompetitorNameException
 	{
 		
+		if ( first.equals( "" ) && last.trim().equals( "" ) 	)
+			throw new NoCompetitorNameException("Invalid competitor name " );
 		String[] tokens = first.split( " ");
 		
 		if ( last == null && tokens.length == 2 )
