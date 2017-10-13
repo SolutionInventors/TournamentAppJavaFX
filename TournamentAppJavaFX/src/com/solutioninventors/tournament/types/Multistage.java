@@ -323,8 +323,10 @@ public class Multistage extends Tournament
 	{
 		List< Round > roundList = new ArrayList<Round>();
 		
-		int totalRounds = numberOfGroupStageRounds() + 
-						  knockoutStage.getRoundArray().length ;
+		int totalRounds = numberOfGroupStageRounds();
+		
+		if( isGroupStageOver() ) 
+			totalRounds += knockoutStage.getRoundArray().length ;
 		
 		int factor = getCurrentRoundNum() < totalRounds ? getCurrentRoundNum() :
 						totalRounds -1 ;

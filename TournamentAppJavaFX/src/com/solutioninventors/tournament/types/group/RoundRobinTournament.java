@@ -109,7 +109,7 @@ public class RoundRobinTournament extends GroupTournament
 			}
 			
 			tempRound[ tempCurrentRound] = 
-					convertToRound( fixureCreator  ); //convert int[][] to Round 
+					convertToRound( fixureCreator , tempCurrentRound + 1 ); //convert int[][] to Round 
 			tempCurrentRound++ ;
 			
 		}
@@ -122,8 +122,9 @@ public class RoundRobinTournament extends GroupTournament
 	 * precondition: fixes = int[ numberOfCompetitors /2][ 2 ] if no bye or
 	 * 				 fixes = int[ numberOfCompetitors/2 + 1][ 2 ]  if bye
 	 * This method skips the first row if bye
+	 * @param roundNum 
 	 */
-	private Round convertToRound(int[][] fixes ) 
+	private Round convertToRound(int[][] fixes, int roundNum ) 
 	{
 		
 		Competitor[] competitors = getCompetitors();
@@ -137,7 +138,7 @@ public class RoundRobinTournament extends GroupTournament
 			                              competitors[ fixes[ i + skip ][ 1 ] - 1 ] );
 		}
 		
-		return new Round ( fixtures );
+		return new Round ( fixtures , String.valueOf( roundNum ) );
 		
 	}
 

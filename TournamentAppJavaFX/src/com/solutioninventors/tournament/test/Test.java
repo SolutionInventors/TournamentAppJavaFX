@@ -28,7 +28,7 @@ public class Test {
 	{
 		for ( int i = 0 ; i < rounds.length ; i++ )
 		{
-			System.out.println( "Round " + ( i+ 1) );
+			System.out.println( rounds[i] + "\n" );
 			System.out.println( getFixutures( rounds[i].getFixtures()  ) );
 			
 		}

@@ -153,7 +153,7 @@ public class DoubleElimination extends EliminationTournament
 		
 		
 		Round initialRound = new Round(  
-				roundFixtures.toArray(new Fixture[ roundFixtures.size() ] ));
+				roundFixtures.toArray(new Fixture[ roundFixtures.size() ] ), toString() );
 		addRound( BracketType.INITIAL_BRACKET , initialRound );
 		
 	}
@@ -427,7 +427,7 @@ public class DoubleElimination extends EliminationTournament
 				if ( loserBracket.size()  > 1 )
 				{
 					addRound(BracketType.MINOR_BRACKET , new Round( 
-							fixesCreator( loserBracket) ));
+							fixesCreator( loserBracket) , toString()));
 					setCurrentFixture( BracketType.WINNERS_BRACKET );
 					
 				}
@@ -465,12 +465,12 @@ public class DoubleElimination extends EliminationTournament
 				
 				if( winnerBracket.size() > 1 )
 					addRound( BracketType.WINNERS_BRACKET , 
-								new Round( fixesCreator( winnerBracket )  ) );
+								new Round( fixesCreator( winnerBracket)  , toString() ) );
 				
 				
 				
 				addRound(BracketType.MAJOR_BRACKET , new Round( 
-						fixesCreator( loserBracket ) )  );
+						fixesCreator( loserBracket ) , toString())  );
 				
 				setCurrentFixture( BracketType.MAJOR_BRACKET);
 				break;
@@ -493,7 +493,8 @@ public class DoubleElimination extends EliminationTournament
 						
 					else
 						addRound(BracketType.TOURNAMENT_FINAL   , 
-								new Round( new Fixture( getSportType(),  f.getCompetitorTwo(), f.getCompetitorOne()) ) );
+								new Round( new Fixture( getSportType(),  f.getCompetitorTwo(), 
+										f.getCompetitorOne()) , toString() ));
 				
 				}
 				else
@@ -552,7 +553,8 @@ public class DoubleElimination extends EliminationTournament
 				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
 						 .filter( f-> f.isComplete() )
 						 .collect(Collectors.toList() );
-				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) );
+				return new Round( 
+						fixtures.toArray( new Fixture[ fixtures.size() ] ), toString() );
 
 			}
 				
@@ -561,11 +563,11 @@ public class DoubleElimination extends EliminationTournament
 				List<Fixture> fixtures = Arrays.stream( getCurrentRoundHelper().getFixtures() )
 										 .filter( f-> !f.isComplete() )
 										 .collect(Collectors.toList() );
-				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) );
+				return new Round( fixtures.toArray( new Fixture[ fixtures.size() ] ) , toString());
 				
 			}
 			else if ( isTieRound() )
-				return new Round( activeTies.toArray( new Fixture[ activeTies.size() ] ) );
+				return new Round( activeTies.toArray( new Fixture[ activeTies.size() ] ) , toString());
 			
 			
 			

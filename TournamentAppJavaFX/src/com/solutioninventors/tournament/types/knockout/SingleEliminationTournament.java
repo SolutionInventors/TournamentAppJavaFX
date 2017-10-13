@@ -126,10 +126,10 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 		}
 
-		roundList.add(new Round(fixtures));
+		roundList.add(new Round(fixtures, toString() ));
 
 		if (hasAway())
-			roundList.add(new Round(fixtures).invertHomeAndAway( getSportType() ));
+			roundList.add(new Round(fixtures, toString() ).invertHomeAndAway( getSportType() ));
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			{
 				eliminateLosers();
 			}
-			Round tieRound = new Round( activeTies );
+			Round tieRound = new Round( activeTies, toString()  );
 			createTieRound( tieRound );
 			setTieRound( true );
 		}
@@ -212,7 +212,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 	{
 		if ( !isTieRound() && hasTie() )
 		{
-			Round tieRound = new Round( activeTies );
+			Round tieRound = new Round( activeTies, toString() );
 			tieRounds.put( getCurrentRoundNum(), tieRound ) ;
 			createTieRound( tieRound );
 			setTieRound( true );
@@ -239,7 +239,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			for ( int i = 0 ; i < activeCompetitors.length ; i+= 2 )
 				nextRoundFixtures[ i/2 ] = new Fixture( getSportType(), activeCompetitors[ i ], activeCompetitors[ i + 1 ] );
 			
-			Round round = new Round( nextRoundFixtures );
+			Round round = new Round( nextRoundFixtures, toString() );
 			roundList.add( round );
 			if ( hasAway() && getActiveCompetitors().length > 2 )
 				roundList.add( round.invertHomeAndAway( getSportType() ) );
@@ -524,10 +524,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			message = "Final";
 			break;
 		case 4:
-			if ( isSemiFinal() )
-				message = "Semi final";
-			else
-				message = "Third-place fixture";
+			message = "Semi final";
 			break;
 		case 8:
 			message = "Quarter-Final";

@@ -39,6 +39,7 @@ public class Round implements Serializable
 {
 	private Fixture[] fixtures;
 	
+	private String name;
 	/**
 	 * Creates a Round object with a {@code Fixture[] } object
 	 * Removes any duplicate in the arrays
@@ -52,8 +53,26 @@ public class Round implements Serializable
 	{
 		HashSet<Fixture > set = new HashSet<Fixture>( Arrays.asList( fixes )  );
 		this.fixtures = set.toArray( new Fixture[ set.size() ] )  ;
-		
+		setName("Round") ;
 	}
+	
+	/**
+	 * Creates a Round object with a {@code Fixture[] } object
+	 * Removes any duplicate in the arrays
+	 * It sets the name of the this Round
+	 * 
+	 * @author Oguejiofor Chidiebere
+	 * @since v1.0
+	 * @see Fixture
+	 *@param fixes the {@code Fixture[] } object
+	 */
+	public Round( Fixture[]  fixes, String name  )
+	{
+		HashSet<Fixture > set = new HashSet<Fixture>( Arrays.asList( fixes )  );
+		this.fixtures = set.toArray( new Fixture[ set.size() ] )  ;
+		setName(name ) ;
+	}
+	
 	
 	/**
 	 * Creates a Round object with a {@code Collection<Fixture> } object
@@ -64,9 +83,9 @@ public class Round implements Serializable
 	 *@param fixes the {@code Collection<Fixture>} object
 	 */
 	
-	public Round( Collection<Fixture>  fixes )
+	public Round( Collection<Fixture>  fixes, String name  )
 	{
-		this( fixes.toArray( new Fixture[ fixes.size() ] ) );
+		this( fixes.toArray( new Fixture[ fixes.size() ]  ), name );
 		
 	}
 	
@@ -79,11 +98,16 @@ public class Round implements Serializable
 	 */
 	public Round( Fixture f )
 	{
-		Fixture[] temp = {f};
-		fixtures = temp; ;
-	
+		this( f, "Round" );
 	}
 	
+	public Round(Fixture f, String string)
+	{
+		Fixture[] temp = {f};
+		fixtures = temp; ;
+		setName( string );
+	}
+
 	/**
 	 *@return All the fixtures in this object as {@code Fixture[] }
 	 *@author Oguejiofor Chidiebere
@@ -245,7 +269,7 @@ public class Round implements Serializable
 												currentFixture[ i ].getCompetitorOne() 	);
 		}
 		
-		return new Round( inverseFixtures );
+		return new Round( inverseFixtures, toString() );
 		
 	}
 	
@@ -369,6 +393,17 @@ public class Round implements Serializable
 	public int getNumberOfFixtures()
 	{
 		return getFixtures().length;
+	}
+
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public String toString()
+	{
+		return name;
 	}
 	
 }	

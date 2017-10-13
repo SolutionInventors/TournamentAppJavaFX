@@ -72,7 +72,7 @@ public class Challenge extends Tournament
 		{
 			fixture = new Fixture( getSportType(),  getCompetitors()[ i % 2 == 0 ? 0 : 1], 
 					getCompetitors()[ i % 2 == 0 ? 1 : 0 ] );
-			getRoundArray()[ i ] = new Round( fixture );
+			getRoundArray()[ i ] = new Round( fixture , "Round " + (i+1) );
 		}
 	}
 

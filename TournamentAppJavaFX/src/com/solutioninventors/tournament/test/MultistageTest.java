@@ -108,6 +108,7 @@ public class MultistageTest {
 			try
 			{
 				simulateRound((Multistage) tournament );
+				Test.printRounds( tournament.getRoundArray() );
 			}
 			catch (TournamentEndedException | ResultCannotBeSetException | MoveToNextRoundException e)
 			{
