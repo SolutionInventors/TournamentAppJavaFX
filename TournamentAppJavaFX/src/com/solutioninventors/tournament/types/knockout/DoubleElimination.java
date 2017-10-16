@@ -69,10 +69,6 @@ public class DoubleElimination extends EliminationTournament
 	
 	private Competitor[] topThree;
 	
-	/**
-	 * True when current fixtures need to be broken
-	 */
-	private boolean tieRound;
 	
 	private List<Fixture> activeTies;
 	
@@ -254,7 +250,7 @@ public class DoubleElimination extends EliminationTournament
 			{
 				Fixture tie =  new Fixture( getSportType(), competitorOne, competitorTwo);
 				new Round( tie ).setResult(competitorOne, score1, score2, competitorTwo);
-				activeTies.add( tie );
+				getActiveTieList().add( tie );
 				
 				return;
 			}
@@ -263,7 +259,7 @@ public class DoubleElimination extends EliminationTournament
 		}
 		else if ( isTieRound() )
 		{
-			boolean hasFixture = activeTies.stream()
+			boolean hasFixture = getActiveTieList().stream()
 								 .anyMatch( f-> f.hasFixture(competitorOne, competitorTwo) );
 			
 			if ( hasFixture )// no such fixture
@@ -317,11 +313,11 @@ public class DoubleElimination extends EliminationTournament
 	
 	private void removeTie(Competitor competitorOne, Competitor competitorTwo) throws NoFixtureException
 	{
-		for ( int i = 0 ; i < activeTies.size() ; i ++ )
+		for ( int i = 0 ; i < getActiveTieList().size() ; i ++ )
 		{
-			if ( activeTies.get( i ).hasFixture(competitorOne, competitorTwo));
+			if ( getActiveTieList().get( i ).hasFixture(competitorOne, competitorTwo));
 			{
-				activeTies.remove( i );
+				getActiveTieList().remove( i );
 //				if ( activeTies.isEmpty()) 
 //					setTieRound( false );
 				
@@ -560,7 +556,7 @@ public class DoubleElimination extends EliminationTournament
 						 .filter( f-> f.isComplete() )
 						 .collect(Collectors.toList() );
 				
-				activeTies.stream().forEach( f-> fixtures.add( f) );
+				getActiveTieList().stream().forEach( f-> fixtures.add( f) );
 				
 				return new Round( 
 						fixtures.toArray( new Fixture[ fixtures.size() ] ), toString() );
@@ -778,19 +774,7 @@ public class DoubleElimination extends EliminationTournament
 		
 	}
 
-	private boolean hasTie()
-	{
-		return activeTies.size() == 0 ? false : true ;
-		
-	}
-	public boolean isTieRound()
-	{
-		return tieRound;
-	}
-
-	private void setTieRound(boolean tieRound)
-	{
-		this.tieRound = tieRound;
-	}
+	
+	
 	
 }

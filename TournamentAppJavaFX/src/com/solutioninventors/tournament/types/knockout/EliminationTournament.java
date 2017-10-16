@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
+import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 
@@ -26,7 +27,16 @@ import com.solutioninventors.tournament.utils.SportType;
  */
 public abstract class EliminationTournament extends Tournament implements Serializable
 {
-
+	/**
+	 * Stores the active ties in this {@code Tournament}
+	 */
+	private List<Fixture> activeTies;
+	
+	/**
+	 * True when current fixtures need to be broken
+	 */
+	private boolean tieRound;
+	
 	
 	/**
 	 * Creates an {@code EliminationTournament}. This constructor ensures that the 
@@ -45,12 +55,15 @@ public abstract class EliminationTournament extends Tournament implements Serial
 				( Math.log( 2 ) );
 		if ( ! ( validator % 1 == 0.0f)  ) //the number is invalid 
 			throw new TournamentException( "The number of Competitors must be a power of 2 " );
-
+		activeTies = new ArrayList<>();
 
 	}
 
 	public abstract Competitor[] getTopThree();
 	
+	public  boolean hasTie(){
+		return getActiveTieList().size() == 0 ? false : true ;	
+	}
 	
 	/** 
 	 * Gets the active {@link Competitor}s in this {@code EliminationTournament}.
@@ -94,6 +107,12 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	
 	}
 
+	
+	public List<Fixture> getActiveTieList()
+	{
+		return activeTies;
+	}
+	
 	/**
 	 * Gets a round specified by a round number
 	 *Round
@@ -104,6 +123,17 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	{
 		return getRoundArray()[ i ];
 	}
+	
+	public boolean isTieRound()
+	{
+		return tieRound;
+	}
+
+	protected void setTieRound(boolean tieRound)
+	{
+		this.tieRound = tieRound;
+	}
+	
 	
 	
 }

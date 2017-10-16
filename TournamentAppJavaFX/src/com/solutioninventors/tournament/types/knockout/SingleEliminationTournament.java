@@ -40,12 +40,6 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 */
 	private List<Round> roundList;
 	
-	private boolean tieRound;
-	
-	/**
-	 * Stores the active ties in this {@code Tournament}
-	 */
-	private List<Fixture> activeTies;
 	
 	/**
 	 * {@code true} when this {@code SingleEliminationTournament} has away fixtures
@@ -89,7 +83,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		roundList = new ArrayList<>();
 		AWAY = away;
 		createTounament();
-		activeTies = new ArrayList<>();
+		
 		topThree = new Competitor[3];
 		tieRounds =  new HashMap<>();
 	}
@@ -194,7 +188,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 			{
 				eliminateLosers();
 			}
-			Round tieRound = new Round( activeTies, toString()  );
+			Round tieRound = new Round( getActiveTieList(), toString()  );
 			createTieRound( tieRound );
 			setTieRound( true );
 		}
@@ -212,7 +206,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 	{
 		if ( !isTieRound() && hasTie() )
 		{
-			Round tieRound = new Round( activeTies, toString() );
+			Round tieRound = new Round( getActiveTieList(), toString() );
 			tieRounds.put( getCurrentRoundNum(), tieRound ) ;
 			createTieRound( tieRound );
 			setTieRound( true );
@@ -431,18 +425,18 @@ public class SingleEliminationTournament extends EliminationTournament {
 					
 			if ( score1 == score2 )
 				throw new ResultCannotBeSetException( "The score inputed is invalid " +"Score 1 = "+score1+"Score 2 = "+score2);
-			else if ( activeTies.stream().anyMatch( predicate  ))
+			else if ( getActiveTieList().stream().anyMatch( predicate  ))
 			{
-				for ( int i = 0 ; i < activeTies.size() ; i++ )
+				for ( int i = 0 ; i < getActiveTieList().size() ; i++ )
 				{
 					
-					Fixture tieFixture = activeTies.get( i );
+					Fixture tieFixture = getActiveTieList().get( i );
 					if ( Competitor.isEqual( tieFixture.getCompetitorOne() , com1 ) && 
 						 Competitor.isEqual( tieFixture.getCompetitorTwo() ,  com2 ) )
 					{
 						tieFixture.eliminateLoser();
 						tieRounds.get( getCurrentRoundNum() ).setResult(tieFixture, score1, score2);;
-						activeTies.remove( i );
+						getActiveTieList().remove( i );
 					}
 				}
 			}
@@ -466,7 +460,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		Fixture fixture = new Fixture( getSportType(), com1, com2);
 
 		
-		activeTies.add(fixture);
+		getActiveTieList().add(fixture);
 	}
 
 	/**
@@ -474,8 +468,10 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 *@return
 	 */
 	public boolean hasTie() {
-		return activeTies.size() == 0 ? false : true;
+		return getActiveTieList().size() == 0 ? false : true;
 	}
+
+	
 
 	/**
 	 * Gets the active ties in the current {@code Round}
@@ -485,11 +481,11 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 *@see Fixture
 	 */
 	public Fixture[] getActiveTies() {
-		if (activeTies.size() <= 0)
+		if (getActiveTieList().size() <= 0)
 			return null;
 
-		Fixture[] fixes = new Fixture[activeTies.size()];
-		activeTies.toArray(fixes);
+		Fixture[] fixes = new Fixture[getActiveTieList().size()];
+		getActiveTieList().toArray(fixes);
 		return fixes;
 	}
 
@@ -549,14 +545,5 @@ public class SingleEliminationTournament extends EliminationTournament {
 		return null;
 	}
 
-	public boolean isTieRound()
-	{
-		return tieRound;
-	}
-
-	public void setTieRound(boolean tieRound)
-	{
-		this.tieRound = tieRound;
-	}
-
+	
 }
