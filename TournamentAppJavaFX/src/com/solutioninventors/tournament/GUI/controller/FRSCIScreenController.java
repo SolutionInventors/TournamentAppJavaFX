@@ -1,7 +1,10 @@
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -18,9 +21,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FRSCIScreenController {
@@ -91,7 +96,28 @@ public class FRSCIScreenController {
                 KeyCombination.SHORTCUT_DOWN));
 		/*MenuSaveas.setAccelerator(new KeyCodeCombination(KeyCode.N, 
                 KeyCombination.));*/
+	//to create the music interface
+		try {
+		Stage musicStage = new Stage();
+		musicStage.initModality(Modality.APPLICATION_MODAL);
+		Parent root;
+	
+			root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
+		
+		Scene scene = new Scene(root);
+		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+		musicStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		musicStage.setResizable(false);
+		musicStage.setScene(scene);
+		musicStage.sizeToScene();
+		musicStage.setTitle("Music");
+		musicStage.show();
+		} catch (IOException | URISyntaxException e) {
+			// FIXME Auto-generated catch block
+			e.printStackTrace();
 		}
+	
+	}
 
 	public void changetab(int tabtoswitch) {
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
@@ -101,6 +127,7 @@ public class FRSCIScreenController {
 		tournament = tour;
 		tabfixController.setTournament(tournament);
 	}
+	@FXML
 	public void newTour(ActionEvent e) throws IOException {
 		Stage primaryStage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TournamentTypeScreen.fxml"));
@@ -122,10 +149,10 @@ public class FRSCIScreenController {
 		Platform.exit();
 		System.exit(0);
 	}
-	public void music(ActionEvent e) {
-		Platform.exit();
-		System.exit(0);
+	public void music(ActionEvent e) throws IOException, URISyntaxException {
+		control.music();
 	}
+	
 	public void help(ActionEvent e) throws IOException, URISyntaxException {
 		control.help();
 	}

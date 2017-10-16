@@ -84,6 +84,23 @@ public class CommonMethods {
 		helpStage.show();
 	}
 
+	
+	
+	public void music() throws IOException, URISyntaxException {
+		Stage musicStage = new Stage();
+		musicStage.initModality(Modality.APPLICATION_MODAL);
+		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
+		Scene scene = new Scene(root);
+		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+		musicStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		musicStage.setResizable(false);
+		musicStage.setScene(scene);
+		musicStage.sizeToScene();
+		musicStage.setTitle("Music");
+		musicStage.show();
+	}
+
+
 	public void startabs() {
 
 		Runnable runnable = new Runnable() {

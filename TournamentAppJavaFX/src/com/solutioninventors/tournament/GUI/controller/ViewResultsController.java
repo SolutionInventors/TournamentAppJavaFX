@@ -22,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
@@ -62,6 +64,7 @@ public class ViewResultsController {
 		if (!tournament.hasEnded()) {
 			// GridPane settings
 			GridPane grid = new GridPane();
+			//grid.setHgrow(grid, arg1);
 			grid.setPadding(new Insets(25));
 			grid.setHgap(5);
 			grid.setVgap(5);
@@ -73,9 +76,28 @@ public class ViewResultsController {
 			ColumnConstraints column5 = new ColumnConstraints(50);
 			ColumnConstraints column6 = new ColumnConstraints(50);
 			ColumnConstraints column7 = new ColumnConstraints(100);
+			 ColumnConstraints cc = new ColumnConstraints();
+			    cc.setHgrow(Priority.NEVER);
+			    RowConstraints rc = new RowConstraints();
+			    rc.setVgrow(Priority.NEVER);
 
-			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7);
+			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7,cc);
+			grid.getRowConstraints().add(rc);
+			/*for (int j = 0; j < nColumns; j++) {
+			    ColumnConstraints cc = new ColumnConstraints();
+			    cc.setHgrow(Priority.ALWAYS);
+			    gridPane.getColumnConstraints().add(cc);
+			}
 
+			for (int j = 0; j < nRows; j++) {
+			    RowConstraints rc = new RowConstraints();
+			    rc.setVgrow(Priority.ALWAYS);
+			    gridPane.getRowConstraints().add(rc);
+			}*/
+			
+			
+			
+			
 			tourStage.setText(tournament.toString().toUpperCase());
 			currentFixtures = tournament.getCurrentRound().getFixtures();
 			compName = new Label[currentFixtures.length * 2];
@@ -87,7 +109,12 @@ public class ViewResultsController {
 				compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
 				compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
 				compName[i].setFont(font[1]);
+				//compName[i].setMaxSize(162, 76);
+				compName[i].setPrefSize(162, 76);
+				//compName[i].setMaxWidth(162);
+				
 				compName[i + 1].setFont(font[1]);
+				compName[i + 1].setMaxSize(162, 76);
 				compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 				compName[i+ 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 				

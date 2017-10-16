@@ -4,9 +4,9 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Tab?>
 
 <!-- <?import javafx.scene.control.Tab?> -->
 
@@ -45,7 +45,10 @@
               <MenuItem fx:id="MenuClose" mnemonicParsing="true" onAction="#close" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" onAction="#music" text="Music" />
+          <Menu mnemonicParsing="false"  text="Others">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#music" text="Music" />
+               </items></Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#help" text="Tournament Help" />

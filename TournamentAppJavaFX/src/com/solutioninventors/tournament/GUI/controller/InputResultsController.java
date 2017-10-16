@@ -97,9 +97,11 @@ public class InputResultsController {
 					compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
 					compName[i].setFont(font[1]);
 					compName[i].setWrapText(true);
+					compName[i].setMaxSize(162, 76);
 					compName[i].alignmentProperty().set(Pos.CENTER);
 					compName[i + 1].setFont(font[1]);
 					compName[i + 1].setWrapText(true);
+					compName[i + 1].setMaxSize(162, 76);
 					compName[i+ 1].alignmentProperty().set(Pos.CENTER);
 					compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 					compName[i + 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
