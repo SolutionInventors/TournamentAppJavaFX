@@ -140,8 +140,8 @@ public class Competitor implements Serializable
 	public Competitor(String first, String last, File imageFile) throws NoCompetitorNameException
 	{
 		
-		//if ( first.equals( "" ) && last.trim().equals( "" ) 	)
-			//throw new NoCompetitorNameException("Invalid competitor name " );
+//		if ( first.matches( "[%s]*" ) && last.matches( "[%s]*" ))
+//			throw new NoCompetitorNameException("Invalid competitor name " );
 		String[] tokens = first.split( " ");
 		
 		if ( last == null && tokens.length == 2 )
