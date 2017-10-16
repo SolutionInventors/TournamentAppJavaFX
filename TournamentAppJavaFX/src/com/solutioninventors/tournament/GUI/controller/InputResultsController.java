@@ -20,7 +20,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -72,11 +74,15 @@ public class InputResultsController {
 				grid.setVgap(5);
 				// ColumnSettings for all five columns
 				ColumnConstraints column1 = new ColumnConstraints(110); //
+				
 				ColumnConstraints column2 = new ColumnConstraints(100); //
+				column2.setHalignment(HPos.RIGHT);
 				ColumnConstraints column3 = new ColumnConstraints(50);
 				ColumnConstraints column4 = new ColumnConstraints(50);
 				ColumnConstraints column5 = new ColumnConstraints(50);
+				
 				ColumnConstraints column6 = new ColumnConstraints(70);
+				column6.setHalignment(HPos.LEFT);
 				ColumnConstraints column7 = new ColumnConstraints(70);
 
 				grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7);
@@ -150,10 +156,13 @@ public class InputResultsController {
 				if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
 					for (int temp = 0; temp < currentFixtures.length; temp++) {
 						grid.add(logo[c], 0, temp);
+						// GridPane.setHalignment(compName[c], HPos.RIGHT);
 						grid.add(compName[c], 1, temp);
+						compName[c].setAlignment(Pos.TOP_RIGHT);
 						grid.add(scores[c], 2, temp);
 						grid.add(VS[temp], 3, temp);
 						grid.add(scores[c + 1], 4, temp);
+					//	 GridPane.setHalignment(compName[c], HPos.LEFT);
 						grid.add(compName[c + 1], 5, temp);
 						grid.add(logo[c + 1], 6, temp);
 						c += 2;

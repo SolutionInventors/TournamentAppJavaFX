@@ -17,7 +17,7 @@
          </image>
       </ImageView>
     
-      <Label fx:id="tourStage" alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="27.0" prefHeight="36.0" prefWidth="612.0" text="TOURNAMENT TYPE" textAlignment="CENTER" textFill="RED">
+      <Label fx:id="tourStage" alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="27.0" prefHeight="36.0" prefWidth="612.0" text="TOURNAMENT HAS ENDED" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Trebuchet MS" size="31.0" />
          </font></Label>
