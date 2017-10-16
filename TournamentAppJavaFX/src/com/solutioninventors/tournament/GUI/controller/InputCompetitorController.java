@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
@@ -106,6 +107,7 @@ public class InputCompetitorController {
 	private TournamentTypes TournamentType;
 	private Tournament tournament;
 	private File[] file;
+	private int[] imageTracker;
 	private Competitor[] comps;
 	private int tournamenttype;
 	private int startValue = 0;
@@ -194,27 +196,42 @@ public class InputCompetitorController {
 		// this was used to set the default no logo image
 		try {
 			image = new Image(new FileInputStream(new File(url1.toURI())));
+
+			comps = new Competitor[noOfCompetitors];
+			file = new File[noOfCompetitors];
+			imageTracker = new int[noOfCompetitors];
+			Arrays.fill(imageTracker, -1);
+			for (int i = 0; i < txtArray.size(); i++) {
+				txtArray.get(i).setText(null);
+			}
+			/*for (int i = 0; i < comps.length; i++) {
+				comps[i] = new Competitor("Player " + String.valueOf(i + 1), new File(url1.toURI()));
+			}
+			fo
+*/
+			btnPrevious.setVisible(false);
+			btnNext.setVisible(noOfCompetitors <= 4 ? false : true);
+
+			if (TournamentType == TournamentTypes.CHALLENGE) {
+				comps[0] = new Competitor("Champion", new File(url1.toURI()));
+				comps[1] = new Competitor("Challenger", new File(url1.toURI()));
+				txtArray.get(0).setPromptText("Champion");
+				txtArray.get(1).setPromptText("Challenger");
+				for (int i = 2; i < 4; i++) {
+					txtArray.get(i).setVisible(false);
+					imgArray.get(i).setVisible(false);
+					SNArray.get(i).setVisible(false);
+				}
+				endValue = 2;
+			} else if (noOfCompetitors == 3) {
+				txtArray.get(3).setVisible(false);
+				imgArray.get(3).setVisible(false);
+				SNArray.get(3).setVisible(false);
+			}
 		} catch (FileNotFoundException | URISyntaxException e) {
 			e.printStackTrace();
 		}
-		comps = new Competitor[noOfCompetitors];
-		file = new File[noOfCompetitors];
 
-		btnPrevious.setVisible(false);
-		btnNext.setVisible(noOfCompetitors <= 4 ? false : true);
-
-		if (TournamentType == TournamentTypes.CHALLENGE) {
-			txtArray.get(0).setPromptText("Champion");
-			txtArray.get(1).setPromptText("Challenger");
-			for (int i = 2; i <4; i++) {
-				txtArray.get(i).setVisible(false);
-				imgArray.get(i).setVisible(false);
-				SNArray.get(i).setVisible(false);
-			}
-			endValue = 2;
-		} // end if
-		
-	
 		if (goalScored) {
 			goalsOrNoGoals = SportType.GOALS_ARE_SCORED;
 		} else {
@@ -237,9 +254,14 @@ public class InputCompetitorController {
 		btnNext.setVisible(true);
 		btnPrevious.setVisible(startValue - 4 == 0 ? false : true);
 		for (int i = startValue; i < endValue; i++) {
-			String tempCompName = (txtArray.get(i % 4).getText() == null ? "Player " + String.valueOf(i + 1)
+			String tempCompName = (txtArray.get(i % 4).getText() == null ? "Competitor " + String.valueOf(i + 1)
 					: txtArray.get(i % 4).getText());
-			file[i] = (file[i] != null ? file[i] : new File(url1.toURI()));
+			if (file[i] != null) {
+				file[i] = file[i];
+			} else {
+				file[i] =  new File(url1.toURI());
+				imageTracker[i] = i;//track the location in which Click to add image is used
+			}
 			comps[i] = new Competitor(tempCompName, file[i]);
 		}
 
@@ -250,9 +272,10 @@ public class InputCompetitorController {
 				SNArray.get(i).setVisible(true);
 			}
 		}
-		counter2 = startValue - 4;//add this line some where here && !comps[i].getName().trim().equals("Player " + (i+1))
+		counter2 = startValue - 4;// add this line some where here && !comps[i].getName().trim().equals("Player "
+									// + (i+1))
 		for (int i = startValue - 4; i < startValue; i++) {
-			txtArray.get(i % 4).setText(comps[i].getName());
+			txtArray.get(i % 4).setText(comps[i].getName().trim().equals("Competitor "+(i+1)) ? null : comps[i].getName());
 			String localUrl = comps[i].getImage().toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(i % 4).setImage(localImage);
@@ -281,11 +304,17 @@ public class InputCompetitorController {
 		for (int i = startValue; i < endValue; i++) {
 			// first check for if text box is empty if so fill with player x else use name
 			// check if image is empty if so fill with default image else use image
-			String tempCompName = (txtArray.get(i % 4).getText() == null ? "Player " + String.valueOf(i + 1)
+			String tempCompName = (txtArray.get(i % 4).getText() == null ? "Competitor " + String.valueOf(i + 1)
 					: txtArray.get(i % 4).getText());
-			file[i] = (file[i] != null ? file[i] : new File(url1.toURI()));
+			if (file[i] != null) {
+				file[i] = file[i];
+			} else {
+				file[i] =  new File(url1.toURI());
+				imageTracker[i] = i;//track the location in which Click to add image is used
+			}
+			
 			comps[i] = new Competitor(tempCompName, file[i]);
-
+			
 		}
 		if (noOfCompetitors > endValue) {
 			startValue = endValue;
@@ -295,20 +324,18 @@ public class InputCompetitorController {
 		counter2 = 0;
 		// this decides what to display
 		for (int i = startValue; i < endValue; i++) {
-			// if (playername.equals("Player " + (i+1) ) ) {
-			if (comps[i] != null && !comps[i].getName().trim().equals("Player " + (i+1))) {
-				txtArray.get(counter2).setText(comps[i].getName());
-				String localUrl = comps[i].getImage().toURI().toURL().toString();
-				Image localImage = new Image(localUrl, false);
-				imgArray.get(counter2).setImage(localImage);
-				System.out.println(comps[i].getName());
-				System.out.println("Player "+ (i+1));
-				System.out.println(comps[i].getName().trim().equals("Player " + (i+1))); 
-			} else {
+			if (comps[i] != null) {
+				if (!comps[i].getName().trim().equals("Competitor "+String.valueOf(i + 1))) {
+					txtArray.get(counter2).setText(comps[i].getName());
+				}else
+					txtArray.get(counter2).setText(null);
+				
+			} else 
 				txtArray.get(counter2).setText(null);
+			if (file[i] == null) {
 				imgArray.get(counter2).setImage(image);
-				// imgArray.get(counter2).setVisible(false);
-				// btnimgArray.get(counter2).setVisible(true);
+			} else {
+				imgArray.get(counter2).setImage(new Image(file[i].toURI().toURL().toString(), false));
 			}
 			counter++;
 			SNArray.get(counter2).setText(String.valueOf(counter));
@@ -334,20 +361,30 @@ public class InputCompetitorController {
 	@FXML
 	public void finish(ActionEvent event)
 			throws IOException, InvalidBreakerException, TournamentEndedException, URISyntaxException {
-
+		if (!(TournamentType == TournamentTypes.CHALLENGE))  {
+			
+		
 		for (int i = startValue; i < endValue; i++) {
-			String tempCompName = (txtArray.get(i % 4).getText() == null ? "Player " + String.valueOf(i + 1)
+			String tempCompName = ((txtArray.get(i % 4).getText() == null ) ? "Competitor " + String.valueOf(i + 1)
 					: txtArray.get(i % 4).getText());
-			file[i] = (file[i] != null ? file[i] : new File(url1.toURI()));
+			file[i] = (file[i] != null ? file[i] : new File(url2.toURI()));
 			comps[i] = new Competitor(tempCompName, file[i]);
 		}
+		}
+		
+		//everywhere where clickimage was used to create image then replace with no logo
+		for (int i = 0; i < imageTracker.length; i++) {
+			if (imageTracker[i] != -1) {
+				comps[i] = new Competitor(comps[i].getName(), new File(url2.toURI()));
+			} 
+		}
 		// to fill the comp obj with default values
-
+		//if it has not been set
 		for (int i = 0; i < comps.length; i++) {
 			if (comps[i] == null) {
-				file[i] = (file[i] == null || (file[i].equals(new File(url1.toURI()))) ?  new File(url2.toURI()) 
-						:file[i]);
-				comps[i] = new Competitor("Player " + String.valueOf(i + 1), file[i]);
+				file[i] = (file[i] == null || (file[i].equals(new File(url1.toURI()))) ? new File(url2.toURI())
+						: file[i]);
+				comps[i] = new Competitor("Competitor " + String.valueOf(i + 1), file[i]);
 			}
 		}
 		
@@ -422,6 +459,7 @@ public class InputCompetitorController {
 		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
 		window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 		window.setScene(scene);
+		window.sizeToScene();
 		window.setResizable(false);
 		window.show();
 		window.setTitle(TournamentName);

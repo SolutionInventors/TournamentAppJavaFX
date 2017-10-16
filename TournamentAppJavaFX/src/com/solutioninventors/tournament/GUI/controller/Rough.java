@@ -5,13 +5,17 @@
  */
 package com.solutioninventors.tournament.GUI.controller;
 
+import java.util.Arrays;
+
 public class Rough {
 		
 	public static void main( String... arg )
 	{
-		String name = " Hello 1 ".trim();
-		String val = "Hello";
-		int a =0;
-		System.out.println( name.equals( val+" " + String.valueOf(a+1) )); 
+		int[]abc = new int[10];
+		Arrays.fill(abc, 55);
+		for (int i = 0; i < abc.length; i++) {
+			System.out.println(abc[i]);
+		}
+		
 	}
 	} // end class TwoDimArray

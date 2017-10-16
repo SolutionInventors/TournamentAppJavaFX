@@ -114,7 +114,7 @@
             <Font name="Trebuchet MS Bold" size="19.0" />
          </font>
       </Text>
-      <CheckBox fx:id="goalsScored" layoutX="27.0" layoutY="416.0" mnemonicParsing="false" onAction="#updateGoalScored" selected="true" text="Goal Game Only">
+      <CheckBox fx:id="goalsScored" layoutX="27.0" layoutY="416.0" mnemonicParsing="false" onAction="#updateGoalScored" selected="true" text="Check if Goals are Scored">
          <font>
             <Font size="14.0" />
          </font>

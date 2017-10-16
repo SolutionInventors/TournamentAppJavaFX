@@ -54,6 +54,18 @@ public class Btn {
 		}
 	}
 
+	public void previousfromtie(Pane root, ActionEvent event, Pane root2, String fxml, String Cssfile, String title) throws IOException {
+		Parent stageView;
+		//stageView = (Pane) FXMLLoader.load(getClass().getResource(Paths.viewpath + fxml));
+		stageView = (Pane) root2;
+		Scene ns = new Scene(stageView);
+		ns.getStylesheets().add(getClass().getResource(Paths.css + Cssfile).toExternalForm());
+		Stage cS = (Stage) root.getScene().getWindow();
+
+		cS.setScene(ns);
+	}
+
+	
 	public void next(Pane root, Pane nextView, String fxmlfile,String Cssfile) throws IOException {
 		Parent newView = nextView;
 		Scene newScene = new Scene(newView);

@@ -69,23 +69,21 @@ public class InputResultsController {
 				goalsAreScore = (tournament.getSportType() == SportType.GOALS_ARE_SCORED ? true : false);
 				// GridPane settings
 				GridPane grid = new GridPane();
-				grid.setPadding(new Insets(25));
+				grid.setPadding(new Insets(25,0,25,10));
 				grid.setHgap(5);
 				grid.setVgap(5);
-				// ColumnSettings for all five columns
-				ColumnConstraints column1 = new ColumnConstraints(110); //
-				
-				ColumnConstraints column2 = new ColumnConstraints(100); //
-				column2.setHalignment(HPos.RIGHT);
-				ColumnConstraints column3 = new ColumnConstraints(50);
-				ColumnConstraints column4 = new ColumnConstraints(50);
-				ColumnConstraints column5 = new ColumnConstraints(50);
-				
-				ColumnConstraints column6 = new ColumnConstraints(70);
+				// ColumnSettings for all five columns//statring points
+				ColumnConstraints column1 = new ColumnConstraints(110); //comp name
+				ColumnConstraints column2 = new ColumnConstraints(100); //score input
+				column2.setHalignment(HPos.LEFT);
+				ColumnConstraints column3 = new ColumnConstraints(35);//vs
+				ColumnConstraints column4 = new ColumnConstraints(30);//score input
+				ColumnConstraints column5 = new ColumnConstraints(35);//comp name	
+				ColumnConstraints column6 = new ColumnConstraints(130);//image start
 				column6.setHalignment(HPos.LEFT);
-				ColumnConstraints column7 = new ColumnConstraints(70);
+				//ColumnConstraints column7 = new ColumnConstraints(1);//end point for image
 
-				grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7);
+				grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6);
 
 				tourStage.setText(tournament.toString().toUpperCase());
 				currentFixtures = tournament.getCurrentRound().getFixtures();
@@ -98,7 +96,11 @@ public class InputResultsController {
 					compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
 					compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
 					compName[i].setFont(font[1]);
+					compName[i].setWrapText(true);
+					compName[i].alignmentProperty().set(Pos.CENTER);
 					compName[i + 1].setFont(font[1]);
+					compName[i + 1].setWrapText(true);
+					compName[i+ 1].alignmentProperty().set(Pos.CENTER);
 					compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 					compName[i + 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 

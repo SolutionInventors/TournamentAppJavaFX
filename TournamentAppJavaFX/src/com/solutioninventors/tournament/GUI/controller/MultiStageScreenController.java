@@ -67,6 +67,10 @@ public class MultiStageScreenController {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
 	}
+	public void uncheckStandardBreaker() {
+		standardBreaker.setSelected(false);
+		standardbreaker = false;
+	}
 
 	public void initialize() {
 		noofround.setVisible(false);
@@ -85,7 +89,6 @@ public class MultiStageScreenController {
 
 	@FXML
 	public void radioSelected(ActionEvent event) {
-		String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1) * 2));
 		if (swiss.isSelected()) {
 			tourType = 1;
 			txtnoOfrounds.setText("2");
@@ -99,7 +102,7 @@ public class MultiStageScreenController {
 		} else if (round.isSelected()) {
 			tourType = 2;
 			txtnoOfrounds.setVisible(false);
-			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
+			noofround.setText(String.valueOf(3));
 			noofround.setVisible(true);
 			// message = "In a single round-robin tournament, each competitor plays every
 			// other competitor once. The no of rounds is determined by the no of
@@ -109,7 +112,7 @@ public class MultiStageScreenController {
 		} else if (doubleRound.isSelected()) {
 			tourType = 3;
 			txtnoOfrounds.setVisible(false);
-			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)*2));
+			noofround.setText(String.valueOf(6));
 			noofround.setVisible(true);
 			// message = "In a double-round-robin tournament, each competitor plays every
 			// other competitor twice.The no of rounds is determined by the no of
@@ -139,7 +142,7 @@ public class MultiStageScreenController {
 		}
 	}// end updateStandardBreaker
 
-	@FXML
+/*	@FXML
 	public void updaterud(KeyEvent event) {
 		if (!txtnoOfcomps.getText().isEmpty()) {
 			try {
@@ -151,7 +154,7 @@ public class MultiStageScreenController {
 		} // end if
 
 	}
-
+*/
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty()
@@ -195,11 +198,7 @@ public class MultiStageScreenController {
 
 	}
 
-	@FXML
-	public void closeApp(MouseEvent event) {
-		Platform.exit();
-
-	}
+	
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {

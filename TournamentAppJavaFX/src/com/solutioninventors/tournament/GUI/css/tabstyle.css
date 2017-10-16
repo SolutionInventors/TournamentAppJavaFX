@@ -41,3 +41,13 @@
 	-fx-border-radius: 2;
 	
 }
+.button:focused{
+		-fx-background-color: red;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+	-fx-font-family: "Trebuchet MS";
+	-fx-border-width: 1;
+	-fx-border-radius: 2;
+	
+}
