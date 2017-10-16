@@ -133,7 +133,7 @@ public class MultistageTest {
 			simulateGroupRound( tournament );
 		
 		Multistage multiStageSpecific = ( Multistage )  tournament;
-				
+		
 		if (  tournament.getCurrentRoundNum() <=
 				multiStageSpecific.getNumberOfGroupRounds()
 				) 
