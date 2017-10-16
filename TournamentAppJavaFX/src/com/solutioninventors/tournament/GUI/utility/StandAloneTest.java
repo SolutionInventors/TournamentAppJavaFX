@@ -11,7 +11,7 @@ public class StandAloneTest extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"WelcomeScree"
+			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"Music"
 					+ ".fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);

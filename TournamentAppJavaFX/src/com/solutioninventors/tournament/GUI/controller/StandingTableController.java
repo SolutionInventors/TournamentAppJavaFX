@@ -140,11 +140,14 @@ public class StandingTableController {
 		}
 		vBox = new VBox(10);
 		//vBox.setPadding(new Insets(10, 10, 10, 10));
-		vBox.setPrefSize(530,Region.USE_COMPUTED_SIZE);//width , height
+	
 		for (int i = 0; i < noOfGroups; i++) {
 			if (tournament instanceof Multistage) {
 				vBox.getChildren().add(lbl[i]);
-				vBox.setPrefSize(530,700);//width , height
+				//vBox.setPrefSize(530,1150);//width , height worked then stopped
+				vBox.setPrefSize(530,350);
+			}else {
+				vBox.setPrefSize(530,Region.USE_COMPUTED_SIZE);//width , height
 			}
 				
 			vBox.getChildren().add(table[i]);

@@ -41,7 +41,7 @@
             <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="32.0" valignment="BOTTOM" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label maxWidth="-Infinity" minWidth="-Infinity" text="DESIGN " textFill="WHITE">
+            <Label maxWidth="-Infinity" minWidth="-Infinity" text="DESIGN / UI-UX " textFill="WHITE">
                <font>
                   <Font name="Verdana Bold" size="20.0" />
                </font>
@@ -66,12 +66,7 @@
                   <Font name="Verdana" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="90.0" layoutY="155.0" maxWidth="-Infinity" minWidth="-Infinity" text="UI/UX" textFill="WHITE" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Verdana Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="92.0" layoutY="50.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="151.0" text="Kelvin Enumah" textFill="WHITE" GridPane.rowIndex="3">
+            <Label layoutX="92.0" layoutY="50.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="151.0" text="Kelvin Enumah" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="Verdana" size="20.0" />
                </font>

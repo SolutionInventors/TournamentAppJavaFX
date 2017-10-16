@@ -47,8 +47,6 @@ public class TieBreakerController {
 	// For Tie Breaker Selection
 	private ObservableList<String> possibleBreakers = FXCollections.observableArrayList();
 	private final ObservableList<String> selectedBreaker = FXCollections.observableArrayList();
-	// for other classes
-	private Btn btn = new Btn();
 	// shared variables
 	private String TournamentName;
 	private int noOfCompetitors;
@@ -60,8 +58,10 @@ public class TieBreakerController {
 	private double losspoint;
 	// for Knock out
 	private boolean sigleOrDouble;
-	private boolean groupOrMultistage = true;
+	private boolean groupOrMultistage = true;//track who called used for the previous button
 	private int tournamenttype;
+	//others
+	private Btn btn = new Btn();
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 
@@ -241,6 +241,26 @@ public class TieBreakerController {
 	@FXML
 	public void cancel(ActionEvent event) throws IOException {
 		btn.cancel(rootPane);
+	}
+	
+	@FXML
+	public void previous(ActionEvent event) throws IOException {
+		if (groupOrMultistage) {
+			FXMLLoader loader = new FXMLLoader();
+			Pane root = loader.load(getClass().getResource(Paths.viewpath + "Groupstage.fxml").openStream());
+			GroupStageScreenController ic1 = (GroupStageScreenController) loader.getController();
+			ic1.setTournamentName(TournamentName, goalScored);
+			ic1.uncheckStandardBreaker();
+			btn.previousfromtie(rootPane, event,root, "Groupstage.fxml", "commonStyle.css", "Tournament App");
+		} else {
+			FXMLLoader loader = new FXMLLoader();
+			Pane root = loader.load(getClass().getResource(Paths.viewpath + "MultiStage.fxml").openStream());
+			MultiStageScreenController ic1 = (MultiStageScreenController) loader.getController();
+			ic1.setTournamentName(TournamentName, goalScored);
+			ic1.uncheckStandardBreaker();
+			btn.previousfromtie(rootPane, event,root, "MultiStage.fxml", "commonStyle.css", "Tournament App");
+	
+				}
 	}
 
 }// end class

@@ -49,6 +49,10 @@ public class GroupStageScreenController {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
 	}
+	public void uncheckStandardBreaker() {
+		standardBreaker.setSelected(false);
+		standardbreaker = false;
+	}
 	public void initialize() {
 		noofround.setVisible(false);
 		font = cm.loadfonts();
