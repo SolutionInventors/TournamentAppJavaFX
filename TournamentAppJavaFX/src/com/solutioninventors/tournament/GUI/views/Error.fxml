@@ -16,7 +16,7 @@
          <image>
            <!--          when you want to use scene bulider toggle comment -->
 <!--   <Image url="@../resource/images/TournamentAppBackground.jpg" /> -->
-  <Image url="@../resource/images/TournamentAppBackground.jpg" />
+  <Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="71.0" layoutY="296.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="496.0" />

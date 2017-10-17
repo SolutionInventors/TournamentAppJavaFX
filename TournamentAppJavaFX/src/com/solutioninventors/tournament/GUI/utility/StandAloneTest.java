@@ -1,5 +1,7 @@
 package com.solutioninventors.tournament.GUI.utility;
 
+import com.solutioninventors.tournament.GUI.controller.CommonMethods;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +19,8 @@ public class StandAloneTest extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("Stand Alone Test");
+			/*CommonMethods cm = new CommonMethods();
+			cm.ErrorMessage("Invalid no", "There was an error");*/
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

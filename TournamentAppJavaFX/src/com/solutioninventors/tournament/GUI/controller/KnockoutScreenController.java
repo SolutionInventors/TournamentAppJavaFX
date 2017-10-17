@@ -5,8 +5,6 @@ import java.io.IOException;
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,10 +101,15 @@ public class KnockoutScreenController {
 	
 	@FXML
 	public void next(ActionEvent event) throws IOException {
-		double validator = ( Math.log( Integer.valueOf(txtNoofcompetitors.getText()) ) )/
-				( Math.log( 2 ) );
+		double validator = 0;
+		if (!txtNoofcompetitors.getText().isEmpty()) {
+			validator = ( Math.log( Integer.valueOf(txtNoofcompetitors.getText()) ) )/
+					( Math.log( 2 ) );
+		}
+		
 		if ( txtNoofcompetitors.getText().isEmpty()) {
-			AlertBox.display("Invalid No of Rounds", "The no of rounds cannot be empty");
+			//AlertBox.display("Invalid No of Rounds", "The no of rounds cannot be empty");
+			cm.ErrorMessage("Invalid No of Rounds", "The no of rounds cannot be empty");
 		}else if ( Integer.valueOf(txtNoofcompetitors.getText())<2  ) {
 			AlertBox.display("Invalid of competitors", "The number of Competitors must greater than 2");
 		}else if ( ! ( validator % 1 == 0.0f)  ) {

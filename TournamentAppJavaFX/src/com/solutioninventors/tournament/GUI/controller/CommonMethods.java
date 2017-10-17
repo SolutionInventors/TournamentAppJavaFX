@@ -105,7 +105,7 @@ public class CommonMethods {
 		fc.getExtensionFilters().add(new ExtensionFilter("solutionInventorTournament ", " *sit"));
 		fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*"));
 		File seletedfile = fc.showOpenDialog(null); 
-		File tourFile = new	File(seletedfile.getName() + ".sit");
+		
 		if (seletedfile != null) {
 			try {
 				tournament = Tournament.loadTournament(seletedfile);
@@ -167,6 +167,27 @@ public class CommonMethods {
 
 	}
 
+	public void ErrorMessage(String err, String message) {
+		try {
+		Stage errorWindow = new Stage();
+		errorWindow.initModality(Modality.APPLICATION_MODAL);
+		FXMLLoader loader = new FXMLLoader();
+		Parent root = loader.load(getClass().getResource(Paths.viewpath + "Error.fxml").openStream());
+		ErrorController er = (ErrorController) loader.getController();
+		er.setMessage(err, message);
+		Scene scene = new Scene(root);
+		errorWindow.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
+		errorWindow.setResizable(false);
+		errorWindow.sizeToScene();
+		errorWindow.setScene(scene);
+		errorWindow.show();
+		errorWindow.setTitle(err);
+		
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	// validates that the input is a number
 	public void isNumber(TextField txt) {
