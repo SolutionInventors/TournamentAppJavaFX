@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -122,10 +123,10 @@ public class CommonMethods {
 				window.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
 				Scene scene = new Scene(root);
 
-//				window.setOnCloseRequest(e -> {
-//					e.consume();
-//					closeprogram();
-//				});
+				window.setOnCloseRequest(e -> {
+					e.consume();
+					closeprogram(window);
+				});
 
 				window.setScene(scene);
 				window.setResizable(false);
@@ -144,6 +145,15 @@ public class CommonMethods {
 		}
 	}
 
+	private void closeprogram(Stage window) {
+		Boolean answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
+		if (answer) {
+			save(tournament);
+		}
+		window.close();
+		Tournament.closeFile(tournament.getTournamentFile());
+	}
+	
 	public void save(Tournament tour) {
 		try {
 			tour.save();

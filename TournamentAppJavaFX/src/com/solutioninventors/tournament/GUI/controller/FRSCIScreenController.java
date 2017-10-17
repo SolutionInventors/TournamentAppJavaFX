@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -16,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -154,8 +156,9 @@ public class FRSCIScreenController {
 		control.saveas(tournament);
 	}
 	public void close(ActionEvent e) {
-		Platform.exit();
-		System.exit(0);
+		closeprogram();
+		((Node) e.getSource()).getScene().getWindow().hide();
+		
 	}
 	public void music(ActionEvent e) throws IOException, URISyntaxException {
 		control.music(musicStage);
@@ -168,6 +171,14 @@ public class FRSCIScreenController {
 		control.about();
 	}
 	
+	private void closeprogram() {
+		Boolean answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
+		if (answer) {
+			control.save(tournament);
+		}
+		
+		Tournament.closeFile(tournament.getTournamentFile());
+	}
 	
 	//this makes the music player draggable
 	 private void initMovablePlayer(Stage PRIMARY_STAGE) {
