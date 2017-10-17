@@ -68,11 +68,11 @@
       </GridPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="4.0" layoutX="311.0" layoutY="131.0" stroke="RED" strokeType="INSIDE" width="326.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="3.0" layoutX="387.0" layoutY="130.0" stroke="RED" strokeType="INSIDE" width="249.0" />
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="494.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0"  text="PREVIOUS" textAlignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="494.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0" text="PREVIOUS" textAlignment="CENTER">
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="494.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0"  text="NEXT" textAlignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="494.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" text="NEXT" textAlignment="CENTER">
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="494.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0"  text="CANCEL" textAlignment="CENTER" textFill="RED">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="494.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0" text="CANCEL" textAlignment="CENTER" textFill="RED">
         
       </Button>
       <Text fx:id="txtTourHighlight" fill="RED" layoutX="79.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SINGLE ELMINATION">
@@ -93,10 +93,15 @@
       </RadioButton>
       <RadioButton fx:id="singleelim" layoutX="271.0" layoutY="278.0" mnemonicParsing="false" onAction="#tourselected" selected="true" text="Single Elimination" textFill="WHITE" toggleGroup="$ElimType" />
       <Line endX="25.0" layoutX="401.0" layoutY="285.0" rotate="-90.0" stroke="WHITE" strokeWidth="2.0" />
-      <Label fx:id="lbltourapp" layoutX="51.0" layoutY="18.0" text="TOURNAMENT APP" textFill="WHITE">
+      <Label fx:id="lbltourapp" layoutX="70.0" layoutY="19.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
             <Font name="Trebuchet MS" size="16.0" />
          </font>
       </Label>
+      <ImageView fitHeight="45.0" fitWidth="55.0" layoutX="9.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+           <Image url="/com/solutioninventors/tournament/GUI/resource/images/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

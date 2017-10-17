@@ -36,6 +36,7 @@ import javafx.stage.Stage;
 public class CommonMethods {
 
 	private Tournament tournament;
+	URL logoURL = getClass().getResource(Paths.images + "logo.png");
 
 	public Font[] loadfonts() {
 		URL url1 = getClass().getResource(Paths.fonts + "twcenmt.ttf");
@@ -60,8 +61,8 @@ public class CommonMethods {
 		aboutStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "About.fxml"));
 		Scene scene = new Scene(root);
-		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
-		aboutStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		
+		aboutStage.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
 		aboutStage.setResizable(false);
 		aboutStage.sizeToScene();
 		aboutStage.setScene(scene);
@@ -75,8 +76,7 @@ public class CommonMethods {
 		helpStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Help.fxml"));
 		Scene scene = new Scene(root);
-		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
-		helpStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		helpStage.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
 		helpStage.setResizable(false);
 		helpStage.setScene(scene);
 		helpStage.sizeToScene();
@@ -86,59 +86,16 @@ public class CommonMethods {
 
 	
 	
-	public void music() throws IOException, URISyntaxException {
-		Stage musicStage = new Stage();
-		musicStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
-		Scene scene = new Scene(root);
-		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
-		musicStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
-		musicStage.setResizable(false);
-		musicStage.setScene(scene);
-		musicStage.sizeToScene();
-		musicStage.setTitle("Music");
-		musicStage.show();
+	public void music(Stage musicStage) throws IOException, URISyntaxException {
+		if (musicStage.isShowing()) {
+			musicStage.hide();
+		}else {
+			musicStage.show();
+		}
+		
+		
 	}
-
-
-	public void startabs() {
-
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					help();
-				} catch (IOException | URISyntaxException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	}
-
-	/*
-	 * public void opentournament(MouseEvent event) { FileChooser fc = new
-	 * FileChooser(); fc.setInitialDirectory( new
-	 * File(System.getProperty("user.home") + System.getProperty("file.separator") +
-	 * "Documents"));
-	 * 
-	 * fc.getExtensionFilters().add(new
-	 * ExtensionFilter("solutionInventorTournament ", " *sit"));
-	 * fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*")); File
-	 * seletedfile = fc.showOpenDialog(null); // File tourFile = new
-	 * File(seletedfile.getName() + ".sit");
-	 * 
-	 * 
-	 * 
-	 * OpenTournament newtournamnet = new OpenTournament(event,seletedfile);
-	 * 
-	 * 
-	 * 
-	 * ExecutorService executorService = Executors.newCachedThreadPool();
-	 * executorService.execute(newtournamnet); // start task1
-	 * executorService.shutdown();
-	 * 
-	 * }//end opentournament
-	 */
+	
 
 	public void opentournament(MouseEvent event) throws URISyntaxException {
 		FileChooser fc = new FileChooser();
@@ -155,14 +112,13 @@ public class CommonMethods {
 				if (event != null) {
 					((Node) event.getSource()).getScene().getWindow().hide();
 				}
-				URL url1 = getClass().getResource(Paths.images + "logo.jpg");
 				Stage window = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				Parent root = loader.load(getClass().getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
 				FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 				ic.setTournament(tournament);
 				ic.init();
-				window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+				window.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
 				Scene scene = new Scene(root);
 
 //				window.setOnCloseRequest(e -> {
@@ -211,25 +167,6 @@ public class CommonMethods {
 
 	}
 
-	/*
-	 * public void opentournament() { FileChooser fc = new FileChooser();
-	 * fc.getExtensionFilters().add(new
-	 * ExtensionFilter("solutionInventorTournament ", " *sit"));
-	 * fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*")); File
-	 * seletedfile = fc.showOpenDialog(null); // File tourFile = new
-	 * File(seletedfile.getName() + ".sit"); if (seletedfile != null) { try {
-	 * tournament = Tournament.loadTournament(seletedfile); Stage primaryStage = new
-	 * Stage(); FXMLLoader loader = new FXMLLoader(); Parent root =
-	 * loader.load(getClass().getResource(Paths.viewpath +
-	 * "FRSCIScreen.fxml").openStream()); FRSCIScreenController ic =
-	 * (FRSCIScreenController) loader.getController(); ic.setTournament(tournament);
-	 * ic.init(); Scene scene = new Scene(root); primaryStage.setScene(scene);
-	 * primaryStage.show(); primaryStage.setTitle(tournament.getName()); } catch
-	 * (IOException e) { e.printStackTrace(); } catch (TournamentEndedException e) {
-	 * e.printStackTrace(); } }
-	 * 
-	 * }
-	 */
 
 	// validates that the input is a number
 	public void isNumber(TextField txt) {

@@ -10,9 +10,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="281.0" prefWidth="325.0" stylesheets="@../css/tourtypecss.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.MusicController">
+<AnchorPane stylesheets="@../css/tourtypecss.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.MusicController">
    <children>
-      <ImageView fitHeight="281.0" fitWidth="364.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="281.0" fitWidth="332.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
            <Image url="@../resource/images/TournamentAppBackground.jpg" />
 <!--            <Image url="/com/solutioninventors/tournament/GUI/resource/images/TournamentAppBackground.jpg" /> -->
@@ -23,16 +23,28 @@
       <Button fx:id="btnstop" layoutX="109.0" layoutY="242.0" mnemonicParsing="false" onAction="#stop" prefHeight="25.0" prefWidth="57.0" text="Stop" />
       <Button fx:id="btnchangesong" layoutX="207.0" layoutY="242.0" mnemonicParsing="false" onAction="#changeSong" text="Change Song" />
       <Slider fx:id="volumeSlider" layoutX="191.0" layoutY="215.0" />
-      <Label layoutX="17.0" layoutY="90.0" maxWidth="-Infinity" prefHeight="57.0" prefWidth="69.0" text="Name:" wrapText="true">
+      <Label layoutX="17.0" layoutY="97.0" text="Name:" wrapText="true">
          <font>
             <Font name="Trebuchet MS" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="songName" layoutX="93.0" layoutY="77.0" prefHeight="65.0" prefWidth="228.0" text="No Name" wrapText="true">
+      <Label fx:id="songName" layoutX="93.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="232.0" text="No Song" wrapText="true">
          <font>
             <Font name="Trebuchet MS" size="20.0" />
          </font>
       </Label>
       <ProgressBar fx:id="progress" layoutX="91.0" layoutY="151.0" prefHeight="29.0" prefWidth="200.0" progress="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="-3.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="333.0" />
+      <Button layoutX="282.0" layoutY="8.0" mnemonicParsing="false" onAction="#close" prefHeight="10.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="X" />
+      <Label layoutX="60.0" layoutY="13.0" text="TOURNAMENT APP" textFill="WHITE">
+         <font>
+            <Font name="Trebuchet MS Bold" size="15.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="50.0" fitWidth="42.0" layoutX="11.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/com/solutioninventors/tournament/GUI/resource/images/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

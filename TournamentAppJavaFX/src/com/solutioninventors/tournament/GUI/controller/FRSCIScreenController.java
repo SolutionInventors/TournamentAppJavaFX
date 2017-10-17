@@ -15,6 +15,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -25,8 +26,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 public class FRSCIScreenController {
 	@FXML private TabPane tabPane;
@@ -58,7 +60,10 @@ public class FRSCIScreenController {
 	@FXML private StandingTableController tabstandController;
 	@FXML private CompetitorStatusController tabcompController;
 	@FXML private InputResultsController tabinputscoreController;
-
+	//for the music
+	private Stage musicStage;
+	private Point2D anchorPt;
+	private Point2D previousLocation;
 	// ###########################################################################################
 
 	public void init() {
@@ -98,20 +103,23 @@ public class FRSCIScreenController {
                 KeyCombination.));*/
 	//to create the music interface
 		try {
-		Stage musicStage = new Stage();
-		musicStage.initModality(Modality.APPLICATION_MODAL);
+		musicStage = new Stage();
+	
 		Parent root;
 	
 			root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
 		
 		Scene scene = new Scene(root);
-		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+		URL url1 = getClass().getResource(Paths.images + "logo.png");
 		musicStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 		musicStage.setResizable(false);
 		musicStage.setScene(scene);
 		musicStage.sizeToScene();
+		musicStage.initStyle(StageStyle.TRANSPARENT);
 		musicStage.setTitle("Music");
-		musicStage.show();
+		musicStage.setX(10);
+		initMovablePlayer(musicStage);
+	//	musicStage.show();
 		} catch (IOException | URISyntaxException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
@@ -150,7 +158,7 @@ public class FRSCIScreenController {
 		System.exit(0);
 	}
 	public void music(ActionEvent e) throws IOException, URISyntaxException {
-		control.music();
+		control.music(musicStage);
 	}
 	
 	public void help(ActionEvent e) throws IOException, URISyntaxException {
@@ -160,4 +168,39 @@ public class FRSCIScreenController {
 		control.about();
 	}
 	
+	
+	//this makes the music player draggable
+	 private void initMovablePlayer(Stage PRIMARY_STAGE) {
+	      Scene scene = PRIMARY_STAGE.getScene();
+	      // starting initial anchor point
+	      scene.setOnMousePressed(mouseEvent
+	              -> anchorPt = new Point2D(mouseEvent.getScreenX(),
+	                      mouseEvent.getScreenY())
+	      );
+
+	      // dragging the entire stage
+	      scene.setOnMouseDragged(mouseEvent -> {
+	         if (anchorPt != null && previousLocation != null) {
+	            PRIMARY_STAGE.setX(previousLocation.getX()
+	                    + mouseEvent.getScreenX()
+	                    - anchorPt.getX());
+	            PRIMARY_STAGE.setY(previousLocation.getY()
+	                    + mouseEvent.getScreenY()
+	                    - anchorPt.getY());
+	         }
+	      });
+
+	      // set the current location
+	      scene.setOnMouseReleased(mouseEvent
+	              -> previousLocation = new Point2D(PRIMARY_STAGE.getX(),
+	                      PRIMARY_STAGE.getY())
+	      );
+
+	      // Initialize previousLocation after Stage is shown
+	      PRIMARY_STAGE.addEventHandler(WindowEvent.WINDOW_SHOWN,
+	              (WindowEvent t) -> {
+	                 previousLocation = new Point2D(PRIMARY_STAGE.getX(),
+	                         PRIMARY_STAGE.getY());
+	              });
+	   }
 }// end class

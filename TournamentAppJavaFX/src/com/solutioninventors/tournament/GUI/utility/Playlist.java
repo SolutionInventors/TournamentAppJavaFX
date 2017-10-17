@@ -49,7 +49,6 @@ public class Playlist
 		}
 		catch (ClassNotFoundException | IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null ;
 		}
@@ -123,6 +122,7 @@ public class Playlist
 				return new LinkedList<File>();
 			
 			input = new ObjectInputStream( new FileInputStream( playListFile ) );
+			@SuppressWarnings("unchecked")
 			List<File> storedFiles = ( List<File>)  input.readObject() ; 
 			
 			return storedFiles.stream()
@@ -148,7 +148,6 @@ public class Playlist
 		}
 		catch (ClassNotFoundException | IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

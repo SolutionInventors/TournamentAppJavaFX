@@ -30,7 +30,7 @@ public class GUITest extends Application {
 			Parent root = loader.load(getClass().getResource(Paths.viewpath + "WelcomeScreen.fxml").openStream());
 			Scene scene = new Scene(root);
 			window = primaryStage;
-			URL url1 = getClass().getResource(Paths.images + "logo.jpg"); 
+			URL url1 = getClass().getResource(Paths.images + "logo.png"); 
 			window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 			window.centerOnScreen();
 			window.setScene(scene);

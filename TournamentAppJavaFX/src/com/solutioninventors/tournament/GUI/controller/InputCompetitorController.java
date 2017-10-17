@@ -456,7 +456,7 @@ public class InputCompetitorController {
 		/*
 		 * window.setOnCloseRequest(e -> { e.consume(); closeprogram(); });
 		 */
-		URL url1 = getClass().getResource(Paths.images + "logo.jpg");
+		URL url1 = getClass().getResource(Paths.images + "logo.png");
 		window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 		window.setScene(scene);
 		window.sizeToScene();

@@ -11,11 +11,8 @@ public class Rough {
 		
 	public static void main( String... arg )
 	{
-		int[]abc = new int[10];
-		Arrays.fill(abc, 55);
-		for (int i = 0; i < abc.length; i++) {
-			System.out.println(abc[i]);
-		}
+		String abc  = "chinedu.mp3sadf";
+		System.out.println(abc.endsWith(".mp3"));
 		
 	}
 	} // end class TwoDimArray

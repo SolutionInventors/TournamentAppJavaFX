@@ -5,12 +5,14 @@ import java.net.MalformedURLException;
 
 import com.solutioninventors.tournament.GUI.utility.AlertBox;
 
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -19,6 +21,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 
 public class MusicController {
@@ -44,7 +47,7 @@ public class MusicController {
 		
 		//playsong("C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3");
 		//mediaPlayer.setVolume(.7);// just to set the volume to about 70%
-		volumeSlider.setValue(.7);// this multiplication is done cos the getvol retruns 0 to
+		volumeSlider.setValue(70);// this multiplication is done cos the getvol retruns 0 to
 																// 1
 		// while the slider uses 1 to 100
 		volumeSlider.valueProperty().addListener(new InvalidationListener() {
@@ -77,12 +80,20 @@ public class MusicController {
 			AlertBox.display("No Music", "You have not selected any song");
 		}
 	}//end 
-
+	
+	@FXML
+	private void close(ActionEvent e) {
+		((Node) e.getSource()).getScene().getWindow().hide();
+	}
+	
 	@FXML
 	private void stop(ActionEvent e) {
-		mediaPlayer.stop();
-		playing = false;
-		btnplay.setText("Play");
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+			playing = false;
+			btnplay.setText("Play");
+		}
+		
 
 	}
 
@@ -99,16 +110,25 @@ public class MusicController {
 		//mediaPlayer.currentTimeProperty().addListener(progressChangeListener);
 		setCurrentlyPlaying(mediaPlayer);
 		mediaPlayer.setVolume(volumeSlider.getValue());
-		
+		mediaPlayer.setOnEndOfMedia(new Runnable() {
+	        @Override public void run() {
+	        	btnplay.setText("Play");
+	          }
+	        });
 		
 	}
 
 	public void changeSong() throws MalformedURLException {
 		FileChooser fc = new FileChooser();
+		fc.setInitialDirectory(
+				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
+		fc.getExtensionFilters().add(new ExtensionFilter("Mp3 Audio ", " *.mp3"));
+		fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*"));
 		Stage primaryStage = new Stage();
 		File seletedfile = fc.showOpenDialog(primaryStage);
+		//seletedfile.getName()
 		// for the song
-		if (seletedfile != null) {
+		if (seletedfile != null && seletedfile.getName().endsWith(".mp3")) {
 			String path = seletedfile.getAbsolutePath();
 			playsong(path);
 		} 

@@ -33,6 +33,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class InputResultsController {
 	@FXML
@@ -99,6 +100,7 @@ public class InputResultsController {
 					compName[i].setWrapText(true);
 					compName[i].setMaxSize(162, 76);
 					compName[i].alignmentProperty().set(Pos.CENTER);
+					//compName[i].setTextAlignment(new TextAlignment());
 					compName[i + 1].setFont(font[1]);
 					compName[i + 1].setWrapText(true);
 					compName[i + 1].setMaxSize(162, 76);

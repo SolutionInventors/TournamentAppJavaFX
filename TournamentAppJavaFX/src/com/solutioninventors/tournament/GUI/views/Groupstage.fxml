@@ -46,10 +46,10 @@
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="494.0" mnemonicParsing="false" onAction="#previous" prefHeight="20.0" prefWidth="90.0" text="PREVIOUS" textAlignment="CENTER">
          
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="494.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0"  text="NEXT" textAlignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="494.0" mnemonicParsing="false" onAction="#next" prefHeight="20.0" prefWidth="90.0" text="NEXT" textAlignment="CENTER">
         
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="494.0" onAction="#cancel" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0"  text="CANCEL" textAlignment="CENTER" textFill="RED">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="482.0" layoutY="494.0" mnemonicParsing="false" onAction="#cancel" prefHeight="20.0" prefWidth="90.0" text="CANCEL" textAlignment="CENTER" textFill="RED">
         
       </Button>
       <Text fx:id="txtTourHighlight" fill="RED" layoutX="77.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWISS STYLE" wrappingWidth="151.99999248236418">
@@ -153,7 +153,7 @@
             </Label>
          </children>
       </GridPane>
-      <Label fx:id="lbltourapp" layoutX="93.0" layoutY="20.0" text="TOURNAMENT APP" textFill="WHITE">
+      <Label fx:id="lbltourapp" layoutX="70.0" layoutY="19.0" text="TOURNAMENT APP" textFill="WHITE">
          <font>
             <Font name="Trebuchet MS" size="16.0" />
          </font>
@@ -163,5 +163,10 @@
             <Font size="14.0" />
          </font>
       </CheckBox>
+      <ImageView fitHeight="45.0" fitWidth="55.0" layoutX="9.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/com/solutioninventors/tournament/GUI/resource/images/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
