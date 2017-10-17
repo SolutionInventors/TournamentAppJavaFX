@@ -2,7 +2,6 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
 import javafx.event.ActionEvent;
@@ -59,7 +58,7 @@ public class ChallengeScreenController {
 	@FXML
 	public void next(ActionEvent event) throws IOException  {
 		if (txtnoOfrounds.getText().isEmpty()) {
-			AlertBox.display("Please check input", "No of round cannot be empty");
+			cm.ErrorMessage("Please check input", "No of round cannot be empty");
 		} else {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());

@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.CustomTextField;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
-import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -33,15 +31,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 public class InputResultsController {
-	@FXML
-	private ScrollPane scrollPane;
-	@FXML
-	private Label tourStage;
-	@FXML
-	private Button btnsubmit;
+	@FXML private ScrollPane scrollPane;
+	@FXML private Label tourStage;
+	@FXML private Button btnsubmit;
 	private Label compName[];
 	private Label VS[];
 	private CustomTextField scores[];
@@ -73,15 +67,16 @@ public class InputResultsController {
 				grid.setPadding(new Insets(25,0,25,10));
 				grid.setHgap(5);
 				grid.setVgap(5);
-				// ColumnSettings for all five columns//statring points
+				//grid.setGridLinesVisible(true);
+				// ColumnSettings for all seven columns//statring points
 				ColumnConstraints column1 = new ColumnConstraints(110); //comp name
 				ColumnConstraints column2 = new ColumnConstraints(100); //score input
-				column2.setHalignment(HPos.LEFT);
-				ColumnConstraints column3 = new ColumnConstraints(35);//vs
+				//column2.setHalignment(HPos.LEFT);
+				ColumnConstraints column3 = new ColumnConstraints(55);//vs
 				ColumnConstraints column4 = new ColumnConstraints(30);//score input
-				ColumnConstraints column5 = new ColumnConstraints(35);//comp name	
-				ColumnConstraints column6 = new ColumnConstraints(130);//image start
-				column6.setHalignment(HPos.LEFT);
+				ColumnConstraints column5 = new ColumnConstraints(55);//comp name	
+				ColumnConstraints column6 = new ColumnConstraints(100);//image start
+			//	column6.setHalignment(HPos.LEFT);
 				//ColumnConstraints column7 = new ColumnConstraints(1);//end point for image
 
 				grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6);
@@ -98,13 +93,13 @@ public class InputResultsController {
 					compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
 					compName[i].setFont(font[1]);
 					compName[i].setWrapText(true);
-					compName[i].setMaxSize(162, 76);
-					compName[i].alignmentProperty().set(Pos.CENTER);
+					compName[i].setMaxSize(151, 45);
+					//compName[i].alignmentProperty().set(Pos.CENTER);
 					//compName[i].setTextAlignment(new TextAlignment());
 					compName[i + 1].setFont(font[1]);
 					compName[i + 1].setWrapText(true);
-					compName[i + 1].setMaxSize(162, 76);
-					compName[i+ 1].alignmentProperty().set(Pos.CENTER);
+					compName[i + 1].setMaxSize(151, 45);
+					//compName[i+ 1].alignmentProperty().set(Pos.CENTER);
 					compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 					compName[i + 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
 
@@ -164,7 +159,7 @@ public class InputResultsController {
 						grid.add(logo[c], 0, temp);
 						// GridPane.setHalignment(compName[c], HPos.RIGHT);
 						grid.add(compName[c], 1, temp);
-						compName[c].setAlignment(Pos.TOP_RIGHT);
+						//compName[c].setAlignment(Pos.TOP_RIGHT);
 						grid.add(scores[c], 2, temp);
 						grid.add(VS[temp], 3, temp);
 						grid.add(scores[c + 1], 4, temp);
@@ -192,7 +187,7 @@ public class InputResultsController {
 			}
 
 		} else {
-			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 			btnsubmit.setVisible(false);
 		}
 	}// end set current
@@ -250,16 +245,16 @@ public class InputResultsController {
 				}
 			}
 			}
-		} // end if / else goals Scored
+		} // end if else goals Scored
 
 		if (emptyBox) {
-			AlertBox.display("Empty Box", "Please check that all the boxes have been filled");
+			cm.ErrorMessage("Empty Box", "Please check that all the boxes have been filled");
 		} else if (singleTieDraw) {
-			AlertBox.display("Tie Round", "You Cannot input draw in a tie Round");
+			cm.ErrorMessage("Tie Round", "You Cannot input draw in a tie Round");
 		} /*else if (DoubleElimDraw) {
 			AlertBox.display("No Draw", "Draw is not allowed in a Double Elimination");
 		}*/ else if (invalidnogoalScore) {
-			AlertBox.display("Invalid Result", "You cannot input a W D or L D etc");
+			cm.ErrorMessage("Invalid Result", "You cannot input a W D or L D etc");
 		} else {
 			for (int i = 0; i < currentFixtures.length; i++) {
 				Competitor com1 = currentFixtures[i].getCompetitorOne();

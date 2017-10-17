@@ -179,6 +179,7 @@ public class CommonMethods {
 		errorWindow.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
 		errorWindow.setResizable(false);
 		errorWindow.sizeToScene();
+		scene.getStylesheets().add(getClass().getResource(Paths.css + "commonStyle.css").toExternalForm());
 		errorWindow.setScene(scene);
 		errorWindow.show();
 		errorWindow.setTitle(err);

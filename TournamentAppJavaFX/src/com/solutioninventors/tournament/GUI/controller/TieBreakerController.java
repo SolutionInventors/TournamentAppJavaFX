@@ -2,7 +2,6 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.utils.Breaker;
 
@@ -191,7 +190,7 @@ public class TieBreakerController {
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		if (selectedBreaker.isEmpty()) {
-			AlertBox.display("NO Breaker Selected", "You Must Select at least one type of Breaker in order to proceed");
+			cm.ErrorMessage("NO Breaker Selected", "You Must Select at least one type of Breaker in order to proceed");
 		} else {
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource(Paths.viewpath + "InputCompetitorScreen.fxml").openStream());

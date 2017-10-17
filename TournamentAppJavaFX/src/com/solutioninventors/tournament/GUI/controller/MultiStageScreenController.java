@@ -2,11 +2,9 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.utils.Breaker;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +12,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -160,10 +156,10 @@ public class MultiStageScreenController {
 		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty()
 				|| txtdrawpoint.getText().isEmpty() || txtlosspoint.getText().isEmpty()) {
 
-			AlertBox.display("Please check input",
+			cm.ErrorMessage("Please check input",
 					"Please check that all the textboxes are filled");
 		} else if ( Integer.valueOf(txtnoOfcomps.getText()) <= 4 || Integer.valueOf(txtnoOfcomps.getText()) %4 !=0 ) {
-			AlertBox.display("Invalid no of Competitors",
+			cm.ErrorMessage("Invalid no of Competitors",
 					"In a Muliti-Stage tournament the No of competitors must be a greater than 4 and multiple of 4 e.g 4,8,12");
 		} else {
 

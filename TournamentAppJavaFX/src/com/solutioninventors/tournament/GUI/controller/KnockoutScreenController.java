@@ -2,7 +2,6 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 
 import javafx.event.ActionEvent;
@@ -109,11 +108,11 @@ public class KnockoutScreenController {
 		
 		if ( txtNoofcompetitors.getText().isEmpty()) {
 			//AlertBox.display("Invalid No of Rounds", "The no of rounds cannot be empty");
-			cm.ErrorMessage("Invalid No of Rounds", "The no of rounds cannot be empty");
+			cm.ErrorMessage("Error", "The Number of Competitors Cannot be empty");
 		}else if ( Integer.valueOf(txtNoofcompetitors.getText())<2  ) {
-			AlertBox.display("Invalid of competitors", "The number of Competitors must greater than 2");
+			cm.ErrorMessage("Invalid of competitors", "The number of Competitors must greater than 2");
 		}else if ( ! ( validator % 1 == 0.0f)  ) {
-			AlertBox.display("Invalid number", "The number of Competitors must be a power of 2");
+			cm.ErrorMessage("Invalid number", "The number of Competitors must be a power of 2 ie 4,8,16,32,64,128");
 		}else {
 		FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());

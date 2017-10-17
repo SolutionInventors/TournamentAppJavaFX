@@ -2,7 +2,6 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.net.MalformedURLException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
@@ -45,14 +44,15 @@ public class FixturesController {
 		if (!tournament.hasEnded()) {
 			// GridPane settings
 			GridPane grid = new GridPane();
-			grid.setPadding(new Insets(25));
+			grid.setPadding(new Insets(25,0,25,10));
 			grid.setHgap(5);
 			grid.setVgap(5);
+			//grid.setGridLinesVisible(true);
 			// ColumnSettings for all five columns
-			ColumnConstraints column1 = new ColumnConstraints(110); //
-			ColumnConstraints column2 = new ColumnConstraints(100); //
-			ColumnConstraints column3 = new ColumnConstraints(100);
-			ColumnConstraints column4 = new ColumnConstraints(130);
+			ColumnConstraints column1 = new ColumnConstraints(110); //comp name
+			ColumnConstraints column2 = new ColumnConstraints(155); //VS
+			ColumnConstraints column3 = new ColumnConstraints(85);//comp name 2	
+			ColumnConstraints column4 = new ColumnConstraints(100);//image
 			ColumnConstraints column5 = new ColumnConstraints(100);
 
 			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5);
@@ -113,7 +113,7 @@ public class FixturesController {
 		} // end if tournament has not ended
 
 		else {
-			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
 

@@ -3,7 +3,6 @@ package com.solutioninventors.tournament.GUI.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -28,8 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 public class ViewResultsController {
-	@FXML
-	private ScrollPane scrollPane;
+	@FXML private ScrollPane scrollPane;
 	@FXML private Label tourStage;
 	@FXML private Label msgboxlbl;
 	@FXML private Rectangle msgboxrect;
@@ -65,38 +63,23 @@ public class ViewResultsController {
 			// GridPane settings
 			GridPane grid = new GridPane();
 			//grid.setHgrow(grid, arg1);
-			grid.setPadding(new Insets(25));
+			grid.setPadding(new Insets(25,0,25,10));
 			grid.setHgap(5);
 			grid.setVgap(5);
 			// ColumnSettings for all - columns
-			ColumnConstraints column1 = new ColumnConstraints(110); //
-			ColumnConstraints column2 = new ColumnConstraints(100); //
-			ColumnConstraints column3 = new ColumnConstraints(50);
-			ColumnConstraints column4 = new ColumnConstraints(50);
-			ColumnConstraints column5 = new ColumnConstraints(50);
-			ColumnConstraints column6 = new ColumnConstraints(50);
-			ColumnConstraints column7 = new ColumnConstraints(100);
+			ColumnConstraints column1 = new ColumnConstraints(110); //comp name
+			ColumnConstraints column2 = new ColumnConstraints(100); //score input
+			ColumnConstraints column3 = new ColumnConstraints(55);//vs
+			ColumnConstraints column4 = new ColumnConstraints(30);//score input
+			ColumnConstraints column5 = new ColumnConstraints(55);//comp name	
+			ColumnConstraints column6 = new ColumnConstraints(100);//im
 			 ColumnConstraints cc = new ColumnConstraints();
 			    cc.setHgrow(Priority.NEVER);
 			    RowConstraints rc = new RowConstraints();
 			    rc.setVgrow(Priority.NEVER);
 
-			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6, column7,cc);
+			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6,cc);
 			grid.getRowConstraints().add(rc);
-			/*for (int j = 0; j < nColumns; j++) {
-			    ColumnConstraints cc = new ColumnConstraints();
-			    cc.setHgrow(Priority.ALWAYS);
-			    gridPane.getColumnConstraints().add(cc);
-			}
-
-			for (int j = 0; j < nRows; j++) {
-			    RowConstraints rc = new RowConstraints();
-			    rc.setVgrow(Priority.ALWAYS);
-			    gridPane.getRowConstraints().add(rc);
-			}*/
-			
-			
-			
 			
 			tourStage.setText(tournament.toString().toUpperCase());
 			currentFixtures = tournament.getCurrentRound().getFixtures();
@@ -198,7 +181,7 @@ public class ViewResultsController {
 
 		else {
 			btnMoveNext.setVisible(false);
-			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
 
@@ -230,7 +213,7 @@ public class ViewResultsController {
 			e.printStackTrace();
 		}
 		if (tournament.hasEnded())
-			AlertBox.display("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 
 	}// end nextRound
 	

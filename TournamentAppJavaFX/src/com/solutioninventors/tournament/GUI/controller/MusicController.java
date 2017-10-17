@@ -3,9 +3,6 @@ package com.solutioninventors.tournament.GUI.controller;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import com.solutioninventors.tournament.GUI.utility.AlertBox;
-
-import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -20,8 +17,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MusicController {
@@ -76,9 +73,7 @@ public class MusicController {
 		}
 		
 		
-		} else {
-			AlertBox.display("No Music", "You have not selected any song");
-		}
+		} 
 	}//end 
 	
 	@FXML
