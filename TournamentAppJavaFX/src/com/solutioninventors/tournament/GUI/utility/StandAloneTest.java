@@ -1,7 +1,5 @@
 package com.solutioninventors.tournament.GUI.utility;
 
-import com.solutioninventors.tournament.GUI.controller.CommonMethods;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +11,7 @@ public class StandAloneTest extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"Error"
+			Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"Music"
 					+ ".fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);

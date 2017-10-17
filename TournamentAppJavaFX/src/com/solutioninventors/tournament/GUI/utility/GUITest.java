@@ -36,10 +36,10 @@ public class GUITest extends Application {
 			window.setScene(scene);
 			window.sizeToScene();
 			window.setResizable(false);
-		/*	window.setOnCloseRequest(e -> {
+			window.setOnCloseRequest(e -> {
 				e.consume();
 				closeprogram();
-			});*/
+			});
 			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
 			//WelcomeScreenController ic = (WelcomeScreenController) loader.getController();

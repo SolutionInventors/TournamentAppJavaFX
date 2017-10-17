@@ -51,27 +51,16 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class InputCompetitorController {
-	@FXML
-	private Text close;
-	@FXML
-	private Button btnNext;
-	@FXML
-	private Button btnPrevious;
-	@FXML
-	private AnchorPane rootPane;
-	@FXML
-	private List<Label> SNArray;
-	@FXML
-	private List<TextField> txtArray;
-	// @FXML private List<Button> btnimgArray;
-	@FXML
-	private List<ImageView> imgArray;
-	@FXML
-	private List<Label> lblArray;
-	@FXML
-	private Label lbltourtype;
-	@FXML
-	private Label lbltourapp;
+	@FXML private Text close;
+	@FXML private Button btnNext;
+	@FXML private Button btnPrevious;
+	@FXML private AnchorPane rootPane;
+	@FXML private List<Label> SNArray;
+	@FXML private List<TextField> txtArray;
+	@FXML private List<ImageView> imgArray;
+	@FXML private List<Label> lblArray;
+	@FXML private Label lbltourtype;
+	@FXML private Label lbltourapp;
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private Stage window;
@@ -453,9 +442,9 @@ public class InputCompetitorController {
 		ic.setTournament(tournament);
 		ic.init();
 		Scene scene = new Scene(root);
-		/*
-		 * window.setOnCloseRequest(e -> { e.consume(); closeprogram(); });
-		 */
+		
+		window.setOnCloseRequest(e -> { e.consume(); closeprogram(); });
+		 
 		URL url1 = getClass().getResource(Paths.images + "logo.png");
 		window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
 		window.setScene(scene);
@@ -466,11 +455,12 @@ public class InputCompetitorController {
 	}// end finish method
 
 	private void closeprogram() {
-		Boolean answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
+		Boolean answer = ConfirmBox.display("Save", "Do you want to save changes to "+TournamentName);
 		if (answer) {
-			window.close();
-
+			cm.save(tournament);
+			Tournament.closeFile(tournament.getTournamentFile());
 		}
+		window.close();
 	}
 	// should reverse the work done in the next button by retrieveing values from
 	// the comp

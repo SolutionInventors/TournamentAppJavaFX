@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
+import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Tournament;
@@ -137,6 +138,8 @@ public class CommonMethods {
 				e.printStackTrace();
 			} catch (TournamentEndedException e) { // TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (FileIsOpenException e) {
+				ErrorMessage("File Open","Cannot open the same file");
 			}
 		}
 	}

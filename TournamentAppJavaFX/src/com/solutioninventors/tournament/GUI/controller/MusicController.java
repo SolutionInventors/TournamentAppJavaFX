@@ -36,6 +36,8 @@ public class MusicController {
 	private boolean playing;
 	private MediaPlayer mediaPlayer;
 	private ChangeListener<Duration> progressChangeListener;
+	private String path;
+	private boolean isEnded = false;
 	  
 	
 	
@@ -61,19 +63,25 @@ public class MusicController {
 
 	@FXML
 	private void playPauseButtonPressed(ActionEvent e) {
-		if (mediaPlayer != null) {
-		playing = !playing;
-
-		if (playing) {
-			btnplay.setText("Pause");
-			mediaPlayer.play();
+		if (isEnded) {
+			playsong(path);
 		} else {
-			btnplay.setText("Play");
-			mediaPlayer.pause();
+			if (mediaPlayer != null) {
+				playing = !playing;
+
+				if (playing) {
+					btnplay.setText("Pause");
+					mediaPlayer.play();
+				} else {
+					btnplay.setText("Play");
+					mediaPlayer.pause();
+				}
+				
+				
+				} 
 		}
 		
-		
-		} 
+	
 	}//end 
 	
 	@FXML
@@ -108,6 +116,7 @@ public class MusicController {
 		mediaPlayer.setOnEndOfMedia(new Runnable() {
 	        @Override public void run() {
 	        	btnplay.setText("Play");
+	        	isEnded = true;
 	          }
 	        });
 		
@@ -124,7 +133,7 @@ public class MusicController {
 		//seletedfile.getName()
 		// for the song
 		if (seletedfile != null && seletedfile.getName().endsWith(".mp3")) {
-			String path = seletedfile.getAbsolutePath();
+			path = seletedfile.getAbsolutePath();
 			playsong(path);
 		} 
 
