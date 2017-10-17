@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -206,7 +207,7 @@ public class SaveTourJavaFX extends Application{
 			Test.displayMessage("Retrieving from file...... ");
 			tournament = Tournament.loadTournament( tournamentFile);
 		}
-		catch (IOException  e)
+		catch (IOException | FileIsOpenException  e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -18,11 +18,14 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -31,6 +34,7 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.utils.Competitor;
+import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 
@@ -53,6 +57,11 @@ import com.solutioninventors.tournament.utils.SportType;
 
 public abstract class Tournament implements Serializable
 {
+	
+	/**
+	 * Stores the currently open tournaments
+	 */
+	private static final Set<File> openFiles = new 	HashSet<>();
 	
 	private static final long serialVersionUID = 1L;
 
@@ -208,6 +217,8 @@ public abstract class Tournament implements Serializable
 		else
 			throw new 
 				TournamentHasNotBeenSavedException( errorMessage  );
+	
+		
 	}
 	
 	/**
@@ -396,6 +407,7 @@ public abstract class Tournament implements Serializable
 					ObjectOutputStream( new FileOutputStream(savedTournaments ) );
 			output.writeObject( tourList );
 			output.close();
+			openFiles.add( file );
 		}
 		catch (IOException e)
 		{
@@ -411,11 +423,15 @@ public abstract class Tournament implements Serializable
 	 *@param file the {@code File} that contains the {@code Tournament}
 	 *@return - a {@code Tournament} object
 	 *@throws IOException
+	 * @throws FileIsOpenException 
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E extends Tournament> E loadTournament( File file  ) 
-			throws  IOException	
+			throws  IOException, FileIsOpenException	
 	{
+		if( openFiles.contains( file ) )
+			throw new FileIsOpenException("File is already open" );
+
 		E tournament ;
 		 if ( file.exists() )
 		{
@@ -426,9 +442,8 @@ public abstract class Tournament implements Serializable
 						new ObjectInputStream( new FileInputStream(file ));
 				tournament = (E) input.readObject( );
 				input.close();
-//				
-//				tournament.setName( file.getName().replaceAll( ".sit", "" ) );
-//				
+				openFiles.add( file );
+				
 			}
 			catch (IOException | ClassNotFoundException e)
 			{
@@ -443,6 +458,14 @@ public abstract class Tournament implements Serializable
 		 return tournament;
 	}
 
+	/**
+	 * Removes the file from the set of open files 
+	 *@param file the {@code File} to add
+	 */
+	public static void closeFile( File file ){
+		if( openFiles.contains( file) )
+			openFiles.remove( file );
+	}
 
 	/**
 	 * Gets the absolute path of all the saved {@code Tournament}s by this app

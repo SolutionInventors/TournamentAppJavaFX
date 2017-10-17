@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
+import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
@@ -38,7 +39,7 @@ public class SaveTournamentTest
 		{
 			tournament = Tournament.loadTournament( fileChooser.getSelectedFile() );
 		}
-		catch (IOException e1)
+		catch (IOException | FileIsOpenException e1)
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

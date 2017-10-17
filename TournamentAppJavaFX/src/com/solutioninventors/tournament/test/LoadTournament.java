@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -49,7 +50,7 @@ public class LoadTournament
 			tournament = Tournament.loadTournament( file );
 		}
 		
-		catch (IOException e )
+		catch (IOException | FileIsOpenException e )
 		{
 			Test.displayMessage("Error in loading file..." );
 			System.exit( 0 );
