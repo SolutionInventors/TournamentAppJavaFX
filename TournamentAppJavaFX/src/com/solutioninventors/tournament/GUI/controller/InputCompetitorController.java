@@ -351,14 +351,12 @@ public class InputCompetitorController {
 	public void finish(ActionEvent event)
 			throws IOException, InvalidBreakerException, TournamentEndedException, URISyntaxException {
 		if (!(TournamentType == TournamentTypes.CHALLENGE))  {
-			
-		
-		for (int i = startValue; i < endValue; i++) {
-			String tempCompName = ((txtArray.get(i % 4).getText() == null ) ? "Competitor " + String.valueOf(i + 1)
-					: txtArray.get(i % 4).getText());
-			file[i] = (file[i] != null ? file[i] : new File(url2.toURI()));
-			comps[i] = new Competitor(tempCompName, file[i]);
-		}
+			for (int i = startValue; i < endValue; i++) {
+				String tempCompName = ((txtArray.get(i % 4).getText() == null ) ? "Competitor " + String.valueOf(i + 1)
+						: txtArray.get(i % 4).getText());
+				file[i] = (file[i] != null ? file[i] : new File(url2.toURI()));
+				comps[i] = new Competitor(tempCompName, file[i]);
+			}
 		}
 		
 		//everywhere where clickimage was used to create image then replace with no logo
