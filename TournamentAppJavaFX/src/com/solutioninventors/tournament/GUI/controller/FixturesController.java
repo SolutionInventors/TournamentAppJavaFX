@@ -64,8 +64,8 @@ public class FixturesController {
 			VS = new Label[currentFixtures.length];
 			logo = new ImageView[currentFixtures.length * 2];
 
-			int[] jIndex = new int[1];
-			int[] iIndex = new int[1];
+			int[] jIndex = new int[1]; //iterator used in stream
+			int[] iIndex = new int[1]; //iterator used in stream
 			
 			Arrays.stream(currentFixtures).forEach( current -> {
 				compName[iIndex[0]] = new Label(current.getCompetitorOne().toString());
