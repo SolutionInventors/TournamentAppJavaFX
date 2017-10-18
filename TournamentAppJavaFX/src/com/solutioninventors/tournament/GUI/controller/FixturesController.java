@@ -63,7 +63,7 @@ public class FixturesController {
 			compName = new Label[currentFixtures.length * 2];
 			VS = new Label[currentFixtures.length];
 			logo = new ImageView[currentFixtures.length * 2];
-			int i = 0;
+
 			int[] jIndex = new int[1];
 			int[] iIndex = new int[1];
 			
