@@ -2,18 +2,21 @@
  * @author Chinedu Oguejiofor
  *10 Aug. 2017
  * 3:23:29 pm
- */
+ *//*
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
@@ -65,8 +68,8 @@ public class InputCompetitorController {
 	private Font font[] = new Font[3];
 	private Stage window;
 
-	private URL url1 = getClass().getResource(Paths.images + "clickme.PNG");
-	private URL url2 = getClass().getResource(Paths.images + "nologo.jpg");
+	private InputStream url1 = getClass().getResourceAsStream(Paths.images + "clickme.PNG");
+	private InputStream url2 = getClass().getResourceAsStream(Paths.images + "nologo.jpg");
 	private Image image;
 	// shared variables
 	private String TournamentName;
@@ -182,43 +185,38 @@ public class InputCompetitorController {
 	}
 
 	public void loadcomponents() {
-		// this was used to set the default no logo image
-		try {
-			image = new Image(new FileInputStream(new File(url1.toURI())));
+		image = new Image(url1);
 
-			comps = new Competitor[noOfCompetitors];
-			file = new File[noOfCompetitors];
-			imageTracker = new int[noOfCompetitors];
-			Arrays.fill(imageTracker, -1);
-			for (int i = 0; i < txtArray.size(); i++) {
-				txtArray.get(i).setText(null);
-			}
-			/*for (int i = 0; i < comps.length; i++) {
-				comps[i] = new Competitor("Player " + String.valueOf(i + 1), new File(url1.toURI()));
-			}
-			fo
-*/
-			btnPrevious.setVisible(false);
-			btnNext.setVisible(noOfCompetitors <= 4 ? false : true);
+		comps = new Competitor[noOfCompetitors];
+		file = new File[noOfCompetitors];
+		imageTracker = new int[noOfCompetitors];
+		Arrays.fill(imageTracker, -1);
+		for (int i = 0; i < txtArray.size(); i++) {
+			txtArray.get(i).setText(null);
+		}
+		for (int i = 0; i < comps.length; i++) {
+			comps[i] = new Competitor("Player " + String.valueOf(i + 1), new File(url1.toURI()));
+		}
+		fo
 
-			if (TournamentType == TournamentTypes.CHALLENGE) {
-				comps[0] = new Competitor("Champion", new File(url1.toURI()));
-				comps[1] = new Competitor("Challenger", new File(url1.toURI()));
-				txtArray.get(0).setPromptText("Champion");
-				txtArray.get(1).setPromptText("Challenger");
-				for (int i = 2; i < 4; i++) {
-					txtArray.get(i).setVisible(false);
-					imgArray.get(i).setVisible(false);
-					SNArray.get(i).setVisible(false);
-				}
-				endValue = 2;
-			} else if (noOfCompetitors == 3) {
-				txtArray.get(3).setVisible(false);
-				imgArray.get(3).setVisible(false);
-				SNArray.get(3).setVisible(false);
+		btnPrevious.setVisible(false);
+		btnNext.setVisible(noOfCompetitors <= 4 ? false : true);
+
+		if (TournamentType == TournamentTypes.CHALLENGE) {
+			comps[0] = new Competitor("Champion", new File(url1.toString()));
+			comps[1] = new Competitor("Challenger", new File(url1.toString()));
+			txtArray.get(0).setPromptText("Champion");
+			txtArray.get(1).setPromptText("Challenger");
+			for (int i = 2; i < 4; i++) {
+				txtArray.get(i).setVisible(false);
+				imgArray.get(i).setVisible(false);
+				SNArray.get(i).setVisible(false);
 			}
-		} catch (FileNotFoundException | URISyntaxException e) {
-			e.printStackTrace();
+			endValue = 2;
+		} else if (noOfCompetitors == 3) {
+			txtArray.get(3).setVisible(false);
+			imgArray.get(3).setVisible(false);
+			SNArray.get(3).setVisible(false);
 		}
 
 		if (goalScored) {
@@ -239,7 +237,7 @@ public class InputCompetitorController {
 	}
 
 	@FXML
-	public void previous(ActionEvent event) throws MalformedURLException, URISyntaxException {
+	public void previous(ActionEvent event) throws URISyntaxException, IOException {
 		btnNext.setVisible(true);
 		btnPrevious.setVisible(startValue - 4 == 0 ? false : true);
 		for (int i = startValue; i < endValue; i++) {
@@ -248,7 +246,11 @@ public class InputCompetitorController {
 			if (file[i] != null) {
 				file[i] = file[i];
 			} else {
-				file[i] =  new File(url1.toURI());
+				File tempFile = null;
+					FileUtils.copyInputStreamToFile(url1,tempFile);
+				
+				//file[i] =  new File(url1.toURI());
+				//file[i] = 
 				imageTracker[i] = i;//track the location in which Click to add image is used
 			}
 			comps[i] = new Competitor(tempCompName, file[i]);
@@ -553,3 +555,4 @@ public class InputCompetitorController {
 		changeImage4(null);
 	}
 }// end class
+*/

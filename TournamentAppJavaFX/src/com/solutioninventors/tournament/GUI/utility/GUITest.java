@@ -3,11 +3,7 @@
  */
 package com.solutioninventors.tournament.GUI.utility;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
-
-import com.solutioninventors.tournament.GUI.controller.WelcomeScreenController;
+import java.io.InputStream;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +26,8 @@ public class GUITest extends Application {
 			Parent root = loader.load(getClass().getResource(Paths.viewpath + "WelcomeScreen.fxml").openStream());
 			Scene scene = new Scene(root);
 			window = primaryStage;
-			URL url1 = getClass().getResource(Paths.images + "logo.png"); 
-			window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+			InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png"); 
+			window.getIcons().add(new Image(url1));
 			window.centerOnScreen();
 			window.setScene(scene);
 			window.sizeToScene();
@@ -42,8 +38,6 @@ public class GUITest extends Application {
 			});
 			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
-			//WelcomeScreenController ic = (WelcomeScreenController) loader.getController();
-			//ic.load();
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
