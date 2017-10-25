@@ -36,13 +36,14 @@ import javafx.scene.text.Font;
 public class InputResultsController {
 	@FXML private ScrollPane scrollPane;
 	@FXML private Label tourStage;
+	@FXML private Label lblResultSubmitted;
 	@FXML private Button btnsubmit;
+	
 	private Label compName[];
 	private Label VS[];
 	private CustomTextField scores[];
 	private ImageView logo[];
 	private ArrayList<ComboBox<String>> scoresnoGoal = new ArrayList<>();
-	// private Image img = new Image("file:nologo");
 	private Tournament tournament;
 	private Competitor comp1;
 	private Competitor comp2;
@@ -54,6 +55,7 @@ public class InputResultsController {
 
 	public void initialize() {
 		font = cm.loadfonts();
+		lblResultSubmitted.setVisible(false);
 
 		tourStage.setFont(font[1]);// tournament Specs
 	}
@@ -182,14 +184,17 @@ public class InputResultsController {
 					}
 				}
 				btnsubmit.setVisible(true);
+				lblResultSubmitted.setVisible(false);
 				scrollPane.setContent(grid);
 			} else {
 				btnsubmit.setVisible(false);
+				lblResultSubmitted.setVisible(true);
 			}
 
 		} else {
 			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 			btnsubmit.setVisible(false);
+			lblResultSubmitted.setVisible(false);
 		}
 	}// end set current
 
@@ -259,6 +264,7 @@ public class InputResultsController {
 				try {
 					tournament.setResult(com1, firstScore, secondScore, com2);
 					btnsubmit.setVisible(false);
+					lblResultSubmitted.setVisible(true);
 				} catch (NoFixtureException ee) {
 					ee.printStackTrace();
 				}

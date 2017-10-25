@@ -19,7 +19,7 @@ public class HelpController {
 	 private Font font[] = new Font[3];
 
 	public void initialize() {
-	font = cm.loadfonts();
+		font = cm.loadfonts();
 		txtArea.setFont(new Font("Times New Roman",19));
 		
 		TreeItem<String> root, tournament,tournamentApp;
