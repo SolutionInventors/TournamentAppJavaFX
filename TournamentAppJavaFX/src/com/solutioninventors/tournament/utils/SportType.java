@@ -9,8 +9,6 @@ package com.solutioninventors.tournament.utils;
 
 import java.io.Serializable;
 
-import com.solutioninventors.tournament.GUI.utility.StandingTable;
-
 /**
  * A {@code SportType } stores the kind of sport that is being played in
  * a {@code Tournament}. This is used by a {@code GroupTournament}'s  to

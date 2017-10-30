@@ -51,6 +51,7 @@ import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
 public class Competitor implements Serializable
 {
 
+	private static final long serialVersionUID = 8387995545539633696L;
 	/**Contains the first name of the competitor <br>
 	 * Can be retrieved via call to method {@code getFirstName }
 	 */
@@ -140,6 +141,7 @@ public class Competitor implements Serializable
 //		if ( first.matches( "[%s]*" ) && last.matches( "[%s]*" ))
 //			throw new NoCompetitorNameException("Invalid competitor name " );
 		String[] tokens = first.split(" ");
+		
 		
 		if ( last == null && tokens.length == 2 )
 		{
@@ -378,12 +380,11 @@ public class Competitor implements Serializable
 	 */
 	private void copyFile(File fileToCopy, File fileToPaste)
 	{
-		try 
+		try ( 
+				FileChannel input = new FileInputStream(fileToCopy).getChannel();
+				FileChannel output = new FileOutputStream(fileToPaste).getChannel();)
 		{
-			FileChannel input = new FileInputStream(fileToCopy).getChannel();
-			FileChannel output = new FileOutputStream(fileToPaste).getChannel();
 			output.transferFrom(input, 0, input.size());
-
 		} 
 		catch (FileNotFoundException e) 
 		{

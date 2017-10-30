@@ -27,6 +27,8 @@ import com.solutioninventors.tournament.utils.SportType;
  */
 public abstract class EliminationTournament extends Tournament implements Serializable
 {
+	private static final long serialVersionUID = -7761144312615513778L;
+
 	/**
 	 * Stores the active ties in this {@code Tournament}
 	 */

@@ -623,24 +623,10 @@ public enum Breaker implements Serializable
 	{
 		String name =  toString().replace( '_', ' ' ).trim();
 		
-//		String[] tokens = name.split(" ");
-//		   
-//		for ( int i = 0 ; i< tokens.length ; i ++ 	)
-//		{
-//			name = name.replaceFirst( tokens[i], capitaliseFirstLetter(tokens[i]));
-//		}
 		return name ;
 	}
 
 	
-	private String capitaliseFirstLetter( String word )
-	{
-		char[] charac =  { word.charAt(0)}; 
-		String first  = new String(charac ) ;
-		word = word.replaceFirst(first, first.toUpperCase() );
-		word = word.replaceFirst(first, first.toUpperCase() );
-		return word;
-	}
 	/**
 	 * Gets an array of {@code Breaker}'s based on the type and goal dependence specifiedby the
 	 * arguments
@@ -658,7 +644,6 @@ public enum Breaker implements Serializable
 	 */
 	public static Breaker[] getBreakers( Breaker breakerType, Breaker dependence )
 	{
-		final Breaker  val ;
 		Predicate<Breaker> predicate = null;
 		if ( dependence == Breaker.GOAL_DEPENDENT || 
 				dependence == Breaker.NOT_GOAL_DEPENDENT)
@@ -668,7 +653,6 @@ public enum Breaker implements Serializable
 		else //gets all the breaker type
 			predicate = b-> b.getType() == breakerType || b.getType() == Breaker.ALL;	
 			
-		val = dependence ;
 		
 		if(  breakerType == Breaker.KNOCKOUT_BREAKER || breakerType == Breaker.GROUP_BREAKER ||
 						breakerType == Breaker.ALL)

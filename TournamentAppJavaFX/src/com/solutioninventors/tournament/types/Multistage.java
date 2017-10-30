@@ -9,9 +9,7 @@ package com.solutioninventors.tournament.types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.solutioninventors.tournament.GUI.controller.KnockoutScreenController;
 import com.solutioninventors.tournament.exceptions.GroupIndexOutOfBoundsException;
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;

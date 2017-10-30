@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -46,6 +44,8 @@ import com.solutioninventors.tournament.utils.TieBreaker;
  */
 public class RoundRobinTournament extends GroupTournament
 {
+	private static final long serialVersionUID = -7077529128769429245L;
+
 	/**
 	 * Stores {@code true } if there are home and away fixtures. That is if
 	 * a {@code Competitor} would meet all opponent twice
@@ -138,7 +138,7 @@ public class RoundRobinTournament extends GroupTournament
 			                              competitors[ fixes[ i + skip ][ 1 ] - 1 ] );
 		}
 		
-		return new Round ( fixtures , String.valueOf( roundNum ) );
+		return new Round ( fixtures , "Round " + String.valueOf( roundNum ) );
 		
 	}
 
@@ -197,7 +197,9 @@ public class RoundRobinTournament extends GroupTournament
 			for( int i = 0 ; i < rounds.length ; i  ++ )
 			{
 				finalRounds[ i ] = rounds[ i ];
+				finalRounds[i].setName( "Round " + i );
 				finalRounds[ i + rounds.length ] = inverseRounds[ i ] ;
+				finalRounds[ i + rounds.length ].setName( "Round " + (i + rounds.length) );
 			}
 			
 		}

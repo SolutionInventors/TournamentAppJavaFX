@@ -37,6 +37,8 @@ import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 
 public class Round implements Serializable
 {
+	private static final long serialVersionUID = -6082762569998446694L;
+
 	private Fixture[] fixtures;
 	
 	private String name;
@@ -408,5 +410,7 @@ public class Round implements Serializable
 	{
 		return name;
 	}
+
+	
 	
 }	

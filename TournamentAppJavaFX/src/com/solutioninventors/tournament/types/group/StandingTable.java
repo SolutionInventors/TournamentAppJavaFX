@@ -12,8 +12,6 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.rmi.CORBA.Tie;
-
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.SportType;
 import com.solutioninventors.tournament.utils.TieBreaker;
@@ -35,6 +33,8 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class StandingTable implements Serializable {
 
+	private static final long serialVersionUID = 2063358009821795868L;
+	
 	private Competitor[] competitors;
 	private String[][] table;
 
@@ -313,10 +313,5 @@ public class StandingTable implements Serializable {
 		return updateStringTable( getAwayTable() , awayTable, TieBreaker.AWAY_FIXTURES );
 	}
 	
-	private enum TableType
-	{
-		HOME,
-		AWAY,
-		HOME_AND_AWAY
-	}
+	
 }

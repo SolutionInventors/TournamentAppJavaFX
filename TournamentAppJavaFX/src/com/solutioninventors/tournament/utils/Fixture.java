@@ -29,6 +29,7 @@ import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 
 public class Fixture implements Serializable{
 
+	private static final long serialVersionUID = -4656193186435862491L;
 	/**
 	 * Stores the home {@code  Competitor } object in this {@code Fixture} <br>
   		Can be retrieved via call to method {@code getCompetitorOne()}

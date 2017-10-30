@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
+import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
@@ -33,6 +34,7 @@ import com.solutioninventors.tournament.utils.SportType;
 public class Challenge extends Tournament 
 {
 
+	private static final long serialVersionUID = 745303018037565536L;
 	/**
 	 * Contains all the rounds in this {@code Tournament}
 	 */
@@ -48,8 +50,9 @@ public class Challenge extends Tournament
 	 * @param numOfRounds the number of rounds that would be played in this {@code Challenge}
 	 * @author Oguejiofor Chidiebere
 	 * @param competitors  the two {@code Competitor}s in the tournament
+	 * @throws TournamentException 
 	 */
-	public Challenge( SportType type, Competitor[] competitors , int numOfRounds 	)
+	public Challenge( SportType type, Competitor[] competitors , int numOfRounds 	) throws TournamentException
 	{
 		super( type ,  competitors );
 		

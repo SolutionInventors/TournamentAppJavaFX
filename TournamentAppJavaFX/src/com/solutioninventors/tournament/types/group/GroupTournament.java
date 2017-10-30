@@ -7,7 +7,6 @@
 package com.solutioninventors.tournament.types.group;
 
 import java.util.Arrays;
-import java.util.List;
 
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
@@ -41,6 +40,8 @@ import com.solutioninventors.tournament.utils.TieBreaker;
 public abstract class GroupTournament extends Tournament 
 {
 	
+	private static final long serialVersionUID = 2535233063354244258L;
+
 	/**
 	 * Stores the ranking table of this {@code GroupTournament}. Would be used to
 	 * determine the winner at the end of the {@code Tournament}
@@ -131,7 +132,7 @@ public abstract class GroupTournament extends Tournament
 	 *@param fixes
 	 */
 	protected void setCurrentRound(Fixture[] fixes) {
-		rounds[getCurrentRoundNum()] = new Round(fixes , toString()  );
+		rounds[getCurrentRoundNum()] = new Round(fixes , "Round " + toString()  );
 	}
 
 	/**

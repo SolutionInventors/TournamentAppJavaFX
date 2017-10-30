@@ -35,6 +35,9 @@ import com.solutioninventors.tournament.utils.SportType;
  */
 public class SingleEliminationTournament extends EliminationTournament {
 
+	private static final long serialVersionUID = -715885738343087387L;
+
+
 	/**
 	 * Stores all the rounds in this tournament
 	 */

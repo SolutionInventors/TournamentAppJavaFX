@@ -7,9 +7,6 @@
  */
 package com.solutioninventors.tournament.types.group;
 
-import java.util.Arrays;
-import java.util.function.Predicate;
-
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -37,6 +34,8 @@ import com.solutioninventors.tournament.utils.TieBreaker;
  */
 public class SwissTournament extends GroupTournament {
 	
+	private static final long serialVersionUID = -8743697610134891249L;
+
 	public SwissTournament(Competitor[] comps, SportType type, double winPoint, double drawPoint, double lossPoint,
 			TieBreaker breaker, int totalRounds) throws TournamentException, InvalidBreakerException {
 		super(comps, type, winPoint, drawPoint, lossPoint, breaker);

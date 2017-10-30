@@ -23,6 +23,7 @@ import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
  */
 public class TieBreaker implements Serializable
 {
+	private static final long serialVersionUID = 7353343296579961184L;
 	/**
 	 * The {@code Breaker}s  array to be used to break ties
 	 */

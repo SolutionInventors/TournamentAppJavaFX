@@ -57,7 +57,6 @@ import com.solutioninventors.tournament.utils.SportType;
 
 public abstract class Tournament implements Serializable
 {
-	
 	/**
 	 * Stores the currently open tournaments
 	 */
@@ -112,8 +111,9 @@ public abstract class Tournament implements Serializable
 	 * @since v1.0
 	 *@param type - the {@code SportType} with which the {@code Tournament} would be created
 	 *@param coms - the {@code Competitor } array
+	 * @throws TournamentException 
 	 */
-	public Tournament ( SportType type , Competitor ... coms )
+	public Tournament ( SportType type , Competitor ... coms ) throws TournamentException
 	{
 		
 		this( coms,  type, false  );
@@ -129,10 +129,19 @@ public abstract class Tournament implements Serializable
 	 * @param shoffle specifies whether the {@code Competitor}s should be shuffled
 	 *@param type - the {@code SportType} with which the {@code Tournament} would be created
 	 *@param coms - the {@code Competitor } array
+	 * @throws TournamentException 
 	 */
-	public Tournament ( Competitor [] coms  , SportType type , boolean shuffle)
+	public Tournament ( Competitor [] coms  , SportType type , boolean shuffle) throws TournamentException
 	{
+		int size = coms.length;
+		int duplicateTrim = 
+				Arrays.stream( coms )
+				.map( com -> com.getName() )
+				.distinct().toArray().length;
 		
+		if( size  != duplicateTrim ){
+			throw new TournamentException("Two competitors have the same name" );
+		}
 		if (  shuffle )
 		{
 			Collections.shuffle( Arrays.asList(coms) );
@@ -195,6 +204,19 @@ public abstract class Tournament implements Serializable
 		return name;
 	}
 
+	public Round[] getResults () {
+		List<Round> list = Arrays.stream( getRoundArray())
+							.filter( round -> round.isComplete() )
+							.collect( Collectors.toList());
+		return list.toArray( new Round[ list.size() ]  );	
+	}
+	
+	public Round[] getPendingRounds(){
+		List<Round> list = Arrays.stream( getRoundArray())
+				.filter( round -> !round.isComplete() )
+				.collect( Collectors.toList());
+		return list.toArray( new Round[ list.size() ]  );	
+	}
 	/**
 	 * 
 	 *Saves the current state of this {@code Tournament} to an existing file.<p>
@@ -428,6 +450,7 @@ public abstract class Tournament implements Serializable
 	 *@throws IOException when an I/O  error occurs
 	 * @throws FileIsOpenException when the specified file is already open
 	 */
+	@SuppressWarnings("unchecked")
 	public static <E extends Tournament> E loadTournament( File file  ) 
 			throws  IOException, FileIsOpenException	
 	{
@@ -437,13 +460,11 @@ public abstract class Tournament implements Serializable
 		E tournament ;
 		 if ( file.exists() )
 		{
-			ObjectInputStream input  = null ;
-			try
+			try ( ObjectInputStream  input = 
+					new ObjectInputStream( new FileInputStream(file ));)
 			{
-				input  = 
-						new ObjectInputStream( new FileInputStream(file ));
+				
 				tournament = (E) input.readObject( );
-				input.close();
 				openFiles.add( file );
 				
 			}
