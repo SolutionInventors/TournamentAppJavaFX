@@ -1,17 +1,14 @@
 package com.solutioninventors.tournament.GUI.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 
-import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -112,8 +109,8 @@ public class FRSCIScreenController {
 			root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
 		
 		Scene scene = new Scene(root);
-		URL url1 = getClass().getResource(Paths.images + "logo.png");
-		musicStage.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+		InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png");
+		musicStage.getIcons().add(new Image(url1));
 		musicStage.setResizable(false);
 		musicStage.setScene(scene);
 		musicStage.sizeToScene();
@@ -122,7 +119,7 @@ public class FRSCIScreenController {
 		musicStage.setX(10);
 		initMovablePlayer(musicStage);
 	//	musicStage.show();
-		} catch (IOException | URISyntaxException e) {
+		} catch (IOException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -142,10 +139,39 @@ public class FRSCIScreenController {
 		Stage primaryStage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath+"TournamentTypeScreen.fxml"));
 		Scene scene = new Scene(root);
+		primaryStage.setOnCloseRequest(e1 -> {
+			e.consume();
+			closeprogram();
+		});
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setTitle("Tournament App");
+		/*try {
+			FXMLLoader loader = new FXMLLoader();
+			Parent root = loader.load(getClass().getResource(Paths.viewpath + "TournamentTypeScreen.fxml").openStream());
+			Scene scene = new Scene(root);
+			Stage window = new Stage();
+			InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png"); 
+			window.getIcons().add(new Image(url1));
+			window.centerOnScreen();
+			window.setScene(scene);
+			window.sizeToScene();
+			window.setResizable(false);
+			window.setOnCloseRequest(e1 -> {
+				e.consume();
+				closeprogram();
+			});
+			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
+			window.setTitle("Tournament APP");
+			window.show();
+		} catch (IOException e2) {
+		}*/
 	}
+
+	
+		
+		
+	
 	public void openTour(ActionEvent event) throws URISyntaxException {
 		control.opentournament(null);
 	}
@@ -172,8 +198,8 @@ public class FRSCIScreenController {
 	}
 	
 	private void closeprogram() {
-		Boolean answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
-		if (answer) {
+		int answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
+		if (answer ==1) {
 			control.save(tournament);
 		}
 		

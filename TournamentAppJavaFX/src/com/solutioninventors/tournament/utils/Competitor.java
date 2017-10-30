@@ -16,9 +16,6 @@ import java.io.Serializable;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.ImageFormatException;
 import com.solutioninventors.tournament.exceptions.NoCompetitorNameException;
@@ -142,7 +139,7 @@ public class Competitor implements Serializable
 		
 //		if ( first.matches( "[%s]*" ) && last.matches( "[%s]*" ))
 //			throw new NoCompetitorNameException("Invalid competitor name " );
-		String[] tokens = first.split( " ");
+		String[] tokens = first.split(" ");
 		
 		if ( last == null && tokens.length == 2 )
 		{
@@ -349,13 +346,15 @@ public class Competitor implements Serializable
 	{
 //		 This method copies the image file and stores it in the class dir
 //		 It first validates the file and its format
+            //    System.out.println( "File exists: " +  imageFile.exists());
 		String imageName = imageFile.getName();
-
+               
+                    
 		if (imageFile.exists() || imageName.indexOf(".") < 0) {
-			String format = imageName.substring(imageName.indexOf("."), imageName.length()); // get the format
+			String format = imageName.substring(imageName.lastIndexOf("."), imageName.length()); // get the format
 
 			format = format.toLowerCase();
-			if (format.matches(".png|.jpg|.jpeg")) {
+			if (format.matches(".png|.jpg|.jpeg|.bmp|.gif")) {
 				image = new File(getName() + format);
 				copyFile(imageFile, image); // copies the file
 
@@ -363,7 +362,12 @@ public class Competitor implements Serializable
 				throw new ImageFormatException("The file is not a valid image file");
 
 		} else
-			throw new ImageFormatException("The URL is not a file");
+                    
+                {
+                   // System.out.println( "Image Name from Copetitor: " +  imageFile.getAbsolutePath());
+                    throw new ImageFormatException("The URL is not a file");
+                }
+			
 	}
 
 	/**

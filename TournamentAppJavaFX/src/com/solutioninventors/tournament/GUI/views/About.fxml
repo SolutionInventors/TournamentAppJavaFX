@@ -27,7 +27,7 @@
       <Line endX="425.0" layoutX="218.0" layoutY="64.0" startX="-220.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="200.0" layoutX="260.0" layoutY="70.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
       <Rectangle arcHeight="60.0" arcWidth="60.0" fill="RED" height="333.0" layoutX="76.0" layoutY="83.0" stroke="RED" strokeType="INSIDE" width="507.0" />
-      <GridPane layoutX="162.0" layoutY="78.0" prefHeight="230.0" prefWidth="318.0">
+      <GridPane layoutX="162.0" layoutY="89.0" prefHeight="230.0" prefWidth="318.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -88,14 +88,14 @@
                   <Font name="Verdana" size="17.0" />
                </font>
             </Label>
-            <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="501.0" text="Email" textFill="WHITE" GridPane.rowIndex="1">
+            <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="501.0" text="Email developers with suggestions" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font name="Verdana" size="17.0" />
                </font>
             </Label>
-            <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="501.0" text="solutioninventors@gmail.com" textFill="#2b00ff" underline="true" GridPane.rowIndex="2">
+            <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="501.0" text="solutioninventors@gmail.com" textFill="WHITE" underline="true" GridPane.rowIndex="2">
                <font>
-                  <Font name="Verdana" size="17.0" />
+                  <Font name="Times New Roman Italic" size="17.0" />
                </font>
             </Label>
          </children>

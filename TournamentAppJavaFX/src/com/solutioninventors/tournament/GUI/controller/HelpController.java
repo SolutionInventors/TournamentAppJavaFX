@@ -15,11 +15,11 @@ public class HelpController {
 	@FXML private TreeView<String> treeView;
 	@FXML private TextArea txtArea;
 	@FXML private AnchorPane  rootPane;
-	 private CommonMethods cm = new CommonMethods();
-	 private Font font[] = new Font[3];
+	// private CommonMethods cm = new CommonMethods();
+	// private Font font[] = new Font[3];
 
 	public void initialize() {
-		font = cm.loadfonts();
+	//font = cm.loadfonts();
 		txtArea.setFont(new Font("Times New Roman",19));
 		
 		TreeItem<String> root, tournament,tournamentApp;
@@ -131,7 +131,7 @@ public class HelpController {
 					"");
 			break;
 		case "Challenge":
-			txtArea.setText("Challenge \r\n" + 
+			txtArea.setText("Challenge \r\n\n" + 
 					"In this format, champions retain their title until they are defeated by an opponent, known as the challenger. This system is used in professional boxing (see lineal championship), and the World Chess Championship. This is actually an alternative to a tournament\r\n" + 
 					"");
 			break;
@@ -140,15 +140,6 @@ public class HelpController {
 			break;
 		}
 		
-	/*	if (item.getValue() != null) {
-			System.out.println("I have caught you");
-		}
-		System.out.println(item.getValue());
-		
-		if (e.getClickCount() == 2) {
-			txtArea.setText("Value for help");
-		}else
-			txtArea.setText("default text goes here");*/
 	}
 	 public TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
 	        TreeItem<String> item = new TreeItem<>(title);

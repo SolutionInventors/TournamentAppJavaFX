@@ -6,9 +6,9 @@ package com.solutioninventors.tournament.GUI.utility;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-/**
+/** here i am no i am not
  * @author ChineduKnight
- *
+ *sdfdsfs
  */
 public class CompetitorStatus {
 	private final SimpleIntegerProperty sn;

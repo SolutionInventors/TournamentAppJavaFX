@@ -3,6 +3,7 @@
  */
 package com.solutioninventors.tournament.GUI.utility;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javafx.application.Application;
@@ -39,14 +40,13 @@ public class GUITest extends Application {
 			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
 			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
 		}
 	}
 
 	private void closeprogram() {
-		Boolean answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
-		if (answer) {
+		int answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
+		if (answer == 1) {
 			window.close();
 
 		}

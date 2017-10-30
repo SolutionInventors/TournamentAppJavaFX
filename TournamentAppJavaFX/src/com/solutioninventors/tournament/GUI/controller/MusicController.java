@@ -127,7 +127,7 @@ public class MusicController {
 		fc.setInitialDirectory(
 				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
 		fc.getExtensionFilters().add(new ExtensionFilter("Mp3 Audio ", " *.mp3"));
-		fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*"));
+		//fc.getExtensionFilters().add(new ExtensionFilter("All Files ", "*"));
 		Stage primaryStage = new Stage();
 		File seletedfile = fc.showOpenDialog(primaryStage);
 		//seletedfile.getName()

@@ -16,6 +16,7 @@ import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.exceptions.FileIsOpenException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.exceptions.TournamentHasNotBeenSavedException;
 import com.solutioninventors.tournament.types.Tournament;
 
 import javafx.beans.value.ChangeListener;
@@ -90,7 +91,24 @@ public class CommonMethods {
 		
 	}
 	
+	public File changeImage(MouseEvent e) {
+		FileChooser fc = new FileChooser();
+		FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg","*.png","*.bmp","*.gif");
 
+		fc.setInitialDirectory(
+				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
+		fc.getExtensionFilters().add(imageFilter);
+		File file1 = fc.showOpenDialog(null);
+		
+		return file1;
+	
+		
+		
+	
+	}// end change image
+	
+
+	
 	public void opentournament(MouseEvent event) throws URISyntaxException {
 		FileChooser fc = new FileChooser();
 		fc.setInitialDirectory(
@@ -136,26 +154,35 @@ public class CommonMethods {
 			}
 		}
 	}
-
+	
 	private void closeprogram(Stage window) {
-		Boolean answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
-		if (answer) {
+		int answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
+		if (answer ==1) {
 			save(tournament);
 		}
 		window.close();
 		Tournament.closeFile(tournament.getTournamentFile());
 	}
 	
-	public void save(Tournament tour) {
-		try {
-			tour.save();
-		} catch (Exception e) {
-			System.out.println("You haven't saved for the first time");
-			saveas(tour);
-		}
+	
+	
+	public boolean save(Tournament tour) {
+	
+			try {
+				tour.save();
+				return true;
+			} catch (IOException e) {
+				return  saveas(tour);
+			} catch (TournamentHasNotBeenSavedException e1) {
+				return  saveas(tour);
+			}catch (Exception a1) {
+				return  saveas(tour);
+			}
+			
+		
 	}
 
-	public void saveas(Tournament tour) {
+	public boolean saveas(Tournament tour) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(
 				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Documents"));
@@ -165,10 +192,17 @@ public class CommonMethods {
 		if (tournamentFile != null) {
 			try {
 				Tournament.saveAs(tour, tournamentFile);
-			} catch (IOException | TournamentException e) {
-				e.printStackTrace();
+				return true;
+			} catch (IOException a) {
+				return false;
+			} catch (TournamentException e) {
+				return false;
 			}
+		}else {
+			return false;
 		}
+			
+		
 
 	}
 
