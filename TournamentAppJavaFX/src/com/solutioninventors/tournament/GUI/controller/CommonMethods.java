@@ -1,5 +1,5 @@
 /**
- *@Author: Oguejiofor Chidiebere
+ *@Author: Oguejiofor Chinedu Knight
  *CommonMethods.java
  *30 Sep. 2017
  *10:05:21 pm
@@ -7,11 +7,9 @@
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
@@ -38,23 +36,17 @@ import javafx.stage.Stage;
 public class CommonMethods {
 
 	private Tournament tournament;
-	URL logoURL = getClass().getResource(Paths.images + "logo.png");
+	InputStream logoURL = getClass().getResourceAsStream(Paths.images + "logo.png");
 
-	public Font[] loadfonts() {
-		URL url1 = getClass().getResource(Paths.fonts + "twcenmt.ttf");
-		URL url2 = getClass().getResource(Paths.fonts + "TwCenMTCondensed.ttf");
-		URL url3 = getClass().getResource(Paths.fonts + "Pristina.ttf");
+	public Font[] loadfonts()  {
+		InputStream url1 = getClass().getResourceAsStream(Paths.fonts + "twcenmt.ttf");
+		InputStream url2 = getClass().getResourceAsStream(Paths.fonts + "TwCenMTCondensed.ttf");
+		InputStream url3 = getClass().getResourceAsStream(Paths.fonts + "Pristina.ttf");
 		final Font font[] = new Font[3];
-		try {
+		font[0] = Font.loadFont(url1, 19);
 
-			font[0] = Font.loadFont(new FileInputStream(new File(url1.toURI())), 19);
-
-			font[1] = Font.loadFont(new FileInputStream(new File(url2.toURI())), 19);
-			font[2] = Font.loadFont(new FileInputStream(new File(url3.toURI())), 19);
-		} catch (FileNotFoundException | URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		font[1] = Font.loadFont(url2, 19);
+		font[2] = Font.loadFont(url3, 19);
 		return font;
 	}
 
@@ -64,7 +56,7 @@ public class CommonMethods {
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "About.fxml"));
 		Scene scene = new Scene(root);
 		
-		aboutStage.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
+		aboutStage.getIcons().add(new Image(logoURL));
 		aboutStage.setResizable(false);
 		aboutStage.sizeToScene();
 		aboutStage.setScene(scene);
@@ -78,7 +70,7 @@ public class CommonMethods {
 		helpStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Help.fxml"));
 		Scene scene = new Scene(root);
-		helpStage.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
+		helpStage.getIcons().add(new Image(logoURL));
 		helpStage.setResizable(false);
 		helpStage.setScene(scene);
 		helpStage.sizeToScene();
@@ -120,7 +112,7 @@ public class CommonMethods {
 				FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 				ic.setTournament(tournament);
 				ic.init();
-				window.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
+				window.getIcons().add(new Image(logoURL));
 				Scene scene = new Scene(root);
 
 				window.setOnCloseRequest(e -> {
@@ -137,7 +129,7 @@ public class CommonMethods {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-			} catch (TournamentEndedException e) { // TODO Auto-generated catch block
+			} catch (TournamentEndedException e) {
 				e.printStackTrace();
 			} catch (FileIsOpenException e) {
 				ErrorMessage("File Open","Cannot open the same file");
@@ -189,7 +181,7 @@ public class CommonMethods {
 		ErrorController er = (ErrorController) loader.getController();
 		er.setMessage(err, message);
 		Scene scene = new Scene(root);
-		errorWindow.getIcons().add(new Image(new FileInputStream(new File(logoURL.toURI()))));
+		errorWindow.getIcons().add(new Image(logoURL));
 		errorWindow.setResizable(false);
 		errorWindow.sizeToScene();
 		scene.getStylesheets().add(getClass().getResource(Paths.css + "commonStyle.css").toExternalForm());
@@ -197,8 +189,7 @@ public class CommonMethods {
 		errorWindow.show();
 		errorWindow.setTitle(err);
 		
-		} catch (IOException | URISyntaxException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
