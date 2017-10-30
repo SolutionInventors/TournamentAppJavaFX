@@ -14,13 +14,12 @@ import com.solutioninventors.tournament.utils.SportType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -60,7 +59,7 @@ public class StandingTableController {
 		if (tournament instanceof GroupTournament) {
 			noOfGroups = 1;
 			stringtableMap.put(0, ((GroupTournament) tournament).getTable().getStringTable());
-			outputString(stringtableMap.get(0));
+			//outputString(stringtableMap.get(0)); used for debugging
 			setupTable();// call utility method
 
 		} // end if tournament is instance of
@@ -126,28 +125,39 @@ public class StandingTableController {
 		for (int i = 0; i < table.length; i++) {
 			table[i] = new TableView<>();
 			table[i].setItems(abc.get(i));
+			
 			table[i].getColumns().add(serialNo[i]);
 			table[i].getColumns().add(compName[i]);
 			for (int col = 0; col < WDLFADP[i].length; col++) {
 				table[i].getColumns().add(WDLFADP[i][col]);
 			}
+			//table[i].setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+		
+			//table[i].autosize();
 		}
 
 		// setup display
-		Label lbl[] = new Label[noOfGroups];
-		for (int i = 0; i < lbl.length; i++) {
-			lbl[i] = new Label("Group " + (i + 1));
+		Label lblGroupNo[] = new Label[noOfGroups];
+		for (int i = 0; i < lblGroupNo.length; i++) {
+			lblGroupNo[i] = new Label("GROUP " + (i + 1));
+			lblGroupNo[i].setStyle("-fx-font-size: 22px; -fx-font-weight: BOLD; -fx-background-color:#ddd7d7; -fx-border-color:  white; -fx-border-width: 1px;");
+			//lblGroupNo[i].setStyle("-fx-font-size: 25px; -fx-font-weight: BOLD; -fx-background-color:red; -fx-border-color:  white; -fx-border-width: 1px; -fx-text-fill: white;");
+			lblGroupNo[i].setPrefSize(139, 36);
+			lblGroupNo[i].setAlignment(Pos.CENTER);
+			//lblGroupNo[i].setLayoutX(200);
 		}
 		vBox = new VBox(10);
 		//vBox.setPadding(new Insets(10, 10, 10, 10));
 	
 		for (int i = 0; i < noOfGroups; i++) {
 			if (tournament instanceof Multistage) {
-				vBox.getChildren().add(lbl[i]);
+				vBox.getChildren().add(lblGroupNo[i]);
+				table[i].setPrefSize(530,130);
 				//vBox.setPrefSize(530,1150);//width , height worked then stopped
-				vBox.setPrefSize(530,350);
+				
 			}else {
-				vBox.setPrefSize(530,Region.USE_COMPUTED_SIZE);//width , height
+				table[0].setPrefSize(530,345);
+				//vBox.setPrefSize(530,Region.USE_COMPUTED_SIZE);//width , height
 			}
 				
 			vBox.getChildren().add(table[i]);
@@ -158,7 +168,7 @@ public class StandingTableController {
 
 	public List<ObservableList<StandingTable>> setuptablevariable() {
 		List<ObservableList<StandingTable>> mainList = FXCollections.observableArrayList();
-		Map<Integer, ObservableList<StandingTable>> map = new HashMap<Integer, ObservableList<StandingTable>>();
+		Map<Integer, ObservableList<StandingTable>> map = new HashMap<>();
 		
 		ObservableList<ObservableList<StandingTable>> items3 = FXCollections.observableArrayList();
 
@@ -192,7 +202,6 @@ public class StandingTableController {
 										stringtableMap.get(i)[j][3], stringtableMap.get(i)[j][4], stringtableMap.get(i)[j][5], stringtableMap.get(i)[j][6],
 										stringtableMap.get(i)[j][7], stringtableMap.get(i)[j][8]));
 					} catch (Exception e) {
-						e.printStackTrace();
 					}
 				}//end inner for loop
 			}else {
@@ -215,7 +224,9 @@ public class StandingTableController {
 		}//end outer for loop
 	}
 	
-	public static void outputString(String[][] array) {
+/*	Used for debugging to display the raw table 
+ * before to see what the GUI gets
+ * public static void outputString(String[][] array) {
 		// loop through array's rows
 		for (int row = 0; row < array.length; row++) {
 			// loop through columns of current row
@@ -225,6 +236,6 @@ public class StandingTableController {
 			System.out.println(); // start new line of output
 		} // end outer for
 	} // end method outputArray
-	
+*/	
 
 }// end class

@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 public class ConfirmBox {
 
     //Create variable
-    static boolean answer;
+    static int answer = -111;
 
-    public static boolean display(String title, String message) {
+    public static int display(String title, String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -27,11 +27,11 @@ public class ConfirmBox {
 
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
-            answer = true;
+            answer = 1;
             window.close();
         });
         noButton.setOnAction(e -> {
-            answer = false;
+            answer = 0;
             window.close();
         });
 

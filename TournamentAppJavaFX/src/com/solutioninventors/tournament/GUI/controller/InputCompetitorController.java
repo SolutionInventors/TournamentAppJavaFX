@@ -2,12 +2,10 @@
  * @author Chinedu Oguejiofor
  *10 Aug. 2017
  * 3:23:29 pm
- *//*
+ */
 package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -15,6 +13,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
@@ -50,7 +50,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class InputCompetitorController {
@@ -68,8 +67,12 @@ public class InputCompetitorController {
 	private Font font[] = new Font[3];
 	private Stage window;
 
-	private InputStream url1 = getClass().getResourceAsStream(Paths.images + "clickme.PNG");
-	private InputStream url2 = getClass().getResourceAsStream(Paths.images + "nologo.jpg");
+	private InputStream url11 = getClass().getResourceAsStream(Paths.images + "clickme.PNG");
+	private File imageFileforChangeImage;
+	private File clickToaddImageFile = new File("clicktoaddimgae.png");
+	private File nologoImageFile = new File("nologo.png");
+	private final URL url1 = getClass().getResource(Paths.images + "clickme.PNG");
+	private URL url2 = getClass().getResource(Paths.images + "nologo.jpg");
 	private Image image;
 	// shared variables
 	private String TournamentName;
@@ -113,7 +116,12 @@ public class InputCompetitorController {
 
 		lbltourtype.setFont(font[1]);// tournament Specs
 		lbltourapp.setFont(font[0]);// TOURNAMNET APP
-
+		try {
+			FileUtils.copyURLToFile(url1, clickToaddImageFile);
+			FileUtils.copyURLToFile(url2, nologoImageFile);
+		} catch (IOException ex) {
+			Logger.getLogger(InputCompetitorController.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		for (Label currentlabel : lblArray) {
 			currentlabel.setFont(font[0]);
 		}
@@ -185,7 +193,8 @@ public class InputCompetitorController {
 	}
 
 	public void loadcomponents() {
-		image = new Image(url1);
+		// image = new Image(new FileInputStream(new File(url1.toURI())));
+		image = new Image(url11);
 
 		comps = new Competitor[noOfCompetitors];
 		file = new File[noOfCompetitors];
@@ -194,17 +203,15 @@ public class InputCompetitorController {
 		for (int i = 0; i < txtArray.size(); i++) {
 			txtArray.get(i).setText(null);
 		}
-		for (int i = 0; i < comps.length; i++) {
-			comps[i] = new Competitor("Player " + String.valueOf(i + 1), new File(url1.toURI()));
-		}
-		fo
-
+		/*
+		 * for (int i = 0; i < comps.length; i++) { comps[i] = new Competitor("Player "
+		 * + String.valueOf(i + 1), new File(url1.toURI())); } fo
+		 */
 		btnPrevious.setVisible(false);
 		btnNext.setVisible(noOfCompetitors <= 4 ? false : true);
 
 		if (TournamentType == TournamentTypes.CHALLENGE) {
-			comps[0] = new Competitor("Champion", new File(url1.toString()));
-			comps[1] = new Competitor("Challenger", new File(url1.toString()));
+			
 			txtArray.get(0).setPromptText("Champion");
 			txtArray.get(1).setPromptText("Challenger");
 			for (int i = 2; i < 4; i++) {
@@ -237,7 +244,7 @@ public class InputCompetitorController {
 	}
 
 	@FXML
-	public void previous(ActionEvent event) throws URISyntaxException, IOException {
+	public void previous(ActionEvent event) throws MalformedURLException, URISyntaxException {
 		btnNext.setVisible(true);
 		btnPrevious.setVisible(startValue - 4 == 0 ? false : true);
 		for (int i = startValue; i < endValue; i++) {
@@ -246,12 +253,9 @@ public class InputCompetitorController {
 			if (file[i] != null) {
 				file[i] = file[i];
 			} else {
-				File tempFile = null;
-					FileUtils.copyInputStreamToFile(url1,tempFile);
-				
-				//file[i] =  new File(url1.toURI());
-				//file[i] = 
-				imageTracker[i] = i;//track the location in which Click to add image is used
+				// file[i] = new File(url1.toURI());
+				file[i] = clickToaddImageFile;
+				imageTracker[i] = i;// track the location in which Click to add image is used
 			}
 			comps[i] = new Competitor(tempCompName, file[i]);
 		}
@@ -266,7 +270,8 @@ public class InputCompetitorController {
 		counter2 = startValue - 4;// add this line some where here && !comps[i].getName().trim().equals("Player "
 									// + (i+1))
 		for (int i = startValue - 4; i < startValue; i++) {
-			txtArray.get(i % 4).setText(comps[i].getName().trim().equals("Competitor "+(i+1)) ? null : comps[i].getName());
+			txtArray.get(i % 4)
+					.setText(comps[i].getName().trim().equals("Competitor " + (i + 1)) ? null : comps[i].getName());
 			String localUrl = comps[i].getImage().toURI().toURL().toString();
 			Image localImage = new Image(localUrl, false);
 			imgArray.get(i % 4).setImage(localImage);
@@ -289,7 +294,7 @@ public class InputCompetitorController {
 	}// end previous button
 
 	@FXML
-	public void next(ActionEvent event) throws MalformedURLException, URISyntaxException {
+	public void next(ActionEvent event) throws MalformedURLException, URISyntaxException, IOException {
 		btnPrevious.setVisible(true);
 		counter = endValue;
 		for (int i = startValue; i < endValue; i++) {
@@ -300,12 +305,20 @@ public class InputCompetitorController {
 			if (file[i] != null) {
 				file[i] = file[i];
 			} else {
-				file[i] =  new File(url1.toURI());
-				imageTracker[i] = i;//track the location in which Click to add image is used
+				// file[i] = new File(url1.toString());
+
+				// tempFile = FileUtils.toFile(url1);
+
+				file[i] = clickToaddImageFile;
+
+				System.out.println("from to string of url 1");
+				System.out.println(url1.toString());
+				// file[i] = new File(url1.toURI());
+				imageTracker[i] = i;// track the location in which Click to add image is used
 			}
-			
+			// System.out.println(file[i].getAbsolutePath());
 			comps[i] = new Competitor(tempCompName, file[i]);
-			
+
 		}
 		if (noOfCompetitors > endValue) {
 			startValue = endValue;
@@ -316,12 +329,12 @@ public class InputCompetitorController {
 		// this decides what to display
 		for (int i = startValue; i < endValue; i++) {
 			if (comps[i] != null) {
-				if (!comps[i].getName().trim().equals("Competitor "+String.valueOf(i + 1))) {
+				if (!comps[i].getName().trim().equals("Competitor " + String.valueOf(i + 1))) {
 					txtArray.get(counter2).setText(comps[i].getName());
-				}else
+				} else
 					txtArray.get(counter2).setText(null);
-				
-			} else 
+
+			} else
 				txtArray.get(counter2).setText(null);
 			if (file[i] == null) {
 				imgArray.get(counter2).setImage(image);
@@ -352,32 +365,41 @@ public class InputCompetitorController {
 	@FXML
 	public void finish(ActionEvent event)
 			throws IOException, InvalidBreakerException, TournamentEndedException, URISyntaxException {
-		if (!(TournamentType == TournamentTypes.CHALLENGE))  {
+		if (!(TournamentType == TournamentTypes.CHALLENGE)) {
+
 			for (int i = startValue; i < endValue; i++) {
-				String tempCompName = ((txtArray.get(i % 4).getText() == null ) ? "Competitor " + String.valueOf(i + 1)
+				String tempCompName = ((txtArray.get(i % 4).getText() == null) ? "Competitor " + String.valueOf(i + 1)
 						: txtArray.get(i % 4).getText());
-				file[i] = (file[i] != null ? file[i] : new File(url2.toURI()));
+				file[i] = (file[i] != null ? file[i] : nologoImageFile);//I think the error is here
 				comps[i] = new Competitor(tempCompName, file[i]);
 			}
-		}
+		}else {
+			
+			String tempCompName1 = ((txtArray.get(0).getText() == null ) ? "Champion"	: txtArray.get(0).getText());
+			String tempCompName2 = ((txtArray.get(1).getText() == null ) ? "Challenger"	: txtArray.get(1).getText());
+				file[0] = (file[0] != null ? file[0] : nologoImageFile);
+				file[1] = (file[1] != null ? file[1] : nologoImageFile);
+			comps[0] = new Competitor(tempCompName1, file[0]);
+			comps[1] = new Competitor(tempCompName2, file[1]);
+			}
 		
-		//everywhere where clickimage was used to create image then replace with no logo
+
+		// everywhere where clickimage was used to create image then replace with no
+		// logo
 		for (int i = 0; i < imageTracker.length; i++) {
 			if (imageTracker[i] != -1) {
-				comps[i] = new Competitor(comps[i].getName(), new File(url2.toURI()));
-			} 
+				comps[i] = new Competitor(comps[i].getName(), nologoImageFile);
+			}
 		}
 		// to fill the comp obj with default values
-		//if it has not been set
+		// if it has not been set
 		for (int i = 0; i < comps.length; i++) {
 			if (comps[i] == null) {
-				file[i] = (file[i] == null || (file[i].equals(new File(url1.toURI()))) ? new File(url2.toURI())
-						: file[i]);
+				file[i] = (file[i] == null || (file[i].equals(clickToaddImageFile)) ? nologoImageFile : file[i]);
 				comps[i] = new Competitor("Competitor " + String.valueOf(i + 1), file[i]);
 			}
 		}
-		
-		
+
 		try {
 			switch (TournamentType) {
 			case KNOCKOUT:
@@ -442,11 +464,14 @@ public class InputCompetitorController {
 		ic.setTournament(tournament);
 		ic.init();
 		Scene scene = new Scene(root);
-		
-		window.setOnCloseRequest(e -> { e.consume(); closeprogram(); });
-		 
-		URL url1 = getClass().getResource(Paths.images + "logo.png");
-		window.getIcons().add(new Image(new FileInputStream(new File(url1.toURI()))));
+
+		window.setOnCloseRequest(e -> {
+			e.consume();
+			closeprogram();
+		});
+
+		InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png");
+		window.getIcons().add(new Image(url1));
 		window.setScene(scene);
 		window.sizeToScene();
 		window.setResizable(false);
@@ -455,104 +480,51 @@ public class InputCompetitorController {
 	}// end finish method
 
 	private void closeprogram() {
-		Boolean answer = ConfirmBox.display("Save", "Do you want to save changes to "+TournamentName);
-		if (answer) {
-			cm.save(tournament);
-			Tournament.closeFile(tournament.getTournamentFile());
+		int answer = ConfirmBox.display("Save", "Do you want to save changes to " + TournamentName);
+		if (answer == 1) {
+			if (cm.save(tournament)) {
+				Tournament.closeFile(tournament.getTournamentFile());
+				window.close();
+			}
+		} else if (answer == 0) {
+			window.close();
 		}
-		window.close();
+
 	}
-	// should reverse the work done in the next button by retrieveing values from
+	// should reverse the work done in the next button by retrieving values from
 	// the comp
 	// also you need to change the static file in the image to be dynamic
 
-	public void changeImage1(MouseEvent e) throws MalformedURLException {
-		FileChooser fc = new FileChooser();
-		FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+	public void changeImagecustom(MouseEvent e, int fileNum, int arrayNum) {
 
-		fc.setInitialDirectory(
-				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
-		fc.getExtensionFilters().add(imageFilter);
-		File file1 = fc.showOpenDialog(null);
-		try {
-			file[img1] = new File(file1.toURI());
-		} catch (Exception e1) {
-		}
-		// for the image
-		if (file1 != null) {
-			String localUrl = file1.toURI().toURL().toString();
-			Image localImage = new Image(localUrl, false);
-			// System.out.println(localUrl);
-			imgArray.get(0).setImage(localImage);
-			// btnimgArray.get(0).setVisible(false);
-			imgArray.get(0).setVisible(true);
+		imageFileforChangeImage = new File(cm.changeImage(e).toURI());
+		file[fileNum] = imageFileforChangeImage;
+		if (imageFileforChangeImage != null) {
+			try {
+				String localUrl = imageFileforChangeImage.toURI().toURL().toString();
+				Image localImage = new Image(localUrl, false);
+				imgArray.get(arrayNum).setImage(localImage);
+				imgArray.get(arrayNum).setVisible(true);
+			} catch (MalformedURLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}// end change image
 
-	public void changeImage2(MouseEvent e) throws MalformedURLException {
-		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(
-				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
-		File file2 = fc.showOpenDialog(null);
-		file[img2] = new File(file2.toURI());
-		// System.out.println(file2);
-		// for the image
-		if (file2 != null) {
-			String localUrl = file2.toURI().toURL().toString();
-			Image localImage = new Image(localUrl, false);
-			imgArray.get(1).setImage(localImage);
-			// btnimgArray.get(1).setVisible(false);
-			imgArray.get(1).setVisible(true);
-		}
+	public void changeImage1(MouseEvent e) {
+		changeImagecustom(e, img1, 0);
 	}// end change image
 
-	public void changeImage3(MouseEvent e) throws MalformedURLException {
-		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(
-				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
-		File file3 = fc.showOpenDialog(null);
-		file[img3] = new File(file3.toURI());
-		// for the image
-		if (file3 != null) {
-			String localUrl = file3.toURI().toURL().toString();
-			Image localImage = new Image(localUrl, false);
-			imgArray.get(2).setImage(localImage);
-			// btnimgArray.get(2).setVisible(false);
-			imgArray.get(2).setVisible(true);
-		}
+	public void changeImage2(MouseEvent e) {
+		changeImagecustom(e, img2, 1);
 	}// end change image
 
-	public void changeImage4(MouseEvent e) throws MalformedURLException {
-		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(
-				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
-		File file4 = fc.showOpenDialog(null);
-		file[img4] = new File(file4.toURI());
-		// for the image
-		if (file4 != null) {
-			String localUrl = file4.toURI().toURL().toString();
-			Image localImage = new Image(localUrl, false);
-
-			imgArray.get(3).setImage(localImage);
-			// btnimgArray.get(3).setVisible(false);
-			imgArray.get(3).setVisible(true);
-		}
+	public void changeImage3(MouseEvent e) {
+		changeImagecustom(e, img3, 2);
 	}// end change image
 
-	public void changeimage1(ActionEvent e) throws MalformedURLException {
-		changeImage1(null);
-	}
+	public void changeImage4(MouseEvent e) {
+		changeImagecustom(e, img4, 3);
+	}// end change image
 
-	public void changeimage2(ActionEvent e) throws MalformedURLException {
-		changeImage2(null);
-	}
-
-	public void changeimage3(ActionEvent e) throws MalformedURLException {
-		changeImage3(null);
-	}
-
-	public void changeimage4(ActionEvent e) throws MalformedURLException {
-		changeImage4(null);
-	}
 }// end class
-*/

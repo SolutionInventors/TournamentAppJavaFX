@@ -52,7 +52,6 @@ public class ChallengeScreenController {
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
-		System.out.println(TournamentName);
 		btn.previous(rootPane, event, "TournamentTypeScreen.fxml", "tourtypecss.css", "Tournament App");}
 	
 	@FXML

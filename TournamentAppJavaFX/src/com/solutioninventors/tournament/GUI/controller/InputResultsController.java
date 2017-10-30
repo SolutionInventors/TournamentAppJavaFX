@@ -3,7 +3,6 @@ package com.solutioninventors.tournament.GUI.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.solutioninventors.tournament.GUI.utility.CustomTextField;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -19,9 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -201,22 +198,38 @@ public class InputResultsController {
 	@FXML
 	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException, IOException {
 		boolean emptyBox = false, singleTieDraw = false, invalidnogoalScore = false;// DoubleElimDraw = false,
-		TournamentEndedException[] tournamentEnded = new TournamentEndedException[1];
-		ResultCannotBeSetException[] resultException = new ResultCannotBeSetException[1];
-		
-		int[] count =  new int[1];
+		double score1, score2;
+		int count = 0;
 		if (goalsAreScore) {
-			emptyBox = Arrays.stream( scores ).anyMatch( s->s.getText().isEmpty() );
-			if (emptyBox == false && tournament instanceof SingleEliminationTournament && 
-					((SingleEliminationTournament) tournament).isTieRound())
+			for (int i = 0; i < scores.length; i++) {
+				if (scores[i].getText().isEmpty()) {
+					emptyBox = true;
+					break;
+				}
+			}
+
+		/*	if (emptyBox == false && tournament instanceof DoubleElimination)
+				DoubleElimDraw = checkforDrawgoals();*/
+			if (emptyBox == false && tournament instanceof SingleEliminationTournament)
+				if (((SingleEliminationTournament) tournament).isTieRound())
 					singleTieDraw = checkforDrawgoals();
 
 		} else {
-			try{
-				emptyBox = scoresnoGoal.stream().anyMatch( g->g.getValue().isEmpty() );
-			}
-			catch( Exception e1 ){
-				emptyBox = true;
+			for (int i = 0; i < scoresnoGoal.size(); i++) {
+				try {
+					if (scoresnoGoal.get(i).getValue().isEmpty()) {
+						emptyBox = true;
+						break;
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					emptyBox = true;
+					//e1.printStackTrace();
+					System.out.println("from exception");
+					break;
+					
+					
+				}
 			}
 
 			/*if (emptyBox == false && tournament instanceof DoubleElimination)
@@ -246,48 +259,27 @@ public class InputResultsController {
 		}*/ else if (invalidnogoalScore) {
 			cm.ErrorMessage("Invalid Result", "You cannot input a W D or L D etc");
 		} else {
-				Arrays.stream( currentFixtures ).forEach( current -> {
-				
-				double firstScore;
-				double secondScore;
-				
-				Competitor com1 = current.getCompetitorOne();
-				Competitor com2 = current.getCompetitorTwo();
+			for (int i = 0; i < currentFixtures.length; i++) {
+				Competitor com1 = currentFixtures[i].getCompetitorOne();
+				Competitor com2 = currentFixtures[i].getCompetitorTwo();
 
 				if (goalsAreScore) {
-					firstScore = Double.valueOf(scores[count[0]].getText());
-					secondScore = Double.valueOf(scores[count[0] + 1].getText());
+					score1 = Double.valueOf(scores[count].getText());
+					score2 = Double.valueOf(scores[count + 1].getText());
 				} else {
-					firstScore = (scoresnoGoal.get(count[0]).getValue().equals("W") ? 1 : 0);
-					secondScore = (scoresnoGoal.get(count[0] + 1).getValue().equals("W") ? 1 : 0);
+					score1 = (scoresnoGoal.get(count).getValue().equals("W") ? 1 : 0);
+					score2 = (scoresnoGoal.get(count + 1).getValue().equals("W") ? 1 : 0);
 				}
 				try {
-					tournament.setResult(com1, firstScore, secondScore, com2);
+					tournament.setResult(com1, score1, score2, com2);
 					btnsubmit.setVisible(false);
 					lblResultSubmitted.setVisible(true);
 				} catch (NoFixtureException ee) {
 					ee.printStackTrace();
 				}
-				catch (TournamentEndedException e1)
-				{
-					tournamentEnded[0] = e1 ;
-					e1.printStackTrace();
-				}
-				catch (ResultCannotBeSetException e1)
-				{
-					resultException[0] = e1 ;
-					e1.printStackTrace();
-				}
-				
-				count[0] += 2;
-			});
+				count += 2;
+			}
 		}
-		
-		if( resultException[0] != null )
-			throw resultException[0];
-		else if ( tournamentEnded[0] != null) 
-			throw tournamentEnded[0];
-		
 	}// end method get result
 
 	/**

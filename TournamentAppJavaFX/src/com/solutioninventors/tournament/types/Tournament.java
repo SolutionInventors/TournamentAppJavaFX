@@ -116,7 +116,7 @@ public abstract class Tournament implements Serializable
 	public Tournament ( SportType type , Competitor ... coms )
 	{
 		
-		this( coms,  type, true  );
+		this( coms,  type, false  );
 	}
 
 	
