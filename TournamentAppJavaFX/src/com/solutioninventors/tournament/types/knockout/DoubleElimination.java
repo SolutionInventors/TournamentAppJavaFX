@@ -34,7 +34,7 @@ import com.solutioninventors.tournament.utils.SportType;
  * {@code Tournament}. It achieves this by placing the {@code Competitor}s into a 
  * winners bracket 	and losers bracket.
 
- * The class rounds is stored in the Map&lt; BracketType, List&ltRound&gt; &gt; object 
+ * The class rounds is stored in the Map&lt; BracketType, List&lt;Round&gt; &gt; object 
  * The BracketType objects stores the info about the bracket. Its values include 
  * BracketType.WINNERS_BRACKET , BracketType.MAJOR_BRACKET , BracketType.MINOR_BRACKET ,
  * BracketType.INITIAL_BRACKET , BracketType.TOURNAMENT_FINAL  
@@ -75,8 +75,8 @@ public class DoubleElimination extends EliminationTournament
 	private static final long serialVersionUID = -7071860792899692927L;
 	
 	/**
-	 *Encapsulates the current fixture type of the current round
-	 *@see  CurrentFixture
+	 *Encapsulates  {@code BracketType } of the current round
+	 *@see  BracketType
 	 */
 	private BracketType currentFixture;
 	
@@ -96,6 +96,7 @@ public class DoubleElimination extends EliminationTournament
 	/**
 	 * Creates a {@code DoubleElimination} with the specified competitors
 	 * Always shuffles the competitors
+	 * @param type the {@code Sportype } of this {@code Tournament}
 	 *@param comps the {@code Competitor} array
 	 *@throws TournamentException if an invalid number of competitors
 	 *is inputed
@@ -110,6 +111,8 @@ public class DoubleElimination extends EliminationTournament
 	 * Creates a {@code DoubleElimination} with the specified competitors
 	 * Shuffles the array based on the value of shuffle
 	 *@param comps the {@code Competitor} array
+	 *@param type the {@code Sportype } of this {@code Tournament}
+	 *@param shuffle {@code true } specifies that the competitors should be shuffled 
 	 *@throws TournamentException if an invalid number of competitors
 	 *is inputed
 	 *
@@ -183,29 +186,33 @@ public class DoubleElimination extends EliminationTournament
 	/**
 	 * 
 	 *Gets a Round object that encapsulates the fixtures of the current Round of a specified
-	 *type
-	 *@param type
+	 *type. The {@code Bracket } is used to know if the winner breaket {@code Fixtures } or 
+	 *loser bracket {@code Fixture} would be returned
+	 *@param type the {@code Bracket } type that would be returned
 	 *@return {@link  Round }
-	 *@throws RoundIndexOutOfBoundsException
+	 *@throws RoundIndexOutOfBoundsException when the {@code Tournament} has ended
 	 */
 	
 	public Round getCurrentRound( BracketType type ) 
 			throws RoundIndexOutOfBoundsException
 	{
-//		if ( isTieRound() )
-//			try
-//			{
-//				return getCurrentRound() ;
-//			}
-//			catch (TournamentEndedException e)
-//			{
-//				e.printStackTrace();
-//			}
+
 		if( type == BracketType.INITIAL_BRACKET && getCurrentRoundNum() > 0 )
 			throw new RoundIndexOutOfBoundsException( "The round index is out of bound . " + getCurrentRoundNum());
 		return getBracketRound( getCurrentRoundNum() , type );
 	}
 	
+	/**
+	 * Gets a {@code Round } object that contains the {@code Fixtures} of a specified
+	 * BracketType in a specified {@code Round} number
+	 
+	 *@param roundNum an int representing the round number. Note that the first round 
+	 *has a round index of zero
+	 *@param type a {@code BracketType  }  used to determine the {@code Round} that would
+	 *be returned
+	 *@return a {@code Round}  that encapsulates the {@code Fixture}s requested
+	 *@throws RoundIndexOutOfBoundsException when the round number is invalid
+	 */
 	public Round getBracketRound(int roundNum ,  BracketType type)
 			throws RoundIndexOutOfBoundsException
 	{
@@ -236,8 +243,8 @@ public class DoubleElimination extends EliminationTournament
 	 * 
 	 * Throws NoFixtureException if competitorOne and CompetitorTwo are not found in the current
 	 * Round object
-	 * @throws ResultCannotBeSetException 
-	 * @see {@link BracketType, Round }
+	 * @see BracketType 
+	 * @see Round
 	 */
 	@Override
 	public void setResult(Competitor competitorOne, double score1, 
@@ -739,9 +746,9 @@ public class DoubleElimination extends EliminationTournament
 	/**
 	 * Gets a {@link BracketType } that indicates the current fixtures
 	 * 
-	 *@return
+	 *@return a {@code BracketType } that represents the currentFixture
 	 */
-	public BracketType getCurrentFixture()
+	private BracketType getCurrentFixture()
 	{
 		return currentFixture;
 	}
@@ -751,11 +758,6 @@ public class DoubleElimination extends EliminationTournament
 	{
 		this.currentFixture = currentFixture;
 	}
-
-
-
-	
-
 
 
 	public boolean isMinorFixtureComplete()

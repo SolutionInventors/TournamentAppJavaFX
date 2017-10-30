@@ -44,9 +44,10 @@ public class Challenge extends Tournament
 	 * {@linkplain createTournament }. 
 	 * The rounds are created in such a way that one competitor does not  play too many consecutive home or aeay games 
 	 * This is very important in games like chess
-	 * 
-	 * @author Chidiebere
-	 * @param Competitor[] , {@code}int numOfRounds
+	 * @param type the {@code SportType } of this {@code Tournament}
+	 * @param numOfRounds the number of rounds that would be played in this {@code Challenge}
+	 * @author Oguejiofor Chidiebere
+	 * @param competitors  the two {@code Competitor}s in the tournament
 	 */
 	public Challenge( SportType type, Competitor[] competitors , int numOfRounds 	)
 	{

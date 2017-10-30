@@ -147,8 +147,8 @@ public class Multistage extends Tournament
 	 *@param pLoss- the point for a loss in the group stage
 	 *@param breaker - a {@link TieBreaker}s that would be used when breaking ties in the group stage
 	 *@param numOfGroupRound - the number of rounds that the {@link SwissTournament } would have
-	 *@throws TournamentException
-	 *@throws InvalidBreakerException
+	 *@throws TournamentException when any argument is inputed
+	 *@throws InvalidBreakerException when the TieBreaketr object contains invalid {@code Breaker}s
 	 */
 	
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
@@ -161,7 +161,7 @@ public class Multistage extends Tournament
 	}
 	
 	/**
-	 * Creates a {@code Multistage} with the group stage played as a {@link RoundRobin} and 
+	 * Creates a {@code Multistage} with the group stage played as a {@link com.solutioninventors.tournament.types.group.RoundRobinTournament} and 
 	 * the knock-out stage played as {@link SingleElimination}
 	 *  @author Oguejiofor Chidiebere
 	 * @since v1.0
@@ -173,8 +173,10 @@ public class Multistage extends Tournament
 	 *@param breaker - a  {@link TieBreaker}s that would be used when breaking ties in the group stage
 	 *@param knockoutHomeAndAway - indicates whether the knockout stage would be home and away
 	 *@param knockoutHomeAndAway indicates if the group stage would be home and away when set to {@code true}
+	 *@param groupHomeAndAway {@code true} indicates that there would be home and away in this {@code Tournament} groupStage
 	 *@throws TournamentException - when any parameter is invalid
 	 *@throws InvalidBreakerException when the {@link TieBreaker} is invalid
+	 *
 	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , boolean groupHomeAndAway , boolean knockoutHomeAndAway) 
@@ -186,7 +188,8 @@ public class Multistage extends Tournament
 	}
 
 	/**
-	 * Creates a {@code Multistage} with the groupstage played as a {@link RoundRobin} and
+	 * Creates a {@code Multistage} with the groupstage played as a 
+	 * {@link com.solutioninventors.tournament.types.group.RoundRobinTournament} and
 	 * the lnockout stage played as a {@link DoubleElimination}. Note that 
 	 * {@link DoubleElimination} knockout stage cannot be home and away and 
 	 * @author Oguejiofor Chidiebere
@@ -198,8 +201,10 @@ public class Multistage extends Tournament
 	 *@param pLoss- the point for a loss in the group stage
 	 *@param breaker - a  {@link TieBreaker}s that would be used when breaking ties in the group stage
 	 *@param groupHomeAndAway - indicates if the round robin would be home and away
-	 *@throws TournamentException- when invalid parameter is passed as an argument
+	 *@throws TournamentException - when invalid parameter is passed as an argument
 	 *@throws InvalidBreakerException when the {@link TieBreaker} is invalid
+	 *@throws TournamentException when invalid arguments wore passed
+	 
 	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , boolean groupHomeAndAway ) 
@@ -466,7 +471,6 @@ public class Multistage extends Tournament
 	 * of this {@code Multistage} {@code Tournament}
 	 * @see EliminationTournament
 	   @author Oguejifor Chidiebere
-	   @a
 	 *@return EliminationTournament
 	 */
 	public EliminationTournament getKnockoutStage()
@@ -736,6 +740,7 @@ public class Multistage extends Tournament
 	/**
 	 * Gets the active competitors in this {@code Multistage}
 	 * {@code Tournament}
+	 * @return all the {@code Competitor}s that have not been eliminated
 	 */
 	public Competitor[] getActiveCompetitors()
 	{
@@ -769,7 +774,8 @@ public class Multistage extends Tournament
 
 	/**
 	 * Checks if the knockout stage has away fixtures.
-	 * Can be   true only if the knockout stage is a {@link  SingleElimination}
+	 * Can be   true only if the knockout stage is a 
+	 * {@link  com.solutioninventors.tournament.types.knockout.SingleEliminationTournament}
 	 * @author Oguejiofor Chidiebere
 	 * @since v1.0
 	 *@return {@code boolean}
@@ -827,8 +833,7 @@ public class Multistage extends Tournament
 	/**
 	 * Gets the number of players that would be chosen from fourth or third place
 	 * ranking table
-	 *int
-	 *@return
+	 *@return an int indicating the number of extra qualifiers
 	 */
 	public int getNumberOfExtraQualifiers()
 	{
@@ -865,9 +870,10 @@ public class Multistage extends Tournament
 	/**
 	 * Gets the third-place or fourth-place {@link StandingTable} 
 	 * Returns null if this {@code Multistage} does not contain extra table
-	 *@return
+	 *@return a {@code StandingTable} object that encapsulates the all 3rd or 4th
+	 *place ranking table
 
- *  @author Oguejiofor Chidiebere
+	 * @author Oguejiofor Chidiebere
 	 * @since v1.0
 	 */
 	public StandingTable getPossibleQualifierTable()

@@ -60,10 +60,11 @@ public class SingleEliminationTournament extends EliminationTournament {
 	/**
 	 * Initializes this {@code SingleEliminationTournament} with the {@code Competitor[]}
 	 * Always shuffles the array
-	 *@param type
-	 *@param comps
-	 *@param away
-	 *@throws TournamentException
+	 *@param type this {@code Tournament}'s {@code SprtType} specifying whether goals
+	 *are scored or not
+	 *@param comps the {@code Competitor}s that would be in this {@code Tournament}
+	 *@param away  {@code true} specifies that there would away {@code Fixture}s
+	 *@throws TournamentException when invalid data is inputed
 	 */
 	public SingleEliminationTournament(SportType type, Competitor[] comps, boolean away) throws TournamentException {
 		this( type, comps, away , true );
@@ -72,10 +73,11 @@ public class SingleEliminationTournament extends EliminationTournament {
 	/**
 	 * Initializes this {@code SingleEliminationTournament} with the {@code Competitor[]}
 	 * Shuffles the array only if shuffle is true 
-	 *@param type
-	 *@param comps
-	 *@param away
-	 *@throws TournamentException
+	 *@param type the {@code SportType } of this {@code Tournament}
+	 *@param comps the Competitors in this {@code Tournament}
+	 *@param away {@code true} indicates that there would be home and away
+	 *@param shuffle {@code true} indicates that the {@code Competitor}s would be shuffled
+	 *@throws TournamentException when invalid arguments are passed
 	 */
 	public SingleEliminationTournament(SportType type, Competitor[] comps, boolean away, boolean shuffle) throws TournamentException {
 		super( type, comps, shuffle );
@@ -94,10 +96,10 @@ public class SingleEliminationTournament extends EliminationTournament {
 	 *This constructor creates a {@code SingleEliminationTournament} with only home {@code Fixture}
 	 *@author Oguejiofor Chidiebere
 	 *@since v1.0
-	 *@see Fixture
-	 *@param type
-	 *@param comps
-	 *@throws TournamentException
+	 *@see Fixture 
+	 *@param type the {@code SportType} specifying whether goals are scored or not
+	 *@param comps the {@code Competitor} array that contains all the {@code Competitor}s in the {@code Tournament}
+	 *@throws TournamentException when invalid arguments are passed
 	 */
 	public SingleEliminationTournament(SportType type, Competitor[] comps) throws TournamentException
 	{
@@ -411,6 +413,10 @@ public class SingleEliminationTournament extends EliminationTournament {
 	/**
 	 *Sets the result a tie in this current{@code Round}. Should be used only in tie breaking {@code Round}s
 	 *
+	 *@param com1 the home {@code Competitor}
+	 *@param com2 the away {@code Competitor}
+	 *@param score1 the home {@code Competitor} score
+	 *@param score2 the away {@code Competitor} score  
 	 * @throws ResultCannotBeSetException when the two scores are equal
 	 * @throws NoFixtureException  when the {@code Fixture} doesn't exist
 	 */
@@ -465,7 +471,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	/**
 	 * Checks if there is a tie in the current {@code Round}
-	 *@return
+	 *@return true when there is a tie in the current {@code Round}
 	 */
 	public boolean hasTie() {
 		return getActiveTieList().size() == 0 ? false : true;

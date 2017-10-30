@@ -126,6 +126,7 @@ public abstract class Tournament implements Serializable
 	 * if shuffle is true
 	 * @author Ogujiofor Chidiebere
 	 * @since v1.0
+	 * @param shoffle specifies whether the {@code Competitor}s should be shuffled
 	 *@param type - the {@code SportType} with which the {@code Tournament} would be created
 	 *@param coms - the {@code Competitor } array
 	 */
@@ -294,12 +295,12 @@ public abstract class Tournament implements Serializable
 	
 	/**
 	 * Saves a {@code Tournament} in a specified {@code File}
-	 * @param T a subclass of {@code Tournament}
-	 *@param tournament - a {@code Tournament} object
+	 * @param <T> a {@code Tournament} object type. Could be any of its subclasses 
+	 * @param tournament a subclass of {@code Tournament}
 	 *@param file - the {@code File} where the {@code Tournament} would be saved
 	 *@throws FileNotFoundException - Signals that an error occured
 	 *@throws IOException - signals that an I/O  exception occured
-	 *@throws com.solutioninventors.tournament.exceptions.TournamentException - when  the {@code Tournament} passed as argument is {@codem null}
+	 *@throws com.solutioninventors.tournament.exceptions.TournamentException - when  the {@code Tournament} passed as argument is {@code null}
 	 */
 	public static <T extends Tournament> 
 		void saveAs( T tournament   , File file ) 
@@ -419,13 +420,14 @@ public abstract class Tournament implements Serializable
 	}
 
 	/**
+	 * 
 	 * Loads a {@code Tournament} from a {@code File}
+	 * @param <E> is a subclass of {@code Tournament}
 	 *@param file the {@code File} that contains the {@code Tournament}
 	 *@return - a {@code Tournament} object
-	 *@throws IOException
-	 * @throws FileIsOpenException 
+	 *@throws IOException when an I/O  error occurs
+	 * @throws FileIsOpenException when the specified file is already open
 	 */
-	@SuppressWarnings("unchecked")
 	public static <E extends Tournament> E loadTournament( File file  ) 
 			throws  IOException, FileIsOpenException	
 	{
@@ -494,7 +496,7 @@ public abstract class Tournament implements Serializable
 
 	
 	/**
-	 * This method moves this {@code Tournament} to its next {@Code Round} by performing
+	 * This method moves this {@code Tournament} to its next {@code Round} by performing
 	 *  some type specific operations
 	 *  @author Oguejiofor Chidiebere
 	 *  @since v1.0

@@ -44,6 +44,7 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	 * {@code number of competitors = 2}<sup>x</sup> <br>
 	 * where x is greater than 1<br>
 	 * 
+	 * @param shuffle {@code Competitor}s would be shuffled when true
 	 *@param type the {@code SportType } of this {@code Tournament}
 	 *@param comps the {@link Competitor}s 
 	 *@throws TournamentException when the total competitors is invalid
@@ -87,7 +88,7 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	
 	/**
 	 * Gets the competitors that have been eliminated in this {@code Tournaments}
-	 *@return a {@code Competitor[]) object
+	 *@return a {@code Competitor[]} object
 	 *@see Competitor
 	 *@since v1.0
 	 *@author Oguejiofor Chidiebere 
@@ -116,14 +117,20 @@ public abstract class EliminationTournament extends Tournament implements Serial
 	/**
 	 * Gets a round specified by a round number
 	 *Round
-	 *@param i
-	 *@return
+	 *@param roundIndex the {@code Round} number that would be returned
+	 *Note that the first {@code Round} has a roundIndex of 0 
+	 *@return a {@code Round} object that encapsulates the specified {@code ROund}
 	 */
-	public Round getRound(int i)
+	public Round getRound(int roundIndex)
 	{
-		return getRoundArray()[ i ];
+		return getRoundArray()[ roundIndex ];
 	}
 	
+	/**
+	 * Returns true when ties are being broken in the current {@code Round}
+	 *
+	 *@return boolean
+	 */
 	public boolean isTieRound()
 	{
 		return tieRound;

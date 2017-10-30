@@ -701,7 +701,7 @@ public enum Breaker implements Serializable
 	 * toString() method
 	 *This method does not return Breaker.COIN_TOSS
 	 *@author Oguejiofor Chidiebere
-	 *@sincev1.0
+	 *@since v 1.0
 	 *@param breakers the Breaker array to be converted
 	 *@return an array of String
 	 */
@@ -735,11 +735,9 @@ public enum Breaker implements Serializable
 	}
 	
 	/**
-	 * Converts an array of Breakers to an array of String by calling each  {@code Breaker}'s
-	 * toString() method
-	 *String[]
-	 *@param breakers
-	 *@return a BreakerArray
+	 * Converts an array of String   to an array of Breakers 
+	 *@param breakerNames the names of the {@code Breaker}s to be converted 
+	 *@return a {@code Breaker}Array
 	 */
 	public static Breaker[] convertToBreaker( String ... breakerNames)
 	{

@@ -61,6 +61,7 @@ public class Round implements Serializable
 	 * Removes any duplicate in the arrays
 	 * It sets the name of the this Round
 	 * 
+	 * @param name the name that the {@code Round} would have.
 	 * @author Oguejiofor Chidiebere
 	 * @since v1.0
 	 * @see Fixture
@@ -81,6 +82,8 @@ public class Round implements Serializable
 	 * @since v1.0
 	 * @see Fixture
 	 *@param fixes the {@code Collection<Fixture>} object
+	 *@param name the name of the {@code Round} eg " Round 1", "Round 2" etc.
+	 *would be returned as the {@code Round }'s object toString
 	 */
 	
 	public Round( Collection<Fixture>  fixes, String name  )

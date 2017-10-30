@@ -113,13 +113,16 @@ public abstract class GroupTournament extends Tournament
 	/**
 	 * Gets a specified {@code Round}. Note that if roundNum eqauls 0 then
 	 * the first {@code Round} is returned
+	 * @param roundIndex specifies the round number to be returned 
+	 * Note that the first round has index 0 
 	 * @see Round 
+	 * @throws RoundIndexOutOfBoundException when the specified roundIndex is invalid
 	 * @author Oguejiofor Chidiebere
 	 */
 	
-	public Round getRound(int roundNum) throws RoundIndexOutOfBoundsException {
-		if (roundNum < getRoundArray().length)
-			return getRoundArray()[roundNum];
+	public Round getRound(int roundIndex) throws RoundIndexOutOfBoundsException {
+		if (roundIndex < getRoundArray().length)
+			return getRoundArray()[roundIndex];
 		throw new RoundIndexOutOfBoundsException();
 	}
 
@@ -164,7 +167,7 @@ public abstract class GroupTournament extends Tournament
 	/**
 	 * Gets the total number of {@code Round}s that have beeen played in this 
 	 * {@code GroupTournament}
-	]*@return an {@code int }
+	*@return an {@code int }
 	 */
 	public int getTotalNumberOfRounds() {
 		return getRoundArray().length;
@@ -172,7 +175,7 @@ public abstract class GroupTournament extends Tournament
 
 	/**
 	 * Gets the point for a win in the tournament
-	*@return
+	*@return a {@code double} specifying the point for a win
 	 */
 	public double getWinPoint()
 	{
@@ -212,6 +215,7 @@ public abstract class GroupTournament extends Tournament
 	 * Checks if the current {@code Round } is complete
 	 * 
 	 *@return a {@code true	} when the current round does not contain pending {@code Fixture}s
+	 *@throws TournamentEndedException when this {@code Tournament } has ended
 	 *@author Oguejiofor Chidiebere
 	 */
 	public boolean isCurrentRoundComplete() throws TournamentEndedException

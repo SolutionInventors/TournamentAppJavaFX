@@ -11,6 +11,7 @@ public class TournamentException extends Exception
 	/**
 	 * This exception should be thrown  only by subclasses of Tournament 
 	 * Thrown when an error occurs when creating  tournament
+	 * @param message the error message that would be shown
 	 */
 	
 	public TournamentException( String message )
