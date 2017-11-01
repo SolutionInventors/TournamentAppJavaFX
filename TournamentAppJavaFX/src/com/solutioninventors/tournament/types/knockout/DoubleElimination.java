@@ -68,6 +68,7 @@ public class DoubleElimination extends EliminationTournament
 	private Competitor[] topThree;
 	
 	
+	@SuppressWarnings("unused")
 	private List<Fixture> activeTies;
 	
 	private static final long serialVersionUID = -7071860792899692927L;
@@ -316,6 +317,7 @@ public class DoubleElimination extends EliminationTournament
 	}
 
 	
+	@SuppressWarnings("unused")
 	private void removeTie(Competitor competitorOne, Competitor competitorTwo) throws NoFixtureException
 	{
 		for ( int i = 0 ; i < getActiveTieList().size() ; i++ )

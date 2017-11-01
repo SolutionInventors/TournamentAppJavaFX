@@ -8,6 +8,8 @@ package com.solutioninventors.tournament.exceptions;
 
 public class TournamentException extends Exception
 {
+	private static final long serialVersionUID = 708518744386092574L;
+
 	/**
 	 * This exception should be thrown  only by subclasses of Tournament 
 	 * Thrown when an error occurs when creating  tournament

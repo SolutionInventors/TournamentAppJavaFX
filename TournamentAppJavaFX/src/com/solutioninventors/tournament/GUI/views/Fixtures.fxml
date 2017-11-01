@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" stylesheets="@../css/tabstyle.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.FixturesController">
+<AnchorPane stylesheets="@../css/tabstyle.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.solutioninventors.tournament.GUI.controller.FixturesController">
    <children>
       <ImageView fitHeight="548.0" fitWidth="662.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -29,5 +30,10 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
+      <CheckBox fx:id="chkAllFixtures" layoutX="63.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateFixtures" prefHeight="28.0" prefWidth="157.0" style="-fx-background-color: white;" text="All Fixtures" textFill="RED">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </CheckBox>
    </children>
 </AnchorPane>

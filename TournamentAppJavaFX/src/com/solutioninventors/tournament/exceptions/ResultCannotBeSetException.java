@@ -12,6 +12,8 @@ import com.solutioninventors.tournament.utils.Competitor;
  */
 public class ResultCannotBeSetException extends Exception
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a this object with default error message
 	 * @author Oguejiofor Chidiebere

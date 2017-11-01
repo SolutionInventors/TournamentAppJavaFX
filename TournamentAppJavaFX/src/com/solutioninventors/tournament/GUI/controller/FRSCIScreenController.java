@@ -141,7 +141,7 @@ public class FRSCIScreenController {
 		Scene scene = new Scene(root);
 		primaryStage.setOnCloseRequest(e1 -> {
 			e.consume();
-			closeprogram();
+			closeprogram2(primaryStage);
 		});
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -205,7 +205,13 @@ public class FRSCIScreenController {
 		
 		Tournament.closeFile(tournament.getTournamentFile());
 	}
-	
+	private void closeprogram2(Stage window) {
+		int answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
+		if (answer == 1) {
+			window.close();
+
+		}
+	}
 	//this makes the music player draggable
 	 private void initMovablePlayer(Stage PRIMARY_STAGE) {
 	      Scene scene = PRIMARY_STAGE.getScene();

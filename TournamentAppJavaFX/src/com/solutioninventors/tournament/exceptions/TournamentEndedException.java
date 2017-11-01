@@ -9,6 +9,8 @@ package com.solutioninventors.tournament.exceptions;
 public class TournamentEndedException extends Exception
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/** 
 	 * Should be thrown when moveToNextRound is called when an attempt is made to modify
 	 * a tournament that has already ended

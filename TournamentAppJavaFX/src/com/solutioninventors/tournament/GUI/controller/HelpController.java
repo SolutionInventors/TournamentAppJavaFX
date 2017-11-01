@@ -22,18 +22,18 @@ public class HelpController {
 	//font = cm.loadfonts();
 		txtArea.setFont(new Font("Times New Roman",19));
 		
-		TreeItem<String> root, tournament,tournamentApp;
+		TreeItem<String> root, tournament; //,tournamentApp;
 		//setup root
 		root = new TreeItem<>();
 		root.setExpanded(true);
 
 		
-		//tournament App
-		tournamentApp = makeBranch("Tournament App", root);
-        makeBranch("Create Tournament ", tournamentApp);
-        makeBranch("Continue Tournament ", tournamentApp);
-        makeBranch("Print Tournament ", tournamentApp);
-		
+//		//tournament App
+//		tournamentApp = makeBranch("Tournament App", root);
+//        makeBranch("Create Tournament ", tournamentApp);
+//        makeBranch("Continue Tournament ", tournamentApp);
+//        makeBranch("Print Tournament ", tournamentApp);
+//		
 		
         //tournament and children
 		tournament = makeBranch("Tournament", root);
@@ -55,10 +55,10 @@ public class HelpController {
 					"A tournament is a series of rounds in which a number of contestants compete and the one that prevails through the final round or that finishes with the best record is declared the winner. Each round contains a set of fixtures where each competitor is paired against each other.\r\n" + 
 					"In some sports where goals are scored e.g. football, soccer, basketball etc. The winner of a fixture is the competitor with the higher number of goals scored. However, if goals are not scored eg chess, the winner cannot be gotten from scores since none exist.\r\n" + 
 					"There are several types of tournaments including:\r\n" + 
-					"•	Elimination Tournament\r\n" + 
-					"•	Group Tournament\r\n" + 
-					"•	Multistage Tournament\r\n" + 
-					"•	Challenge\r\n" + 
+					"	Elimination Tournament\r\n" + 
+					"	Group Tournament\r\n" + 
+					"	Multistage Tournament\r\n" + 
+					"	Challenge\r\n" + 
 					"");
 			break;
 		case "Elimination":
@@ -70,37 +70,37 @@ public class HelpController {
 					"Ties are broken in a single elimination with a shoot-out until a winner eventually emerges.\r\n" + 
 					"2.	Double Elimination Tournament\r\n" + 
 					"In a double elimination tournament, a competitor is eliminated only after he losses twice in the tournament.\r\n" + 
-					"After the first round of a double elimination tournament, competitors are placed into two brackets namely: winner’s bracket and losers bracket. Two set of fixtures would be played in the loser’s bracket: the minor loser bracket round and the major loser bracket round.\r\n" + 
-					"The losers of the minor round would be eliminated while the winners of the minor round would be paired against the losers of the winner’s bracket round in the loser major bracket fixture \r\n" + 
-					"Competitors would be eliminated until only two competitors are left and these would form the tournament final. In the tournament final the winners bracket finalist must lose twice before the loser’s bracket finalist is declared the winner\r\n" + 
+					"After the first round of a double elimination tournament, competitors are placed into two brackets namely: winners bracket and losers bracket. Two set of fixtures would be played in the losers bracket: the minor loser bracket round and the major loser bracket round.\r\n" + 
+					"The losers of the minor round would be eliminated while the winners of the minor round would be paired against the losers of the winners bracket round in the loser major bracket fixture \r\n" + 
+					"Competitors would be eliminated until only two competitors are left and these would form the tournament final. In the tournament final the winners bracket finalist must lose twice before the losers bracket finalist is declared the winner\r\n" + 
 					"For example, In a double elimination tournament with 4 competitors A, B, C, D. The initial fixture results may be\r\n" + 
-					"		A	2		VS 	1		B\r\n" + 
-					"C	3		VS 	2		D\r\n" + 
+					"	A	2	VS 	1	B\r\n" + 
+					"	C	3	VS 	2	D\r\n" + 
 					"\r\n" + 
-					"After this the competitors would be group into loser’s bracket and winner’s bracket as follows:\r\n" + 
+					"After this the competitors would be group into losers bracket and winners bracket as follows:\r\n" + 
 					"\r\n" + 
 					"Winners Bracket:\r\n" + 
-					"	A			VS 			C\r\n" + 
-					"Loser’s Bracket:\r\n" + 
-					"B			VS 			D\r\n" + 
+					"	A		VS		C\r\n" + 
+					"Losers Bracket:\r\n" + 
+					"	B		VS		D\r\n" + 
 					"\r\n" + 
 					"\r\n" + 
-					"When these two fixtures are played the losers of the loser’s bracket fixture are eliminated and the winners of the loser’s bracket minor round are paired against the losers of the winner’s bracket fixtures. For example; if\r\n" + 
+					"When these two fixtures are played the losers of the losers bracket fixture are eliminated and the winners of the losers bracket minor round are paired against the losers of the winners bracket fixtures. For example; if\r\n" + 
 					"Winners Bracket:\r\n" + 
-					"	A		0	VS 		1	C\r\n" + 
-					"Loser’s Bracket Minor Fixture:\r\n" + 
-					"B		4	VS 		3	D\r\n" + 
+					"	A	0	VS 	1	C\r\n" + 
+					"Loser's Bracket Minor Fixture:\r\n" + 
+					"	B	4	VS 	3	D\r\n" + 
 					"	\r\n" + 
-					"D is eliminated and the loser’s bracket major Fixture becomes:\r\n" + 
-					"Loser’s Bracket Minor Fixture:\r\n" + 
-					"B			VS 			A\r\n" + 
+					"D is eliminated and the losers bracket major Fixture becomes:\r\n" + 
+					"Losers Bracket Minor Fixture:\r\n" + 
+					"	B		VS 		A\r\n" + 
 					"The loser is then eliminated as in \r\n" + 
-					"B		2	VS 		4	A\r\n" + 
+					"	B	2	VS 	4	A\r\n" + 
 					"B is eliminated\r\n" + 
 					"Currently only B and C is left so they play the tournament final as in:\r\n" + 
-					"C			VS 			B\r\n" + 
+					"	C		VS		B\r\n" + 
 					"\r\n" + 
-					"Note that the winners bracket finalist (C in this case) must lose twice before the loser’s bracket finalist (B in this case) can be declared the winner. However, the winner’s bracket finalist needs just one win to be declared the tournament winner.\r\n" + 
+					"Note that the winners bracket finalist (C in this case) must lose twice before the losers bracket finalist (B in this case) can be declared the winner. However, the winners bracket finalist needs just one win to be declared the tournament winner.\r\n" + 
 					"");
 			break;
 		case "Group":
@@ -108,12 +108,12 @@ public class HelpController {
 					"In a group tournament, unlike a knockout tournament there is no scheduled decisive final match. Instead, all the competitors are ranked by examining the results of all the matches played in the tournament. Points are awarded for each match, with competitors ranked based either on total number of points or average points per match. Each competitor plays an equal number of matches, in which case rankings by total points and by average points are equivalent.\r\n" + 
 					"The point for win, draw or loss is specified by the tournament organizers or the sport governing body. \r\n" + 
 					"Ties are broken in group tournaments by using several criterias including:\r\n" + 
-					"•	Head to head record: Here a competitor’s score against an opponent is considered and used to break ties.\r\n" + 
-					"•	Goals scored\r\n" + 
-					"•	Goals difference\r\n" + 
-					"•	Home wins (or white wins in chess)\r\n" + 
-					"•	Away wins (or black wins in chess)\r\n" + 
-					"•	Etc.\r\n" + 
+					"*	Head to head record: Here a competitors score against an opponent is considered and used to break ties.\r\n" + 
+					"*	Goals scored\r\n" + 
+					"*	Goals difference\r\n" + 
+					"*	Home wins (or white wins in chess)\r\n" + 
+					"*	Away wins (or black wins in chess)\r\n" + 
+					"*	Etc.\r\n" + 
 					"The order of the breakers would be determined by the tournament organizers\r\n" + 
 					"There are two types of group tournaments namely Swiss- style tournament, round robin tournament and double round robin tournament.\r\n" + 
 					"\r\n" + 

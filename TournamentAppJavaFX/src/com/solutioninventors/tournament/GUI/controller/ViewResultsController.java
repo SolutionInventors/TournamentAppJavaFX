@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -32,6 +33,7 @@ public class ViewResultsController {
 	@FXML private Label msgboxlbl;
 	@FXML private Rectangle msgboxrect;
 	@FXML private Button btnMoveNext;
+	@FXML private CheckBox chkAllResults;
 	private Label compName[];
 	private Label VS[];
 	private Label scores[];
@@ -185,6 +187,11 @@ public class ViewResultsController {
 		}
 	}// end set current
 
+	@FXML
+	public void updateResults(ActionEvent actionperformed){
+		
+	}
+	
 	private String getScoreWDL(String num) {
 		double scr = Double.valueOf(num);
 		int score = (int) scr;

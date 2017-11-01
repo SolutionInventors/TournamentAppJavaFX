@@ -135,6 +135,7 @@ public class Competitor implements Serializable
 	 *@param imageFile The {@code File } object that contains a file in either .jpg, .png or .jpeg
 	 *@throws NoCompetitorNameException when competitor name contains only white space
 	 */
+	@SuppressWarnings("unused")
 	public Competitor(String first, String last, File imageFile) throws NoCompetitorNameException
 	{
 		
