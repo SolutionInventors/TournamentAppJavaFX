@@ -40,6 +40,8 @@ public class RoundRobinTest {
 		Competitor c3 = new Competitor("Joshua", file);
 		Competitor c4 = new Competitor("Chinedu", file);
 
+		
+
 		Competitor[] comps = { c1, c2, c3, c4 };
 		
 		Test.displayMessage("Robin begins");
@@ -220,7 +222,7 @@ public class RoundRobinTest {
 		
 		for ( int i = 0 ; i < rounds.length ; i ++ 	)
 		{
-			builder.append( ( rounds[i] + ":\n" ) );
+			builder.append( (rounds[i] + ":\n" ) );
 			builder.append(  ( Test.getFixutures( rounds[ i ].getFixtures() ) 	) + "\n") ;
 			
 		}
