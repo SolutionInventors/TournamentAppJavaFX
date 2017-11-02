@@ -128,7 +128,9 @@ public class SingleEliminationTournament extends EliminationTournament {
 		roundList.add(new Round(fixtures, toString() ));
 
 		if (hasAway())
-			roundList.add(new Round(fixtures, toString() ).invertHomeAndAway( getSportType() ));
+			roundList.add(new Round(fixtures, toString() ).
+					invertHomeAndAway( getSportType(), getCurrentRoundName() + 
+							" Second Leg" ));
 	}
 
 	/**
@@ -181,16 +183,23 @@ public class SingleEliminationTournament extends EliminationTournament {
 		else if ( hasTie() && isTieRound() )
 			throw new MoveToNextRoundException("The ties have not been broken");
 		
-		
-		if ( isFinal()  && !hasTie() )
+		if( isTieRound() ){
+			eliminateLosers();
+			createNextRound();
+			return;
+		}
+		else if ( isFinal()  && !hasTie() )
 		{
 			eliminateLosers();
 			createNextRound();
 		}
 		else if (hasTie() )
 		{
-			if ( getCurrentRound().getLosers() != null )
+			if ( !hasAway() && getCurrentRound().getLosers() != null )
 			{
+				eliminateLosers();
+			}
+			else if( hasAway() && !isFinal() ){
 				eliminateLosers();
 			}
 			Round tieRound = new Round( getActiveTieList(), toString()  );
@@ -199,6 +208,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		}
 		else if ( hasAway() && !isSecondLeg() )//firstLeg fixture
 			incrementRoundNum();
+		
 		else if ( isSecondLeg()   || !hasAway()   )
 		{
 			eliminateLosers();
@@ -229,6 +239,11 @@ public class SingleEliminationTournament extends EliminationTournament {
 		return getActiveCompetitors().length == 2 ;
 	}
 
+	/**
+	 * Creates the next round of thois tournament
+	 
+	 *@param activeCompetitors
+	 */
 	private void createNextRound(Competitor[] activeCompetitors)
 	{
 		
@@ -238,10 +253,12 @@ public class SingleEliminationTournament extends EliminationTournament {
 			for ( int i = 0 ; i < activeCompetitors.length ; i+= 2 )
 				nextRoundFixtures[ i/2 ] = new Fixture( getSportType(), activeCompetitors[ i ], activeCompetitors[ i + 1 ] );
 			
-			Round round = new Round( nextRoundFixtures, toString() );
+			Round round = new Round( nextRoundFixtures, getCurrentRoundFullName() );
 			roundList.add( round );
-			if ( hasAway() && getActiveCompetitors().length > 2 )
-				roundList.add( round.invertHomeAndAway( getSportType() ) );
+			if ( hasAway() && getActiveCompetitors().length > 2 ){
+				roundList.add( round.invertHomeAndAway( getSportType() , getCurrentRoundLegName()) );
+			}
+				
 
 			incrementRoundNum();
 		}
@@ -256,7 +273,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 
 	private void eliminateLosers()
 	{
-		if (!hasAway() || getActiveCompetitors().length == 2 )
+		if (!hasAway() || getActiveCompetitors().length == 2 || isTieRound())
 		{
 			
 			if ( getActiveCompetitors().length ==  2 && 
@@ -292,7 +309,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 						secondLeg.getCompetitorTwo().setEliminated(true );
 					else if ( com1AwayScore  < com2AwayScore )
 						secondLeg.getCompetitorOne().setEliminated( true );
-					else
+					else if(  com1AwayScore  > com2AwayScore )
 						secondLeg.getCompetitorTwo().setEliminated(true );
 					
 				}
@@ -510,16 +527,46 @@ public class SingleEliminationTournament extends EliminationTournament {
 			return "Tournament Has Ended";
 		if ( isTieRound() )
 			return "Break Ties";
+		return getCurrentRoundFullName();
+	}
+
+	/**
+	 * Gets the current Round name as a string. For example Semi final first leg, Semi final
+	 * Final , Round of 16 etc.
+	 *String
+	 *@return
+	 */
+	public String getCurrentRoundFullName() {
 		String message = null;
 		String leg = null;
+		leg = getCurrentRoundLegName();
+		
+		
+		message = getCurrentRoundName();
+		return  message + " " + leg ;
+	}
+
+	/**
+	 *String
+	 *@return
+	 */
+	public String getCurrentRoundLegName() {
+		String leg;
 		if ( hasAway() && isSecondLeg() )
 			leg = "Second-Leg";
 		else if( hasAway() && !isFinal() )
 			leg = "First-Leg";
 		else
 			leg = "";
-		
-		
+		return leg;
+	}
+
+	/**
+	 *String
+	 *@return
+	 */
+	public String getCurrentRoundName() {
+		String message;
 		switch (getActiveCompetitors().length) {
 
 		case 1:
@@ -538,7 +585,7 @@ public class SingleEliminationTournament extends EliminationTournament {
 		default:
 			message = "Round of " + (getCurrentRoundNum() + 1);
 		}
-		return  message + " " + leg ;
+		return message;
 	}
 
 	@Override

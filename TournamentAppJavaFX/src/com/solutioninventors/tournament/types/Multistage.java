@@ -326,15 +326,7 @@ public class Multistage extends Tournament
 	{
 		List< Round > roundList = new ArrayList<Round>();
 		
-		int totalRounds = numberOfGroupStageRounds();
-		
-		if( isGroupStageOver() ) 
-			totalRounds += knockoutStage.getRoundArray().length ;
-		
-		int factor = getCurrentRoundNum() < totalRounds ? getCurrentRoundNum() :
-						totalRounds -1 ;
-		
-		for( int i = 0 ; i <=factor ; i++ )
+		for( int i = 0 ; i <numberOfGroupStageRounds() ; i++ )
 		{
 			try
 			{
@@ -345,9 +337,13 @@ public class Multistage extends Tournament
 				e.printStackTrace();
 			}
 		}
-				
-		if ( roundList.size() == 0 )
-			return null;
+		if( knockoutStage != null ) 
+		{
+			Round[] knockoutRounds = knockoutStage.getRoundArray();
+			for( int i = 0 ; i < knockoutRounds.length ; i++ )
+				roundList.add( knockoutRounds[i] );
+		}
+		
 		return roundList.toArray( new Round[ roundList.size() ] );
 		
 		

@@ -264,6 +264,24 @@ public class Round implements Serializable
 	 */
 	public Round invertHomeAndAway( SportType type )
 	{
+		return invertHomeAndAway(  type, toString() );
+	}
+	
+	
+	/**
+	 *This method returns a a {@code Round} with all the {@link Fixture }s in this object inverted
+	 *<br> It does not change this object but reeturns a new object
+	 *@author Oguejiofor Chidiebere 
+	 *@see Fixture
+	 *@see SportType
+	 *@since v1.0
+	 *@param type  - used to create the {@code Fixture}s. The returned {@code Round} would contain only
+	 *{@code Fixture}s with the sopecified {@code SportType} in this argument
+	 * 
+	 *@return a {@code Round} with all the {@link Fixture }s in this object inverted
+	 */
+	public Round invertHomeAndAway( SportType type,String roundName )
+	{
 		Fixture[] inverseFixtures = new Fixture[ getFixtures().length ];
 		
 		Fixture[] currentFixture= getFixtures();
@@ -274,9 +292,10 @@ public class Round implements Serializable
 												currentFixture[ i ].getCompetitorOne() 	);
 		}
 		
-		return new Round( inverseFixtures, toString() );
+		return new Round( inverseFixtures, roundName );
 		
 	}
+	
 	
 	/**
 	 * 

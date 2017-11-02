@@ -229,11 +229,6 @@ public class DoubleElimination extends EliminationTournament
 			throw new RoundIndexOutOfBoundsException("The Round index is higher than expected" );
 	}
 	
-	
-
-	
-	
-	
 	/**
 	 * This method is inherited from {@link Tournament}. It is used to set the reesult of the 
 	 * current {@link Round }. It sets the results by first verifying if the fixture is in the 
@@ -648,13 +643,16 @@ public class DoubleElimination extends EliminationTournament
 		{ 
 			for ( int i  = 0 ; i  < getCurrentRoundNum() ; i ++ )
 			{	
-				list.addAll(  Arrays.asList(  
+				list.addAll(  new ArrayList<Fixture>( Arrays.asList(  
+						getBracketRound( i ,  BracketType.INITIAL_BRACKET ).getFixtures() 
+					) )) ; 
+				list.addAll(  new ArrayList<Fixture>( Arrays.asList(  
 								getBracketRound( i ,  BracketType.MINOR_BRACKET ).getFixtures() 
-							) ) ; 
+							) )) ; 
 				
-				list.addAll(  Arrays.asList(  
+				list.addAll(  new ArrayList<Fixture>(Arrays.asList(  
 						getBracketRound( i ,  BracketType.WINNERS_BRACKET ).getFixtures() 
-					) ) ; 
+					) )) ; 
 				
 				list.addAll(  Arrays.asList(  
 						getBracketRound( i ,  BracketType.MAJOR_BRACKET ).getFixtures() 
