@@ -45,6 +45,7 @@ public class FixturesController {
 
 		tourStage.setFont(font[1]);// tournament Specs
 		chkAllFixtures.setSelected(false);
+		chkAllFixtures.selectedProperty().set(false);
 		//tourStage.size
 	}
 
@@ -59,21 +60,24 @@ public class FixturesController {
 			VS = new ArrayList<>();
 			logo = new ArrayList<>();
 			setupGridPane(currentFixtures,0);
-			updateGrid(currentFixtures.length,false);
+			updateGrid(false);
+			chkAllFixtures.setSelected(false);
+			chkAllFixtures.selectedProperty().set(false);
 			
 		} // end if tournament has not ended
 
 		else {
 			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			chkAllFixtures.setVisible(false);
 		}
 	}// end set current
 	
 	@FXML
 	public void updateFixtures(ActionEvent actionperformed){
 		try {
-			System.out.println(tournament.toString());
 			tempint = 0;
 		if (chkAllFixtures.isSelected()) {
+			tourStage.setText("PENDING FIXTURES");
 			pendingRounds = tournament.getPendingRounds();
 			compName = null;
 			VS = null;
@@ -87,8 +91,9 @@ public class FixturesController {
 				currentFixtures = pendingRounds[j].getFixtures();
 				setupGridPane(currentFixtures,tempint);
 			}
-			updateGrid(currentFixtures.length*pendingRounds.length,true);
+			updateGrid(true);
 		} else {
+			tourStage.setText(tournament.toString().toUpperCase());
 			compName = null;
 			VS = null;
 			logo = null;
@@ -98,7 +103,7 @@ public class FixturesController {
 			logo = new ArrayList<>();
 			currentFixtures = tournament.getCurrentRound().getFixtures();
 			setupGridPane(currentFixtures,0);
-			updateGrid(currentFixtures.length,false);
+			updateGrid(false);
 		}
 		} catch (TournamentEndedException e) {
 			e.printStackTrace();
@@ -155,7 +160,7 @@ public class FixturesController {
 
 	tempint = i;
 	}
-	private void updateGrid(int arraylength, boolean currentround) {
+	private void updateGrid( boolean currentround) {
 		grid = new GridPane();
 		grid.setPadding(new Insets(25,0,25,10));
 		grid.setHgap(5);
@@ -170,13 +175,13 @@ public class FixturesController {
 
 		grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5);
 
-	int counter1 = 0;
-	int counter2 = 0;
+	int counter1 = 0;//increments by 2 to take care of logo1 logo2 
+	int counter2 = 0;//to be used for the VS
 	int row = 0;
 	//boolean value = false;
 	if (currentround) {
 		for (int i = 0; i < pendingRounds.length; i++) {
-			grid.add(new Label("Group"+ (i+1)), 2, row);
+			grid.add(new Label(pendingRounds[i].toString()), 2, row);
 			row++;
 			for (int temp = 0; temp < currentFixtures.length; temp++) {
 				grid.add(logo.get(counter1), 0, row);

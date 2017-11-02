@@ -38,22 +38,22 @@
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
-				<Label alignment="CENTER" onMouseClicked="#newTournament" prefHeight="26.0" prefWidth="220.0" text="NEW TOURNAMENT">
+				<Label fx:id="NewT" alignment="CENTER" onMouseClicked="#newTournament" prefHeight="26.0" prefWidth="220.0" text="NEW TOURNAMENT">
 					<font>
 						<Font name="System Bold" size="16.0" />
 					</font>
 				</Label>
-				<Label  alignment="CENTER" onMouseClicked="#continuetour" prefHeight="26.0" prefWidth="220.0" text="CONTINUE TOURNAMENT" GridPane.rowIndex="1">
+				<Label fx:id="ContinueT" alignment="CENTER" onMouseClicked="#continuetour" prefHeight="26.0" prefWidth="220.0" text="CONTINUE TOURNAMENT" GridPane.rowIndex="1">
 					<font>
 						<Font name="System Bold" size="16.0" />
 					</font>
 				</Label>
-				<Label  alignment="CENTER" onMouseClicked="#About" prefHeight="26.0" prefWidth="220.0" text="CREDITS" GridPane.rowIndex="2">
+				<Label fx:id="About" alignment="CENTER" onMouseClicked="#About" prefHeight="26.0" prefWidth="220.0" text="CREDITS" GridPane.rowIndex="2">
 					<font>
 						<Font name="System Bold" size="16.0" />
 					</font>
 				</Label>
-				<Label  alignment="CENTER" layoutX="10.0" layoutY="111.0" onMouseClicked="#Help" prefHeight="26.0" prefWidth="220.0" text="HELP" GridPane.rowIndex="3">
+				<Label fx:id="Help" alignment="CENTER" layoutX="10.0" layoutY="111.0" onMouseClicked="#Help" prefHeight="26.0" prefWidth="220.0" text="HELP" GridPane.rowIndex="3">
 					<font>
 						<Font name="System Bold" size="16.0" />
 					</font>

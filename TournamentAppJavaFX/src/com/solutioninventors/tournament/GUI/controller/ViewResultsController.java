@@ -2,6 +2,7 @@ package com.solutioninventors.tournament.GUI.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
@@ -9,6 +10,7 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
+import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
 
 import javafx.event.ActionEvent;
@@ -34,10 +36,15 @@ public class ViewResultsController {
 	@FXML private Rectangle msgboxrect;
 	@FXML private Button btnMoveNext;
 	@FXML private CheckBox chkAllResults;
-	private Label compName[];
-	private Label VS[];
-	private Label scores[];
-	private ImageView logo[];
+	//private Label compName[];
+	private Round[] playedRounds;
+	//private Label VS[];
+	private ArrayList<Label> compName;
+	private ArrayList<Label> VS;
+	private ArrayList<ImageView> logo;
+	private ArrayList<Label> scores;
+	//private Label scores[];
+	//private ImageView logo[];
 	// private Image img = new Image("file:nologo");
 	private Tournament tournament;
 	private Competitor comp1;
@@ -45,7 +52,7 @@ public class ViewResultsController {
 	private Fixture[] currentFixtures;
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
-
+	private int tempint;
 	
 	public void initialize() {
 		font = cm.loadfonts();
@@ -59,138 +66,205 @@ public class ViewResultsController {
 		msgboxrect.setVisible(false);
 		msgboxlbl.setVisible(false);
 		btnMoveNext.setVisible(true);
+		
 		tournament = value;
 		
 		if (!tournament.hasEnded()) {
-			// GridPane settings
-			GridPane grid = new GridPane();
-			//grid.setHgrow(grid, arg1);
-			grid.setPadding(new Insets(25,0,25,10));
-			grid.setHgap(5);
-			grid.setVgap(5);
-			// ColumnSettings for all - columns
-			ColumnConstraints column1 = new ColumnConstraints(110); //comp name
-			ColumnConstraints column2 = new ColumnConstraints(100); //score input
-			ColumnConstraints column3 = new ColumnConstraints(55);//vs
-			ColumnConstraints column4 = new ColumnConstraints(30);//score input
-			ColumnConstraints column5 = new ColumnConstraints(55);//comp name	
-			ColumnConstraints column6 = new ColumnConstraints(100);//im
-			 ColumnConstraints cc = new ColumnConstraints();
-			    cc.setHgrow(Priority.NEVER);
-			    RowConstraints rc = new RowConstraints();
-			    rc.setVgrow(Priority.NEVER);
-
-			grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6,cc);
-			grid.getRowConstraints().add(rc);
-			
+			chkAllResults.setVisible(true);
 			tourStage.setText(tournament.toString().toUpperCase());
 			currentFixtures = tournament.getCurrentRound().getFixtures();
-			compName = new Label[currentFixtures.length * 2];
-			VS = new Label[currentFixtures.length];
-			logo = new ImageView[currentFixtures.length * 2];
-			scores = new Label[currentFixtures.length * 2];
-			int i = 0;
-			for (int j = 0; j < currentFixtures.length; j++) {
-				compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
-				compName[i + 1] = new Label(currentFixtures[j].getCompetitorTwo().toString());
-				compName[i].setFont(font[1]);
-				//compName[i].setMaxSize(162, 76);
-				compName[i].setPrefSize(162, 76);
-				//compName[i].setMaxWidth(162);
-				
-				compName[i + 1].setFont(font[1]);
-				compName[i + 1].setMaxSize(162, 76);
-				compName[i].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
-				compName[i+ 1].setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
-				
-				VS[j] = new Label("VS");
-				VS[j].setFont(font[1]);
-				VS[j].setStyle("-fx-font-size: 19px; -fx-font-weight:bold; -fx-text-fill: red;");
-				
-				
-				try {
-					comp1 = currentFixtures[j].getCompetitorOne();
-					comp2 = currentFixtures[j].getCompetitorTwo();
-
-					String localUrl = comp1.getImage().toURI().toURL().toString();
-					String local2 = comp2.getImage().toURI().toURL().toString();
-					Image localImage1 = new Image(localUrl, false);
-					Image localImage2 = new Image(local2, false);
-					logo[i] = new ImageView(localImage1);
-					// logo[i].setImage(localImage1);
-					logo[i].setFitWidth(108);
-					logo[i].setFitHeight(65);
-					logo[i].setPreserveRatio(true);
-					logo[i + 1] = new ImageView(localImage2);
-					logo[i + 1].setFitWidth(108);
-					logo[i + 1].setFitHeight(65);
-					logo[i + 1].setPreserveRatio(true);
-
-				} catch (MalformedURLException e) {
-					//e.printStackTrace();
-					System.out.println("Malformed URL");
-				}
-
-				// display results
-				
-				try {
-					if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
-					scores[i] = new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore()));
-					scores[i + 1] = new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore()));
-					}else {
-						scores[i] = new Label(getScoreWDL(String.valueOf(currentFixtures[j].getCompetitorOneScore())));
-						scores[i + 1] = new Label(getScoreWDL(String.valueOf(currentFixtures[j].getCompetitorTwoScore())));
-					}
-				
-				
-				
-				} catch (IncompleteFixtureException e) {
-					msgboxrect.setVisible(true);
-					msgboxlbl.setVisible(true);
-					btnMoveNext.setVisible(false);
-					//System.out.println("incomplete fixture error");
-				}
-				i += 2;// increment i by 2
-
-			} // end for loop
-			if (scores[0] != null) {
-				
 			
-			int c = 0;
-			for (int temp = 0; temp < currentFixtures.length; temp++) {
-				grid.add(logo[c], 0, temp);
-				grid.add(compName[c], 1, temp);
-				grid.add(scores[c], 2, temp);
-				grid.add(VS[temp], 3, temp);
-				grid.add(scores[c + 1], 4, temp);
-				grid.add(compName[c + 1], 5, temp);
-				grid.add(logo[c + 1], 6, temp);
-				c += 2;
-			}
-			scrollPane.setContent(grid);
-			}//end not null
-		/*	try {
-				if (tournament.getCurrentRound().isComplete()) {
-					btnMoveNext.setVisible(false);
-				}else {
-					btnMoveNext.setVisible(true);
-				}
-			} catch (TournamentEndedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			compName = new ArrayList<>();
+			VS = new ArrayList<>();
+			logo = new ArrayList<>();
+			scores = new ArrayList<>();
+			
+			setupGrid(currentFixtures,0);
+			updateGridPane(false);
+	
 		} // end if tournament has not ended
 
 		else {
 			btnMoveNext.setVisible(false);
+			chkAllResults.setVisible(false);
 			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
 
+	private void setupGrid(Fixture[] currentFixtures, int i) {
+		
+		for (int j = 0; j < currentFixtures.length; j++) {
+			compName.add(i,new Label(currentFixtures[j].getCompetitorOne().toString()));
+			compName.add(i + 1, new Label(currentFixtures[j].getCompetitorTwo().toString()));
+			compName.get(i).setFont(font[1]);
+			compName.get(i).setPrefSize(162, 76);
+			
+			compName.get(i+1).setFont(font[1]);
+			compName.get(i+1).setMaxSize(162, 76);
+			compName.get(i).setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+			compName.get(i+1).setStyle("-fx-font-size: 12px; -fx-font-weight:bold;");
+			
+			VS.add(j,new Label("VS"));
+			VS.get(j).setFont(font[1]);
+			VS.get(j).setStyle("-fx-font-size: 19px; -fx-font-weight:bold; -fx-text-fill: red;");
+			
+			
+			try {
+				comp1 = currentFixtures[j].getCompetitorOne();
+				comp2 = currentFixtures[j].getCompetitorTwo();
+
+				String localUrl = comp1.getImage().toURI().toURL().toString();
+				String local2 = comp2.getImage().toURI().toURL().toString();
+				Image localImage1 = new Image(localUrl, false);
+				Image localImage2 = new Image(local2, false);
+				logo.add(i,new ImageView(localImage1));
+				// logo[i].setImage(localImage1);
+				logo.get(i).setFitWidth(108);
+				logo.get(i).setFitHeight(65);
+				logo.get(i).setPreserveRatio(true);
+				logo.add(i+1,new ImageView(localImage2));
+				logo.get(i+1).setFitWidth(108);
+				logo.get(i+1).setFitHeight(65);
+				logo.get(i+1).setPreserveRatio(true);
+
+			} catch (MalformedURLException e) {
+				//e.printStackTrace();
+				System.out.println("Malformed URL");
+			}
+
+			// display results
+			
+			try {
+				if (tournament.getSportType() == SportType.GOALS_ARE_SCORED) {
+					scores.add(i, new Label(String.valueOf(currentFixtures[j].getCompetitorOneScore())));
+					scores.add(i+1, new Label(String.valueOf(currentFixtures[j].getCompetitorTwoScore())));
+				}else {
+					scores.add(i, new Label(getScoreWDL(String.valueOf(currentFixtures[j].getCompetitorOneScore()))));
+					scores.add(i+1,new Label(getScoreWDL(String.valueOf(currentFixtures[j].getCompetitorTwoScore()))));
+				}
+			
+			
+			
+			} catch (IncompleteFixtureException e) {
+				msgboxrect.setVisible(true);
+				msgboxlbl.setVisible(true);
+				chkAllResults.setVisible(false);
+				btnMoveNext.setVisible(false);
+			}
+			i += 2;// increment i by 2
+
+		} // end for loop
+		tempint = i;
+	}
+
 	@FXML
 	public void updateResults(ActionEvent actionperformed){
-		
+		tempint = 0;
+		if (chkAllResults.isSelected()) {
+			tourStage.setText("ALL RESULTS");
+			playedRounds = tournament.getResults();
+			compName = null;
+			VS = null;
+			logo = null;
+			scores = null;
+			
+			compName = new ArrayList<>();
+			VS = new ArrayList<>();
+			logo = new ArrayList<>();
+			scores = new ArrayList<>();
+
+			for (int j = 0; j < playedRounds.length; j++) {
+				currentFixtures = playedRounds[j].getFixtures();
+				setupGrid(currentFixtures,tempint);
+			}
+			updateGridPane(true);
+			
+		} else {
+			tourStage.setText(tournament.toString().toUpperCase());
+			compName = null;
+			VS = null;
+			logo = null;
+			scores = null;
+			
+			compName = new ArrayList<>();
+			VS = new ArrayList<>();
+			logo = new ArrayList<>();
+			scores = new ArrayList<>();
+			try {
+				currentFixtures = tournament.getCurrentRound().getFixtures();
+			} catch (TournamentEndedException e) {
+				e.printStackTrace();
+			}
+			setupGrid(currentFixtures,0);
+			updateGridPane(false);
+		}
 	}
+	
+	private void updateGridPane(boolean allResult) {
+		// GridPane settings
+		GridPane grid = new GridPane();
+		//grid.setHgrow(grid, arg1);
+		grid.setPadding(new Insets(25,0,25,10));
+		grid.setHgap(5);
+		grid.setVgap(5);
+		// ColumnSettings for all - columns
+		ColumnConstraints column1 = new ColumnConstraints(110); //comp name
+		ColumnConstraints column2 = new ColumnConstraints(100); //score input
+		ColumnConstraints column3 = new ColumnConstraints(55);//vs
+		ColumnConstraints column4 = new ColumnConstraints(30);//score input
+		ColumnConstraints column5 = new ColumnConstraints(55);//comp name	
+		ColumnConstraints column6 = new ColumnConstraints(100);//im
+		 ColumnConstraints cc = new ColumnConstraints();
+		    cc.setHgrow(Priority.NEVER);
+		    RowConstraints rc = new RowConstraints();
+		    rc.setVgrow(Priority.NEVER);
+
+		grid.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6,cc);
+		grid.getRowConstraints().add(rc);
+		if (scores.get(0) != null) {
+			//int c = 0;
+			int counter1 = 0;//increments by 2 to take care of logo1 logo2 
+			int counter2 = 0;//to be used for the VS
+			int row = 0;
+			if (allResult) {
+				for (int i = 0; i < playedRounds.length; i++) {
+					grid.add(new Label(playedRounds[i].toString()), 4, row);
+					row++;
+					for (int temp = 0; temp < currentFixtures.length; temp++) {
+						grid.add(logo.get(counter1), 0, row);
+						grid.add(compName.get(counter1), 1, row);
+						grid.add(scores.get(counter1), 2, row);
+						grid.add(VS.get(counter2), 3, row);
+						grid.add(scores.get(counter1+1), 4, row);
+						grid.add(compName.get(counter1+1), 5, row);
+						grid.add(logo.get(counter1+1), 6, row);
+						counter1 += 2;
+						row++;
+						counter2++;
+				}
+				}
+			} else {
+				for (int temp = 0; temp < currentFixtures.length; temp++) {
+					grid.add(logo.get(counter1), 0, temp);
+					grid.add(compName.get(counter1), 1, temp);
+					grid.add(scores.get(counter1), 2, temp);
+					grid.add(VS.get(temp), 3, temp);
+					grid.add(scores.get(counter1+1), 4, temp);
+					grid.add(compName.get(counter1+1), 5, temp);
+					grid.add(logo.get(counter1+1), 6, temp);
+					counter1 += 2;
+				}
+			}
+		
+			
+			
+			System.out.println(compName.size() + "Comp Name Size");
+			System.out.println(scores.size() + "Scores Size");
+			scrollPane.setContent(grid);
+			}//end not null
+	
+	}
+
 	
 	private String getScoreWDL(String num) {
 		double scr = Double.valueOf(num);

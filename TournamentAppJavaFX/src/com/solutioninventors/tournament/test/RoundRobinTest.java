@@ -96,7 +96,7 @@ public class RoundRobinTest {
 				
 				simulateRound(tournament );
 				System.out.println( "Tournament Results: " ); 
-				printRounds( tournament.getResults() ) ;
+				printRounds( tournament.getRoundArray() ) ;
 			}
 			catch (OnlyOutstandingAreLeftException e)
 			{
