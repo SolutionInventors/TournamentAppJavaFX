@@ -7,6 +7,10 @@
  */
 package com.solutioninventors.tournament.types.group;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
@@ -36,12 +40,13 @@ public class SwissTournament extends GroupTournament {
 	
 	private static final long serialVersionUID = -8743697610134891249L;
 
+	private final int TOTAL_ROUNDS;
 	public SwissTournament(Competitor[] comps, SportType type, double winPoint, double drawPoint, double lossPoint,
 			TieBreaker breaker, int totalRounds) throws TournamentException, InvalidBreakerException {
 		super(comps, type, winPoint, drawPoint, lossPoint, breaker);
 		if (comps.length % 2 != 0)
 			throw new TournamentException("Total competitors must be a multiple of 2");
-
+		TOTAL_ROUNDS =totalRounds;
 		setRoundsArray(new Round[totalRounds]);
 		createTournament();
 	}
@@ -105,9 +110,18 @@ public class SwissTournament extends GroupTournament {
 	}
 
 	@Override
+	public Round[] getRoundArray(){
+		List<Round> list = 
+				Arrays.stream( super.getRoundArray() )
+				.filter( round -> round!= null )
+				.collect(Collectors.toList());
+		return list.toArray( new Round[ list.size() ] );
+				
+	}
+	@Override
 	public boolean hasEnded() 
 	{
-		return getCurrentRoundNum() < getRoundArray().length ? false : true;
+		return getCurrentRoundNum() < TOTAL_ROUNDS ? false : true;
 
 	}
 

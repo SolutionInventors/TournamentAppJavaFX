@@ -132,7 +132,7 @@ public abstract class GroupTournament extends Tournament
 	 *@param fixes
 	 */
 	protected void setCurrentRound(Fixture[] fixes) {
-		rounds[getCurrentRoundNum()] = new Round(fixes , "Round " + toString()  );
+		rounds[getCurrentRoundNum()] = new Round(fixes , toString()  );
 	}
 
 	/**
