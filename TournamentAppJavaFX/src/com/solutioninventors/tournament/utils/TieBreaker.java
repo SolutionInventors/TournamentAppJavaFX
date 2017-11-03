@@ -59,14 +59,39 @@ public class TieBreaker implements Serializable
 	 */
 	public TieBreaker( Breaker ... breakers ) throws InvalidBreakerException
 	{
+		this( true , breakers );
+			
+	}
+	
+	
+	/**
+	 * 
+	 *Creates this {@code TieBreaker} with a {@code Breaker}s 
+	 *The order in which the {@link Breaker}s appear determines the order in 
+	 *which the ties would be broken.
+	 *
+	 *@author Oguejiofor Chidiebere 
+	 *@since v1.0
+	 *@param breakers The {@code Breaker[]} object
+	 *@param addCoinToss appends the {@code Breaker } array with Breaker.COIN_TOSS
+	 *else doesn't. Appending with Breaker.COIN_TOSS ensures that there would be no ties.
+	 *@throws com.solutioninventors.tournament.exceptions.InvalidBreakerException - 
+	 * when its argument is {@code null} or when
+	 *any of the {@code Breaker}s is set to
+	 *{@code Breaker.KNOCKOUT_BREAKER , Breaker.GROUP_BREAKER , Breaker.ALL, Breaker.GOALS_SCORED or
+	 *Breker.NOT_GOALS_SCORED}
+	 *It appends Breaker.COIN_TOSS to the Breaker list
+	 *@see Breaker
+	 */
+	public TieBreaker( boolean addCoinToss , Breaker ... breakers ) throws InvalidBreakerException
+	{
 		
 		List<Breaker> list =  new ArrayList<>() ; 
 		list.addAll( Arrays.asList( breakers ) );
 		list.add(Breaker.COIN_TOSS  );
 		
-		
-		list.add( Breaker.COIN_TOSS );
-		breakers = list.toArray( new Breaker[ list.size() ] );
+		if( addCoinToss)
+			breakers = list.toArray( new Breaker[ list.size() ] );
 		
 		boolean invalid = 
 			Arrays.stream( breakers)

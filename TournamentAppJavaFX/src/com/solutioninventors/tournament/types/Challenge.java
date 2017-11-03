@@ -13,14 +13,17 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
+import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
+import com.solutioninventors.tournament.types.group.StandingTable;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 import com.solutioninventors.tournament.utils.SportType;
+import com.solutioninventors.tournament.utils.TieBreaker;
 
 /** 
  * 
@@ -145,6 +148,26 @@ public class Challenge extends Tournament
 					.toArray( coms )[ 0 ] ;
 		}
 		return null ;
+	}
+	
+	/**
+	 * Gets a {@code StandingTable }object that shows the results of the two competitors
+	 * Returns {@code null} if an error occurs.
+	 *@return {@code StandingTable} containing competitor results
+	 */
+	public StandingTable getStandingTable(){
+		
+		TieBreaker breaker;
+		try {
+			breaker = new TieBreaker();
+			return new StandingTable(getSportType(),
+					getCompetitors(), 2, 1, 0, breaker);
+		} catch (InvalidBreakerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	@Override
