@@ -120,16 +120,17 @@ public class Multistage extends Tournament
 	 *@param pLoss- the point for a loss in the group stage
 	 *@param breaker - a list of {@link TieBreaker}s that would be used when breaking ties in the group stage
 	 *@param numOfGroupRound - the number of rounds that the {@link SwissTournament } would have
+	 *@param shuffleCompetitors  determines if the competitor's would be shuffled
 	 *@param knockoutHomeAndAway - true indicates that the {@link SingleElimination} would be home and away.
 	 *@throws TournamentException - when invalid parameters are passed as argument
 	 *@throws InvalidBreakerException- when the {@link  TieBreaker} is invalid 
 	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
-			double pLoss , TieBreaker breaker , int numOfGroupRound,  boolean knockoutHomeAndAway) 
+			double pLoss , TieBreaker breaker , int numOfGroupRound,  boolean knockoutHomeAndAway, boolean shuffleCompetitors) 
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , knockoutHomeAndAway,
-				GroupStageType.SWISS, KnockoutType.SINGLE, false );
+				GroupStageType.SWISS, KnockoutType.SINGLE, shuffleCompetitors );
 		
 	}
 	
@@ -145,16 +146,17 @@ public class Multistage extends Tournament
 	 *@param pLoss- the point for a loss in the group stage
 	 *@param breaker - a {@link TieBreaker}s that would be used when breaking ties in the group stage
 	 *@param numOfGroupRound - the number of rounds that the {@link SwissTournament } would have
+	 *@param shuffleCompetitors determines whether the competitors would be shuffled
 	 *@throws TournamentException when any argument is inputed
 	 *@throws InvalidBreakerException when the TieBreaketr object contains invalid {@code Breaker}s
 	 */
 	
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
-			double pLoss , TieBreaker breaker , int numOfGroupRound) 
+			double pLoss , TieBreaker breaker , int numOfGroupRound, boolean shuffleCompetitors) 
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , false,
-				GroupStageType.SWISS, KnockoutType.DOUBLE, false );
+				GroupStageType.SWISS, KnockoutType.DOUBLE, shuffleCompetitors );
 		
 	}
 	
@@ -172,17 +174,18 @@ public class Multistage extends Tournament
 	 *@param knockoutHomeAndAway - indicates whether the knockout stage would be home and away
 	 *@param knockoutHomeAndAway indicates if the group stage would be home and away when set to {@code true}
 	 *@param groupHomeAndAway {@code true} indicates that there would be home and away in this {@code Tournament} groupStage
+	 *@param shuffle competiotors would be shuffled if {@code true }
 	 *@throws TournamentException - when any parameter is invalid
 	 *@throws InvalidBreakerException when the {@link TieBreaker} is invalid
 	 *
 	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
-			double pLoss , TieBreaker breaker , boolean groupHomeAndAway , boolean knockoutHomeAndAway) 
+			double pLoss , TieBreaker breaker , boolean groupHomeAndAway , boolean knockoutHomeAndAway, boolean shuffle) 
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type , pWin , pDraw ,pLoss, breaker , 
 				0 , groupHomeAndAway ,knockoutHomeAndAway , 
-				GroupStageType.ROUND_ROBIN, KnockoutType.SINGLE, false 	 );
+				GroupStageType.ROUND_ROBIN, KnockoutType.SINGLE, shuffle 	 );
 		
 	}
 
@@ -206,12 +209,12 @@ public class Multistage extends Tournament
 	 
 	 */
 	public Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
-			double pLoss , TieBreaker breaker , boolean groupHomeAndAway ) 
+			double pLoss , TieBreaker breaker , boolean groupHomeAndAway, boolean shuffle ) 
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type , pWin , pDraw ,pLoss, breaker , 
 				0 , groupHomeAndAway ,false ,
-				GroupStageType.ROUND_ROBIN , KnockoutType.DOUBLE, false	 );
+				GroupStageType.ROUND_ROBIN , KnockoutType.DOUBLE, shuffle	 );
 		
 	}
 	
