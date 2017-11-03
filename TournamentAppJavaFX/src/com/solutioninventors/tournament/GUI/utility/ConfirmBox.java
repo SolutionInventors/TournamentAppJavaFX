@@ -1,9 +1,11 @@
 package com.solutioninventors.tournament.GUI.utility;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,7 +26,7 @@ public class ConfirmBox {
         //Create two buttons
         Button yesButton = new Button("Yes");
         Button noButton = new Button("No");
-
+        Button cancelButton = new Button("Cancel");
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
             answer = 1;
@@ -34,11 +36,16 @@ public class ConfirmBox {
             answer = 0;
             window.close();
         });
-
+        cancelButton.setOnAction(e -> {
+            window.close();
+        });
+        HBox hLayout = new HBox(10);
+        
         VBox layout = new VBox(10);
-
+        hLayout.setPadding(new Insets(0,0,10,40));
         //Add buttons
-        layout.getChildren().addAll(label, yesButton, noButton);
+        hLayout.getChildren().addAll(yesButton,noButton,cancelButton);
+        layout.getChildren().addAll(label, hLayout);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);

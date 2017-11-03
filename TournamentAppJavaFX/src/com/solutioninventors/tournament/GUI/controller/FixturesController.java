@@ -12,6 +12,7 @@ import com.solutioninventors.tournament.utils.Round;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -29,23 +30,22 @@ public class FixturesController {
 	private ArrayList<Label> VS;
 	private ArrayList<ImageView> logo;
 	GridPane grid;
-	// private Image img = new Image("file:nologo");
 	private Round[] pendingRounds;
 	private Tournament tournament;
 	private Competitor comp1;
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
+	
 
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private int tempint;
+	private Label[] roundHeader;
 
 	public void initialize() {
 		font = cm.loadfonts();
 
 		tourStage.setFont(font[1]);// tournament Specs
-		chkAllFixtures.setSelected(false);
-		chkAllFixtures.selectedProperty().set(false);
 		//tourStage.size
 	}
 
@@ -68,7 +68,6 @@ public class FixturesController {
 
 		else {
 			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
-			chkAllFixtures.setVisible(false);
 		}
 	}// end set current
 	
@@ -89,6 +88,7 @@ public class FixturesController {
 			
 			for (int j = 0; j < pendingRounds.length; j++) {
 				currentFixtures = pendingRounds[j].getFixtures();
+				//fixturesLength[j] = currentFixtures.length;
 				setupGridPane(currentFixtures,tempint);
 			}
 			updateGrid(true);
@@ -180,8 +180,14 @@ public class FixturesController {
 	int row = 0;
 	//boolean value = false;
 	if (currentround) {
+		roundHeader = new Label[pendingRounds.length];
 		for (int i = 0; i < pendingRounds.length; i++) {
-			grid.add(new Label(pendingRounds[i].toString()), 2, row);
+			roundHeader[i] = new Label(pendingRounds[i].toString().toUpperCase());
+			roundHeader[i].setStyle("-fx-font-size: 22px; -fx-font-weight: BOLD; -fx-background-color:#ddd7d7; -fx-border-color:  white; -fx-border-width: 1px;");
+			roundHeader[i].setPrefSize(400, 36);
+			roundHeader[i].setAlignment(Pos.CENTER);
+			GridPane.setColumnSpan(roundHeader[i], 3);
+			grid.add(roundHeader[i], 1, row);
 			row++;
 			for (int temp = 0; temp < currentFixtures.length; temp++) {
 				grid.add(logo.get(counter1), 0, row);

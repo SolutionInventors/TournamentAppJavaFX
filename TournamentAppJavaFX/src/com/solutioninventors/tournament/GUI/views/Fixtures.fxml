@@ -30,7 +30,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
-      <CheckBox fx:id="chkAllFixtures" layoutX="63.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateFixtures" prefHeight="28.0" prefWidth="157.0" style="-fx-background-color: white;" text="All Fixtures" textFill="RED">
+      <CheckBox fx:id="chkAllFixtures" layoutX="63.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateFixtures" prefHeight="28.0" prefWidth="161.0" style="-fx-background-color: white;" text="Pending Fixtures" textFill="RED">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

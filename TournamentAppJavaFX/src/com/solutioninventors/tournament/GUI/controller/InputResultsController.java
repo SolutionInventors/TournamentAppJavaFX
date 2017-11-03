@@ -59,6 +59,7 @@ public class InputResultsController {
 
 	public void setTournament(Tournament value) throws TournamentEndedException {
 		tournament = value;
+		tourStage.setText(tournament.toString().toUpperCase());
 		if (!tournament.hasEnded()) {
 			if (!tournament.getCurrentRound().isComplete()) {
 				goalsAreScore = (tournament.getSportType() == SportType.GOALS_ARE_SCORED ? true : false);
@@ -192,6 +193,7 @@ public class InputResultsController {
 			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 			btnsubmit.setVisible(false);
 			lblResultSubmitted.setVisible(false);
+			tourStage.setText("TOURNAMENT HAS ENDED");
 		}
 	}// end set current
 
