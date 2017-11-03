@@ -62,6 +62,7 @@ public abstract class Tournament implements Serializable
 	 */
 	private static final Set<File> openFiles = new 	HashSet<>();
 	
+	
 	private static final long serialVersionUID = 1L;
 
 	/**

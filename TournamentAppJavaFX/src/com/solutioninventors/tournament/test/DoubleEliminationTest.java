@@ -63,6 +63,7 @@ public class DoubleEliminationTest
 			Test.displayMessage("Welcome to  \nThe " + tournament.toString() );
 			
 			DoubleElimination doubleSpecific = (DoubleElimination) tournament ; 
+			System.out.println( "From Main: " + doubleSpecific.getRoundArray());
 			try
 			{
 				

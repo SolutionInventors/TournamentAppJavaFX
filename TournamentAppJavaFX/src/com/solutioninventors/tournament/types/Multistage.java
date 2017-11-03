@@ -129,7 +129,7 @@ public class Multistage extends Tournament
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , knockoutHomeAndAway,
-				GroupStageType.SWISS, KnockoutType.SINGLE );
+				GroupStageType.SWISS, KnockoutType.SINGLE, false );
 		
 	}
 	
@@ -154,7 +154,7 @@ public class Multistage extends Tournament
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type, pWin , pDraw ,pLoss , breaker, numOfGroupRound , false , false,
-				GroupStageType.SWISS, KnockoutType.DOUBLE );
+				GroupStageType.SWISS, KnockoutType.DOUBLE, false );
 		
 	}
 	
@@ -181,7 +181,8 @@ public class Multistage extends Tournament
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type , pWin , pDraw ,pLoss, breaker , 
-				0 , groupHomeAndAway ,knockoutHomeAndAway , GroupStageType.ROUND_ROBIN, KnockoutType.SINGLE 	 );
+				0 , groupHomeAndAway ,knockoutHomeAndAway , 
+				GroupStageType.ROUND_ROBIN, KnockoutType.SINGLE, false 	 );
 		
 	}
 
@@ -209,7 +210,8 @@ public class Multistage extends Tournament
 					throws TournamentException, InvalidBreakerException
 	{
 		this( coms , type , pWin , pDraw ,pLoss, breaker , 
-				0 , groupHomeAndAway ,false , GroupStageType.ROUND_ROBIN , KnockoutType.DOUBLE	 );
+				0 , groupHomeAndAway ,false ,
+				GroupStageType.ROUND_ROBIN , KnockoutType.DOUBLE, false	 );
 		
 	}
 	
@@ -233,10 +235,10 @@ public class Multistage extends Tournament
 	 */
 	private Multistage(Competitor[] coms, SportType type , double pWin , double pDraw , 
 			double pLoss , TieBreaker breaker , int numOfGroupRound, boolean groupHomeAndAway,
-			boolean knockoutHomeAndAway , GroupStageType groupStageType, KnockoutType knockout ) 
+			boolean knockoutHomeAndAway , GroupStageType groupStageType, KnockoutType knockout, boolean shuffle ) 
 					throws TournamentException, InvalidBreakerException
 	{
-		super(type, coms);
+		super(coms, type, shuffle);
 		groupAwayMatches = groupHomeAndAway;
 		knockoutAwayMatches = knockoutHomeAndAway ;
 		

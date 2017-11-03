@@ -197,7 +197,7 @@ public class RoundRobinTournament extends GroupTournament
 			for( int i = 0 ; i < rounds.length ; i  ++ )
 			{
 				finalRounds[ i ] = rounds[ i ];
-				finalRounds[i].setName( "Round " + i );
+				finalRounds[i].setName( "Round " + (i+1) );
 				finalRounds[ i + rounds.length ] = inverseRounds[ i ] ;
 				finalRounds[ i + rounds.length ].setName( "Round " + (i + rounds.length) );
 			}
