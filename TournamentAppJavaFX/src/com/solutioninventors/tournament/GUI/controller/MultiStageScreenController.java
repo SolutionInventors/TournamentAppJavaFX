@@ -52,7 +52,7 @@ public class MultiStageScreenController {
 	private CheckBox standardBreaker;
 	private Btn btn = new Btn();
 	private String TournamentName;
-	private int tourType = 1;// 1 swiss, 2 round, 3 doubleRound
+	private int tourType = 1;// 1 swiss , 2 round, 3 doubleRound
 	private boolean singleDoubleElim = false;
 	private Boolean goalScored;
 	private Boolean standardbreaker = true;

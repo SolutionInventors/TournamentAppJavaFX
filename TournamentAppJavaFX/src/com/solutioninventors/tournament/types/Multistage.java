@@ -109,6 +109,9 @@ public class Multistage extends Tournament
 	private final KnockoutType knockoutType;
 	
 	/**
+	 * 
+	 * CREATES A SWISS SINGLE ELIMINATION MULTISTAGE TOURNAMENT<br>
+	 * 	
 	 * Creates this {@code Multistage} {@link Tournament} whose group stage would be a {@link SwissTournament} style and 
 	 * its knokoutStage would be a {@link SingleElimination}
 	 * @author Oguejiofor Chidiebere
@@ -135,6 +138,8 @@ public class Multistage extends Tournament
 	}
 	
 	/**
+	 * 
+	 * CREATES A SWISS DOUBLE ELIMINTION MULTISTAGE TOURNAMENT <br>
 	 * Creates a {@code Multistage} with the groupStage played as a {@link SwissTournament}  and 
 	 * the knock-out stage played as a {@link DoubleElimination}
 	  * @author Oguejiofor Chidiebere
@@ -161,6 +166,8 @@ public class Multistage extends Tournament
 	}
 	
 	/**
+	 * 
+	 * CREATE A ROUND ROBIN SINGLE ELIMINATION MULTISTAGE TOURNAMENT
 	 * Creates a {@code Multistage} with the group stage played as a {@link com.solutioninventors.tournament.types.group.RoundRobinTournament} and 
 	 * the knock-out stage played as {@link SingleElimination}
 	 *  @author Oguejiofor Chidiebere
@@ -190,6 +197,8 @@ public class Multistage extends Tournament
 	}
 
 	/**
+	 * Creates a ROUND ROUBIN DOUBLE ELIMINATION MULTISTAGE TOURNAMENT<BR>
+	 * 
 	 * Creates a {@code Multistage} with the groupstage played as a 
 	 * {@link com.solutioninventors.tournament.types.group.RoundRobinTournament} and
 	 * the lnockout stage played as a {@link DoubleElimination}. Note that 
@@ -219,6 +228,8 @@ public class Multistage extends Tournament
 	}
 	
 	/**
+	 * CREATES ANY COMBINATION THAT A MULTISTAGE TOURNAMENT CAN HAVE!!!<br>
+	 * 
 	 * Used to create a {@code Multistage} with any specification. 
 	 * @author Oguejiofor Chidiebere
 	 * @since v1.0

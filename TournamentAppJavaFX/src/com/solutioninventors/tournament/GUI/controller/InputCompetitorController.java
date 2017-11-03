@@ -67,6 +67,8 @@ public class InputCompetitorController {
 	private Font font[] = new Font[3];
 	private Stage window;
 
+	private boolean shuffleCompetitors;
+	
 	private InputStream url11 = getClass().getResourceAsStream(Paths.images + "clickme.PNG");
 	private File imageFileforChangeImage;
 	private File clickToaddImageFile = new File("clicktoaddimgae.png");
@@ -87,7 +89,7 @@ public class InputCompetitorController {
 	private double drawpoint;
 	private double losspoint;
 	// for Knock out
-	private boolean sigleOrDouble;
+	private boolean isKnockoutDouble;
 	private boolean homeandAway;
 	// for the images file count
 	private int img1 = 0;
@@ -137,7 +139,7 @@ public class InputCompetitorController {
 		noOfCompetitors = noofcomp;
 		TournamentType = TournamentTypes.KNOCKOUT;
 		homeandAway = homeAndAway;
-		sigleOrDouble = sigleTour;
+		isKnockoutDouble = sigleTour;
 		// System.out.println("KnockOut tournament called");
 		loadcomponents();
 	}
@@ -182,7 +184,7 @@ public class InputCompetitorController {
 		drawpoint = drawp;
 		losspoint = lossp;
 		tournamenttype = tourType;
-		sigleOrDouble = KOSinDob;
+		isKnockoutDouble = KOSinDob;
 		breakers = tieBreaker;
 		try {
 			tieBreakers = new TieBreaker(breakers);
@@ -403,7 +405,7 @@ public class InputCompetitorController {
 		try {
 			switch (TournamentType) {
 			case KNOCKOUT:
-				if (sigleOrDouble) {
+				if (isKnockoutDouble) {
 					tournament = new SingleEliminationTournament(goalsOrNoGoals, comps, homeandAway);
 				} else {
 					tournament = new DoubleElimination(goalsOrNoGoals, comps);
@@ -434,17 +436,32 @@ public class InputCompetitorController {
 				break;
 			case MULTISTAGE:
 				switch (tournamenttype) {
-				case 1:
-					tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint, tieBreakers,
-							onOfRounds, sigleOrDouble);
+				case 1://swiss
+					if( isKnockoutDouble ){
+						tournament= new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint,
+								tieBreakers, onOfRounds, shuffleCompetitors);
+					}
+					else
+						tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint, tieBreakers,
+								onOfRounds, isKnockoutDouble, shuffleCompetitors);
+						
+					
 					break;
-				case 2:
-					tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint, tieBreakers,
-							false, sigleOrDouble);
+				case 2://single roubin 
+					if( isKnockoutDouble )
+						tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint,
+								losspoint, tieBreakers, false, shuffleCompetitors);
+					else
+						tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint, 
+								tieBreakers, false, homeandAway, shuffleCompetitors);
 					break;
-				case 3:
-					tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint, tieBreakers,
-							true, sigleOrDouble);
+				case 3://double roubin 
+					if( isKnockoutDouble )
+						tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint,
+								losspoint, tieBreakers, true, shuffleCompetitors);
+					else
+						tournament = new Multistage(comps, goalsOrNoGoals, winpoint, drawpoint, losspoint, 
+								tieBreakers, true , homeandAway, shuffleCompetitors);
 					break;
 				}// end inner switch
 
