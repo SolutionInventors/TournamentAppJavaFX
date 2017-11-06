@@ -63,6 +63,8 @@ public class TieBreakerController {
 	private Btn btn = new Btn();
 	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
+	private boolean shuffleCompetitors;
+	private boolean isSingleKOhomeAndAway;
 
 	public void initialize() {
 		font = cm.loadfonts();
@@ -173,7 +175,7 @@ public class TieBreakerController {
 	}
 
 	public void setMultiStageTournament(String tn, Boolean goalScored, int rud, int noofcomp, double winp, double drawp,
-			double lossp, int tourType, boolean KOSinDob) {
+			double lossp, int tourType, boolean KOSinDob, boolean shuffleComps, boolean isSingleKOhomeandAway) {
 		TournamentName = tn;
 		this.goalScored = goalScored;
 		onOfRounds = rud;
@@ -184,6 +186,8 @@ public class TieBreakerController {
 		losspoint = lossp;
 		tournamenttype = tourType;
 		sigleOrDouble = KOSinDob;
+		isSingleKOhomeAndAway = isSingleKOhomeandAway;
+		shuffleCompetitors = shuffleComps;
 		loadcomponents();
 	}
 
@@ -211,7 +215,7 @@ public class TieBreakerController {
 
 				InputCompetitorController ic11 = (InputCompetitorController) loader.getController();
 				ic11.setMultiStageTournament(TournamentName, goalScored, onOfRounds, noOfCompetitors, winpoint,
-						drawpoint, losspoint, tournamenttype, sigleOrDouble, tieBreaker);
+						drawpoint, losspoint, tournamenttype, sigleOrDouble, isSingleKOhomeAndAway, tieBreaker, shuffleCompetitors);
 
 				btn.next(rootPane, root, "InputCompetitorScreen.fxml", "commonStyle.css");
 

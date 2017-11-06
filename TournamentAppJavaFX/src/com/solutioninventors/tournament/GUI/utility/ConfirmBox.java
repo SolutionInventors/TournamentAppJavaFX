@@ -27,6 +27,9 @@ public class ConfirmBox {
         Button yesButton = new Button("Yes");
         Button noButton = new Button("No");
         Button cancelButton = new Button("Cancel");
+        yesButton.setPrefSize(55, 25);
+        noButton.setPrefSize(55, 25);
+        cancelButton.setPrefSize(55, 25);
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
             answer = 1;
@@ -42,7 +45,7 @@ public class ConfirmBox {
         HBox hLayout = new HBox(10);
         
         VBox layout = new VBox(10);
-        hLayout.setPadding(new Insets(0,0,10,40));
+        hLayout.setPadding(new Insets(0,0,10,20));
         //Add buttons
         hLayout.getChildren().addAll(yesButton,noButton,cancelButton);
         layout.getChildren().addAll(label, hLayout);

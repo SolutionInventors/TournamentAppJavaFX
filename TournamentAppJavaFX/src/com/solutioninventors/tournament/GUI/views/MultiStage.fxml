@@ -157,6 +157,11 @@
                   <Font size="14.0" />
                </font>
             </CheckBox>
+            <CheckBox fx:id="checkBoxShuffleComps" mnemonicParsing="false" selected="true" text="Shuffle Competitors" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
          </children>
       </GridPane>
       <Label layoutX="233.0" layoutY="413.0" prefHeight="23.0" prefWidth="240.0" text="KNOCKOUT SPECS" textFill="RED">
@@ -169,7 +174,7 @@
             <Font name="Trebuchet MS" size="16.0" />
          </font>
       </Label>
-      <RadioButton fx:id="singleelim" layoutX="245.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" selected="true" text="Single" textFill="WHITE">
+      <RadioButton fx:id="KOSingle" layoutX="245.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" selected="true" text="Single" textFill="WHITE">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
@@ -177,7 +182,7 @@
             <ToggleGroup fx:id="type3" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="doubleelim" layoutX="350.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" text="Double" textFill="WHITE" toggleGroup="$type3">
+      <RadioButton fx:id="KODouble" layoutX="350.0" layoutY="445.0" mnemonicParsing="false" onAction="#tourselected" text="Double" textFill="WHITE" toggleGroup="$type3">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
@@ -198,6 +203,23 @@
             <Image url="/com/solutioninventors/tournament/GUI/resource/images/logo.png" />
          </image>
       </ImageView>
+      <GridPane layoutX="50.0" layoutY="464.0" prefHeight="30.0" prefWidth="372.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="199.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="173.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="lblHomeandAway" text="Home and Away">
+               <font>
+                  <Font name="Trebuchet MS" size="16.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="isSingleKOHomeandAway" mnemonicParsing="false" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
 <!--       <ImageView fitHeight="46.0" fitWidth="48.0" layoutX="13.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true"> -->
 <!--          <image> -->
 <!--             <Image url="/com/solutioninventors/tournament/GUI/resource/images/logo.jpg" /> -->

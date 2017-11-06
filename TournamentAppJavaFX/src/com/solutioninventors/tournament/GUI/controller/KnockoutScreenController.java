@@ -21,6 +21,7 @@ public class KnockoutScreenController {
 	@FXML private ToggleGroup ElimType;
 	@FXML private TextField txtNoofcompetitors;
 	@FXML private CheckBox homeandAway;
+	@FXML private CheckBox checkBoxShuffleComps;
 	@FXML private RadioButton singleelim;
 	@FXML private RadioButton doubleelim;
 	@FXML private Text txtTourHighlight; 
@@ -29,7 +30,7 @@ public class KnockoutScreenController {
 	@FXML private Label  lbltourtype; 
 	@FXML private Label lbltourapp;
 	@FXML private AnchorPane  rootPane;
-		  private boolean singleDoubleElim = true;
+		  private boolean isKnockoutSingle = true;
 		  private boolean HomeandAwayFixture = false;
 		  private Btn btn = new Btn();
 		  private Boolean goalScored;
@@ -70,12 +71,12 @@ public class KnockoutScreenController {
 	@FXML
 	public void tourselected(ActionEvent e) {
 		if (singleelim.isSelected()) {
-			singleDoubleElim=true;
+			isKnockoutSingle=true;
 			lblhomeAway.setVisible(true);
 			homeandAway.setVisible(true);
 			HomeandAwayFixture = false;
 		} else if (doubleelim.isSelected()) {
-			singleDoubleElim=false;
+			isKnockoutSingle=false;
 			lblhomeAway.setVisible(false);
 			homeandAway.setVisible(false);
 			HomeandAwayFixture = false;
@@ -117,7 +118,7 @@ public class KnockoutScreenController {
 		FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
-			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), singleDoubleElim, HomeandAwayFixture);
+			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), isKnockoutSingle, HomeandAwayFixture,checkBoxShuffleComps.isSelected());
 			btn.next(rootPane, root, "Input.fxml","commonStyle.css");
 			//btn.next(rootPane, root);
 			}

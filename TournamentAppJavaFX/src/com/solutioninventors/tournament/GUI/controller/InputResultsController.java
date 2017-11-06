@@ -9,6 +9,7 @@ import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.ResultCannotBeSetException;
 import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.types.Tournament;
+import com.solutioninventors.tournament.types.knockout.DoubleElimination;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
@@ -199,7 +200,7 @@ public class InputResultsController {
 
 	@FXML
 	public void getResults(ActionEvent e) throws TournamentEndedException, ResultCannotBeSetException, IOException {
-		boolean emptyBox = false, singleTieDraw = false, invalidnogoalScore = false;// DoubleElimDraw = false,
+		boolean emptyBox = false, singleTieDraw = false, invalidnogoalScore = false, DoubleElimDraw = false;
 		double score1, score2;
 		int count = 0;
 		if (goalsAreScore) {
@@ -226,7 +227,7 @@ public class InputResultsController {
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					emptyBox = true;
-					//e1.printStackTrace();
+					e1.printStackTrace();
 					System.out.println("from exception");
 					break;
 					
@@ -234,8 +235,8 @@ public class InputResultsController {
 				}
 			}
 
-			/*if (emptyBox == false && tournament instanceof DoubleElimination)
-				DoubleElimDraw = checkforDrawNoGoal();*/
+			if (emptyBox == false && tournament instanceof DoubleElimination)
+				DoubleElimDraw = checkforDrawNoGoal();
 			if (emptyBox == false && tournament instanceof SingleEliminationTournament)
 				if (((SingleEliminationTournament) tournament).isTieRound())
 					singleTieDraw = checkforDrawNoGoal();
@@ -256,9 +257,9 @@ public class InputResultsController {
 			cm.ErrorMessage("Empty Box", "Please check that all the boxes have been filled");
 		} else if (singleTieDraw) {
 			cm.ErrorMessage("Tie Round", "You Cannot input draw in a tie Round");
-		} /*else if (DoubleElimDraw) {
-			AlertBox.display("No Draw", "Draw is not allowed in a Double Elimination");
-		}*/ else if (invalidnogoalScore) {
+		} else if (DoubleElimDraw) {
+			cm.ErrorMessage("No Draw", "Draw is not allowed in a Double Elimination");
+		} else if (invalidnogoalScore) {
 			cm.ErrorMessage("Invalid Result", "You cannot input a W D or L D etc");
 		} else {
 			for (int i = 0; i < currentFixtures.length; i++) {

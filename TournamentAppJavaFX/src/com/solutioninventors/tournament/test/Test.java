@@ -9,21 +9,28 @@ package com.solutioninventors.tournament.test;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
+import com.solutioninventors.tournament.types.group.StandingTable;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.Round;
 
 public class Test {
 	public static void displayStandingTable(String[][] stringTable) {
-		StringBuilder builder = new StringBuilder(1000);
 
 		
+		displayMessage("The table is \n" + getTableToDisplay(stringTable));
 		
-		if (stringTable[0].length == 8)
+
+	}
+
+	public static String getTableToDisplay(String[][] stringTable )
+	{
+		StringBuilder builder  = new StringBuilder(1000);
+		if (stringTable[0].length == 9)
 			builder.append(String.format( "%-20s %s", "Name" , 
-					"W D L F A GD  Pts\n"));
+					"P W D L F A GD  Pts\n"));
 		else
 			builder.append(String.format( "%-20s %s", "Name" , 
-					"W D L Pts\n"));
+					"P W D L Pts\n"));
 			
 		for (int row = 0; row < stringTable.length; row++) {
 			for (int col = 0; col < stringTable[row].length; col++)
@@ -38,9 +45,7 @@ public class Test {
 			builder.append("\n");
 
 		}
-		displayMessage("The table is \n" + builder.toString());
-		;
-
+		return builder.toString() ;
 	}
 
 	public static void displayFixtures(Fixture[] currentFixtures) {
@@ -49,6 +54,22 @@ public class Test {
 
 	}
 
+	public static String getAllTables(StandingTable table)
+	{
+		StringBuilder builder = new StringBuilder(400);
+		
+		builder.append( "The Tournament Tables are:\n\n" );
+		builder.append( "Home Fixtures:\n" );
+		builder.append( Test.getTableToDisplay( table.getHomeStringTable()  ) );
+		
+		builder.append( "\nAway Fixtures:\n" );
+		builder.append( Test.getTableToDisplay( table.getAwayStringTable()  ) );
+		
+		builder.append( "\nAll Fixtures:\n" );
+		builder.append( Test.getTableToDisplay( table.getStringTable()  ) );
+		return builder.toString();
+	}
+	
 	public static String getFixutures(Fixture[] currentFixtures)
 	{
 		StringBuilder builder = new StringBuilder(500);
@@ -68,24 +89,27 @@ public class Test {
 	public static void displayRoundResults(Round currentRound)
 	{
 		
-		try {
-			displayMessage(getResultString(currentRound));
-		} catch (IncompleteFixtureException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		displayMessage(getResultString(currentRound));
 
 	}
 
-	public static String getResultString(Round currentRound) throws IncompleteFixtureException
+	public static String getResultString(Round currentRound)
 	{
 		Fixture[] fixtures = currentRound.getFixtures();
 
 		StringBuilder builder = new StringBuilder(500);
 		builder.append("Round Results: \n");
 		for (Fixture fixture : fixtures) {
-			builder.append(String.format("%s %.1f VS %.1f %s\n", fixture.getCompetitorOne(),
-					fixture.getCompetitorOneScore(), fixture.getCompetitorTwoScore(), fixture.getCompetitorTwo()));
+			try
+			{
+				builder.append(String.format("%s %.1f VS %.1f %s\n", fixture.getCompetitorOne(),
+						fixture.getCompetitorOneScore(true), fixture.getCompetitorTwoScore(true), fixture.getCompetitorTwo()));
+			}
+			catch (IncompleteFixtureException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return builder.toString();
 	}

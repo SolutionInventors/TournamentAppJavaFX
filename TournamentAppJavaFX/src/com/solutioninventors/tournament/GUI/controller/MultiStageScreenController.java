@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.solutioninventors.tournament.GUI.utility.Paths;
 import com.solutioninventors.tournament.utils.Breaker;
+import com.solutioninventors.tournament.utils.SportType;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,42 +19,31 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MultiStageScreenController {
-	@FXML
-	private RadioButton swiss;
-	@FXML
-	private RadioButton round;
-	@FXML
-	private RadioButton doubleRound;
-	@FXML
-	private RadioButton singleelim;
-	@FXML
-	private RadioButton doubleelim;
-	@FXML
-	private Label noofround;
-	@FXML
-	private TextField txtnoOfrounds;
-	@FXML
-	private TextField txtnoOfcomps;
-	@FXML
-	private TextField txtwinpoint;
-	@FXML
-	private TextField txtdrawpoint;
-	@FXML
-	private TextField txtlosspoint;
-	@FXML
-	private Text THeader;
+	@FXML private RadioButton swiss;
+	@FXML private RadioButton round;
+	@FXML private RadioButton doubleRound;
+	@FXML private RadioButton KOSingle;
+	@FXML private RadioButton KODouble;
+	@FXML private Text THeader;
 	@FXML private Text txtdisplay;
-	@FXML private Text  txtTourHighlight;
-	@FXML private Label  lbltourtype; 
+	@FXML private Text txtTourHighlight;
+	@FXML private Label noofround;
+	@FXML private Label lblHomeandAway;
+	@FXML private Label lbltourtype; 
 	@FXML private Label lbltourapp;
-	@FXML
-	private AnchorPane rootPane;
-	@FXML
-	private CheckBox standardBreaker;
+	@FXML private TextField txtnoOfrounds;
+	@FXML private TextField txtnoOfcomps;
+	@FXML private TextField txtwinpoint;
+	@FXML private TextField txtdrawpoint;
+	@FXML private TextField txtlosspoint;
+	@FXML private CheckBox standardBreaker; 
+	@FXML private CheckBox checkBoxShuffleComps;
+	@FXML private CheckBox isSingleKOHomeandAway;
+	@FXML private AnchorPane rootPane;
 	private Btn btn = new Btn();
 	private String TournamentName;
-	private int tourType = 1;// 1 swiss , 2 round, 3 doubleRound
-	private boolean singleDoubleElim = false;
+	private int tourType = 1;// 1 SWISS , 2 round, 3 doubleRound
+	private boolean isKOSingle = true;
 	private Boolean goalScored;
 	private Boolean standardbreaker = true;
 	private CommonMethods cm = new CommonMethods();
@@ -122,10 +112,15 @@ public class MultiStageScreenController {
 
 	@FXML
 	public void tourselected(ActionEvent e) {
-		if (singleelim.isSelected()) {
-			singleDoubleElim = false;
-		} else if (doubleelim.isSelected()) {
-			singleDoubleElim = true;
+		if (KOSingle.isSelected()) {
+			isKOSingle = true;
+			lblHomeandAway.setVisible(true);
+			isSingleKOHomeandAway.setVisible(true);
+		} else if (KODouble.isSelected()) {
+			isKOSingle = false;
+			lblHomeandAway.setVisible(false);
+			isSingleKOHomeandAway.selectedProperty().set(false);
+			isSingleKOHomeandAway.setVisible(false);
 		}
 	}
 
@@ -138,19 +133,6 @@ public class MultiStageScreenController {
 		}
 	}// end updateStandardBreaker
 
-/*	@FXML
-	public void updaterud(KeyEvent event) {
-		if (!txtnoOfcomps.getText().isEmpty()) {
-			try {
-				String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1) * 2));
-				noofround.setText(noofrnd);
-			} catch (NumberFormatException e) {
-				noofround.setText("Please input the correct no of competitors");
-			}
-		} // end if
-
-	}
-*/
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty()
@@ -164,7 +146,7 @@ public class MultiStageScreenController {
 		} else {
 
 			FXMLLoader loader = new FXMLLoader();
-			Breaker[] standardBreakers = Breaker.getBreakers(Breaker.ALL, Breaker.GOAL_DEPENDENT);
+			Breaker[] standardBreakers =Breaker.getStandardBreaker(goalScored ? SportType.GOALS_ARE_SCORED : SportType.GOALS_ARE_NOT_SCORED); 
 			if (standardbreaker) {
 				Pane root = loader
 						.load(getClass().getResource(Paths.viewpath + "InputCompetitorScreen.fxml").openStream());
@@ -172,7 +154,7 @@ public class MultiStageScreenController {
 				ic.setMultiStageTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
 						Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()), tourType,
-						singleDoubleElim, standardBreakers);
+						isKOSingle, isSingleKOHomeandAway.isSelected(), standardBreakers, checkBoxShuffleComps.isSelected());
 
 				btn.next(rootPane, root, "InputCompetitorScreen.fxml", "commonStyle.css");
 			} else {
@@ -181,7 +163,7 @@ public class MultiStageScreenController {
 				tb.setMultiStageTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
 						Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
 						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()), tourType,
-						singleDoubleElim);
+						isKOSingle,isSingleKOHomeandAway.isSelected(), checkBoxShuffleComps.isSelected());
 
 				btn.next(rootPane, root, "TieBreaker.fxml", "commonStyle.css");
 			}

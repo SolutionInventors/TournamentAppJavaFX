@@ -29,7 +29,7 @@ public class FixturesController {
 	private ArrayList<Label> compName;
 	private ArrayList<Label> VS;
 	private ArrayList<ImageView> logo;
-	GridPane grid;
+	private GridPane grid;
 	private Round[] pendingRounds;
 	private Tournament tournament;
 	private Competitor comp1;
