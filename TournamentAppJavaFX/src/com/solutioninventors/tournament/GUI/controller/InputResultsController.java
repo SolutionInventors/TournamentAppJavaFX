@@ -245,8 +245,12 @@ public class InputResultsController {
 				String s1 = (scoresnoGoal.get(i).getValue());
 				String s2 = (scoresnoGoal.get(i + 1).getValue());
 
-				if (s1.equals("W") && s2.equals("W") || s1.equals("L") && s2.equals("L")
-						|| s1.equals("W") && s2.equals("D") || s1.equals("L") && s2.equals("D")) {
+				if (		s1.equals("W") && s2.equals("W") 
+						|| s1.equals("L") && s2.equals("L")
+						|| s1.equals("W") && s2.equals("D") 
+						|| s1.equals("D") && s2.equals("W")
+						|| s1.equals("L") && s2.equals("D")
+						|| s1.equals("D") && s2.equals("L")) {
 					invalidnogoalScore = true;
 				}
 			}

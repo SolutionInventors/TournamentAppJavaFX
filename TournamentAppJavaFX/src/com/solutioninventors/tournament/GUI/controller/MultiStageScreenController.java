@@ -135,6 +135,23 @@ public class MultiStageScreenController {
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
+		//gets the values of the win points and compare
+				boolean correctPoints = true;
+				try {
+					double winpoint = Double.valueOf(txtwinpoint.getText());
+					double drawpoint = Double.valueOf(txtdrawpoint.getText());
+					double losspoint = Double.valueOf(txtlosspoint.getText());
+					
+					if (winpoint>drawpoint && winpoint>losspoint && drawpoint>losspoint) {
+						correctPoints = false;
+					} else {
+						correctPoints = true;
+					}
+				} catch (NumberFormatException e ) {
+					correctPoints = true;
+					e.printStackTrace();
+				}
+				
 		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty()
 				|| txtdrawpoint.getText().isEmpty() || txtlosspoint.getText().isEmpty()) {
 
@@ -143,7 +160,9 @@ public class MultiStageScreenController {
 		} else if ( Integer.valueOf(txtnoOfcomps.getText()) <= 4 || Integer.valueOf(txtnoOfcomps.getText()) %4 !=0 ) {
 			cm.ErrorMessage("Invalid no of Competitors",
 					"In a Muliti-Stage tournament the No of competitors must be a greater than 4 and multiple of 4 e.g 4,8,12");
-		} else {
+		} else if ( correctPoints ) {
+			cm.ErrorMessage("Invalid Pointing System", "Please check the pointing System, win Point must be greater than draw point and loss point etc");
+		}else {
 
 			FXMLLoader loader = new FXMLLoader();
 			Breaker[] standardBreakers =Breaker.getStandardBreaker(goalScored ? SportType.GOALS_ARE_SCORED : SportType.GOALS_ARE_NOT_SCORED); 
