@@ -77,6 +77,7 @@ public class FixturesController {
 			tempint = 0;
 		if (chkAllFixtures.isSelected()) {
 			tourStage.setText("PENDING FIXTURES");
+			pendingRounds = new Round[tournament.getPendingRounds().length];
 			pendingRounds = tournament.getPendingRounds();
 			compName = null;
 			VS = null;

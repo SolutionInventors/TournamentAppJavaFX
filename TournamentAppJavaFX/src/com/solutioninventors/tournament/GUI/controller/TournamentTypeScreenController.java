@@ -35,6 +35,7 @@ public class TournamentTypeScreenController {
 	@FXML private RadioButton rbGroup;
 	@FXML private AnchorPane  rootPane;
 	@FXML private CheckBox goalsScored;
+	private String tournamentAppName;
 	
 	
 	private String message;
@@ -86,6 +87,10 @@ public class TournamentTypeScreenController {
 
 	@FXML
 	public void next(ActionEvent event) throws IOException {
+		if(tournamentName.getText().trim().equals("") || tournamentName.getText() == null) {
+			tournamentAppName = "Tournament";
+		}else
+			tournamentAppName = tournamentName.getText();
 		//((Node) event.getSource()).getScene().getWindow().hide();
 		//Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
@@ -93,21 +98,22 @@ public class TournamentTypeScreenController {
 		
 		//to pass the tournament name to the next screen
 		switch (nextFxml) {
+		
 		case "Challenge.fxml":
 			ChallengeScreenController ch = (ChallengeScreenController) loader.getController();
-			ch.setTournamentName(tournamentName.getText(),goalScored);
+			ch.setTournamentName(tournamentAppName,goalScored);
 			break;
 		case "MultiStage.fxml":
 			MultiStageScreenController ms = (MultiStageScreenController) loader.getController();
-			ms.setTournamentName(tournamentName.getText(),goalScored);
+			ms.setTournamentName(tournamentAppName,goalScored);
 			break;
 		case "GroupStage.fxml":
 			GroupStageScreenController gr = (GroupStageScreenController) loader.getController();
-			gr.setTournamentName(tournamentName.getText(),goalScored);
+			gr.setTournamentName(tournamentAppName,goalScored);
 			break;
 		default:
 			KnockoutScreenController ko = (KnockoutScreenController) loader.getController();
-			ko.setTournamentName(tournamentName.getText(),goalScored);
+			ko.setTournamentName(tournamentAppName,goalScored);
 			break;
 		}//end switch
 

@@ -81,7 +81,7 @@
             <Font name="Trebuchet MS Bold" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="tournamentName" layoutX="25.0" layoutY="378.0" prefHeight="25.0" prefWidth="240.0" text="IIT Football League" />
+      <TextField fx:id="tournamentName" layoutX="25.0" layoutY="378.0" prefHeight="25.0" prefWidth="240.0" promptText="Tournament" />
       <Label layoutX="27.0" layoutY="334.0" prefHeight="17.0" prefWidth="240.0" text="Please input the Tournament name ">
          <font>
             <Font size="14.0" />

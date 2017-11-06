@@ -114,8 +114,8 @@
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtnoOfcomps" onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" text="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <TextField fx:id="txtnoOfrounds" text="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <TextField fx:id="txtnoOfcomps" onKeyPressed="#updaterud" onKeyReleased="#updaterud" onKeyTyped="#updaterud" promptText="4" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <TextField fx:id="txtnoOfrounds" promptText="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
             <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="22.0" text="W" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                <font>
                   <Font name="System Bold" size="18.0" />

@@ -64,8 +64,8 @@
                </font>
             </Label>
             <CheckBox fx:id="homeandAway" mnemonicParsing="false" onAction="#homeAway" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtNoofcompetitors" text="4" GridPane.columnIndex="1" />
-            <CheckBox fx:id="checkBoxShuffleComps" mnemonicParsing="false"  selected="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNoofcompetitors" promptText="4" GridPane.columnIndex="1" />
+            <CheckBox fx:id="checkBoxShuffleComps" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Shuffle Competitors" GridPane.rowIndex="2">
                <font>
                   <Font name="Trebuchet MS" size="16.0" />

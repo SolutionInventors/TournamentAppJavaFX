@@ -89,7 +89,7 @@ public class GroupStageScreenController {
 			tourType = 2;
 			txtnoOfrounds.setText("2");
 			txtnoOfrounds.editableProperty().set(false);
-			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
+			noofround.setText(txtnoOfcomps.getText()== null || txtnoOfcomps.getText().equals("")? "0": String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
 			noofround.setVisible(true);
 			txtnoOfrounds.setVisible(false);
 			message = "In a                         robin tournament, each competitor plays every other competitor once. The no of rounds is determined by the no of competitors. The winner is determined by the ranking table which is based on the no of Wins, Draws , Goals Scored etc";
@@ -98,7 +98,7 @@ public class GroupStageScreenController {
 			tourType = 3;
 			txtnoOfrounds.setText("2");
 			txtnoOfrounds.setVisible(false);
-			noofround.setText(String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)*2));
+			noofround.setText(txtnoOfcomps.getText()== null || txtnoOfcomps.getText().equals("")? "0": String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
 			noofround.setVisible(true);
 			txtTourHighlight.setText("DOUBLE ROUND");
 			message = "In a                          robin tournament, each competitor plays every other competitor twice.The no of rounds is determined by the no of competitors. Most association football leagues in the world are organized on a double round-robin basis, in which every team plays all others in its league once at home and once away.";

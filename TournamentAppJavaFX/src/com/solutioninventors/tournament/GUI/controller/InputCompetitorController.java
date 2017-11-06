@@ -42,7 +42,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -310,8 +309,8 @@ public class InputCompetitorController {
 
 				file[i] = clickToaddImageFile;
 
-				System.out.println("from to string of url 1");
-				System.out.println(url1.toString());
+				//System.out.println("from to string of url 1");
+				//System.out.println(url1.toString());
 				// file[i] = new File(url1.toURI());
 				imageTracker[i] = i;// track the location in which Click to add image is used
 			}
