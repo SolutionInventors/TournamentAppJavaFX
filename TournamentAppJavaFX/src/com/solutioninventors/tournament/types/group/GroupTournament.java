@@ -60,7 +60,8 @@ public abstract class GroupTournament extends Tournament
 		
 		if ( comps.length < 3 )
 			throw new TournamentException("A group tournament must have total comopettitors > 2" );
-		
+		if(pWin <= pDraw || pWin <= pLoss || pDraw <= pLoss )
+			throw new TournamentException("The points are invalid" );
 		if ( breaker == null || !Arrays.stream( breaker.getBreakers() )
 				.allMatch( b -> b.getType() == Breaker.GROUP_BREAKER ||
 							b.getType() ==  Breaker.ALL ))
