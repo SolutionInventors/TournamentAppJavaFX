@@ -53,6 +53,19 @@ public abstract class GroupTournament extends Tournament
 	 */
 	private Round[] rounds;
 	
+	/**
+	 * This constructor initialises this {@code GroupTournament} with the required
+	 * parameters.
+	 *@param comps the Competitors in this {@code Tournament}
+	 *@param type the {@code SportType }of this {@code Tournament}
+	 *@param pWin the point for a win in this {@code GroupTournament}
+	 *@param pDraw the point for a draw in this {@code GroupTournament}
+	 *@param pLoss the point for a loss in this {@code GroupTournament}
+	 *@param breaker a {@link com.solutioninventors.tournament.utils.TieBreaker}
+	 *that encapsulates the logic for breaking ties in this {@code Tournament}
+	 *@throws InvalidBreakerException when any breaker is invalid
+	 *@throws TournamentException when wrong parameters are inputed
+	 */
 	public GroupTournament(Competitor[] comps, SportType type, double pWin, double pDraw, double pLoss,
 			TieBreaker breaker) throws InvalidBreakerException, TournamentException {
 		
@@ -210,7 +223,7 @@ public abstract class GroupTournament extends Tournament
 		if ( hasEnded() )
 			return "Tournament Has Ended";
 		
-		return "Round " + ( getCurrentRoundNum()+1) ;
+		return "Round " + ( getCurrentRoundNum() + 1) ;
 	}
 
 	/**
