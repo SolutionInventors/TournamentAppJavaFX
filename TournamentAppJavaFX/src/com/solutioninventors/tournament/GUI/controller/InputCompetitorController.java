@@ -142,6 +142,7 @@ public class InputCompetitorController {
 		homeandAway = homeAndAway;
 		isKOSingle = sigleTour;
 		shuffleCompetitors = shuffleComps;
+		//System.out.println(shuffleCompetitors);
 		loadcomponents();
 	}
 
@@ -188,6 +189,7 @@ public class InputCompetitorController {
 		isKOSingle = koSingleDoub;
 		isSingleKOHomeandAway = singleKohomeaway;
 		shuffleCompetitors = shuffleComps;
+	//	System.out.println(shuffleCompetitors);
 		breakers = tieBreaker;
 		try {
 			tieBreakers = new TieBreaker(breakers);
@@ -402,9 +404,9 @@ public class InputCompetitorController {
 			switch (TournamentType) {
 			case KNOCKOUT:
 				if (isKOSingle) {
-					tournament = new SingleEliminationTournament(goalsOrNoGoals, comps, homeandAway);
+					tournament = new SingleEliminationTournament(goalsOrNoGoals, comps, homeandAway,shuffleCompetitors);
 				} else {
-					tournament = new DoubleElimination(goalsOrNoGoals, comps);
+					tournament = new DoubleElimination(goalsOrNoGoals, comps,shuffleCompetitors);
 				}
 
 				break;

@@ -71,7 +71,7 @@
          </children>
       </GridPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e8eb" height="249.0" layoutX="341.0" layoutY="150.0" stroke="#686262" strokeType="INSIDE" width="296.0" />
-      <Text fx:id="txtdisplay" layoutX="354.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                       is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination" wrappingWidth="271.0000029951334">
+      <Text fx:id="txtdisplay" layoutX="354.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In a                                       is divided into rounds each competitors plays at least one fixture per round the winner of each fixture advances to the next round. Knockout tournament models include single elimination and double elimination" wrappingWidth="271.0000029951334">
          <font>
             <Font name="Trebuchet MS" size="19.0" />
          </font>

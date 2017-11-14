@@ -47,5 +47,9 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </CheckBox>
+      <Label fx:id="lblNewRound" layoutX="431.0" layoutY="476.0" prefHeight="45.0" prefWidth="188.0" style="-fx-background-color: white;" text="New Round.                Click the Input Score Tab" textFill="RED" wrapText="true">
+         <font>
+            <Font name="Trebuchet MS" size="16.0" />
+         </font></Label>
    </children>
 </AnchorPane>

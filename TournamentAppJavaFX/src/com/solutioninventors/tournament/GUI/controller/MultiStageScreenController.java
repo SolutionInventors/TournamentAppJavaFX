@@ -87,6 +87,7 @@ public class MultiStageScreenController {
 			// competitors";
 		} else if (round.isSelected()) {
 			tourType = 2;
+			txtnoOfrounds.setText("2");
 			txtnoOfrounds.setVisible(false);
 			noofround.setText(String.valueOf(3));
 			noofround.setVisible(true);
@@ -97,6 +98,7 @@ public class MultiStageScreenController {
 
 		} else if (doubleRound.isSelected()) {
 			tourType = 3;
+			txtnoOfrounds.setText("2");
 			txtnoOfrounds.setVisible(false);
 			noofround.setText(String.valueOf(6));
 			noofround.setVisible(true);

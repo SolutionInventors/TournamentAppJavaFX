@@ -33,7 +33,7 @@
       </TabPane>
    </center>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar fx:id="myMenuBar" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="true" text="File">
             <items>

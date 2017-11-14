@@ -79,7 +79,7 @@ public class GroupStageScreenController {
 		//String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2));
 		if (swiss.isSelected()) {
 			tourType = 1;
-			txtnoOfrounds.setText("2");
+			txtnoOfrounds.setText("");
 			txtnoOfrounds.editableProperty().set(true);
 			txtnoOfrounds.setVisible(true);
 			noofround.setVisible(false);
@@ -87,12 +87,12 @@ public class GroupStageScreenController {
 			txtTourHighlight.setText("SWISS STYLE");
 		} else if (round.isSelected()) {
 			tourType = 2;
-			//txtnoOfrounds.setText("2");
+			txtnoOfrounds.setText("2");
 			txtnoOfrounds.editableProperty().set(false);
 			txtnoOfrounds.setVisible(false);
 			noofround.setVisible(true);
 			noofround.setText(txtnoOfcomps.getText()== null || txtnoOfcomps.getText().equals("")? "0": String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1))));
-			System.out.println(noofround.getText());
+			//System.out.println(noofround.getText());
 			message = "In a                         robin tournament, each competitor plays every other competitor once. The no of rounds is determined by the no of competitors. The winner is determined by the ranking table which is based on the no of Wins, Draws , Goals Scored etc";
 			txtTourHighlight.setText("SINGLE ROUND");
 		}  else if (doubleround.isSelected()) {
