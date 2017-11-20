@@ -382,10 +382,12 @@ public class Competitor implements Serializable
 	private void copyFile(File fileToCopy, File fileToPaste)
 	{
 		try ( 
-				FileChannel input = new FileInputStream(fileToCopy).getChannel();
-				FileChannel output = new FileOutputStream(fileToPaste).getChannel();)
+				FileInputStream copyStream = new FileInputStream(fileToCopy);
+				FileOutputStream pasteStream = new FileOutputStream(fileToPaste);
+				FileChannel pasteChannel = pasteStream.getChannel();)
 		{
-			output.transferFrom(input, 0, input.size());
+			copyStream.getChannel()
+				.transferFrom(pasteChannel, 0, pasteChannel.size());
 		} 
 		catch (FileNotFoundException e) 
 		{

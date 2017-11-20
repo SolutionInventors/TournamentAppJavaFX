@@ -5,7 +5,6 @@ import java.io.File;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.knockout.SingleEliminationTournament;
 import com.solutioninventors.tournament.utils.Competitor;
-import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.SportType;
 
 public class SingleElimShiffleTest {

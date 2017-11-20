@@ -92,7 +92,6 @@ public class FRSCIScreenController {
 				e.printStackTrace();
 			}
 		});
-
 		MenuNew.setAccelerator(new KeyCodeCombination(KeyCode.N, 
 				KeyCombination.SHORTCUT_DOWN));
 		MenuOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, 
@@ -102,7 +101,7 @@ public class FRSCIScreenController {
 		/*MenuSaveas.setAccelerator(new KeyCodeCombination(KeyCode.N, 
                 KeyCombination.));*/
 		//to create the music interface
-		try {
+		try( InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png");) {
 			musicStage = new Stage();
 
 			Parent root;
@@ -110,7 +109,6 @@ public class FRSCIScreenController {
 			root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
 
 			Scene scene = new Scene(root);
-			InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png");
 			musicStage.getIcons().add(new Image(url1));
 			musicStage.setResizable(false);
 			musicStage.setScene(scene);
@@ -124,7 +122,7 @@ public class FRSCIScreenController {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	public void changetab(int tabtoswitch) {

@@ -491,6 +491,7 @@ public class InputCompetitorController {
 		window.setResizable(false);
 		window.show();
 		window.setTitle(TournamentName);
+		url1.close();
 	}// end finish method
 
 	private void closeprogram() {

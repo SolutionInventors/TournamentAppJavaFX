@@ -11,7 +11,6 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import com.solutioninventors.tournament.exceptions.IncompleteFixtureException;
-import com.solutioninventors.tournament.exceptions.InvalidBreakerException;
 import com.solutioninventors.tournament.exceptions.MoveToNextRoundException;
 import com.solutioninventors.tournament.exceptions.NoFixtureException;
 import com.solutioninventors.tournament.exceptions.OnlyOutstandingAreLeftException;
@@ -20,12 +19,9 @@ import com.solutioninventors.tournament.exceptions.TournamentEndedException;
 import com.solutioninventors.tournament.exceptions.TournamentException;
 import com.solutioninventors.tournament.types.Challenge;
 import com.solutioninventors.tournament.types.Tournament;
-import com.solutioninventors.tournament.types.group.StandingTable;
-import com.solutioninventors.tournament.utils.Breaker;
 import com.solutioninventors.tournament.utils.Competitor;
 import com.solutioninventors.tournament.utils.Fixture;
 import com.solutioninventors.tournament.utils.SportType;
-import com.solutioninventors.tournament.utils.TieBreaker;
 
 public class ChallengeTest {
 

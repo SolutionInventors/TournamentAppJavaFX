@@ -63,8 +63,4 @@ public class CompetitorStatusController {
 	
 	}//end utility method
 	
-	
-	
-	
-	
 }//end class

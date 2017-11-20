@@ -424,13 +424,11 @@ public abstract class Tournament implements Serializable
 	private static void writeSavedList(File file , List<File> tourList) throws IOException
 	{
 		tourList.add( file );
-		ObjectOutputStream output = null ;
-		try
+		try( ObjectOutputStream output = 
+				new ObjectOutputStream( new FileOutputStream(savedTournaments ) );)
 		{
-			output = new 
-					ObjectOutputStream( new FileOutputStream(savedTournaments ) );
+					
 			output.writeObject( tourList );
-			output.close();
 			openFiles.add( file );
 		}
 		catch (IOException e)
