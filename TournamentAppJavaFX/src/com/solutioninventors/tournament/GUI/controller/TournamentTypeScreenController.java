@@ -47,11 +47,11 @@ public class TournamentTypeScreenController {
 	
 	@FXML public void radioSelected(ActionEvent event) {
 		if (rbChallenge.isSelected()) {
-			message = "In a                                     champions retain their title until they are defeated by an opponent, known as the challenger.The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
+			message = "In a                                     champions retain their title until they are defeated by an opponent, known as the challenger. The right to become a contender may be awarded through a tournament, as in chess, or through a ranking system";
 			nextFxml = "Challenge.fxml";
 			txtTourHighlight.setText("CHALLENGE TOURNAMENT");
 		} else if (rbMultiStage.isSelected()) {
-			message = "In a                                     The competitors are divided into multiple groups, which play separate round-robins in parallel.Many tournaments are held in multiple stages, with the top teams in one stage progressing to the next.";
+			message = "In a                                     The competitors are divided into multiple groups, which play separate round-robins in parallel. Many tournaments are held in multiple stages, with the top teams in one stage progressing to the next.";
 			nextFxml = "MultiStage.fxml";
 			txtTourHighlight.setText("MULTISTAGE TOURNAMENT");
 		} else if (rbGroup.isSelected()) {
@@ -59,7 +59,7 @@ public class TournamentTypeScreenController {
 			nextFxml = "GroupStage.fxml";
 			txtTourHighlight.setText("GROUP TOURNAMENT");
 		} else {
-			message = "In a                                      is divided into rounds each competitors plays at least one fixture per round thee winner of each fixture advances to the next round. Knock out tournament models include single elimination and double elimination";
+			message = "In a                                      is divided into rounds each competitors plays at least one fixture per round the winner of each fixture advances to the next round. Knockout tournament models include single elimination and double elimination";
 			nextFxml = "Knockout.fxml";
 			txtTourHighlight.setText("KNOCKOUT TOURNAMENT");
 		} // end if

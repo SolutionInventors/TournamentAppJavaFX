@@ -34,6 +34,7 @@ public class ViewResultsController {
 	@FXML private ScrollPane scrollPane;
 	@FXML private Label tourStage;
 	@FXML private Label msgboxlbl;
+	@FXML private Label lblNewRound;
 	@FXML private Rectangle msgboxrect;
 	@FXML private Button btnMoveNext;
 	@FXML private CheckBox chkAllResults;
@@ -64,6 +65,7 @@ public class ViewResultsController {
 		msgboxrect.setVisible(false);
 		msgboxlbl.setVisible(false);
 		btnMoveNext.setVisible(true);
+		lblNewRound.setVisible(false);
 		//chkAllResults.setVisible(true);
 
 		tournament = value;
@@ -84,6 +86,7 @@ public class ViewResultsController {
 		} // end if tournament has not ended
 		else {
 			btnMoveNext.setVisible(false);
+			lblNewRound.setVisible(false);
 			//chkAllResults.setVisible(false);
 			CommonMethods.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
@@ -149,6 +152,7 @@ public class ViewResultsController {
 				msgboxlbl.setVisible(true);
 				//chkAllResults.setVisible(false);
 				btnMoveNext.setVisible(false);
+				lblNewRound.setVisible(false);
 			}
 			i += 2;// increment i by 2
 
@@ -294,6 +298,7 @@ public class ViewResultsController {
 		try {
 			tournament.moveToNextRound();
 			btnMoveNext.setVisible(false);
+			lblNewRound.setVisible(true);
 		} catch (TournamentEndedException | MoveToNextRoundException e) {
 			e.printStackTrace();
 		}

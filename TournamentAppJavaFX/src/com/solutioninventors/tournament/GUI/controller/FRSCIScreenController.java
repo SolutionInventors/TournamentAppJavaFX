@@ -14,9 +14,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
@@ -36,6 +36,8 @@ public class FRSCIScreenController {
 	@FXML private MenuItem MenuSave;
 	@FXML private MenuItem MenuSaveas;
 	@FXML private MenuItem MenuClose;
+	@FXML private MenuBar myMenuBar;
+
 	private Tournament tournament;
 
 	// ###################################Inject
@@ -181,8 +183,10 @@ public class FRSCIScreenController {
 		CommonMethods.saveas(tournament);
 	}
 	public void close(ActionEvent e) {
-		closeprogram();
-		((Node) e.getSource()).getScene().getWindow().hide();
+	
+		Stage stage = (Stage) myMenuBar.getScene().getWindow();
+		closeprogram(stage);
+		
 		
 	}
 	public void music(ActionEvent e) throws IOException, URISyntaxException {
@@ -196,14 +200,27 @@ public class FRSCIScreenController {
 		CommonMethods.about();
 	}
 	
-	private void closeprogram() {
+/*	public void closeprogram(Stage window) {
 		int answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
 		if (answer ==1) {
 			CommonMethods.save(tournament);
 		}
-		
+		window.close();
 		Tournament.closeFile(tournament.getTournamentFile());
+	}*/
+	private void closeprogram(Stage window) {
+		int answer = ConfirmBox.display("Save", "Do you want to save changes to " + tournament.getName());
+		if (answer == 1) {
+			if (CommonMethods.save(tournament)) {
+				Tournament.closeFile(tournament.getTournamentFile());
+				window.close();
+			}
+		} else if (answer == 0) {
+			window.close();
+		}
+
 	}
+	
 	private void closeprogram2(Stage window) {
 		int answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
 		if (answer == 1) {

@@ -40,6 +40,7 @@ public class ConfirmBox {
             window.close();
         });
         cancelButton.setOnAction(e -> {
+        	answer = 33;
             window.close();
         });
         HBox hLayout = new HBox(10);

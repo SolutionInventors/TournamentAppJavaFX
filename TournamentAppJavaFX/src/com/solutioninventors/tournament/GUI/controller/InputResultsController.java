@@ -41,7 +41,7 @@ public class InputResultsController {
 	private Label VS[];
 	private CustomTextField scores[];
 	private ImageView logo[];
-	private ArrayList<ComboBox<String>> scoresnoGoal = new ArrayList<>();
+	private ArrayList<ComboBox<String>> scoresnoGoal;
 	private Tournament tournament;
 	private Competitor comp1;
 	private Competitor comp2;
@@ -88,6 +88,7 @@ public class InputResultsController {
 				VS = new Label[currentFixtures.length];
 				logo = new ImageView[currentFixtures.length * 2];
 				scores = new CustomTextField[currentFixtures.length * 2];
+				scoresnoGoal = new ArrayList<>();
 				int i = 0;
 				for (int j = 0; j < currentFixtures.length; j++) {
 					compName[i] = new Label(currentFixtures[j].getCompetitorOne().toString());
@@ -219,9 +220,14 @@ public class InputResultsController {
 		} else {
 			for (int i = 0; i < scoresnoGoal.size(); i++) {
 				try {
+					System.out.println(scoresnoGoal.size());
+					if (scoresnoGoal !=null) {
+						
+					
 					if (scoresnoGoal.get(i).getValue().isEmpty()) {
 						emptyBox = true;
 						break;
+					}
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -301,7 +307,7 @@ public class InputResultsController {
 			double score1 = (scoresnoGoal.get(i).getValue().equals("D") ? 1 : 0);
 			double score2 = (scoresnoGoal.get(i + 1).getValue().equals("D") ? 1 : 0);
 
-			if (score1 == score2) {
+			if (score1 == 1 &&  score2 == 1) {
 				isDraw = true;
 				break;
 			}
