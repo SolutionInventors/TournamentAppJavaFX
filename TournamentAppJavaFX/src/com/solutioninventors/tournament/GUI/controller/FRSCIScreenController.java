@@ -68,63 +68,63 @@ public class FRSCIScreenController {
 
 	public void init() {
 		tabPane.getSelectionModel().selectedItemProperty()
-				.addListener((ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) -> {
+		.addListener((ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) -> {
 
-					try {
+			try {
 
-					if (newValue == tab1_fixtures) {
-						
-							tabfixController.setTournament(tournament);
-						
-						
-					} else if(newValue == tab2_results) {
-						tabresultController.setTournament(tournament);
-					}else if(newValue == tab3_standingtable) {
-						tabstandController.setTournament(tournament);
-					}else if(newValue == tab4_Competitors) {
-						tabcompController.setTournament(tournament);
-					}else if(newValue == tab5_inputScores) {
-						tabinputscoreController.setTournament(tournament);
-					}
-					
-				} catch (TournamentEndedException e) {
-					// FIXME Auto-generated catch block
-					e.printStackTrace();
+				if (newValue == tab1_fixtures) {
+
+					tabfixController.setTournament(tournament);
+
+
+				} else if(newValue == tab2_results) {
+					tabresultController.setTournament(tournament);
+				}else if(newValue == tab3_standingtable) {
+					tabstandController.setTournament(tournament);
+				}else if(newValue == tab4_Competitors) {
+					tabcompController.setTournament(tournament);
+				}else if(newValue == tab5_inputScores) {
+					tabinputscoreController.setTournament(tournament);
 				}
-				});
-	
+
+			} catch (TournamentEndedException e) {
+				// FIXME Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
 		MenuNew.setAccelerator(new KeyCodeCombination(KeyCode.N, 
-	                KeyCombination.SHORTCUT_DOWN));
+				KeyCombination.SHORTCUT_DOWN));
 		MenuOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, 
-                KeyCombination.SHORTCUT_DOWN));
+				KeyCombination.SHORTCUT_DOWN));
 		MenuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, 
-                KeyCombination.SHORTCUT_DOWN));
+				KeyCombination.SHORTCUT_DOWN));
 		/*MenuSaveas.setAccelerator(new KeyCodeCombination(KeyCode.N, 
                 KeyCombination.));*/
-	//to create the music interface
+		//to create the music interface
 		try {
-		musicStage = new Stage();
-	
-		Parent root;
-	
+			musicStage = new Stage();
+
+			Parent root;
+
 			root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Music.fxml"));
-		
-		Scene scene = new Scene(root);
-		InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png");
-		musicStage.getIcons().add(new Image(url1));
-		musicStage.setResizable(false);
-		musicStage.setScene(scene);
-		musicStage.sizeToScene();
-		musicStage.initStyle(StageStyle.TRANSPARENT);
-		musicStage.setTitle("Music");
-		musicStage.setX(10);
-		initMovablePlayer(musicStage);
-	//	musicStage.show();
+
+			Scene scene = new Scene(root);
+			InputStream url1 = getClass().getResourceAsStream(Paths.images + "logo.png");
+			musicStage.getIcons().add(new Image(url1));
+			musicStage.setResizable(false);
+			musicStage.setScene(scene);
+			musicStage.sizeToScene();
+			musicStage.initStyle(StageStyle.TRANSPARENT);
+			musicStage.setTitle("Music");
+			musicStage.setX(10);
+			initMovablePlayer(musicStage);
+			//	musicStage.show();
 		} catch (IOException e) {
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	public void changetab(int tabtoswitch) {
@@ -169,10 +169,10 @@ public class FRSCIScreenController {
 		}*/
 	}
 
-	
-		
-		
-	
+
+
+
+
 	public void openTour(ActionEvent event) throws URISyntaxException {
 		CommonMethods.opentournament(null);
 	}
@@ -183,24 +183,24 @@ public class FRSCIScreenController {
 		CommonMethods.saveas(tournament);
 	}
 	public void close(ActionEvent e) {
-	
+
 		Stage stage = (Stage) myMenuBar.getScene().getWindow();
 		closeprogram(stage);
-		
-		
+
+
 	}
 	public void music(ActionEvent e) throws IOException, URISyntaxException {
 		CommonMethods.music(musicStage);
 	}
-	
+
 	public void help(ActionEvent e) throws IOException, URISyntaxException {
 		CommonMethods.help();
 	}
 	public void about(ActionEvent e) throws IOException, URISyntaxException {
 		CommonMethods.about();
 	}
-	
-/*	public void closeprogram(Stage window) {
+
+	/*	public void closeprogram(Stage window) {
 		int answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
 		if (answer ==1) {
 			CommonMethods.save(tournament);
@@ -220,7 +220,7 @@ public class FRSCIScreenController {
 		}
 
 	}
-	
+
 	private void closeprogram2(Stage window) {
 		int answer = ConfirmBox.display("Close App", "Are you sure you want to exit");
 		if (answer == 1) {
@@ -229,37 +229,37 @@ public class FRSCIScreenController {
 		}
 	}
 	//this makes the music player draggable
-	 private void initMovablePlayer(Stage PRIMARY_STAGE) {
-	      Scene scene = PRIMARY_STAGE.getScene();
-	      // starting initial anchor point
-	      scene.setOnMousePressed(mouseEvent
-	              -> anchorPt = new Point2D(mouseEvent.getScreenX(),
-	                      mouseEvent.getScreenY())
-	      );
+	private void initMovablePlayer(Stage PRIMARY_STAGE) {
+		Scene scene = PRIMARY_STAGE.getScene();
+		// starting initial anchor point
+		scene.setOnMousePressed(mouseEvent
+				-> anchorPt = new Point2D(mouseEvent.getScreenX(),
+						mouseEvent.getScreenY())
+				);
 
-	      // dragging the entire stage
-	      scene.setOnMouseDragged(mouseEvent -> {
-	         if (anchorPt != null && previousLocation != null) {
-	            PRIMARY_STAGE.setX(previousLocation.getX()
-	                    + mouseEvent.getScreenX()
-	                    - anchorPt.getX());
-	            PRIMARY_STAGE.setY(previousLocation.getY()
-	                    + mouseEvent.getScreenY()
-	                    - anchorPt.getY());
-	         }
-	      });
+		// dragging the entire stage
+		scene.setOnMouseDragged(mouseEvent -> {
+			if (anchorPt != null && previousLocation != null) {
+				PRIMARY_STAGE.setX(previousLocation.getX()
+						+ mouseEvent.getScreenX()
+						- anchorPt.getX());
+				PRIMARY_STAGE.setY(previousLocation.getY()
+						+ mouseEvent.getScreenY()
+						- anchorPt.getY());
+			}
+		});
 
-	      // set the current location
-	      scene.setOnMouseReleased(mouseEvent
-	              -> previousLocation = new Point2D(PRIMARY_STAGE.getX(),
-	                      PRIMARY_STAGE.getY())
-	      );
+		// set the current location
+		scene.setOnMouseReleased(mouseEvent
+				-> previousLocation = new Point2D(PRIMARY_STAGE.getX(),
+						PRIMARY_STAGE.getY())
+				);
 
-	      // Initialize previousLocation after Stage is shown
-	      PRIMARY_STAGE.addEventHandler(WindowEvent.WINDOW_SHOWN,
-	              (WindowEvent t) -> {
-	                 previousLocation = new Point2D(PRIMARY_STAGE.getX(),
-	                         PRIMARY_STAGE.getY());
-	              });
-	   }
+		// Initialize previousLocation after Stage is shown
+		PRIMARY_STAGE.addEventHandler(WindowEvent.WINDOW_SHOWN,
+				(WindowEvent t) -> {
+					previousLocation = new Point2D(PRIMARY_STAGE.getX(),
+							PRIMARY_STAGE.getY());
+				});
+	}
 }// end class
