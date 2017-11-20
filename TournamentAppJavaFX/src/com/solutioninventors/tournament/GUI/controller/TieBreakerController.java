@@ -61,13 +61,12 @@ public class TieBreakerController {
 	private int tournamenttype;
 	//others
 	private Btn btn = new Btn();
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private boolean shuffleCompetitors;
 	private boolean isSingleKOhomeAndAway;
 
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		lbltourtype.setFont(font[1]);// Knockout Specs
 		txtdisplay.setFont(font[0]);// the display
@@ -194,7 +193,7 @@ public class TieBreakerController {
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		if (selectedBreaker.isEmpty()) {
-			cm.ErrorMessage("NO Breaker Selected", "You Must Select at least one type of Breaker in order to proceed");
+			CommonMethods.ErrorMessage("NO Breaker Selected", "You Must Select at least one type of Breaker in order to proceed");
 		} else {
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource(Paths.viewpath + "InputCompetitorScreen.fxml").openStream());

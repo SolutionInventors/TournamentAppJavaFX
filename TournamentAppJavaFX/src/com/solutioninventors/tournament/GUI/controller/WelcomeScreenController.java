@@ -22,11 +22,10 @@ public class WelcomeScreenController {
 	@FXML private Label lblmainmenu;
 	@FXML private List<Label> lblTour;
 	private Transition trans = new Transition();
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	
 	public void initialize() throws FileNotFoundException, URISyntaxException {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 		for (int i = 0; i < lblTour.size(); i++) {
 			lblTour.get(i).setFont(font[1]);
 		}
@@ -40,15 +39,15 @@ public class WelcomeScreenController {
 	}
 	@FXML
 	public void continuetour(MouseEvent event) throws IOException, TournamentEndedException, URISyntaxException {
-		cm.opentournament(event);
+		CommonMethods.opentournament(event);
 	}//end continue tour
 
 	public void About(MouseEvent event) throws IOException, URISyntaxException {
 		
-		cm.about();
+		CommonMethods.about();
 	}
 	public void Help(MouseEvent event) throws IOException, URISyntaxException {
-		cm.help();
+		CommonMethods.help();
 	}
 	
 	

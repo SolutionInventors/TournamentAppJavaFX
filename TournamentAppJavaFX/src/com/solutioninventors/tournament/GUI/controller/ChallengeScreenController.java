@@ -26,7 +26,6 @@ public class ChallengeScreenController {
 	private String TournamentName;
 	private Btn btn = new Btn();
 	private Boolean goalScored;
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	  
 	
@@ -35,13 +34,13 @@ public class ChallengeScreenController {
 	}
 	
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 		
 		lbltourtype.setFont(font[1]);//Knockout Specs
 		txtdisplay.setFont(font[0]);//the display
 		lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		txtTourHighlight.setFont(font[0]);
-		cm.isNumber(txtnoOfrounds);
+		CommonMethods.isNumber(txtnoOfrounds);
 	}
 	
 	
@@ -57,7 +56,7 @@ public class ChallengeScreenController {
 	@FXML
 	public void next(ActionEvent event) throws IOException  {
 		if (txtnoOfrounds.getText().isEmpty()) {
-			cm.ErrorMessage("Please check input", "No of round cannot be empty");
+			CommonMethods.ErrorMessage("Please check input", "No of round cannot be empty");
 		} else {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());

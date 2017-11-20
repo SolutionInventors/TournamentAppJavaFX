@@ -27,14 +27,13 @@ public class CompetitorStatusController {
 	@FXML private TableColumn<CompetitorStatus, String>eliminated;
 	
 	@FXML private Label tourStage;
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	
 	private Tournament tournament;
 	private ObservableList<CompetitorStatus> list;
 	
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		tourStage.setFont(font[1]);// tournament Specs
 		//tourStage.size

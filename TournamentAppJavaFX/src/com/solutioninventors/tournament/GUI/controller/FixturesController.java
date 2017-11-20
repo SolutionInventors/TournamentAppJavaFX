@@ -36,14 +36,12 @@ public class FixturesController {
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
 	
-
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private int tempint;
 	private Label[] roundHeader;
 
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		tourStage.setFont(font[1]);// tournament Specs
 		//tourStage.size
@@ -67,7 +65,7 @@ public class FixturesController {
 		} // end if tournament has not ended
 
 		else {
-			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			CommonMethods.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
 	

@@ -47,12 +47,11 @@ public class InputResultsController {
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
 	private ObservableList<String> WDL = FXCollections.observableArrayList("W", "D", "L");
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private boolean goalsAreScore;
 
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 		lblResultSubmitted.setVisible(false);
 
 		tourStage.setFont(font[1]);// tournament Specs
@@ -191,7 +190,7 @@ public class InputResultsController {
 			}
 
 		} else {
-			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			CommonMethods.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 			btnsubmit.setVisible(false);
 			lblResultSubmitted.setVisible(false);
 			tourStage.setText("TOURNAMENT HAS ENDED");
@@ -258,13 +257,13 @@ public class InputResultsController {
 		} // end if else goals Scored
 
 		if (emptyBox) {
-			cm.ErrorMessage("Empty Box", "Please check that all the boxes have been filled");
+			CommonMethods.ErrorMessage("Empty Box", "Please check that all the boxes have been filled");
 		} else if (singleTieDraw) {
-			cm.ErrorMessage("Tie Round", "You Cannot input draw in a tie Round");
+			CommonMethods.ErrorMessage("Tie Round", "You Cannot input draw in a tie Round");
 		} else if (DoubleElimDraw) {
-			cm.ErrorMessage("No Draw", "Draw is not allowed in a Double Elimination");
+			CommonMethods.ErrorMessage("No Draw", "Draw is not allowed in a Double Elimination");
 		} else if (invalidnogoalScore) {
-			cm.ErrorMessage("Invalid Result", "You cannot input a W D or L D etc");
+			CommonMethods.ErrorMessage("Invalid Result", "You cannot input a W D or L D etc");
 		} else {
 			for (int i = 0; i < currentFixtures.length; i++) {
 				Competitor com1 = currentFixtures[i].getCompetitorOne();

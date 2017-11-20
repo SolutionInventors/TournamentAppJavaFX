@@ -46,7 +46,6 @@ public class MultiStageScreenController {
 	private boolean isKOSingle = true;
 	private Boolean goalScored;
 	private Boolean standardbreaker = true;
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 
 	public void setTournamentName(String tournamentName, Boolean goalScored) {
@@ -60,17 +59,17 @@ public class MultiStageScreenController {
 
 	public void initialize() {
 		noofround.setVisible(false);
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		 lbltourtype.setFont(font[1]);//tournament Specs
 		 txtdisplay.setFont(font[0]);//the display
 		 lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		 txtTourHighlight.setFont(font[0]);
-		cm.isNumber(txtnoOfrounds);
-		cm.isNumber(txtnoOfcomps);
-		cm.isNumber(txtwinpoint);
-		cm.isNumber(txtdrawpoint);
-		cm.isNumber(txtlosspoint);
+		 CommonMethods.isNumber(txtnoOfrounds);
+		 CommonMethods.isNumber(txtnoOfcomps);
+		 CommonMethods.isNumber(txtwinpoint);
+		 CommonMethods.isNumber(txtdrawpoint);
+		 CommonMethods.isNumber(txtlosspoint);
 	}
 
 	@FXML
@@ -155,13 +154,13 @@ public class MultiStageScreenController {
 		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty()
 				|| txtdrawpoint.getText().isEmpty() || txtlosspoint.getText().isEmpty()) {
 
-			cm.ErrorMessage("Please check input",
+			CommonMethods.ErrorMessage("Please check input",
 					"Please check that all the textboxes are filled");
 		} else if ( Integer.valueOf(txtnoOfcomps.getText()) <= 4 || Integer.valueOf(txtnoOfcomps.getText()) %4 !=0 ) {
-			cm.ErrorMessage("Invalid no of Competitors",
+			CommonMethods.ErrorMessage("Invalid no of Competitors",
 					"In a Muliti-Stage tournament the No of competitors must be a greater than 4 and multiple of 4 e.g 4,8,12");
 		} else if ( correctPoints ) {
-			cm.ErrorMessage("Invalid Pointing System", "Please check the pointing System, win Point must be greater than draw point and loss point etc");
+			CommonMethods.ErrorMessage("Invalid Pointing System", "Please check the pointing System, win Point must be greater than draw point and loss point etc");
 		}else {
 
 			FXMLLoader loader = new FXMLLoader();

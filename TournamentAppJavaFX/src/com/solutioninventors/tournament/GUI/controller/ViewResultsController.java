@@ -47,14 +47,13 @@ public class ViewResultsController {
 	private Competitor comp2;
 	private Fixture[] currentFixtures;
 	private int fixturesLength[];
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private int tempint;
 	private boolean isFixturesComplete;
 	private Label roundHeader[];
 
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		msgboxlbl.setFont(font[1]);// tournament Specs
 		tourStage.setFont(font[1]);
@@ -86,7 +85,7 @@ public class ViewResultsController {
 		else {
 			btnMoveNext.setVisible(false);
 			//chkAllResults.setVisible(false);
-			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			CommonMethods.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 		}
 	}// end set current
 
@@ -299,7 +298,7 @@ public class ViewResultsController {
 			e.printStackTrace();
 		}
 		if (tournament.hasEnded())
-			cm.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
+			CommonMethods.ErrorMessage("Tournament Finish", "This tournament is over the winner is " + tournament.getWinner());
 
 	}// end nextRound
 

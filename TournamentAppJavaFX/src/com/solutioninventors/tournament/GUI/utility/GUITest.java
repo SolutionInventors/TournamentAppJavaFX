@@ -39,6 +39,8 @@ public class GUITest extends Application {
 			});
 			scene.getStylesheets().add(getClass().getResource(Paths.css + "welcomeScreen.css").toExternalForm());
 			primaryStage.setTitle("Tournament APP");
+			
+			url1.close();
 			primaryStage.show();
 		} catch (IOException e) {
 		}

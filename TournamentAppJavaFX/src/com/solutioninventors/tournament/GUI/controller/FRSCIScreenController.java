@@ -36,7 +36,6 @@ public class FRSCIScreenController {
 	@FXML private MenuItem MenuSave;
 	@FXML private MenuItem MenuSaveas;
 	@FXML private MenuItem MenuClose;
-	private CommonMethods control = new CommonMethods();
 	private Tournament tournament;
 
 	// ###################################Inject
@@ -173,13 +172,13 @@ public class FRSCIScreenController {
 		
 	
 	public void openTour(ActionEvent event) throws URISyntaxException {
-		control.opentournament(null);
+		CommonMethods.opentournament(null);
 	}
 	public void saveTour(ActionEvent e) {
-		control.save(tournament);
+		CommonMethods.save(tournament);
 	}
 	public void saveTouras(ActionEvent e) {
-		control.saveas(tournament);
+		CommonMethods.saveas(tournament);
 	}
 	public void close(ActionEvent e) {
 		closeprogram();
@@ -187,20 +186,20 @@ public class FRSCIScreenController {
 		
 	}
 	public void music(ActionEvent e) throws IOException, URISyntaxException {
-		control.music(musicStage);
+		CommonMethods.music(musicStage);
 	}
 	
 	public void help(ActionEvent e) throws IOException, URISyntaxException {
-		control.help();
+		CommonMethods.help();
 	}
 	public void about(ActionEvent e) throws IOException, URISyntaxException {
-		control.about();
+		CommonMethods.about();
 	}
 	
 	private void closeprogram() {
 		int answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
 		if (answer ==1) {
-			control.save(tournament);
+			CommonMethods.save(tournament);
 		}
 		
 		Tournament.closeFile(tournament.getTournamentFile());

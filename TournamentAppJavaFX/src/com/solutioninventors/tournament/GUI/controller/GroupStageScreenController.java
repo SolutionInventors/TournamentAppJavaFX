@@ -35,14 +35,13 @@ public class GroupStageScreenController {
 	@FXML private AnchorPane  rootPane;
 	@FXML private Text txtTourHighlight;
 	@FXML private CheckBox standardBreaker;
-		  private String TournamentName;
-		  private Btn btn = new Btn();
-		  private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
-		  private String message;
-		  private Boolean goalScored;
-		  private Boolean standardbreaker =true;
-		  private CommonMethods cm = new CommonMethods();
-		  private Font font[] = new Font[3];
+	private String TournamentName;
+	private Btn btn = new Btn();
+	private int tourType = 1;//1 swiss, 2 round, 3 doubleRound
+	private String message;
+	private Boolean goalScored;
+	private Boolean standardbreaker =true;
+	private Font font[] = new Font[3];
 
 	public void setTournamentName(String tournamentName, Boolean goalScored) {
 		TournamentName = tournamentName;
@@ -54,17 +53,17 @@ public class GroupStageScreenController {
 	}
 	public void initialize() {
 		noofround.setVisible(false);
-		font = cm.loadfonts();
-		
+		font = CommonMethods.loadfonts();
+
 		lbltourtype.setFont(font[1]);//tournament Specs
 		txtdisplay.setFont(font[0]);//the display
 		lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		txtTourHighlight.setFont(font[0]);
-		cm.isNumber(txtnoOfrounds);
-		cm.isNumber(txtnoOfcomps);
-		cm.isNumber (txtwinpoint);
-		cm.isNumber (txtdrawpoint);
-		cm.isNumber(txtlosspoint);
+		CommonMethods.isNumber(txtnoOfrounds);
+		CommonMethods.isNumber(txtnoOfcomps);
+		CommonMethods.isNumber (txtwinpoint);
+		CommonMethods.isNumber (txtdrawpoint);
+		CommonMethods.isNumber(txtlosspoint);
 	}
 	@FXML
 	public void updateStandardBreaker(ActionEvent event){
@@ -103,12 +102,12 @@ public class GroupStageScreenController {
 			noofround.setText(txtnoOfcomps.getText()== null || txtnoOfcomps.getText().equals("")? "0": String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)));
 			txtTourHighlight.setText("DOUBLE ROUND");
 			message = "In a                          robin tournament, each competitor plays every other competitor twice.The no of rounds is determined by the no of competitors. Most association football leagues in the world are organized on a double round-robin basis, in which every team plays all others in its league once at home and once away.";
-		
+
 		}
 		txtdisplay.setText(message);
 	}
-	
-	
+
+
 	@FXML
 	public void updaterud(KeyEvent event)  {
 		if (!txtnoOfcomps.getText().isEmpty()) {
@@ -120,17 +119,17 @@ public class GroupStageScreenController {
 					String noofrnd = String.valueOf(((Integer.valueOf(txtnoOfcomps.getText()) - 1)*2)*2);
 					noofround.setText(noofrnd);
 				}
-				
+
 			} catch (NumberFormatException e) {
 				noofround.setText("Please input the correct no of competitors");
 			}
 		}//end if
-		
+
 	}
-	
+
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
-		
+
 		btn.previous(rootPane,event, "TournamentTypeScreen.fxml", "tourtypecss.css", TournamentName);
 	}
 	@FXML
@@ -145,7 +144,7 @@ public class GroupStageScreenController {
 			double winpoint = Double.valueOf(txtwinpoint.getText());
 			double drawpoint = Double.valueOf(txtdrawpoint.getText());
 			double losspoint = Double.valueOf(txtlosspoint.getText());
-			
+
 			if (winpoint>drawpoint && winpoint>losspoint && drawpoint>losspoint) {
 				correctPoints = false;
 			} else {
@@ -155,46 +154,46 @@ public class GroupStageScreenController {
 			correctPoints = true;
 			e.printStackTrace();
 		}
-		
+
 		if (txtnoOfrounds.getText().isEmpty() || txtnoOfcomps.getText().isEmpty() || txtwinpoint.getText().isEmpty() || txtdrawpoint.getText().isEmpty()
 				|| txtlosspoint.getText().isEmpty() ) {
-		
-			cm.ErrorMessage("Please check input", "Please check that all the textboxes are filled ");
+
+			CommonMethods.ErrorMessage("Please check input", "Please check that all the textboxes are filled ");
 		}else if ((tourType ==1) && (Integer.valueOf(txtnoOfcomps.getText())<=2 || Integer.valueOf(txtnoOfcomps.getText()) % 2 !=0 )) {
-			cm.ErrorMessage("Invalid no of Competitors", "In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
+			CommonMethods.ErrorMessage("Invalid no of Competitors", "In a swiss tournament the No of comps must be a multiple of 2 and greater than 2 e.g 4,6,8,10,12");
 		}else if( (tourType ==2 || tourType ==3) &&  Integer.valueOf(txtnoOfcomps.getText())<=3){
-			cm.ErrorMessage("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 3 e.g 4,5,6,7");
+			CommonMethods.ErrorMessage("Invalid no of Competitors", "In a Robin tournament the No of comps must be a greater than 3 e.g 4,5,6,7");
 		}else if(correctPoints){
-			cm.ErrorMessage("Invalid Pointing System", "Please check the pointing System, win Point must be greater than draw point and loss point etc");
+			CommonMethods.ErrorMessage("Invalid Pointing System", "Please check the pointing System, win Point must be greater than draw point and loss point etc");
 		}else {
-		
-		FXMLLoader loader = new FXMLLoader();
-		Breaker[] standardBreakers;
-		if (goalScored) {
-			standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_SCORED);
-		}else {
-			standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_NOT_SCORED);
+
+			FXMLLoader loader = new FXMLLoader();
+			Breaker[] standardBreakers;
+			if (goalScored) {
+				standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_SCORED);
+			}else {
+				standardBreakers = Breaker.getStandardBreaker(SportType.GOALS_ARE_NOT_SCORED);
+			}
+
+			if (standardbreaker) {
+				Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
+				InputCompetitorController ic = (InputCompetitorController) loader.getController();
+				ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
+						Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
+						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, standardBreakers );
+				btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
+			}else {
+				Pane root = loader.load(getClass().getResource(Paths.viewpath+"TieBreaker.fxml").openStream());
+				TieBreakerController tb = (TieBreakerController) loader.getController();
+				tb.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
+						Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
+						Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
+
+				btn.next(rootPane, root, "TieBreaker.fxml","commonStyle.css");
+			}
+
 		}
-	
-		if (standardbreaker) {
-			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
-			InputCompetitorController ic = (InputCompetitorController) loader.getController();
-			ic.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
-					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
-					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType, standardBreakers );
-			btn.next(rootPane, root, "InputCompetitorScreen.fxml","commonStyle.css");
-		}else {
-			Pane root = loader.load(getClass().getResource(Paths.viewpath+"TieBreaker.fxml").openStream());
-			TieBreakerController tb = (TieBreakerController) loader.getController();
-			tb.setGroupTournament(TournamentName, goalScored, Integer.valueOf(txtnoOfrounds.getText()),
-					Integer.valueOf(txtnoOfcomps.getText()), Double.valueOf(txtwinpoint.getText()),
-					Double.valueOf(txtdrawpoint.getText()), Double.valueOf(txtlosspoint.getText()) ,tourType );
-			
-			btn.next(rootPane, root, "TieBreaker.fxml","commonStyle.css");
-		}
-			
-		}
-		
+
 
 	}
 }

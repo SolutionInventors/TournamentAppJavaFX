@@ -63,7 +63,6 @@ public class InputCompetitorController {
 	@FXML private List<Label> lblArray;
 	@FXML private Label lbltourtype;
 	@FXML private Label lbltourapp;
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private Stage window;
 
@@ -115,7 +114,7 @@ public class InputCompetitorController {
 	private TieBreaker tieBreakers;
 
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		lbltourtype.setFont(font[1]);// tournament Specs
 		lbltourapp.setFont(font[0]);// TOURNAMNET APP
@@ -495,7 +494,7 @@ public class InputCompetitorController {
 	private void closeprogram() {
 		int answer = ConfirmBox.display("Save", "Do you want to save changes to " + TournamentName);
 		if (answer == 1) {
-			if (cm.save(tournament)) {
+			if (CommonMethods.save(tournament)) {
 				Tournament.closeFile(tournament.getTournamentFile());
 				window.close();
 			}
@@ -510,7 +509,7 @@ public class InputCompetitorController {
 
 	public void changeImagecustom(MouseEvent e, int fileNum, int arrayNum) {
 
-		imageFileforChangeImage = new File(cm.changeImage(e).toURI());
+		imageFileforChangeImage = new File(CommonMethods.changeImage(e).toURI());
 		file[fileNum] = imageFileforChangeImage;
 		if (imageFileforChangeImage != null) {
 			try {

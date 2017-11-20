@@ -42,7 +42,6 @@ public class TournamentTypeScreenController {
 	private String nextFxml = "Knockout.fxml";
 	private Boolean goalScored = true;
 	private Btn btn = new Btn();
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	
 	
@@ -130,7 +129,7 @@ public class TournamentTypeScreenController {
 	public void initialize() throws FileNotFoundException, URISyntaxException {
 		rootPane.setOpacity(0);
 		Transition.FadeIn(rootPane);
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 		txtdisplay.setFont(font[0]);
 		lbltourtype.setFont(font[1]);
 		lbltapp.setFont(font[0]);

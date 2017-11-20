@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import com.solutioninventors.tournament.GUI.utility.ConfirmBox;
 import com.solutioninventors.tournament.GUI.utility.Paths;
@@ -34,27 +35,40 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class CommonMethods {
+public  class CommonMethods {
 
-	private Tournament tournament;
-	InputStream logoURL = getClass().getResourceAsStream(Paths.images + "logo.png");
-
-	public Font[] loadfonts()  {
-		InputStream url1 = getClass().getResourceAsStream(Paths.fonts + "twcenmt.ttf");
-		InputStream url2 = getClass().getResourceAsStream(Paths.fonts + "TwCenMTCondensed.ttf");
-		InputStream url3 = getClass().getResourceAsStream(Paths.fonts + "Pristina.ttf");
+	private static Tournament tournament;
+	private static InputStream logoURL =  
+			CommonMethods.class.getResourceAsStream(Paths.images + "logo.png");
+	
+	/**
+	 * THis constructor makes this object a snigleton
+	 * Nov 20, 2017
+	 */
+	private CommonMethods(){}
+	public static Font[] loadfonts()  {
 		final Font font[] = new Font[3];
-		font[0] = Font.loadFont(url1, 19);
+		try(InputStream url1 = CommonMethods.class.getResourceAsStream(Paths.fonts + "twcenmt.ttf");
+				InputStream url2 = CommonMethods.class.getResourceAsStream(Paths.fonts + "TwCenMTCondensed.ttf");
+				InputStream url3 = CommonMethods.class.getResourceAsStream(Paths.fonts + "Pristina.ttf");
+				)
+		{
+			font[0] = Font.loadFont(url1, 19);
 
-		font[1] = Font.loadFont(url2, 19);
-		font[2] = Font.loadFont(url3, 19);
+			font[1] = Font.loadFont(url2, 19);
+			font[2] = Font.loadFont(url3, 19);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return font;
 	}
 
-	public void about() throws IOException, URISyntaxException {
+	public static void about() throws IOException, URISyntaxException {
 		Stage aboutStage = new Stage();
 		aboutStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "About.fxml"));
+		Parent root = FXMLLoader.load(
+				CommonMethods.class.getResource(Paths.viewpath + "About.fxml"));
 		Scene scene = new Scene(root);
 		
 		aboutStage.getIcons().add(new Image(logoURL));
@@ -66,10 +80,11 @@ public class CommonMethods {
 
 	}
 
-	public void help() throws IOException, URISyntaxException {
+	public static void help() throws IOException, URISyntaxException {
 		Stage helpStage = new Stage();
 		helpStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource(Paths.viewpath + "Help.fxml"));
+		Parent root = FXMLLoader.load(
+				CommonMethods.class.getResource(Paths.viewpath + "Help.fxml"));
 		Scene scene = new Scene(root);
 		helpStage.getIcons().add(new Image(logoURL));
 		helpStage.setResizable(false);
@@ -81,17 +96,15 @@ public class CommonMethods {
 
 	
 	
-	public void music(Stage musicStage) throws IOException, URISyntaxException {
+	public static void music(Stage musicStage) throws IOException, URISyntaxException {
 		if (musicStage.isShowing()) {
 			musicStage.hide();
 		}else {
 			musicStage.show();
 		}
-		
-		
 	}
 	
-	public File changeImage(MouseEvent e) {
+	public static File changeImage(MouseEvent e) {
 		FileChooser fc = new FileChooser();
 		FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg","*.png","*.bmp","*.gif");
 
@@ -109,7 +122,7 @@ public class CommonMethods {
 	
 
 	
-	public void opentournament(MouseEvent event) throws URISyntaxException {
+	public static void opentournament(MouseEvent event) throws URISyntaxException {
 		FileChooser fc = new FileChooser();
 		fc.setInitialDirectory(
 				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Documents"));
@@ -126,7 +139,8 @@ public class CommonMethods {
 				}
 				Stage window = new Stage();
 				FXMLLoader loader = new FXMLLoader();
-				Parent root = loader.load(getClass().getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
+				Parent root = loader.load(
+						CommonMethods.class.getResource(Paths.viewpath + "FRSCIScreen.fxml").openStream());
 				FRSCIScreenController ic = (FRSCIScreenController) loader.getController();
 				ic.setTournament(tournament);
 				ic.init();
@@ -155,7 +169,7 @@ public class CommonMethods {
 		}
 	}
 	
-	private void closeprogram(Stage window) {
+	private static void closeprogram(Stage window) {
 		int answer = ConfirmBox.display("Save", "Do you want to save changes to "+tournament.getName());
 		if (answer ==1) {
 			save(tournament);
@@ -166,7 +180,7 @@ public class CommonMethods {
 	
 	
 	
-	public boolean save(Tournament tour) {
+	public static boolean save(Tournament tour) {
 	
 			try {
 				tour.save();
@@ -182,7 +196,7 @@ public class CommonMethods {
 		
 	}
 
-	public boolean saveas(Tournament tour) {
+	public static boolean saveas(Tournament tour) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(
 				new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Documents"));
@@ -206,30 +220,37 @@ public class CommonMethods {
 
 	}
 
-	public void ErrorMessage(String err, String message) {
+	public static void ErrorMessage(String err, String message) {
 		try {
 		Stage errorWindow = new Stage();
 		errorWindow.initModality(Modality.APPLICATION_MODAL);
 		FXMLLoader loader = new FXMLLoader();
-		Parent root = loader.load(getClass().getResource(Paths.viewpath + "Error.fxml").openStream());
+		InputStream input =CommonMethods.class.getResource(Paths.viewpath + "Error.fxml").openStream();
+		Parent root = loader.load(input);
 		ErrorController er = (ErrorController) loader.getController();
 		er.setMessage(err, message);
 		Scene scene = new Scene(root);
 		errorWindow.getIcons().add(new Image(logoURL));
 		errorWindow.setResizable(false);
 		errorWindow.sizeToScene();
-		scene.getStylesheets().add(getClass().getResource(Paths.css + "commonStyle.css").toExternalForm());
+		
+		URL url = CommonMethods.class.getResource(Paths.css + "commonStyle.css");
+		
+		scene.getStylesheets().add( url.toExternalForm());
 		errorWindow.setScene(scene);
 		errorWindow.show();
 		errorWindow.setTitle(err);
+		input.close();
+		
 		
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
 
 	// validates that the input is a number
-	public void isNumber(TextField txt) {
+	public static void isNumber(TextField txt) {
 		txt.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

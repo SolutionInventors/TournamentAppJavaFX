@@ -30,34 +30,33 @@ public class KnockoutScreenController {
 	@FXML private Label  lbltourtype; 
 	@FXML private Label lbltourapp;
 	@FXML private AnchorPane  rootPane;
-		  private boolean isKnockoutSingle = true;
-		  private boolean HomeandAwayFixture = false;
-		  private Btn btn = new Btn();
-		  private Boolean goalScored;
-		  private CommonMethods cm = new CommonMethods();
-		  private Font font[] = new Font[3];
-	
-	
+	private boolean isKnockoutSingle = true;
+	private boolean HomeandAwayFixture = false;
+	private Btn btn = new Btn();
+	private Boolean goalScored;
+	private Font font[] = new Font[3];
+
+
 
 	private String TournamentName;
 
 	public String getTournamentName() {
 		return TournamentName;
-		
+
 	}
 	public void initialize() {
-		font = cm.loadfonts();
-		
+		font = CommonMethods.loadfonts();
+
 		lbltourtype.setFont(font[1]);//Knockout Specs
 		txtdisplay.setFont(font[0]);//the display
 		lbltourapp.setFont(font[0]);//TOURNAMNET APP
 		txtTourHighlight.setFont(font[0]);
-		
+
 		//only numbers
 		// force the field to be numeric only
-		cm.isNumber(txtNoofcompetitors);
+		CommonMethods.isNumber(txtNoofcompetitors);
 
-	
+
 	}
 
 
@@ -67,7 +66,7 @@ public class KnockoutScreenController {
 		TournamentName = tournamentName;
 		this.goalScored = goalScored;
 	}
-	
+
 	@FXML
 	public void tourselected(ActionEvent e) {
 		if (singleelim.isSelected()) {
@@ -82,7 +81,7 @@ public class KnockoutScreenController {
 			HomeandAwayFixture = false;
 		}
 	}
-	
+
 	@FXML
 	public void homeAway(ActionEvent e) {
 		if (homeandAway.isSelected()) {
@@ -90,15 +89,15 @@ public class KnockoutScreenController {
 		}else
 			HomeandAwayFixture = false;
 	}
-	
+
 
 	@FXML
 	public void previous(ActionEvent event) throws IOException {
-	
+
 		btn.previous(rootPane,event,"TournamentTypeScreen.fxml", "tourtypecss.css", TournamentName);
 	}
 
-	
+
 	@FXML
 	public void next(ActionEvent event) throws IOException {
 		double validator = 0;
@@ -106,24 +105,24 @@ public class KnockoutScreenController {
 			validator = ( Math.log( Integer.valueOf(txtNoofcompetitors.getText()) ) )/
 					( Math.log( 2 ) );
 		}
-		
+
 		if ( txtNoofcompetitors.getText().isEmpty()) {
 			//AlertBox.display("Invalid No of Rounds", "The no of rounds cannot be empty");
-			cm.ErrorMessage("Error", "The Number of Competitors Cannot be empty");
+			CommonMethods.ErrorMessage("Error", "The Number of Competitors Cannot be empty");
 		}else if ( Integer.valueOf(txtNoofcompetitors.getText())<2  ) {
-			cm.ErrorMessage("Invalid of competitors", "The number of Competitors must greater than 2");
+			CommonMethods.ErrorMessage("Invalid of competitors", "The number of Competitors must greater than 2");
 		}else if ( ! ( validator % 1 == 0.0f)  ) {
-			cm.ErrorMessage("Invalid number", "The number of Competitors must be a power of 2 ie 4,8,16,32,64,128");
+			CommonMethods.ErrorMessage("Invalid number", "The number of Competitors must be a power of 2 ie 4,8,16,32,64,128");
 		}else {
-		FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource(Paths.viewpath+"InputCompetitorScreen.fxml").openStream());
 			InputCompetitorController ic = (InputCompetitorController) loader.getController();
 			ic.setKOtournament(TournamentName, goalScored, Integer.valueOf(txtNoofcompetitors.getText()), isKnockoutSingle, HomeandAwayFixture,checkBoxShuffleComps.isSelected());
 			btn.next(rootPane, root, "Input.fxml","commonStyle.css");
 			//btn.next(rootPane, root);
-			}
-		
-		
+		}
+
+
 	}
 	@FXML
 	public void cancel(ActionEvent event) throws IOException {

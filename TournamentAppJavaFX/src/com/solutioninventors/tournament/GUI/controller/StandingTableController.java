@@ -32,7 +32,6 @@ public class StandingTableController {
 	private Label tourStage;
 	@FXML
 	private Label lblnostanding;
-	private CommonMethods cm = new CommonMethods();
 	private Font font[] = new Font[3];
 	private Map<Integer, String[][]> stringtableMap = new HashMap<Integer, String[][]>();
 	private Tournament tournament;
@@ -49,7 +48,7 @@ public class StandingTableController {
 	private VBox vBox;
 
 	public void initialize() {
-		font = cm.loadfonts();
+		font = CommonMethods.loadfonts();
 
 		lblnostanding.setFont(font[1]);// tournament Specs
 		tourStage.setFont(font[1]);
